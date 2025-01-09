@@ -6,6 +6,7 @@ exports:
   - format: docx
   - format: pdf
   - format: tex
+  - format: typst
 bibliography:
   - references.bib
 ---
