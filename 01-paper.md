@@ -101,7 +101,12 @@ The same tensor in index notation is given by equations [](#index_rank2) and
 [](#index_rank3).
 
 Using properties of a determinant, we can see that the wedge product is just a
-fully antisymmetric tensor. 
+fully antisymmetric tensor.
+
+:::{warning} TODO
+Write every antisymmetric tensor using differential forms, thus showing
+that they are equivalent.
+:::
 
 ## Examples
 
