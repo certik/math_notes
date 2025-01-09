@@ -75,37 +75,31 @@ and  covariant components of the same tensor.
 ## Exterior (Wedge) Product
 
 The exterior (wedge) product of two forms $\mathbf{u}=u_i \tilde{e}^i$ and $\mathbf{v}=v_i \tilde{e}^i$ is defined as:
-$$
-\mathbf{u} \wedge \mathbf{v} \equiv
+$$\mathbf{u} \wedge \mathbf{v} \equiv
 \mathbf{u} \otimes \mathbf{v} - \mathbf{v} \otimes \mathbf{u}\,.
 $$
 Expressing this in components in terms of the basis:
-$$
-\mathbf{u} \wedge \mathbf{v}
+$$\mathbf{u} \wedge \mathbf{v}
     = u_i \tilde{e}^i \wedge v_j \tilde{e}^j
     =\mathbf{u} \otimes \mathbf{v} - \mathbf{v} \otimes \mathbf{u}
     = u_i \tilde{e}^i \otimes v_j \tilde{e}^j
     - v_i \tilde{e}^i \otimes u_j \tilde{e}^j =
 $$
 
-$$
-    = u_i v_j \tilde{e}^i \otimes \tilde{e}^j
+$$= u_i v_j \tilde{e}^i \otimes \tilde{e}^j
     - v_i u_j \tilde{e}^i \otimes \tilde{e}^j =
 $$
 
-$$
-    = (u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j =
+$$= (u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j =
 $$
 
-$$
-    = \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
+$$= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
         \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
 :::{warning} TODO
 The last equation can be written using a wedge product:
-$$
-    (u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
+$$(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
     = (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j
 $$
 Workout the details and incorporate.
