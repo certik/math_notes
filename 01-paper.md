@@ -15,6 +15,13 @@ We express differential forms in terms of tensors and index notation. The
 closest treatment seems to be @winitzki2009linear, but we improve even upon
 that in terms of clarity, exact short definitions and explicit examples.
 
+It seems the usual old-fashioned index-based tensor formalism is all that is
+needed, and the differential forms provide an equivalent and optional treatment
+for antisymmetric tensors, which might be sometimes useful, but fundamentally
+does not bring any new feature or machinery, exactly the same computations can
+be done using index-based tensors also. We show how to equivalently rewrite any
+differential form formula or computation using tensors.
+
 ## Vectors, Forms and Tensors
 
 Any vector $\mathbf{u}$ can be written as:
@@ -147,6 +154,18 @@ that they are equivalent.
 :::{warning} TODO
 Derive all properties of the wedge product using existing tensor machinery:
 antisymmetry, all the common relations from literature, etc.
+:::
+
+:::{warning} TODO
+Show that in 2D and 3D the wedge product is the oriented area and volume.
+Ideally using tensors first, since we only want to use that, and then show that
+the wedge product when written using tensors gives the area and volume exactly.
+:::
+
+:::{warning} TODO
+Derive integration formulas by converting to tensor formulation and a metric.
+The determinant takes care of the volume and becomes the usual square root of a
+determinant of the metric I think.
 :::
 
 ## Examples
