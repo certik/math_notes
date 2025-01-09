@@ -333,3 +333,25 @@ $$
 
 The form has thus selected the first, second and fourth component row of the
 vectors. The result is just a scalar.
+
+:::{warning} TODO
+Add examples of a 3D space, rank 0-, 1-, 2-, 3-forms that correspond to
+scalars, vectors/forms, rank 2 antisymmetric tensor (which internally contains a pseudo-vector I think, using $A_{ij}=\varepsilon_{ijk}B_k$), and rank 3 antisymmetric
+tensor, which I think must contain only one independent component, and it is
+related to the oriented volume, the component might be a pseudoscalar, since it changes sign
+when you flip axes, or something like that.
+
+Give examples from physics for each. It should be possible to build this
+structure fully using antisymmetric tensors.
+
+Also add examples of differentiation, where derivative of a vector creates a
+tensor, this must be related to $F_{\mu\nu}=\partial_\mu A_\nu - \partial_\nu A_\mu$ which
+is antisymmetric, so this operation can be expressed as differentiating
+differential forms, since both LHS and RHS are antisymmetric tensors.
+Differentiating one more time in the antisymmetric manner then creates the rank
+3 tensor. No more antisymmetric derivatives are then possible.
+
+Knowing exactly where each physical entity belongs is crucial (give examples),
+but that is possible already using tensors, we do not need differential forms
+for that. Rewrite various equations that use differential forms to use tensors.
+:::
