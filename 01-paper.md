@@ -102,6 +102,14 @@ $$
         \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
+:::{warning} TODO
+The last equation can be written using a wedge product:
+$$
+    (u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
+    = (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j
+$$
+Workout the details and incorporate.
+:::
 Thus we get:
 $$\label{wedge_rank2}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j =
@@ -140,6 +148,11 @@ fully antisymmetric tensor.
 :::{warning} TODO
 Write every antisymmetric tensor using differential forms, thus showing
 that they are equivalent.
+:::
+
+:::{warning} TODO
+Derive all properties of the wedge product using existing tensor machinery:
+antisymmetry, all the common relations from literature, etc.
 :::
 
 ## Examples
