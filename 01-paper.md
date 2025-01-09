@@ -336,10 +336,19 @@ vectors. The result is just a scalar.
 
 :::{warning} TODO
 Add examples of a 3D space, rank 0-, 1-, 2-, 3-forms that correspond to
-scalars, vectors/forms, rank 2 antisymmetric tensor (which internally contains a pseudo-vector I think, using $A_{ij}=\varepsilon_{ijk}B_k$), and rank 3 antisymmetric
-tensor, which I think must contain only one independent component, and it is
-related to the oriented volume, the component might be a pseudoscalar, since it changes sign
-when you flip axes, or something like that.
+scalars, vectors/forms, rank 2 antisymmetric tensor (which internally contains
+a pseudo-vector I think, using $A_{ij}=\varepsilon_{ijk}B_k$; here $\varepsilon_{ijk}$ is a tensor density, not a tensor, so also $B_k$ is not a vector, but a pseudovector), and rank 3
+antisymmetric tensor, which I think must contain only one independent
+component, and it is related to the oriented volume, the component might be a
+pseudoscalar, since it changes sign when you flip axes, or something like that.
+
+Riemannian volume form ($\sqrt{|g|} dx^1 \wedge ... \wedge dx^n$) is related to this, add examples.
+
+$\sqrt{-g}$ is a scalar density, add examples.
+
+Show this:
+$$\mathbf{a}\wedge \mathbf{b} = i \mathbf{a} \times \mathbf{b}\,,$$
+where $i = e_1 \wedge e_2 \wedge e_3$ is a unit pseudoscalar, $i^2=-1$.
 
 Give examples from physics for each. It should be possible to build this
 structure fully using antisymmetric tensors.
