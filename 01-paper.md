@@ -106,8 +106,6 @@ $$= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
         \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
-
-:::{note}
 The last equation can be written using a wedge product by
 first rewriting the tensor basis into its symmetric and antisymmetric parts:
 $$\tilde{e}^i \otimes \tilde{e}^j
@@ -123,8 +121,10 @@ $$u_i \tilde{e}^i \wedge v_j \tilde{e}^j
 =(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
     = {1\over2} (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j\,.
 $$
+
+:::{note}
 The ${1\over2}$ factor ends up there due to double counting: if we expand the
-original, in this example we'll assume dimension 2 for simplicity (i.e., $i=1,2$):
+original, in this note we'll assume dimension 2 for simplicity (i.e., $i=1,2$):
 $$A_{ij}\tilde{e}^i \otimes \tilde{e}^j
 =A_{12}\tilde{e}^1 \otimes \tilde{e}^2
 +A_{21}\tilde{e}^2 \otimes \tilde{e}^1
@@ -180,9 +180,10 @@ $$\label{wedge_rank2}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j =
     \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
     \tilde{e}^i \otimes \tilde{e}^j
-    = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
+    = A_{ij}\tilde{e}^i \otimes \tilde{e}^j
+    = {1\over2}A_{ij}\tilde{e}^i \wedge \tilde{e}^j\,.
 $$
-For a wedge product of three forms we get:
+For a wedge product of three 1-forms we get:
 $$\label{wedge_rank3}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k =
     \det\begin{pmatrix} u_i & u_j & u_k \\ v_i & v_j & v_k \\ w_i & w_j & w_k \end{pmatrix}
