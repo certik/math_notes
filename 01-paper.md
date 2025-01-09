@@ -107,25 +107,72 @@ $$= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
 
-:::{warning} TODO
-The last equation can be written using a wedge product:
-$$(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
-    = (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j
-$$
-Workout the details and incorporate. Roughly:
+:::{note}
+The last equation can be written using a wedge product by
+first rewriting the tensor basis into its symmetric and antisymmetric parts:
 $$\tilde{e}^i \otimes \tilde{e}^j
 ={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
 +{1\over2}(\tilde{e}^i \otimes \tilde{e}^j-\tilde{e}^j \otimes \tilde{e}^i)=
 $$
 $$={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
-+{1\over2} \tilde{e}^i \wedge \tilde{e}^j
++{1\over2} \tilde{e}^i \wedge \tilde{e}^j\,.
 $$
-The left term is symmetric, which cancels with the antisymmetric
+The left term is symmetric, which cancels with the antisymmetric tensor
 $u_i v_j-u_j v_i$, so we end up with:
-$$(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
-    = (u_i v_j-u_j v_i) {1\over2} \tilde{e}^i \wedge \tilde{e}^j
+$$u_i \tilde{e}^i \wedge v_j \tilde{e}^j
+=(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
+    = {1\over2} (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j\,.
 $$
-Don't understand the 1/2 yet.
+The ${1\over2}$ factor ends up there due to double counting: if we expand the
+original, in this example we'll assume dimension 2 for simplicity (i.e., $i=1,2$):
+$$A_{ij}\tilde{e}^i \otimes \tilde{e}^j
+=A_{12}\tilde{e}^1 \otimes \tilde{e}^2
++A_{21}\tilde{e}^2 \otimes \tilde{e}^1
++A_{11}\tilde{e}^1 \otimes \tilde{e}^1
++A_{22}\tilde{e}^2 \otimes \tilde{e}^2=
+$$
+$$
+=A_{12}\tilde{e}^1 \otimes \tilde{e}^2
+-A_{12}\tilde{e}^2 \otimes \tilde{e}^1
+=A_{12}(\tilde{e}^1 \otimes \tilde{e}^2 -\tilde{e}^2 \otimes \tilde{e}^1)
+=A_{12}(\tilde{e}^1 \wedge \tilde{e}^2)\,.
+$$
+Above we used the fact that $A_{11}=A_{22}=0$ and $A_{21}=-A_{12}$ due to
+antisymmetry.
+Now we expand the wedge formula in a similar manner:
+$${1\over2}A_{ij}\tilde{e}^i \wedge \tilde{e}^j
+={1\over2}\left(A_{12}\tilde{e}^1 \wedge \tilde{e}^2
++A_{21}\tilde{e}^2 \wedge \tilde{e}^1
++A_{11}\tilde{e}^1 \wedge \tilde{e}^1
++A_{22}\tilde{e}^2 \wedge \tilde{e}^2\right)=
+$$
+$$
+={1\over2}\left(A_{12}\tilde{e}^1 \wedge \tilde{e}^2
+-A_{12}\tilde{e}^2 \wedge \tilde{e}^1\right)
+={1\over2}A_{12}(\tilde{e}^1 \wedge \tilde{e}^2 -\tilde{e}^2 \wedge \tilde{e}^1)=
+$$
+$$
+={1\over2}A_{12}(\tilde{e}^1 \wedge \tilde{e}^2 +\tilde{e}^1 \wedge \tilde{e}^2)
+=A_{12}(\tilde{e}^1 \wedge \tilde{e}^2)\,.
+$$
+The final answer is exactly the same in both cases:
+$A_{12}(\tilde{e}^1 \wedge \tilde{e}^2)$.
+We can see that the terms $\tilde{e}^1 \wedge \tilde{e}^2$ and $-\tilde{e}^2
+\wedge \tilde{e}^1$ combined due to antisymmetry, canceling the ${1\over2}$.
+When we use the full tensor basis $\tilde{e}^i \otimes \tilde{e}^j$ then no
+terms combine, we will always have 4 terms in 2D for a general asymmetric
+tensor. The wedge product basis combines the (12) and (21) terms, double
+counting the element values. Another way to put it is:
+$$\tilde{e}^1 \wedge \tilde{e}^2
+={1\over2}(\tilde{e}^1 \wedge \tilde{e}^2 -\tilde{e}^2 \wedge \tilde{e}^1)
+=(\tilde{e}^1 \otimes \tilde{e}^2 -\tilde{e}^2 \otimes \tilde{e}^1)\,.
+$$
+Each wedge product contains two tensor products, thus requiring the
+${1\over2}$. Alternatively, for both wedge and tensor products the ${1\over2}$
+comes from:
+$$A_{ij} = {1\over2}(A_{ij}-A_{ji})
+$$
+For an antisymmetric tensor $A_{ij}$.
 :::
 
 Thus we get:
