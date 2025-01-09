@@ -11,8 +11,12 @@ exports:
 
 ## Exterior (Wedge) Product
 
-The exterior product is defined as:
-$$u_i {\tilde e^i}$$
+The exterior product of two forms $\mathbf{u}=u_i \tilde{e}^i$ and $\mathbf{v}=v_i \tilde{e}^i$ is defined as:
+$$
+u_i \tilde{e}^i \wedge v_j \tilde{e}^j \equiv
+    \det\begin{pmatrix} u^i & u^j \\ v^i & v^j \end{pmatrix}
+    \tilde{e}^i \otimes \tilde{e}^j
+$$
 
 ## References
 
