@@ -16,12 +16,13 @@ We express differential forms in terms of tensors and index notation. The
 closest treatment seems to be @winitzki2009linear, but we improve even upon
 that in terms of clarity, exact short definitions and explicit examples.
 
-It seems the usual old-fashioned index-based tensor formalism is all that is
-needed, and the differential forms provide an equivalent and optional treatment
-for antisymmetric tensors, which might be sometimes useful, but fundamentally
-does not bring any new feature or machinery, exactly the same computations can
-be done using index-based tensors also. We show how to equivalently rewrite any
-differential form formula or computation using tensors.
+It seems the usual old-fashioned index-based tensor formalism described in
+@TheoreticalPhysicsReference is all that is needed, and the differential forms
+provide an equivalent and optional treatment for antisymmetric tensors, which
+might be sometimes useful, but fundamentally does not bring any new feature or
+machinery, exactly the same computations can be done using index-based tensors
+also. We show how to equivalently rewrite any differential form formula or
+computation using tensors.
 
 ## Vectors, Forms and Tensors
 
@@ -236,10 +237,3 @@ $$
 
 The form has thus selected the first, second and fourth component row of the
 vectors. The result is just a scalar.
-
-
-## References
-
-Winitzki, Sergei. Linear algebra via exterior products. Sergei Winitzki, 2009.
-
-Theoretical Physics Reference: https://www.theoretical-physics.com/dev/math/differential-geometry.html
