@@ -200,14 +200,15 @@ u_i \tilde{e}^i \wedge v_j \tilde{e}^j =
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j
     = {1\over2}A_{ij}\tilde{e}^i \wedge \tilde{e}^j\,.
 $$
-For a wedge product of three 1-forms we get:
+For a wedge product of three 1-forms we get a rank 3 antisymmetric tensor:
 $$\label{wedge_rank3}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k =
     \det\begin{pmatrix} u_i & u_j & u_k \\ v_i & v_j & v_k \\ w_i & w_j & w_k \end{pmatrix}
     \tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
     =A_{ijk}\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.
 $$
-More products are defined in analogous manner. The exterior product can be
+Higher-order products are defined in analogous manner ($n$ wedge products is a rank
+$n$ fully antisymmetric tensor). The exterior product can be
 defined for vectors as well.
 The components of these tensors are
 equal to:
