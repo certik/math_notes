@@ -84,7 +84,8 @@ and  covariant components of the same tensor.
 ## Exterior (Wedge) Product
 
 The exterior (wedge) product of two forms $\mathbf{u}=u_i \tilde{e}^i$ and $\mathbf{v}=v_i \tilde{e}^i$ is defined as:
-$$\mathbf{u} \wedge \mathbf{v} \equiv
+$$\label{wedge_def}
+\mathbf{u} \wedge \mathbf{v} \equiv
 \mathbf{u} \otimes \mathbf{v} - \mathbf{v} \otimes \mathbf{u}\,.
 $$
 Expressing this in components in terms of the basis:
@@ -106,21 +107,37 @@ $$= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
         \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
+The tensor $A_{ij}$ is antisymmetric.
 The last equation can be written using a wedge product by
 first rewriting the tensor basis into its symmetric and antisymmetric parts:
-$$\tilde{e}^i \otimes \tilde{e}^j
-={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
-+{1\over2}(\tilde{e}^i \otimes \tilde{e}^j-\tilde{e}^j \otimes \tilde{e}^i)=
+$$A_{ij}\tilde{e}^i \otimes \tilde{e}^j
+=A_{ij}{1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
++A_{ij}{1\over2}(\tilde{e}^i \otimes \tilde{e}^j-\tilde{e}^j \otimes \tilde{e}^i)=
 $$
-$$={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
-+{1\over2} \tilde{e}^i \wedge \tilde{e}^j\,.
+$$=A_{ij}{1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
++A_{ij}{1\over2} \tilde{e}^i \wedge \tilde{e}^j
+={1\over2} A_{ij} \tilde{e}^i \wedge \tilde{e}^j\,.
 $$
-The left term is symmetric, which cancels with the antisymmetric tensor
-$u_i v_j-u_j v_i$, so we end up with:
+The left term contains an antisymmetric tensor
+$A_{ij}=u_i v_j-u_j v_i$ contracted with a symmetric tensor, the result is zero.
+We end up with:
 $$u_i \tilde{e}^i \wedge v_j \tilde{e}^j
 =(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
     = {1\over2} (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j\,.
 $$
+
+:::{note}
+The equation
+$$A_{ij}\tilde{e}^i \otimes \tilde{e}^j
+={1\over2} A_{ij} \tilde{e}^i \wedge \tilde{e}^j
+$$
+shows that any rank 2 antisymmetric tensor can be written in terms of a wedge
+product as a differential form. And the definition [](#wedge_def) shows that
+any differential 2-form can be written as an antisymmetric tensor. The same
+will be true for higher ranks too.
+
+Thus differential forms are simply antisymmetric tensors.
+:::
 
 :::{note}
 The ${1\over2}$ factor ends up there due to double counting: if we expand the
