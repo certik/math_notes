@@ -106,13 +106,28 @@ $$= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
         \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j\,.
 $$
+
 :::{warning} TODO
 The last equation can be written using a wedge product:
 $$(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
     = (u_i v_j-u_j v_i) \tilde{e}^i \wedge \tilde{e}^j
 $$
-Workout the details and incorporate.
+Workout the details and incorporate. Roughly:
+$$\tilde{e}^i \otimes \tilde{e}^j
+={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
++{1\over2}(\tilde{e}^i \otimes \tilde{e}^j-\tilde{e}^j \otimes \tilde{e}^i)=
+$$
+$$={1\over2}(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)
++{1\over2} \tilde{e}^i \wedge \tilde{e}^j
+$$
+The left term is symmetric, which cancels with the antisymmetric
+$u_i v_j-u_j v_i$, so we end up with:
+$$(u_i v_j-u_j v_i) \tilde{e}^i \otimes \tilde{e}^j
+    = (u_i v_j-u_j v_i) {1\over2} \tilde{e}^i \wedge \tilde{e}^j
+$$
+Don't understand the 1/2 yet.
 :::
+
 Thus we get:
 $$\label{wedge_rank2}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j =
