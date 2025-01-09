@@ -350,6 +350,9 @@ Show this:
 $$\mathbf{a}\wedge \mathbf{b} = i \mathbf{a} \times \mathbf{b}\,,$$
 where $i = e_1 \wedge e_2 \wedge e_3$ is a unit pseudoscalar, $i^2=-1$.
 
+This is also related to the Hodge star operator that provides isomorphism
+between axial vectors (pseudovectors) and bivectors (2-forms).
+
 Give examples from physics for each. It should be possible to build this
 structure fully using antisymmetric tensors.
 
