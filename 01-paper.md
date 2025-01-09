@@ -230,11 +230,6 @@ Using properties of a determinant, we can see that the wedge product is just a
 fully antisymmetric tensor.
 
 :::{warning} TODO
-Write every antisymmetric tensor using differential forms, thus showing
-that they are equivalent.
-:::
-
-:::{warning} TODO
 Derive all properties of the wedge product using existing tensor machinery:
 antisymmetry, all the common relations from literature, etc.
 :::
