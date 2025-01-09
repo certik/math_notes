@@ -6,8 +6,14 @@ exports:
   - format: docx
   - format: pdf
   - format: tex
+bibliography:
+  - references.bib
 ---
 # Differential Forms
+
+We express differential forms in terms of tensors and index notation. The
+closest treatment seems to be @winitzki2009linear, but we improve even upon
+that in terms of clarity, exact short definitions and explicit examples.
 
 ## Vectors, Forms and Tensors
 
