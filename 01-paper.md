@@ -207,6 +207,13 @@ u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k =
     \tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
     =A_{ijk}\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.
 $$
+:::{warning} TODO
+Likely this is true:
+$$A_{ijk}\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
+={1\over 3!}A_{ijk}\tilde{e}^i \wedge \tilde{e}^j \wedge \tilde{e}^k\,.
+$$
+But we need to prove it.
+:::
 Higher-order products are defined in analogous manner ($n$ wedge products is a rank
 $n$ fully antisymmetric tensor). The exterior product can be
 defined for vectors as well.
@@ -296,7 +303,7 @@ $$= \det\begin{pmatrix}
 \delta_{4i} & \delta_{4j} & \delta_{4k} \\
 \end{pmatrix}
 \tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
-\cdot (u^l v^m w^n \vec{e}_l \vec{e}_m \vec{e}_n)=
+\cdot (u^l v^m w^n \vec{e}_l \otimes \vec{e}_m \otimes \vec{e}_n)=
 $$
 $$= \det\begin{pmatrix}
 \delta_{1i} & \delta_{1j} & \delta_{1k} \\
