@@ -347,7 +347,128 @@ The exterior derivative `d` is defined using the following rules / definitions:
   $d(\alpha \wedge \beta) = d\alpha\wedge\beta + (-1)^k \alpha\wedge d\beta$
 * k-form $\alpha$: $d(d\alpha) = 0$
 
+### Differentiating 0-forms
 
+Input:
+$$
+f(x, y)\,.
+$$
+Derivative:
+$$
+df = \partial_x f\, dx + \partial_y f\, dy\,.
+$$
+
+In general, we get:
+$$
+df = \partial_i f \, dx^i\,.
+$$
+
+### Differentiating 1-forms
+
+Input:
+$$
+\omega = f_1(x^1,x^2) dx^1 + f_2(x^1,y^2) dx^2\,.
+$$
+Derivative:
+$$
+d\omega = d f1 \wedge dx^1 + df_2 \wedge dx^2
+= \partial_i f_1 \, dx^i \wedge dx^1 + \partial_i f_2 \, dx^i \wedge dx^2=
+$$
+$$
+= \partial_2 f_1 \, dx^2 \wedge dx^1 + \partial_1 f_2 \, dx^1 \wedge dx^2
+= (\partial_1 f_2 - \partial_2 f_1) dx^1 \wedge dx^2\,.
+$$
+
+In general, the derivative of a 1-form $\tilde f=f_i dx^i$ is:
+$$
+d\tilde f
+=d(f_i dx^i)
+=df_i \wedge dx^i
+=(\partial_j f_i dx^j) \wedge dx^i
+={1\over2}(\partial_j f_i - \partial_i f_j) dx^j \wedge dx^i=
+$$
+$$
+=(\partial_j f_i - \partial_i f_j) dx^j \otimes dx^i\,.
+$$
+So we get:
+$$
+d\tilde f = A_{ij} dx^i \otimes dx^j\,,
+$$
+where $A_{ij}=\partial_i f_j - \partial_j f_i$.
+
+We take a 1-form $f_j$ then we differentiate $\partial_i f_j$, this is a rank 2
+tensor, and we project it into the antisymmetric subspace $dx^i \otimes dx^j -
+dx^j \otimes dx^i$, which cancels the symmetric part of the derivative and only
+the antisymmetric part survives: $\partial_i f_j - \partial_j f_i$. So we
+define the derivative to be $A_{ij}=\partial_i f_j - \partial_j f_i$. We can
+define the derivative on antisymmetric tensors (exterior derivative) to be a
+regular derivative projected into the antisymmetric subset.
+
+### Differentiating 2-forms in 3D
+
+Input:
+$$
+\omega = F^1 \,dx^2 \wedge dx^3 + F^2 \,dx^3 \wedge dx^1 + F^3 \,dx^1 \wedge dx^2\,.
+$$
+Output:
+$$
+d\omega
+= dF^1 \wedge dx^2 \wedge dx^3 + dF^2 \wedge dx^3 \wedge dx^1 + dF^3 \wedge dx^1 \wedge dx^2=
+$$
+$$
+= \partial_1 F^1 dx^1 \wedge dx^2 \wedge dx^3 + \partial_2 F^2 dx^2 \wedge dx^3 \wedge dx^1 + \partial_3 F^3 dx^3 \wedge dx^1 \wedge dx^2=
+$$
+$$
+= (\partial_1 F^1 + \partial_2 F^2 + \partial_3 F^3) \,dx^1 \wedge dx^2 \wedge dx^3\,.
+$$
+In general for antisymmetric $A_{ij}$:
+$$
+\omega = A_{ij}\, dx^i \otimes dx^j = {1\over2} A_{ij}\, dx^i \wedge dx^j\,.
+$$
+The derivative is decomposed into its symmetric and antisymmetric parts, and
+only the antisymmetric part survives due to the antisymmetric basis, so
+roughly:
+$$
+d\omega = {1\over 6} \varepsilon^{lmn}\partial_l A_{mn} dx^l \wedge dx^i \
+\wedge dx^j\,.
+$$
+:::{warning} TODO
+The index `l` is there three times, fix it.
+:::
+Now we can rewrite:
+$$
+\varepsilon^{lmn}\partial_l A_{mn} 
+=\varepsilon^{lmn}\partial_l \varepsilon_{mnk} F^k
+=2\delta^l{}_k \partial_l F^k
+=2\partial_k F^k\,.
+$$
+So roughly we get:
+$$
+d\omega = \partial_k F^k \, dx^1 \wedge dx^2 \wedge dx^3\,.
+$$
+The constant factor might be off.
+
+The above is the correct result for differentiating any $k$-form in $n$-D space
+where $k=n-1$.
+
+:::{warning} TODO
+The procedure is that we differentiate, and because the basis is antisymmetric,
+we take the antisymmetric part of the derivative, as the symmetric part
+cancels. We just need to do this explicitly.
+
+Roughly, we need operators that turn
+$$
+A_{ij} \to {1\over2}(A_{ij}-A_{ji})
+$$
+and
+$$
+A_{ijk} \to {1\over6}(A_{ijk}-A_{jik}+\dots-+-)
+$$
+We know that $\epsilon^{ij} A_{ij} = A_{12} - A_{21}$, we just need a similar
+expression for $A_{ij}-A_{ji}$.
+:::
+
+## TODO
 
 :::{warning} TODO
 Add examples of a 3D space, rank 0-, 1-, 2-, 3-forms that correspond to
