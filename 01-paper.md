@@ -334,6 +334,21 @@ $$
 The form has thus selected the first, second and fourth component row of the
 vectors. The result is just a scalar.
 
+
+## Exterior Derivative
+
+The exterior derivative `d` is defined using the following rules / definitions:
+
+* 0-form $f$: $df \equiv {\partial f\over\partial x^i} dx^i
+=\partial_i f \, dx^i$
+* k-forms $\alpha$ and $\beta$, numbers $a$, $b$:
+  $d(a\alpha+b\beta) = a d\alpha + b d\beta$
+* k-form $\alpha$, l-form $\beta$:
+  $d(\alpha \wedge \beta) = d\alpha\wedge\beta + (-1)^k \alpha\wedge d\beta$
+* k-form $\alpha$: $d(d\alpha) = 0$
+
+
+
 :::{warning} TODO
 Add examples of a 3D space, rank 0-, 1-, 2-, 3-forms that correspond to
 scalars, vectors/forms, rank 2 antisymmetric tensor (which internally contains
