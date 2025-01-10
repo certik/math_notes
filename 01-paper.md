@@ -510,6 +510,17 @@ derivative is not fully antisymmetric.
 The above is the correct result for differentiating any $k$-form in $n$-D space
 where $k=n-1$.
 
+Let's now do the same computation using regular tensors:
+$$
+\partial_{[k} A_{ij]}
+= {1\over 6}\varepsilon_{kij}\varepsilon^{lmn} \partial_{l} A_{mn}
+= {1\over 6}\varepsilon_{kij}\varepsilon^{lmn} \partial_{l} \varepsilon_{mnq} F^q =
+$$
+$$
+= {1\over 6}\varepsilon_{kij} 2 \delta^l{}_q \partial_{l} F^q
+= {1\over 6}\varepsilon_{ijk} \partial_q F^q\,.
+$$
+
 ## TODO
 
 :::{warning} TODO
