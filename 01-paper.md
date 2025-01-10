@@ -81,6 +81,60 @@ represent the tensor itself, we include the basis functions too.
 The upper and lower indices are treated equally, they are just contravariant
 and  covariant components of the same tensor.
 
+## Antisymmetric Tensors
+
+An antisymmetric part of a tensor can be written as follows for rank 2:
+$$
+A_{[ij]} = {1\over2!}\varepsilon_{ij}\varepsilon^{kl} A_{kl}
+= {1\over2}\det\begin{pmatrix} \delta_i{}^k & \delta_i{}^l \\ \delta_j{}^k & \delta_j{}^l \end{pmatrix} A_{kl}
+= {1\over2}(\delta_i{}^k\delta_j{}^l - \delta_i{}^l \delta_j{}^k) A_{kl}=
+$$
+$$
+= {1\over2}(A_{ij}-A_{ji})
+$$
+Rank 3:
+$$
+A_{[ijk]} = {1\over3!}\varepsilon_{ijk}\varepsilon^{lmn} A_{lmn}
+= {1\over3!}\det\begin{pmatrix}
+\delta_i{}^l & \delta_i{}^m & \delta_i{}^n \\
+\delta_j{}^l & \delta_j{}^m & \delta_j{}^n \\
+\delta_k{}^l & \delta_k{}^m & \delta_k{}^n \end{pmatrix} A_{lmn}=
+$$
+$$
+= {1\over3!}(\delta_i{}^l\delta_j{}^m\delta_k{}^n - \delta_i{}^m\delta_j{}^l\delta_k{}^n + \cdots) A_{lmn}=
+$$
+$$
+= {1\over6}(A_{ijk}-A_{jik}+\cdots - \cdots + \cdots)
+$$
+Rank 4:
+$$
+A_{[ijkl]} = {1\over4!}\varepsilon_{ijkl}\varepsilon^{mnop} A_{mnop}
+= {1\over4!}\det\begin{pmatrix}
+\delta_i{}^m & \delta_i{}^n & \delta_i{}^o & \delta_i{}^p \\
+\delta_j{}^m & \delta_j{}^n & \delta_j{}^o & \delta_j{}^p \\
+\delta_k{}^m & \delta_k{}^n & \delta_k{}^o & \delta_k{}^p \\
+\delta_l{}^m & \delta_l{}^n & \delta_l{}^o & \delta_l{}^p \end{pmatrix} A_{mnop}=
+$$
+$$
+= {1\over4!}(\delta_i{}^m\delta_j{}^n\delta_k{}^o\delta_l{}^p - \delta_i{}^n\delta_j{}^m\delta_k{}^o\delta_l{}^p + \cdots) A_{mnop}=
+$$
+$$
+= {1\over24}(A_{ijkl}-A_{jikl}+\cdots)
+$$
+The fraction at the beginning tells us how many terms there are in the final
+answer: 2, 6, 24 for ranks 2, 3, 4.
+
+:::{note}
+The above expressions work for any dimension, except the Levi-Civita expression
+that only works for rank equal to dimension (e.g., rank 2, dimension 2). For
+dimension higher than the rank, one can skip the Levi-Civita expression and go
+straight to the determinant, which is correct in any dimension.
+
+There is a dimension-dependent expression using Levi-Civita symbols that is
+equal to the determinant. For example for rank 3 and dimension 4, the
+expression is $\varepsilon_{ijks}\varepsilon^{slmn}$.
+:::
+
 ## Exterior (Wedge) Product
 
 The exterior (wedge) product of two forms $\mathbf{u}=u_i \tilde{e}^i$ and $\mathbf{v}=v_i \tilde{e}^i$ is defined as:
