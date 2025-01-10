@@ -458,6 +458,18 @@ define the derivative to be $A_{ij}=\partial_i f_j - \partial_j f_i$. We can
 define the derivative on antisymmetric tensors (exterior derivative) to be a
 regular derivative projected into the antisymmetric subset.
 
+Let's now do the same computation using regular tensors:
+$$
+A_{ij} = \partial_{[i} f_{j]}
+= {1\over 2}\varepsilon_{ij}\varepsilon^{kl} \partial_{k} f_{l}
+= {1\over 2}(\delta_i{}^k\delta_j{}^l-\delta_i{}^l\delta_j{}^k) \partial_{k} f_{l}
+= {1\over 2}(\partial_i f_j - \partial_j f_i)\,.
+$$
+
+The exterior derivative is simply a regular (not antisymmetric) derivative
+$\partial_{i} f_{j}$ that is made antisymmetric:
+$\partial_{[i} f_{j]}$. The same applies to higher ranks.
+
 ### Differentiating 2-forms in 3D
 
 Input:
@@ -520,6 +532,9 @@ $$
 = {1\over 6}\varepsilon_{kij} 2 \delta^l{}_q \partial_{l} F^q
 = {1\over 6}\varepsilon_{ijk} \partial_q F^q\,.
 $$
+The exterior derivative is simply a regular (not antisymmetric) derivative
+$\partial_{k} A_{ij}$ that is made antisymmetric:
+$\partial_{[k} A_{ij]}$.
 
 ## TODO
 
