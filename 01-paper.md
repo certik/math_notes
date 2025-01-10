@@ -90,7 +90,7 @@ A_{[ij]} = {1\over2!}\varepsilon_{ij}\varepsilon^{kl} A_{kl}
 = {1\over2}(\delta_i{}^k\delta_j{}^l - \delta_i{}^l \delta_j{}^k) A_{kl}=
 $$
 $$
-= {1\over2}(A_{ij}-A_{ji})
+= {1\over2}(A_{ij}-A_{ji})\,.
 $$
 Rank 3:
 $$
@@ -104,7 +104,7 @@ $$
 = {1\over3!}(\delta_i{}^l\delta_j{}^m\delta_k{}^n - \delta_i{}^m\delta_j{}^l\delta_k{}^n + \cdots) A_{lmn}=
 $$
 $$
-= {1\over6}(A_{ijk}-A_{jik}+\cdots - \cdots + \cdots)
+= {1\over6}(A_{ijk}-A_{jik}+\cdots - \cdots + \cdots)\,.
 $$
 Rank 4:
 $$
@@ -119,7 +119,7 @@ $$
 = {1\over4!}(\delta_i{}^m\delta_j{}^n\delta_k{}^o\delta_l{}^p - \delta_i{}^n\delta_j{}^m\delta_k{}^o\delta_l{}^p + \cdots) A_{mnop}=
 $$
 $$
-= {1\over24}(A_{ijkl}-A_{jikl}+\cdots)
+= {1\over24}(A_{ijkl}-A_{jikl}+\cdots)\,.
 $$
 The fraction at the beginning tells us how many terms there are in the final
 answer: 2, 6, 24 for ranks 2, 3, 4.
@@ -391,7 +391,8 @@ vectors. The result is just a scalar.
 
 ## Exterior Derivative
 
-The exterior derivative `d` is defined using the following rules / definitions:
+The exterior derivative $d$ is defined using the following rules / definitions
+for differential forms:
 
 * 0-form $f$: $df \equiv {\partial f\over\partial x^i} dx^i
 =\partial_i f \, dx^i$
@@ -400,6 +401,20 @@ The exterior derivative `d` is defined using the following rules / definitions:
 * k-form $\alpha$, l-form $\beta$:
   $d(\alpha \wedge \beta) = d\alpha\wedge\beta + (-1)^k \alpha\wedge d\beta$
 * k-form $\alpha$: $d(d\alpha) = 0$
+
+It turns out in terms of tensors, the exterior derivative is simply a regular
+derivative that is made antisymmetric:
+
+* 0-form: $\partial_i f$
+* 1-form: $\partial_{[i} f_{j]}$
+* 2-form: $\partial_{[i} A_{jk]}$
+* 3-form: $\partial_{[i} A_{jkl]} = 0$ (in 3 dimensions, since rank 4 fully
+  antisymmetric tensor in 3D is identically 0)
+
+One can use the formulas from the section "Antisymmetric Tensors" above to
+evaluate these antisymmetric derivatives. We show examples of this below. We
+first compute the exterior derivative using differential forms and the above
+rules, and then we do exactly the same operations using tensors.
 
 ### Differentiating 0-forms
 
