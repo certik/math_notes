@@ -398,7 +398,7 @@ where $A_{ij}=\partial_i f_j - \partial_j f_i$.
 
 We take a 1-form $f_j$ then we differentiate $\partial_i f_j$, this is a rank 2
 tensor, and we project it into the antisymmetric subspace $dx^i \otimes dx^j -
-dx^j \otimes dx^i$, which cancels the symmetric part of the derivative and only
+dx^j \otimes dx^i={1\over2}dx^i\wedge dx^j$, which cancels the symmetric part of the derivative and only
 the antisymmetric part survives: $\partial_i f_j - \partial_j f_i$. So we
 define the derivative to be $A_{ij}=\partial_i f_j - \partial_j f_i$. We can
 define the derivative on antisymmetric tensors (exterior derivative) to be a
