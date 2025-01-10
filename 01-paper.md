@@ -479,48 +479,36 @@ In general for antisymmetric $A_{ij}$:
 $$
 \omega = A_{ij}\, dx^i \otimes dx^j = {1\over2} A_{ij}\, dx^i \wedge dx^j\,.
 $$
-The derivative is decomposed into its symmetric and antisymmetric parts, and
-only the antisymmetric part survives due to the antisymmetric basis, so
-roughly:
+We differentiate the tensor:
 $$
-d\omega = {1\over 6} \varepsilon^{lmn}\partial_l A_{mn} dx^l \wedge dx^i \
-\wedge dx^j\,.
+d\omega = {1\over2} d A_{ij} \, dx^i \wedge dx^j
+= {1\over2} \partial_k A_{ij} \, dx^k \wedge dx^i \wedge dx^j=
 $$
-:::{warning} TODO
-The index `l` is there three times, fix it.
-:::
-Now we can rewrite:
 $$
-\varepsilon^{lmn}\partial_l A_{mn} 
-=\varepsilon^{lmn}\partial_l \varepsilon_{mnk} F^k
-=2\delta^l{}_k \partial_l F^k
-=2\partial_k F^k\,.
+= {1\over2} \partial_{[k} A_{ij]} \, dx^i \wedge dx^j \wedge dx^k=
 $$
-So roughly we get:
 $$
-d\omega = \partial_k F^k \, dx^1 \wedge dx^2 \wedge dx^3\,.
+= {1\over2} {1\over 6}\varepsilon_{kij}\varepsilon^{lmn} \partial_{l} A_{mn} \, dx^i \wedge dx^j \wedge dx^k=
 $$
-The constant factor might be off.
+$$
+= {1\over2} {1\over 6}\varepsilon_{kij}\varepsilon^{lmn} \partial_{l} \varepsilon_{mnq} F^q \, dx^i \wedge dx^j \wedge dx^k=
+$$
+$$
+= {1\over2} {1\over 6}\varepsilon_{kij} 2 \delta^l{}_q \partial_{l} F^q \, dx^i \wedge dx^j \wedge dx^k=
+$$
+$$
+= {1\over 6}\varepsilon_{ijk} \partial_q F^q \, dx^i \wedge dx^j \wedge dx^k=
+$$
+$$
+= \partial_q F^q \, dx^1 \wedge dx^2 \wedge dx^3\,.
+$$
+We used the fact that the basis is antisymmetric, so only the antisymmetric
+part of the derivative survives. The basis becomes antisymmetric due to the
+incorporation of the $dx^k$ base via the wedge product, otherwise the
+derivative is not fully antisymmetric.
 
 The above is the correct result for differentiating any $k$-form in $n$-D space
 where $k=n-1$.
-
-:::{warning} TODO
-The procedure is that we differentiate, and because the basis is antisymmetric,
-we take the antisymmetric part of the derivative, as the symmetric part
-cancels. We just need to do this explicitly.
-
-Roughly, we need operators that turn
-$$
-A_{ij} \to {1\over2}(A_{ij}-A_{ji})
-$$
-and
-$$
-A_{ijk} \to {1\over6}(A_{ijk}-A_{jik}+\dots-+-)
-$$
-We know that $\epsilon^{ij} A_{ij} = A_{12} - A_{21}$, we just need a similar
-expression for $A_{ij}-A_{ji}$.
-:::
 
 ## TODO
 
