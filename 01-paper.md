@@ -551,6 +551,17 @@ The exterior derivative is simply a regular (not antisymmetric) derivative
 $\partial_{k} A_{ij}$ that is made antisymmetric:
 $\partial_{[k} A_{ij]}$.
 
+:::{note}
+The quantity $F^q$ above is a pseudovector, it is not a tensor, because it is
+defined by $A_{ij}=\varepsilon_{ijq}F^q$ where $A_{ij}$ is an antisymmetric
+tensor and $\varepsilon_{ijq}$ is a pseudotensor. The divergence operation is a
+tensor operation, but a divergence of a pseudovector is a pseudoscalar. The
+exterior derivative $\partial_{[k} A_{ij]}$ on the LHS is a (fully
+antisymmetric) tensor. So we need the Levi-Civita pseudotensor
+$\varepsilon_{ijk}$ on the RHS to make everything work: together with the
+pseudoscalar, the RHS is a tensor, but the individual terms are not.
+:::
+
 ## TODO
 
 :::{warning} TODO
