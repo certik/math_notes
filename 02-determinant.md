@@ -32,20 +32,36 @@ $$
 \label{multiplicative1}
 f(AB) = f(A)f(B)\,.
 $$
-We will use [](#multiplicative1) repeatedly in the following calculation. For
-now we will make an assumption that the matrix $A$ can be written as $A=P D
-P^{-1}$ where $D$ is diagonal. Later we will try to generalize it for any
-matrix $A$ using a Jordan form. We will also need matrices $P_i$ that are unit
-matrices with the 1st and $i$-th rows permuted. Now we can compute:
+We will use [](#multiplicative1) repeatedly in the following calculation. First
+we decompose the matrix $A=HU$ using a polar decomposition, where $H$ is
+Hermitian and $U$ is unitary. Both $H$ and $U$ are individually diagonalizable
+(but not mutually diagonalizable, since $A$ is not in general diagonalizable).
+For any matrix $C$ that is diagonalizable, we can write
+$C=P D P^{-1}$ where $D$ is diagonal and $P$ is invertible. Then:
 $$
-f(A)
+f(C)
 = f(P D P^{-1})
 = f(P) f(D) f(P^{-1})
 = f(P) f(P^{-1}) f(D)=
 $$
 $$
 = f(P P^{-1} D)
-= f(D)=
+= f(D)\,.
+$$
+That means that if a matrix is diagonalizable, then $f$ applied to that matrix
+is equal to $f$ applied to the diagonal matrix.
+
+Below we will use matrices $P_i$ that are unit
+matrices with the 1st and $i$-th rows permuted. Now we can compute, using the
+fact that $H$ and $U$ can be decomposed into diagonal matrices $D_H$ and $D_U$,
+and their product is also a diagonal matrix $D=D_H D_U$:
+$$
+f(A)
+= f(HU)
+= f(H)f(U)
+= f(D_H)f(D_U)
+= f(D_H D_U)
+= f(D) =
 $$
 $$
 = f(\mathrm{diag}(d_1,1,1,\dots))
@@ -74,7 +90,11 @@ $$
 = f(\mathrm{diag}(\det D,1,1,\dots))=
 $$
 $$
-= g(\det D)= g(\det P D P^{-1}) = g(\det A)\,,
+= g(\det D)= g(\det D_H D_U)
+= g(\det D_H \det D_U)= g(\det H \det U) =
+$$
+$$
+=g(\det HU) = g(\det A)\,,
 $$
 where we defined a function $g(x)$ using
 $$
@@ -149,40 +169,8 @@ that we can define a determinant using [](#multiplicative1) and [](#homogeneity)
 The transition from $\lambda^n$ to $x$ in [](#glambda) might require better
 treatment, there might be some hidden assumptions about continuity on $g(x)$.
 Maybe there is a way to derive $g(x) = x$ more directly.
-:::
-
-:::{warning} TODO
-We assumed that the matrix $A$ is diagonalizable. Remove this assumption by
-using Jordan form.
-
-Roughly it will work as follows: if $D$ is a Jordan form, then we get:
-$$
-f(A)
-= f(P D P^{-1})
-= f(P) f(D) f(P^{-1})
-= f(P) f(P^{-1}) f(D)=
-$$
-$$
-= f(P P^{-1} D)
-= f(D)=
-$$
-$$
-= f(\mathrm{diag}(d_1 d_2 \dots d_n,1,1,\dots))=
-$$
-$$
-= f(\mathrm{diag}(\det D,1,1,\dots))=
-$$
-$$
-= g(\det D)= g(\det P D P^{-1}) = g(\det A)\,,
-$$
-We can still use matrices $P_i$ to bring all the values $d_i$ to the (1,1)
-element, however the matrix $\mathrm{diag}(d_1 d_2 \dots d_n,1,1,\dots)$ is not
-diagonal anymore, it will have some off-diagonal entries. The (1,1) element is
-still equal to $\det D$, because a determinant of a triangular matrix is just
-the product of elements on the diagonal. The matrix
-$\mathrm{diag}(\det D,1,1,\dots)$ will have some off-diagonal entries. However,
-the determinant of such a matrix is equal to a diagonal matrix, so we can
-remove the off-diagonal entries (actually this is not clear if we can do it).
-One might be able to remove the off-diagonal entries by Gaussian elimination
-with similarity matrices. The rest of the calculation is the same.
+We can maybe use $g(\lambda^n) = g(\lambda)^n = \lambda^n$.
+For $n=2$, we get: $g(\lambda)^2 = \lambda^2$, which also has a solution
+$g(x)=|x|$. But if we allow $\lambda$ to be complex, then likely the only
+solution is $g(x)=x$ without any additional assumptions.
 :::
