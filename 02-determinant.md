@@ -154,4 +154,35 @@ Maybe there is a way to derive $g(x) = x$ more directly.
 :::{warning} TODO
 We assumed that the matrix $A$ is diagonalizable. Remove this assumption by
 using Jordan form.
+
+Roughly it will work as follows: if $D$ is a Jordan form, then we get:
+$$
+f(A)
+= f(P D P^{-1})
+= f(P) f(D) f(P^{-1})
+= f(P) f(P^{-1}) f(D)=
+$$
+$$
+= f(P P^{-1} D)
+= f(D)=
+$$
+$$
+= f(\mathrm{diag}(d_1 d_2 \dots d_n,1,1,\dots))=
+$$
+$$
+= f(\mathrm{diag}(\det D,1,1,\dots))=
+$$
+$$
+= g(\det D)= g(\det P D P^{-1}) = g(\det A)\,,
+$$
+We can still use matrices $P_i$ to bring all the values $d_i$ to the (1,1)
+element, however the matrix $\mathrm{diag}(d_1 d_2 \dots d_n,1,1,\dots)$ is not
+diagonal anymore, it will have some off-diagonal entries. The (1,1) element is
+still equal to $\det D$, because a determinant of a triangular matrix is just
+the product of elements on the diagonal. The matrix
+$\mathrm{diag}(\det D,1,1,\dots)$ will have some off-diagonal entries. However,
+the determinant of such a matrix is equal to a diagonal matrix, so we can
+remove the off-diagonal entries (actually this is not clear if we can do it).
+One might be able to remove the off-diagonal entries by Gaussian elimination
+with similarity matrices. The rest of the calculation is the same.
 :::
