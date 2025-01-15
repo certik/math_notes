@@ -128,6 +128,7 @@ f(\lambda A) = g(\det \lambda A)
 $$
 Comparing to [](#homogeneity) we get:
 $$
+\label{glambda}
 g(\lambda^n)=\lambda^n\,.
 $$
 Since $\lambda$ can be any real (or complex) number, we get:
@@ -143,3 +144,14 @@ $$
 Summary: assuming equations [](#multiplicative1) and [](#homogeneity) we
 obtained [](#multiplicative1_result2) as the only nonzero solution. That means
 that we can define a determinant using [](#multiplicative1) and [](#homogeneity) and no other assumptions.
+
+:::{warning} TODO
+The transition from $\lambda^n$ to $x$ in [](#glambda) might require better
+treatment, there might be some hidden assumptions about continuity on $g(x)$.
+Maybe there is a way to derive $g(x) = x$ more directly.
+:::
+
+:::{warning} TODO
+We assumed that the matrix $A$ is diagonalizable. Remove this assumption by
+using Jordan form.
+:::
