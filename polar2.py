@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.linalg import polar
-#A = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+A = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 #A = np.array([
 #[0, 1, 0, 0],
 #[11, 6, -4, -4],
@@ -10,9 +10,9 @@ from scipy.linalg import polar
 #[0, 4, 3],
 #[0, 20, 16],
 #[0, -25, -20]])
-A = np.array([
-[1, 1],
-[0, 1]])
+#A = np.array([
+#[1, 1],
+#[0, 1]])
 
 U, H = polar(A, side="left")
 print("A")
@@ -42,6 +42,15 @@ print(DU)
 print(PU)
 print("PU DU inv(PU)")
 print(np.dot(PU, np.dot(DU, np.linalg.inv(PU))))
+
+DA, PA = np.linalg.eig(A)
+DA = np.diag(DA)
+print("DA, PA")
+print(DA)
+print(PA)
+print("PA DA inv(PA)")
+print(np.dot(PA, np.dot(DA, np.linalg.inv(PA))))
+
 print("D = DH DU")
 D = np.dot(DH, DU)
 print(D)
