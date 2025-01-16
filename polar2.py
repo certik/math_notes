@@ -1,6 +1,11 @@
 import numpy as np
 from scipy.linalg import polar
-A = np.array([[1, -1], [2, 4]])
+#A = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+A = np.array([
+[0, 1, 0, 0],
+[11, 6, -4, -4],
+[22, 15, -8, -9],
+[-3, -2, 1, 2]])
 U, H = polar(A, side="left")
 print("A")
 print(A)
