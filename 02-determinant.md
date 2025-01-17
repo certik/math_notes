@@ -266,15 +266,23 @@ The Cauchy's multiplicative functional equation is:
 $$
 f(xy) = f(x)f(y)\,.
 $$
-There are only 4 cases that can happen:
+There are only 3 cases that can happen:
 * $f(x) = 0\,.$
 * $f(x) = 1\,.$
-* $f(x) = \begin{cases}
+* $f(0) = 0$, $f(1) = 1$, $f(x) > 0$ for $x > 0$ and this function is either
+  odd or even (to define it for $x<0$).
+
+The last case includes the following two solutions:
+
+* Even: $f(x) = \begin{cases}
         0 & \text{if } x = 0\,,\\
         1 & \text{if } x \ne 0\,.
     \end{cases} $
-* $f(0) = 0$, $f(1) = 1$, $f(x) > 0$ for $x > 0$ and this function is either
-  odd or even.
+* Odd: $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        1 & \text{if } x > 0\,,\\
+        -1 & \text{if } x < 0\,.
+    \end{cases} $
 
 In the last case we can then use the substitution $g(x)=\log f(e^x)$ to convert
 the multiplicative equation into an additive equation from the previous
@@ -305,12 +313,17 @@ The solutions then are $f(x)=h(|x|)$ and $f(x)=\mathrm{sign}(x)h(|x|)$ by
 extending it as either even or odd function for negative $x$.
 
 For measurable $g(x)$ the solution to the additive equation is $g(x) = cx$, so
-we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the four solutions are
+we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the five solutions are
 * $f(x)=0\,.$
-* $f(x) = \begin{cases}
+* $f(x) = |\mathrm{sign}(x)| = \begin{cases}
         0 & \text{if } x = 0\,,\\
         1 & \text{if } x \ne 0\,.
     \end{cases}$
+* $f(x) = \mathrm{sign}(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        1 & \text{if } x > 0\,,\\
+        -1 & \text{if } x < 0\,.
+    \end{cases} $
 * $f(x)=|x|^c\,.$
 * $f(x)=\mathrm{sign}(x)|x|^c\,.$
 
