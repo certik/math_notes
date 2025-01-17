@@ -129,22 +129,27 @@ for numbers $x$, $y$.
 
 The equation [](#multiplicative2) can be solved in several different ways.
 
-Approach 1: With some extra smoothness assumptions one can show that the only
-solutions are $g(x)=0$, $g(x)=|x|^s$ and $g(x)=\mathrm{sign}(x)|x|^s$. Consequently the only
-nonzero solution to [](#multiplicative1) is a power of a determinant.
+Approach 1: Assuming that $f(A)$ (and thus $g(x)$) is measurable, we show below
+that the only solutions are $g(x)=0$, $g(x)=|\mathrm{sign}(x)|$, $g(x)=|x|^s$
+and $g(x)=\mathrm{sign}(x)|x|^s$. Consequently the only nonzero solution to
+[](#multiplicative1) is a power of a determinant (optionally multiplied with
+the signum function). If $f(A)$ is not measurable then we also get highly
+pathological solutions (see the section below). The above is thus the most
+general solution.
 
-Approach 2: Instead of assuming some smoothness assumptions, we can instead
+Approach 2: Instead of assuming measurability, we can instead
 assume homogeneity:
 $$
 \label{homogeneity}
-f(\lambda A) = \lambda^n f(A)
+f(\lambda A) = \lambda^n f(A)\,,
 $$
+where $n$ is the (integer) dimension of the matrix $A$.
 Using [](#multiplicative1_result) and [](#multiplicative2) we get:
 $$
 f(\lambda A) = g(\det \lambda A)
 =g(\lambda^n \det A)
 =g(\lambda^n) g(\det A)
-=g(\lambda^n) f(A)
+=g(\lambda^n) f(A)\,.
 $$
 Comparing to [](#homogeneity) we get:
 $$
@@ -161,9 +166,14 @@ $$
 f(A) = \det A\,.
 $$
 
-Summary: assuming equations [](#multiplicative1) and [](#homogeneity) we
-obtained [](#multiplicative1_result2) as the only nonzero solution. That means
-that we can define a determinant using [](#multiplicative1) and [](#homogeneity) and no other assumptions.
+Summary:
+* Assuming equations [](#multiplicative1) and [](#homogeneity) we obtained
+  [](#multiplicative1_result2) as the only nonzero solution. That means that we
+  can define a determinant using [](#multiplicative1) and [](#homogeneity) and
+  no other assumptions.
+* Alternatively, if we only assume [](#multiplicative1) and that $f(A)$ is
+  measurable, then the only nonzero solution is a power of a determinant
+  (optionally multiplied with the signum function).
 
 :::{warning} TODO
 The transition from $\lambda^n$ to $x$ in [](#glambda) might require better
