@@ -269,22 +269,38 @@ $$
 There are only 3 cases that can happen:
 * $f(x) = 0\,.$
 * $f(x) = 1\,.$
-* $f(0) = 0$, $f(1) = 1$, $f(x) > 0$ for $x > 0$ and this function is either
-  odd or even (to define it for $x<0$).
+* $f(x) = \begin{cases}
+        h(x) & \text{if } x > 0\,,\\
+        0 & \text{if } x = 0\,,\\
+        \pm h(|x|) & \text{if } x < 0\,.\\
+    \end{cases} $
 
-The last case includes the following two solutions:
+In the last case the function $h(x)$ is positive $h(x) > 0$ and defined only
+for $x>0$. The $x < 0$ case has two options for even and odd $f(x)$. We can
+equivalently write the two cases explicitly as follows:
 
 * Even: $f(x) = \begin{cases}
         0 & \text{if } x = 0\,,\\
-        1 & \text{if } x \ne 0\,.
+        h(|x|) & \text{if } x \ne 0\,.\\
     \end{cases} $
 * Odd: $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        \mathrm{sign}(x) h(|x|) & \text{if } x \ne 0\,.\\
+    \end{cases} $
+
+As a special case for $h(x)=1$ we get:
+
+* Even: $f(x) = |\mathrm{sign}(x)| = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        1 & \text{if } x \ne 0\,.
+    \end{cases} $
+* Odd: $f(x) = \mathrm{sign}(x) = \begin{cases}
         0 & \text{if } x = 0\,,\\
         1 & \text{if } x > 0\,,\\
         -1 & \text{if } x < 0\,.
     \end{cases} $
 
-In the last case we can then use the substitution $g(x)=\log f(e^x)$ to convert
+We can then use the substitution $g(x)=\log f(e^x)$ to convert
 the multiplicative equation into an additive equation from the previous
 section:
 $$
@@ -298,7 +314,7 @@ $$
 = g(x) + g(y)\,.
 $$
 We find the solution using the previous section, and then
-we define $h(x)=\exp(g(\log x))$, which satisfies:
+we compute $h(x)$ using $h(x)=\exp(g(\log x))$, which satisfies:
 $$
 h(xy)
 =\exp(g(\log(xy)))
@@ -309,29 +325,50 @@ $$
 =\exp(g(\log x))\exp(g(\log y))
 =h(x)h(y)\,.
 $$
-The solutions then are $f(x)=h(|x|)$ and $f(x)=\mathrm{sign}(x)h(|x|)$ by
-extending it as either even or odd function for negative $x$.
 
 For measurable $g(x)$ the solution to the additive equation is $g(x) = cx$, so
-we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the five solutions are
+we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the four solutions are
+* $f(x) = 0\,.$
+* $f(x) = 1\,.$
+* $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        h(|x|) & \text{if } x \ne 0\,,\\
+    \end{cases}
+  = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        |x|^c & \text{if } x \ne 0\,.\\
+    \end{cases} $
+* $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        \mathrm{sign}(x) h(|x|) & \text{if } x \ne 0\,,\\
+    \end{cases}
+  = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        \mathrm{sign}(x) |x|^c & \text{if } x \ne 0\,.\\
+    \end{cases} $
+
+The solutions can be equivalently written as:
 * $f(x)=0\,.$
 * $f(x) = |\mathrm{sign}(x)| = \begin{cases}
         0 & \text{if } x = 0\,,\\
         1 & \text{if } x \ne 0\,.
     \end{cases}$
-* $f(x) = \mathrm{sign}(x) = \begin{cases}
-        0 & \text{if } x = 0\,,\\
-        1 & \text{if } x > 0\,,\\
-        -1 & \text{if } x < 0\,.
-    \end{cases} $
-* $f(x)=|x|^c\,.$
-* $f(x)=\mathrm{sign}(x)|x|^c\,.$
+* $f(x)=|x|^c$, with $f(0)=0$ (needed for $c < 0)$.
+* $f(x)=\mathrm{sign}(x)|x|^c$, with $f(0)=0$ (needed for $c < 0)$.
 
 The solution $f(x)=1$ is already included in $|x|^c$ for $c=0$.
-If $c$ is an integer, then the two solutions can always be written (for both
-even and odd integers) as $f(x)=x^c$ and $f(x)=\mathrm{sign}(x) x^c$.
+If $c$ is an integer, then the last two solutions can always be written (for
+both even and odd integers) as $f(x)=x^c$ and $f(x)=\mathrm{sign}(x) x^c$.
+
+Some examples are: $0$, $1$, $\mathrm{sign}(x)$, $|\mathrm{sign}(x)|$, $x$,
+$|x|$, $x^2$, $\mathrm{sign}(x) x^2$, $x^3$, $|x|^3$, $1\over x$, $1\over
+|x|$,$1\over x^2$,${\mathrm{sign}(x)\over x^2}={|x|\over x^3}$, $1\over x^3$,
+$\sqrt{|x|}$, $1\over\sqrt{|x|^3}$, etc.
 
 :::{note}
+The function $h(x)$ is only defined for positive $x$ and that is all we need.
+But if we are curious how the formula evaluates for $x \le 0$, we get the
+following.
 For $c>0$ and $x=0^+$ we get:
 $$
 h(x)=\exp(c \log 0^+)=\exp(-c\,\infty)=0\,.
