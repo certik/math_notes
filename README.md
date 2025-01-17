@@ -1,12 +1,19 @@
 # Build html
 
 ```
-myst start
+pixi r start
 ```
 
 # Build pdf
 
+Using TeX:
 ```
-myst build --tex && (cd _build/exports/paper_tex && tectonic paper.tex)
+pixi r tex
 open _build/exports/paper_tex/paper.pdf
+```
+
+Using Typst:
+```
+pixi r typst
+open _build/exports/paper_typst/paper.pdf
 ```
