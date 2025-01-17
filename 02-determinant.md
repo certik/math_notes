@@ -327,6 +327,7 @@ $$
 $$
 
 For measurable $g(x)$ the solution to the additive equation is $g(x) = cx$, so
+we assume $f(x)$ is measurable (which implies $g(x)$ is measurable) and
 we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the four solutions are
 * $f(x) = 0\,.$
 * $f(x) = 1\,.$
