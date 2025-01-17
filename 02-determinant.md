@@ -225,6 +225,34 @@ A linear function $f(x)=ax+b$ can be substituted into [](#additive) and one
 obtains that $b=0$. So this theorem is a simple way to remember the solutions
 to the Cauchy's additive functional equation.
 
+:::{note} Proof
+To prove this theorem, we introduce $g(x)=f(x)-f(1)x$ and prove that $g(x)=0$,
+from which it follows that $f(x)=f(1)x=c x$. We have:
+$$
+g(x+y)=f(x+y)-f(1)(x+y)=f(x)-f(1)x + f(y)-f(1)y = g(x)+g(y)\,,
+$$
+so $g(x)$ is also additive. For rational $q$ we have:
+$$
+g(q)=f(q)-f(1)q=q f(1) - f(1)q = 0\,.
+$$
+Also we get:
+$$
+g(x+q)=g(x)+g(q)=g(x)\,,
+$$
+so $g(x)$ is periodic with a period $q$. It can be shown from this periodicity
+and function $g(x)$ being measurable that $g(x)$ is essentially bounded. Now we
+can compute the following integral which is exists and is finite:
+$$
+\int_0^1 g(x) dx
+=\int_0^1 g(x+y) dx
+=\int_0^1 g(x) dx +\int_0^1 g(y) dx
+=\int_0^1 g(x) dx +g(y)\,,
+$$
+so $g(y)=0$ for all real $y$. Here we have used the dominated convergence
+theorem for $g(x)=g(x+q_n)$ where a sequence of rational $q_n$ is converging
+towards the real $y$.
+:::
+
 :::{note}
 If we do not require a measurable function, then there are infinitely many
 solutions to [](#additive) that are nonlinear and their graphs are dense. They
