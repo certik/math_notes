@@ -10,6 +10,7 @@ version = "0.1.0"
 start = "myst start"
 build = "myst build"
 tex = "myst build --tex && (cd _build/exports/paper_tex && tectonic paper.tex)"
+texdet = "myst build --tex 02-determinant.md && (cd _build/exports/determinant_tex && tectonic determinant.tex)"
 typst = "myst build --typst"
 
 [dependencies]
