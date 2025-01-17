@@ -1,0 +1,18 @@
+[project]
+authors = ["Ondřej Čertík <ondrej@certik.us>"]
+channels = ["conda-forge"]
+description = "Math notes using mystmd"
+name = "math_notes"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+start = "myst start"
+build = "myst build"
+tex = "myst build --tex && (cd _build/exports/paper_tex && tectonic paper.tex)"
+typst = "myst build --typst"
+
+[dependencies]
+typst = ">=0.12.0,<0.13"
+tectonic = ">=0.15.0,<0.16"
+mystmd = ">=1.3.20,<2"
