@@ -205,7 +205,9 @@ f(qx)
 =q f(x)
 \,.
 $$
-Setting $x=1$ we get for all rational $q$:
+We also have to prove it for $p\le 0$ which we can using $f(0)=f(0)+f(0)$ which
+implies $f(0)=0$ and using $0=f(0)=f(x-x)=f(x)+f(-x)$ from which follows
+$f(-x)=-f(x)$. Setting $x=1$ we get for all rational $q$:
 $$
 f(q) = q f(1) = c q\,.
 $$
