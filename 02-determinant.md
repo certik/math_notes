@@ -174,3 +174,76 @@ For $n=2$, we get: $g(\lambda)^2 = \lambda^2$, which also has a solution
 $g(x)=|x|$. But if we allow $\lambda$ to be complex, then likely the only
 solution is $g(x)=x$ without any additional assumptions.
 :::
+
+## Cauchy's Additive Functional Equation
+
+The Cauchy's functional equation (@wiki:CauchyFunctionalEquation) usually means
+the additive equation of this form:
+$$
+f(x+y) = f(x) + f(y)\,.
+$$
+There are other related equations, such as the Cauchy's multiplicative
+functional equation in the next section.
+
+## Cauchy's Multiplicative Functional Equation
+
+The Cauchy's multiplicative functional equation is:
+$$
+f(xy) = f(x)f(y)\,.
+$$
+By using the substitution $g(x)=\log f(e^x)$ we can convert the multiplicative
+equation into an additive equation from the previous section:
+$$
+g(x+y)
+= \log f(e^{x+y})
+= \log f(e^x e^y)
+= \log(f(e^x) f(e^y))=
+$$
+$$
+= \log f(e^x) + \log f(e^y)
+= g(x) + g(y)\,.
+$$
+We find the solution using the previous section, and then
+we define $h(x)=\exp(g(\log x))$, which satisfies:
+$$
+h(xy)
+=\exp(g(\log(xy)))
+=\exp(g(\log x + \log y))
+=\exp(g(\log x) + g(\log y))=
+$$
+$$
+=\exp(g(\log x))\exp(g(\log y))
+=h(x)h(y)\,.
+$$
+The solutions are $f(x)=h(|x|)$, $f(x)=\mathrm{sign}(x)h(|x|)$ and $f(x)=0$.
+
+For measurable $g(x)$ the solution to the additive equation is $g(x) = cx$, so
+we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the three solutions are
+$f(x)=|x|^c$, $f(x)=\mathrm{sign}(x)|x|^c$ and $f(x)=0$.
+
+:::{note}
+For $c>0$ and $x=0^+$ we get:
+$$
+h(x)=\exp(c \log 0^+)=\exp(-c\,\infty)=0\,.
+$$
+For $x<0$ we get:
+$$
+h(x)
+=\exp(c (\log |x| + i \arg x))
+=\exp(c (\log(-x) + i \pi))=
+$$
+$$
+=\exp(\log((-x)^c))\exp(i c \pi)
+=(-x)^c \exp(i c \pi)\,.
+$$
+For an even integer $c$ we have $\exp(ic\pi)=1$ and $h(x)=(-x)^c=x^c$, for an
+odd integer $c$ we have $\exp(ic\pi)=-1$ and $h(x)=-(-x)^c=x^c$ and for
+non-integer $c$ we get some complex number. For example, for $c=1$ (which is an
+odd integer) we get:
+$$
+h(x) = (-x) (-1) = x\,.
+$$
+
+Due to the discontinuity at $x=0$, we can stitch solutions there, and extend
+$h(x)$ as even or odd functions.
+:::
