@@ -130,7 +130,7 @@ for numbers $x$, $y$.
 The equation [](#multiplicative2) can be solved in several different ways.
 
 Approach 1: With some extra smoothness assumptions one can show that the only
-solutions are $g(x)=0$, $g(x)=x^s$ and $g(x)=|x|^s$. Consequently the only
+solutions are $g(x)=0$, $g(x)=|x|^s$ and $g(x)=\mathrm{sign}(x)|x|^s$. Consequently the only
 nonzero solution to [](#multiplicative1) is a power of a determinant.
 
 Approach 2: Instead of assuming some smoothness assumptions, we can instead
@@ -266,8 +266,19 @@ The Cauchy's multiplicative functional equation is:
 $$
 f(xy) = f(x)f(y)\,.
 $$
-By using the substitution $g(x)=\log f(e^x)$ we can convert the multiplicative
-equation into an additive equation from the previous section:
+There are only 4 cases that can happen:
+* $f(x) = 0\,.$
+* $f(x) = 1\,.$
+* $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        1 & \text{if } x \ne 0\,.
+    \end{cases} $
+* $f(0) = 0$, $f(1) = 1$, $f(x) > 0$ for $x > 0$ and this function is either
+  odd or even.
+
+In the last case we can then use the substitution $g(x)=\log f(e^x)$ to convert
+the multiplicative equation into an additive equation from the previous
+section:
 $$
 g(x+y)
 = \log f(e^{x+y})
@@ -290,11 +301,22 @@ $$
 =\exp(g(\log x))\exp(g(\log y))
 =h(x)h(y)\,.
 $$
-The solutions are $f(x)=h(|x|)$, $f(x)=\mathrm{sign}(x)h(|x|)$ and $f(x)=0$.
+The solutions then are $f(x)=h(|x|)$ and $f(x)=\mathrm{sign}(x)h(|x|)$ by
+extending it as either even or odd function for negative $x$.
 
 For measurable $g(x)$ the solution to the additive equation is $g(x) = cx$, so
-we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the three solutions are
-$f(x)=|x|^c$, $f(x)=\mathrm{sign}(x)|x|^c$ and $f(x)=0$.
+we get $h(x)=\exp(c\log x)=\exp(\log(x^c))=x^c$ and the four solutions are
+* $f(x)=0\,.$
+* $f(x) = \begin{cases}
+        0 & \text{if } x = 0\,,\\
+        1 & \text{if } x \ne 0\,.
+    \end{cases}$
+* $f(x)=|x|^c\,.$
+* $f(x)=\mathrm{sign}(x)|x|^c\,.$
+
+The solution $f(x)=1$ is already included in $|x|^c$ for $c=0$.
+If $c$ is an integer, then the two solutions can always be written (for both
+even and odd integers) as $f(x)=x^c$ and $f(x)=\mathrm{sign}(x) x^c$.
 
 :::{note}
 For $c>0$ and $x=0^+$ we get:
