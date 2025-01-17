@@ -180,10 +180,55 @@ solution is $g(x)=x$ without any additional assumptions.
 The Cauchy's functional equation (@wiki:CauchyFunctionalEquation) usually means
 the additive equation of this form:
 $$
+\label{additive}
 f(x+y) = f(x) + f(y)\,.
 $$
 There are other related equations, such as the Cauchy's multiplicative
 functional equation in the next section.
+
+For integer $n$ we get:
+$$
+f(nx)
+= f(\underbrace{x+x+\dots+x}_{n})
+= \underbrace{f(x)+f(x)+\dots+f(x)}_{n}
+= nf(x)\,.
+$$
+By substituting $y=nx$ we get $f(y)=nf(y/n)$, from which
+$f(y/n)=(1/n)f(y)$. Using these two relations for multiplication and division
+by an integer we obtain for any rational number $q={p\over q}$, where $p$, $q$
+are integers:
+$$
+f(qx)
+=f\left({p \over q}x\right)
+=pf\left({x\over q}\right)
+={p\over q}f(x)
+=q f(x)
+\,.
+$$
+Setting $x=1$ we get for all rational $q$:
+$$
+f(q) = q f(1) = c q\,.
+$$
+where $c=f(1)$ is any real constant. If we assume that $f(x)$ is continuous,
+then this implies that $f(x)=c x$ for all real $x$, since the rational numbers
+are dense in real numbers. It turns out that one can relax the continuity
+requirement to only require that $f(x)$ is measurable. Since $f(x)=c x$ is
+linear, we get:
+
+:::{tip} Theorem
+Additive, measurable functions are linear.
+:::
+
+A linear function $f(x)=ax+b$ can be substituted into [](#additive) and one
+obtains that $b=0$. So this theorem is a simple way to remember the solutions
+to the Cauchy's additive functional equation.
+
+:::{note}
+If we do not require a measurable function, then there are infinitely many
+solutions to [](#additive) that are nonlinear and their graphs are dense. They
+are highly pathological functions and these solutions are all excluded by
+requiring that $f(x)$ is measurable.
+:::
 
 ## Cauchy's Multiplicative Functional Equation
 
