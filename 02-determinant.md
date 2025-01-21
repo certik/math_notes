@@ -149,16 +149,15 @@ $$
 f(\lambda A) = g(\det \lambda A)
 =g(\lambda^n \det A)
 =g(\lambda^n) g(\det A)
-=g(\lambda^n) f(A)\,.
+=g(\lambda^n) f(A)=
 $$
-Comparing to [](#homogeneity) we get:
 $$
-\label{glambda}
-g(\lambda^n)=\lambda^n\,.
+=g(\lambda)^n f(A)
+=f(g(\lambda) A)\,.
 $$
-Since $\lambda$ can be any real (or complex) number, we get:
+Comparing the LHS and RHS we can see that $g(\lambda)=\lambda$, or:
 $$
-g(x)=x
+g(x) = x
 $$
 and from [](#multiplicative1_result) we get:
 $$
@@ -175,15 +174,6 @@ Summary:
   measurable, then the only nonzero solution is a power of a determinant
   (optionally multiplied with the signum function).
 
-:::{warning} TODO
-The transition from $\lambda^n$ to $x$ in [](#glambda) might require better
-treatment, there might be some hidden assumptions about continuity on $g(x)$.
-Maybe there is a way to derive $g(x) = x$ more directly.
-We can maybe use $g(\lambda^n) = g(\lambda)^n = \lambda^n$.
-For $n=2$, we get: $g(\lambda)^2 = \lambda^2$, which also has a solution
-$g(x)=|x|$. But if we allow $\lambda$ to be complex, then likely the only
-solution is $g(x)=x$ without any additional assumptions.
-:::
 
 ## Cauchy's Additive Functional Equation
 
