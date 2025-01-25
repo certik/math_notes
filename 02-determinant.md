@@ -395,3 +395,73 @@ $$
 Due to the discontinuity at $x=0$, we can stitch solutions there, and extend
 $h(x)$ as even or odd functions.
 :::
+
+## Geometric Definition
+
+The way to define a determinant using area/volume from geometry is as follows:
+$$
+V(\mathbf{e}_1,\mathbf{e}_2) = 1\,,
+$$
+$$
+V(\mathbf{u},\mathbf{u}) = 0\,,
+$$
+for $c>0$:
+$$
+V(c\mathbf{u}, \mathbf{w})
+= c V(\mathbf{u}, \mathbf{w}) = V(\mathbf{u},
+c\mathbf{w})\,,
+$$
+$$
+V(\mathbf{u}+\mathbf{v}, \mathbf{w})
+= V(\mathbf{u}, \mathbf{w}) + V(\mathbf{v}, \mathbf{w})\,,
+$$
+$$
+V(\mathbf{w}, \mathbf{u}+\mathbf{v})
+= V(\mathbf{w}, \mathbf{u}) + V(\mathbf{w}, \mathbf{v})\,.
+$$
+All these formulas can be "derived" from intuitive properties of areas in 2D.
+Another equivalent set of requirements is:
+$$
+V(\mathbf{e}_1,\mathbf{e}_2) = 1\,,
+$$
+$$
+V(c\mathbf{u}, \mathbf{w})
+= c V(\mathbf{u}, \mathbf{w}) = V(\mathbf{u},
+c\mathbf{w})\,,
+$$
+$$
+V(\mathbf{u}+\mathbf{v}, \mathbf{v})
+= V(\mathbf{u}, \mathbf{v})
+= V(\mathbf{u}, \mathbf{u}+\mathbf{v})\,.
+$$
+Let's use the first set of requirements below. We get:
+$$
+0 = V(\mathbf{v}-\mathbf{v}, \mathbf{w}) = V(\mathbf{v}, \mathbf{w}) + V(-\mathbf{v}, \mathbf{w})\,,
+$$
+from which it follows:
+$$
+V(-\mathbf{v}, \mathbf{w}) = -V(\mathbf{v}, \mathbf{w})\,.
+$$
+Now we derive antisymmetry:
+$$
+0
+= V(\mathbf{u}+\mathbf{v}, \mathbf{u}+\mathbf{v}) =
+$$
+$$
+= V(\mathbf{u},\mathbf{u}) + V(\mathbf{u},\mathbf{v}) + V(\mathbf{v},\mathbf{u}) + V(\mathbf{v},\mathbf{v}) = V(\mathbf{u},\mathbf{v}) + V(\mathbf{v},\mathbf{u})
+$$
+and we get:
+$$
+V(\mathbf{v},\mathbf{u}) = -V(\mathbf{u},\mathbf{v})\,.
+$$
+Now we derive a formula for $V$:
+$$
+V(\mathbf{u},\mathbf{v})
+= V(u_1\mathbf{e}_1+u_2\mathbf{e}_2, v_1\mathbf{e}_1+v_2\mathbf{e}_2) =
+$$
+$$
+= u_1v_2V(\mathbf{e}_1,\mathbf{e}_2) + u_2v_1V(\mathbf{e}_2,\mathbf{e}_1)
+= (u_1v_2-u_2v_1)V(\mathbf{e}_1,\mathbf{e}_2)
+= u_1v_2-u_2v_1\,.
+$$
+This proves both existence and uniqueness.
