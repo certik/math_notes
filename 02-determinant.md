@@ -465,3 +465,71 @@ $$
 = u_1v_2-u_2v_1\,.
 $$
 This proves both existence and uniqueness.
+
+## Coordinate Definition
+
+Determinant of a 2x2 matrix $(\mathbf{A})_{ij}=a_{ij}$ is defined as:
+$$
+\det \mathbf{A} = \epsilon^{ij} a_{1i}a_{2j}
+= {1\over 2!}\epsilon^{ij}\epsilon^{kl} a_{ki}a_{lj}
+$$
+and for a 3x3 matrix $(\mathbf{A})_{ij}=a_{ij}$:
+$$
+\det \mathbf{A} = \epsilon^{ijk} a_{1i}a_{2j}a_{3k}
+= {1\over 3!} \epsilon^{ijk}\epsilon^{lmn} a_{li}a_{mj}a_{nk}
+$$
+And so on in any dimension. The symbol $\epsilon^{ijk}$ is a Levi-Civita
+symbol. All the properties of determinants are encoded in the Levi-Civita
+symbol, so we need to understand it well, but the rest are just usual tensor
+manipulations.
+
+:::{note}
+For the 2x2 matrix we can compute the second formula on the RHS as follows:
+$$
+\det \mathbf{A}
+= {1\over 2!}\epsilon^{ij}\epsilon^{kl} a_{ki}a_{lj}
+= {1\over 2!}\det\begin{pmatrix} \delta^{ik} & \delta^{il} \\
+\delta^{jk} & \delta^{jl} \end{pmatrix} a_{ki}a_{lj} =
+$$
+$$
+= {1\over 2!}( \delta^{ik}\delta^{jl} - \delta^{il} \delta^{jk})
+a_{ki}a_{lj}
+= {1\over 2!}( a_{ii}a_{jj} - a_{ji}a_{ij}) =
+$$
+$$
+= {1\over 2!}( (a_{11}+a_{22})(a_{11}+a_{22}) - (a_{11}a_{11}+a_{12}a_{21}+a_{21}a_{12}+a_{22}a_{22})) =
+$$
+$$
+= {1\over 2!}( 2a_{11}a_{22} - 2a_{21}a_{12})
+= a_{11}a_{22} - a_{21}a_{12}\,.
+$$
+The first formula on the RHS is just:
+$$
+\det \mathbf{A}
+= \epsilon^{ij} a_{1i}a_{2j}
+= a_{11}a_{22}-a_{12}a_{21}\,.
+$$
+Both results are equivalent. It works the same way in any dimension, the
+factorial factor corrects the overcounting.
+:::
+
+Let us now derive the multiplicative formula for determinants:
+$$
+\det\mathbf{AB} = \det\mathbf{A}\det\mathbf{B}\,.
+$$
+Let's show it for 2x2 matrices.
+The LHS is:
+$$
+\det\mathbf{AB}
+= \epsilon^{ij} (\mathbf{AB})_{1i}(\mathbf{AB})_{2j}
+= \epsilon^{ij} (a_1{}^k b_{ki}) (a_2{}^l b_{lj}) =
+$$
+$$
+= \epsilon^{ij} \delta^{km}\delta^{ln}  a_{1m} b_{ki} a_{2n} b_{lj}
+= \epsilon^{ij} \delta^{km}\delta^{ln}  a_{1m} a_{2n} b_{ki} b_{lj}\,.
+$$
+The RHS is:
+$$
+\det\mathbf{A}\det\mathbf{B}
+= \epsilon^{ij} a_{1i}a_{2j} \epsilon^{kl} b_{1k}b_{2l}\,.
+$$
