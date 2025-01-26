@@ -522,14 +522,34 @@ The LHS is:
 $$
 \det\mathbf{AB}
 = \epsilon^{ij} (\mathbf{AB})_{1i}(\mathbf{AB})_{2j}
-= \epsilon^{ij} (a_1{}^k b_{ki}) (a_2{}^l b_{lj}) =
-$$
-$$
-= \epsilon^{ij} \delta^{km}\delta^{ln}  a_{1m} b_{ki} a_{2n} b_{lj}
-= \epsilon^{ij} \delta^{km}\delta^{ln}  a_{1m} a_{2n} b_{ki} b_{lj}\,.
+= \epsilon^{ij} (a_1{}^k b_{ki}) (a_2{}^l b_{lj})\,.
 $$
 The RHS is:
 $$
 \det\mathbf{A}\det\mathbf{B}
-= \epsilon^{ij} a_{1i}a_{2j} \epsilon^{kl} b_{1k}b_{2l}\,.
+= \epsilon^{ij} a_{1i}a_{2j} \epsilon^{kl} b_{1k}b_{2l}=
+$$
+$$
+= (\delta^{ik}\delta^{jl} - \delta^{il}\delta^{jk}) a_{1i}a_{2j} b_{1k}b_{2l}=
+$$
+$$
+= a_{1i}a_{2j} b_1{}^i b_2{}^j - a_{1i}a_{2j} b_1{}^j b_2{}^i =
+$$
+$$
+= a_{1i}a_{2j} (b_1{}^i b_2{}^j - b_1{}^j b_2{}^i) =
+$$
+$$
+= \epsilon^{kl}a_{1i}a_{2j} b_k{}^i b_l{}^j =
+$$
+$$
+= \epsilon^{kl}a_{1i} b_k{}^i a_{2j} b_l{}^j =
+$$
+$$
+= \epsilon^{ij}a_{1k} b_i{}^k a_{2l} b_j{}^l =
+$$
+$$
+= \epsilon^{ij}a_1{}^k b_{ik} a_2{}^l b_{jl} =
+$$
+$$
+=\det\mathbf{AB}^T\,.
 $$
