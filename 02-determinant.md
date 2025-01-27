@@ -553,3 +553,17 @@ $$
 $$
 =\det\mathbf{AB}^T\,.
 $$
+Now we need to prove $\det\mathbf{A}^T = \det\mathbf{A}$. We can do that using
+the factorial formula by relabeling indices as follows:
+$$
+\det\mathbf{A}^T
+= {1\over 2!}\epsilon^{ij}\epsilon^{kl} a_{ik}a_{jl}
+= {1\over 2!}\epsilon^{kl}\epsilon^{ij} a_{ki}a_{lj}
+= {1\over 2!}\epsilon^{ij}\epsilon^{kl} a_{ki}a_{lj}
+= \det\mathbf{A}\,.
+$$
+We have thus shown:
+$$\det\mathbf{AB}
+=\det\mathbf{A}\det\mathbf{B}^T
+=\det\mathbf{A}\det\mathbf{B}\,.
+$$
