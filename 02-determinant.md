@@ -567,3 +567,42 @@ $$\det\mathbf{AB}
 =\det\mathbf{A}\det\mathbf{B}^T
 =\det\mathbf{A}\det\mathbf{B}\,.
 $$
+
+### Alternative Proof
+
+First we need the following identity:
+$$
+\det({\mathbf A}) \epsilon_{ij}
+= \epsilon^{kl} a_{1k}a_{2l} \epsilon_{ij}
+= \det\begin{pmatrix}
+\delta_i{}^{k} & \delta_i{}^{l} \\
+\delta_j{}^{k} & \delta_j{}^{l} \end{pmatrix} a_{1k}a_{2l}
+= \det\begin{pmatrix}
+a_{1i} & a_{2i} \\
+a_{1j} & a_{2j} \end{pmatrix} =
+$$
+$$
+=\epsilon^{kl} a_{ki} a_{lj}
+$$
+Contracting both sides with $\epsilon^{ij}$ we get:
+$$
+\det({\mathbf A}) \epsilon_{ij} \epsilon^{ij}
+=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+$$
+$$
+\det({\mathbf A})\, 2!
+=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+$$
+$$
+\det({\mathbf A})
+={1\over2!}\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+$$
+Note that $\epsilon^{kl} a_{ki} a_{lj} = \epsilon^{kl} a_{ik} a_{jl}$ due to
+the transposition property derived using the last equation in the previous
+section:
+$$
+\det({\mathbf A}) \epsilon_{ij}
+= \epsilon^{kl} a_{ki} a_{lj}
+= \det({\mathbf A}^T) \epsilon_{ij}
+= \epsilon^{kl} a_{ik} a_{jl}
+$$
