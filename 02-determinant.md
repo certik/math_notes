@@ -582,20 +582,38 @@ a_{1i} & a_{2i} \\
 a_{1j} & a_{2j} \end{pmatrix} =
 $$
 $$
-=\epsilon^{kl} a_{ki} a_{lj}
+=\epsilon^{kl} a_{ki} a_{lj}\,.
 $$
+
+:::{note}
+The final step above follows from using the definition of a determinant as
+follows:
+$$
+\det(\mathbf{X})
+= \det\begin{pmatrix}
+a_{1i} & a_{2i} \\
+a_{1j} & a_{2j} \end{pmatrix}
+=\epsilon^{kl} \mathbf{X}_{1k} \mathbf{X}_{2l}\,.
+$$
+Now $\mathbf{X}_{11}=a_{1i}$ and $\mathbf{X}_{12}=a_{2i}$, so
+$\mathbf{X}_{1k}=a_{ki}$. Similarly $\mathbf{X}_{2l}=a_{lj}$, so we get:
+$$
+=\epsilon^{kl} a_{ki} a_{lj}\,.
+$$
+:::
+
 Contracting both sides with $\epsilon^{ij}$ we get:
 $$
 \det({\mathbf A}) \epsilon_{ij} \epsilon^{ij}
-=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}\,,
 $$
 $$
 \det({\mathbf A})\, 2!
-=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+=\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}\,,
 $$
 $$
 \det({\mathbf A})
-={1\over2!}\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}
+={1\over2!}\epsilon^{ij}\epsilon^{kl} a_{ki} a_{lj}\,.
 $$
 Note that $\epsilon^{kl} a_{ki} a_{lj} = \epsilon^{kl} a_{ik} a_{jl}$ due to
 the transposition property derived using the last equation in the previous
@@ -604,5 +622,18 @@ $$
 \det({\mathbf A}) \epsilon_{ij}
 = \epsilon^{kl} a_{ki} a_{lj}
 = \det({\mathbf A}^T) \epsilon_{ij}
-= \epsilon^{kl} a_{ik} a_{jl}
+= \epsilon^{kl} a_{ik} a_{jl}\,.
+$$
+Now we can compute:
+$$
+\det(\mathbf{AB})
+= \epsilon^{ij} (\mathbf{AB})_{1i} (\mathbf{AB})_{2j}
+= \epsilon^{ij} (a_1{}^{k}b_{ki}) (a_2{}^{l}b_{lj})
+= a_1{}^{k} a_2{}^{l} (\epsilon^{ij} b_{ki} b_{lj}) =
+$$
+$$
+= a_1{}^{k} a_2{}^{l} (\epsilon^{ij} b_{ik} b_{jl})
+= a_1{}^{k} a_2{}^{l} \det(\mathbf{B}) \epsilon_{kl}
+= (\epsilon^{kl} a_{1k} a_{2l}) \det(\mathbf{B})
+= \det(\mathbf{A}) \det(\mathbf{B})\,.
 $$
