@@ -579,10 +579,8 @@ $$
 \delta_j{}^{k} & \delta_j{}^{l} \end{pmatrix} a_{1k}a_{2l}
 = \det\begin{pmatrix}
 a_{1i} & a_{2i} \\
-a_{1j} & a_{2j} \end{pmatrix} =
-$$
-$$
-=\epsilon^{kl} a_{ki} a_{lj}\,.
+a_{1j} & a_{2j} \end{pmatrix}
+= \epsilon^{kl} a_{ki} a_{lj}\,.
 $$
 
 :::{note}
@@ -598,6 +596,14 @@ $$
 Now $\mathbf{X}_{11}=a_{1i}$ and $\mathbf{X}_{12}=a_{2i}$, so
 $\mathbf{X}_{1k}=a_{ki}$. Similarly $\mathbf{X}_{2l}=a_{lj}$, so we get:
 $$
+=\epsilon^{kl} a_{ki} a_{lj}\,.
+$$
+Alternatively, one can simply expand the determinant as follows:
+$$
+\det\begin{pmatrix}
+a_{1i} & a_{2i} \\
+a_{1j} & a_{2j} \end{pmatrix}
+= a_{1i} a_{2j} - a_{2i} a_{1j}
 =\epsilon^{kl} a_{ki} a_{lj}\,.
 $$
 :::
