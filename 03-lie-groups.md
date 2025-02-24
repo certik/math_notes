@@ -128,7 +128,7 @@ $$
 
 The $J_i$ are generators of rotations, and $K_i$ are Galilean boosts.
 
-Let's compute the exponential in [](Gexp1):
+Let's compute the exponential in [](#Gexp1):
 $$
 e^{\phi_1 J_1 + \phi_2 J_2 + \phi_3 J_3 + v_1 K_1 + v_2 K_2 + v_3 K_3}
 =...
@@ -140,7 +140,7 @@ $\mathrm{diag}(1,0,0,0)$. This can be computed. The Lorentz/Poincaré group
 leaves the Minkowski metric invariant and that can also be computed.
 Furthermore, from the metric one can derive the transformation also.
 
-The commutation relations [](Gcommut) allow many representations of the
+The commutation relations [](#Gcommut) allow many representations of the
 Galilean group.
 
 We postulated the Galilean transformations above. But rather we actually want
