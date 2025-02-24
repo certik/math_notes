@@ -25,8 +25,9 @@ Galilei, generators show matrices.
 Lorentz, generators, matrices:
 4 disconnected parts.
 
-## Galilei Group
+## Galilean Group
 
+The homogeneous Galilean group is:
 $$
 \begin{pmatrix}
 t' \\
@@ -41,4 +42,52 @@ t' \\
 t \\
 \mathbf{r}
 \end{pmatrix}
+$$
+
+The generators are:
+$$
+J_1 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}, \quad
+J_2 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 \\
+0 & -1 & 0 & 0
+\end{pmatrix}, \quad
+J_3 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}
+$$
+$$
+K_1 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}, \quad
+K_2 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}, \quad
+K_3 = \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0
+\end{pmatrix}
+$$
+
+They satisfy the following commutation relations:
+
+$$
+[J_i, J_j] = \epsilon_{ijk} J_k, \quad [J_i, K_j] = \epsilon_{ijk} K_k, \quad [K_i, K_j] = 0
 $$
