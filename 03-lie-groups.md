@@ -28,6 +28,7 @@ Lorentz, generators, matrices:
 ## Galilean Group
 
 The homogeneous Galilean group is:
+
 $$
 \begin{pmatrix}
 t' \\
