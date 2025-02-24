@@ -1,0 +1,327 @@
+\documentclass[12pt]{article}
+
+%%%% tyhle 3 radky jsou pro dvoustranku %%%%%%%%%%%%%%%%
+
+%\documentclass[10pt,twocolumn]{article}  ì¹èø¾ýáíé
+%\usepackage[landscape, left=2cm, right=2cm]{geometry}
+%\columnsep 6pc  %   Space between columns
+
+\usepackage[margin=3cm]{geometry}
+%\setlength{\oddsidemargin}{0mm}
+%\setlength{\evensidemargin}{0mm}
+%\addtolength{\textheight}{55mm}
+%\addtolength{\textwidth}{43mm}
+%\setlength{\topmargin}{0mm}
+%\setlength{\headsep}{4mm}
+%\voffset=-20mm
+%\hoffset=-20mm
+%\columnseprule=.01pt
+
+
+%\usepackage[iso8859-2]{inputenc}
+\usepackage[latin2]{inputenc}
+%\usepackage[babel]{czech}
+
+\usepackage{amssymb}
+\usepackage{enumitem}   % pro enumerate s pismenky
+\usepackage{hyperref}   % use for hypertext links, including those to external documents and URLs
+
+
+\setlength\parindent{0pt}
+
+
+
+\pagestyle{empty}
+
+\begin{document}
+
+{\Large{Determinanty  verze 5}} 
+-- uva¾ujeme zatím pouze \textbf{reálné} matice.
+
+
+{\section{Homomorfismy $R^* \rightarrow R^*$ }} 
+
+\textbf{Definice:} $R^* = R - \{0\}$, $R^*$ ua¾ujeme jako multiplikativní grupu
+\vskip 1mm
+
+Homomorfismus $R^* \rightarrow R^*$ je ka¾dá reálná funkce $g$, pro kterou platí $g(x\,y) = g(x)\,g(y)$. 
+\vskip 4mm
+
+\textbf{Úloha:} Chceme zjistit, jakou formu mají v¹echny homomorfismy $R^* \rightarrow R^*$.
+\vskip 2mm
+
+\textbf{Vìta 1:} Nech» $g$ je homomorfismus $R^* \rightarrow R^*$. \\
+Pak platí, ¾e buï $g(x) = |x|^\alpha$, nebo $g(x) = sign(x)\,|x|^\alpha$, kde $\alpha \in R$.
+
+\vskip 2mm
+Dùkaz: viz tvùj text, kapitoly 2  a 3 - tohle by se mìlo nìjak slouèit do jednoho dùkazu pro $R^*$ jako multiplikativní grupu, bez odkazu na ten aditivní zápis v kap. 2, aby se vùbec nezavádìl.
+
+$\Box$
+\vskip 5mm
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\section{Restrikce homomorfismù $GL(n) \rightarrow R^*$ na $GD(n)$}} 
+
+\textbf{Definice:} 
+\vskip 1mm
+$GL(n)$ je grupa v¹ech reálných regulárních matic.
+\vskip 1mm
+Homomorfismus $GL(n) \rightarrow R^*$ je ka¾dá funkce $f$, pro kterou platí \begin{equation}
+f(AB) = f(A)\,f(B) .
+\end{equation}
+
+\textbf{Poznámka:} pro homomorfismy platí 
+\begin{eqnarray}
+f(P\,A\,P^{-1}) &=& f(P)\,f(A)\,f(P^{-1}) = f(P)\,f(P^{-1})\,f(A)=f(P\,P^{-1})\,f(A) \\
+  &=&  f(I)\,f(A) = f(A),
+\end{eqnarray}
+kde jsme vyu¾ili faktu, ¾e $f(I)=1$ (viz Appendix).
+
+\vskip 2mm
+
+Grupu v¹ech regulárních diagonálních matic oznaèíme jako $GD(n)$,\\
+ je to podgrupa $GL(n)$.
+\vskip 4mm
+
+\textbf{Úloha:} Chceme zjistit, jak vypadá restrikce libovolného homomorfismu\\ $GL(n) \rightarrow R^*$ na podgrupu $GD(n)$. 
+\vskip 2mm
+
+\textbf{Vìta 2:} Nech» $F: GL(n) \rightarrow R^*$ je homomorfismus a
+ $f: GD(n) \rightarrow R^*$ \\
+ je jeho restrikce na $GD(n)$. Pak $f$ se dá vyjádøit jako homomorfismus \\
+ $g: R^* \rightarrow R^*$ tak, ¾e $f(D) \equiv g(\Pi\, d_i)$.
+\vskip 2mm
+
+Dùkaz: 
+\vskip 1mm
+Pou¾ijeme permutaèní matice $P_i$, které prohodí 1. a $i$-tý øádek. $P_i$ vznikne z $I$ prohozením 1. a $i$-tého øádku, resp. prohozením 1. a $i$-tého sloupce (vyjde toté¾). Platí $P_i^{-1} = P_i$, násobení zleva touto maticí prohodí øádky, násobení zprava prohodí sloupce; pro diagonální matici $D$ operace $P_i D P_i^{-1}$ prohodí 1. a $i$-tý prvek na diagonále.
+
+\begin{eqnarray}
+f(D) &=&  f(diag(d_1, 1, \dots 1))\, f(diag(1, d_2, 1, \dots 1)) \dots \, f(diag(1, \dots 1,  d_n)) \\
+  &=& f(diag(d_1, 1, \dots 1))\,f(P_2\,diag(d_2, 1, \dots 1)\,P_2^{-1})\dots \\
+  &=& \dots f(P_n\,diag(d_n, 1, \dots 1)\,P_n^{-1}) \\
+  &=& f(diag(d_1, 1, \dots 1))\,f(diag(d_2, 1, \dots 1))\dots f(diag(d_n, 1, \dots 1))\, \\
+  &=& f(diag(\Pi\, d_i, 1, \dots 1)) \equiv g(\Pi\, d_i).
+\end{eqnarray}
+
+$g$ je homomorfismus: $g(x)$ je def. jako $g(x) = f(diag(x, 1, \dots 1)0$, tak¾e
+\begin{eqnarray}
+g(x\,y) &=& f(diag(xy, 1, \dots 1)) 
+    = f(diag(x, 1, \dots 1)\, diag(y, 1, \dots 1)) \\
+  &=& f(diag(x, 1, \dots 1))\,f(diag(y, 1, \dots 1)) \\
+  &=& g(x)\,g(y)
+\end{eqnarray}
+$\Box$
+
+\vskip 3mm
+
+Jestli¾e $f$ je homomorfismus $GD(n) \rightarrow R^*$, pak dle Vìty 2
+se dá vyjádøit jako \\
+$f(D) \equiv g(\Pi\, d_i)$, kde $g$ je homomorfismus $R^* \rightarrow R^*$. Odtud dle Vìty 1 plyne, ¾e  \\
+buï 
+\begin{equation}
+\label{h1}
+f(D) \equiv g(\Pi\, d_i) = |\Pi\, d_i|^\alpha \, ,
+\end{equation}
+nebo 
+\begin{equation}
+\label{h2}
+f(D) \equiv g(\Pi\, d_i)= sign(\Pi\, d_i)\,|\Pi\, d_i|^\alpha \, ,
+\end{equation}
+kde $\alpha \in R$.
+\vskip 6mm
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\section{Homomorfismy $GL(n) \rightarrow R^*$ }} 
+
+
+\textbf{Úloha:} Hledáme v¹echny homomorfismy $GL(n) \rightarrow R^*$.
+
+\vskip 3mm
+
+\textbf{Vìta 3:} Ka¾dý homomorfismus na $GL(n)$ je jednoznaènì urèen svou restrikcí\\
+ na podgrupu $GD(n)$.
+
+\vskip 2mm
+Dùkaz: 
+\vskip 1mm
+\begin{enumerate}[label=(\alph*)]
+\item 
+If $C$ is diagonizable, then $C=P\,D\,P^{-1}$, 
+where $D$ is diagonal and $P$ is invertible, and
+\begin{eqnarray}
+f(C) &=& f(P\,D\,P^{-1}) = f(P)\,f(D) \,f(P^{-1}) = f(P)\,f(P^{-1})\,f(D)\\
+ &=&  f(P\,P^{-1})\,f(D) = f(D).
+\end{eqnarray}
+Diagonální matice $D$ je urèena jednoznaènì a¾ na poøadí prvkù na diagonále (jsou na ní vlastní èísla matice $C$), tj. èíslo $\Pi\, d_i$ je jednoznaèné.
+
+\item 
+For general $A$, use polar decomposition $A=H\,U$, where both $H$ and $P$ are diagonizable. Then using the result from a) above:
+\begin{equation}
+\label{AD}
+f(A) = f(H\,U) = f(H)\,f(U) = f(D_H)\,f(D_U) = f(D_H\,D_U) = f(D).
+\end{equation}
+Zde ji¾ prvky matice  $D$ nejsou urèeny jednoznaènì, proto¾e $D_H$ a $D_U$ nemají urèené poøadí prvkù na diagonále, ale èíslo $\Pi\, d_i$ u¾ je jednoznaèné.
+\end{enumerate}
+Matice $D$ tedy není urèena jednoznaènì, av¹ak èíslo $\Pi\, d_i$ je. Ze vztahù \ref{h1} a \ref{h2} tedy plyne, ¾e roz¹íøení z $GD(n)$ na $GL(n)$ je jednoznaèné.
+
+$\Box$
+\vskip 3mm
+
+Závìr: v¹echny homomorfismy $GL(n) \rightarrow R^*$ mají tvar 
+
+\vskip 1mm
+buï 
+\begin{equation}
+\label{h11}
+f(A) = f(D) = |\Pi\,  d_i|^\alpha \, ,
+\end{equation}
+nebo 
+\begin{equation}
+\label{h22}
+f(A) = f(D) = sign(\Pi\,  d_i)\,|\Pi\,  d_i|^\alpha \, ,
+\end{equation}
+kde $\alpha \in R$ a $D$ je matice z \ref{AD} (pøesnì øeèeno, kterákoliv z matic získaných tímto postupem). 
+\vskip 2mm
+
+
+
+%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\section{Homogenní homomorfismy $GL(n) \rightarrow R^*$ }} 
+
+\textbf{Definice:} 
+\vskip 1mm
+Homomorfismus $f: GL(n) \rightarrow R^*$ se nazývá homogenní (stupnì $n$), jestli¾e\\
+pro v¹echna $\lambda \in R^*$ platí 
+\begin{equation}
+\label{homo}
+f(\lambda I) = \lambda^n .
+\end{equation}
+\textbf{Poznámka:} 
+\vskip 1mm
+Z této definice plyne $f(\lambda A) = f((\lambda I) A) =f(\lambda I) \,f(A) = \lambda^n f(A)$.
+\vskip 3mm
+
+\textbf{Definice:} 
+\vskip 1mm
+Homomorfismus $f: GL(n) \rightarrow R^*$ se nazývá pozitivnì homogenní, jestli¾e rovnost \ref{homo} \\
+platí pro v¹echna $\lambda > 0$.
+\vskip 1mm
+\textbf{Poznámka:} 
+\vskip 1mm
+Pro $n$ sudé obì definice splývají.\\
+Pro $n$ liché je pozitivní homogenita pouze nutnou podmínkou pro homogenitu.
+\vskip 2mm
+
+
+\vskip 3mm
+\textbf{Vìta 4.1:} Oba homomorfismy \ref{h11} a \ref{h22} jsou pozitivnì homogenní na $GL(n)$,\\
+ právì kdy¾ $\alpha = 1$. 
+\vskip 2mm
+Dùkaz -- ovìøení rovnosti \ref{homo} pro $\lambda > 0$:
+\begin{equation}
+\label{hi1}
+f(\lambda I) = |\Pi\, d_i|^\alpha = |\lambda^n|^\alpha  = (\lambda^n)^\alpha\, ,
+\end{equation}
+resp.
+\begin{equation}
+\label{hi2}
+f(\lambda I) = sign(\Pi\, d_i)\,|\Pi\, d_i|^\alpha 
+= sign(\lambda^n)\,|\lambda^n|^\alpha = (\lambda^n)^\alpha  \, ,
+\end{equation}
+tak¾e $f$ je pozitivnì homogenní, právì kdy¾ $\alpha = 1$.  
+
+$\Box$
+
+\vskip 3mm
+\textbf{Vìta 4.2:} Ka¾dý homogenní homomorfismus $f: GL(n) \rightarrow R^*$ má tvar\\  pro sudé $n$ buï
+\begin{equation}
+\label{h111}
+f(A) = f(D) = |\Pi\, d_i|\, ,
+\end{equation}
+nebo
+\begin{equation}
+\label{h222}
+f(A) = f(D) = \Pi\, d_i\, ,
+\end{equation}
+kde $D$ je libovolná matice z \ref{AD} . 
+Pro liché $n$ má tvar pouze \ref{h222} .
+
+\vskip 2mm
+Dùkaz: 
+\vskip 1mm
+Pro sudé $n$ plyne z Vìty 4.1 a z toho, ¾e pro sudé $n$ z pozitivní homogenity plyne homogenita. 
+Pro liché $n$ mù¾e nastat pøípad $\lambda^n < 0$, který vyluèuje variantu \ref{h111}. 
+
+$\Box$
+\vskip 4mm
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\section{Definice determinantu na $GL(n)$ }} 
+
+\vskip 4mm
+
+Na $GD(n)$ definujme determinant jako homogenní homomorfismus $GD(n) \rightarrow R^*$.\\
+ Z Vìty 4.2 plyne, ¾e pro liché $n$ je definice jednoznaèná a ¾e 
+\begin{equation}
+\label{detD}
+\det(D) = \Pi\, d_i \, .
+\end{equation}
+Tato definice souhlasí se standardní definicí determinantu.
+\vskip 1mm
+Dodateèná podmínka pro sudé $n$, aby definice byla jednoznaèná ?  Nevím.
+
+Mohli bychom napøíklad pøidat podmínku, ¾e $f(P_2) < 0$, kde $P_2$ je matice\\
+ z dùkazu Vìty 2. Nebo podmínku $f(diag(-1, 1, \dots 1)) = -1$.
+
+
+\vskip 5mm
+Na $GL(n)$ definujme determinant jako roz¹íøení z grupy $GD(n)$, které je \\
+dle Vìty 3 jednoznaèné a je dáno pøedpisem
+\begin{equation}
+\label{detA}
+\det(A) = \det(D) \, ,
+\end{equation}
+kde $D$ je libovolná matice z \ref{AD} . 
+\vskip 4mm
+
+
+\textbf{Vìta 5:} Vý¹e uvedená definice determinantu na $GL(n)$ souhlasí se standardní definicí.
+
+\vskip 2mm
+Dùkaz: 
+\vskip 1mm
+Determinant dle standardní definice a dle na¹í definice se shodují na $GD(n)$.
+\vskip 1mm
+Determinant na $GD(n)$ dle standardní definice i dle na¹í definice pøedstavují roz¹íøení z $GD(n)$ na $GL(n)$.
+\vskip 1mm
+Vìta 3 øíká, ¾e roz¹íøení homomorfismu z $GD(n)$ na $GL(n)$ je jednoznaèné. \\
+Tak¾e se obì definice musí shodovat.
+
+$\Box$
+\vskip 6mm
+
+
+
+
+A teï se to je¹tì musí projít a ovìøit, ¾e $R^*$ se dá nahradit $C^*$, a pak je¹tì z nìjaké spojitosti odvodit, ¾e to platí i pro neregulární matice.
+
+
+\vskip 3mm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\section{Appendix} 
+
+\vskip 3mm
+
+Platí, ¾e slo¾ení dvou homomorfismù je homomorfismus, a ¾e obraz jednotkového prvku je jednotkový prvek - viz napø.
+\vskip 1mm
+{\url{<https://sites.math.washington.edu/~greenber/GroupHomomorphisms.pdf>}}
+\vskip 2mm
+
+
+\end{document}
