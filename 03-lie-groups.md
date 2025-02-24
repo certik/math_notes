@@ -24,3 +24,21 @@ Galilei, generators show matrices.
 
 Lorentz, generators, matrices:
 4 disconnected parts.
+
+## Galilei Group
+
+$$
+\begin{pmatrix}
+t' \\
+\mathbf{r}'
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 \\
+\mathbf{v} & R
+\end{pmatrix}
+\begin{pmatrix}
+t \\
+\mathbf{r}
+\end{pmatrix}
+$$
