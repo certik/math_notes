@@ -191,3 +191,177 @@ Usually in the derivations we assume the same metric in both systems. Can we
 change, say, the signature of the metric? Let's write the Lorentz
 transformation for it and an example. But it seems the metric is only useful if
 it is exactly the same metric for both.
+
+### Galilean and Lorentz Groups in 1+1 Dimensions
+
+To gain further insight into the properties of the Galilean and Lorentz groups, it is instructive to consider them in 1+1 dimensions, where the spatial dimension is reduced to one. In this simplified setting, we can more easily compare their structures and understand how they act on space-time, providing a foundation for understanding their behavior in higher dimensions.
+
+The homogeneous Lorentz group in 1+1 dimensions is SO(1,1), which consists of
+transformations that preserve the Minkowski metric $\text{diag}(-1,1)$. A general element of SO(1,1) can be written as:
+
+$$
+A = \begin{pmatrix} \cosh \eta & \sinh \eta \\ \sinh \eta & \cosh \eta \end{pmatrix}
+$$
+
+where $\eta$ is the rapidity parameter. This represents a hyperbolic rotation, or a boost, in 1+1 dimensions.
+
+On the other hand, the homogeneous Galilean group in 1+1 dimensions consists of transformations of the form:
+
+$$
+A = \begin{pmatrix} 1 & 0 \\ v & 1 \end{pmatrix}
+$$
+
+where $v$ is the relative velocity between two inertial frames. This transformation corresponds to a Galilean boost.
+
+Interestingly, both groups have a single generator for boosts, and their Lie
+algebras share the same commutation relation. Specifically, for both groups,
+the boost generator $K$ satisfies:
+
+$$
+[K, K] = 0
+$$
+
+since there is only one generator, and any element commutes with itself. Thus, the Lie algebras are Abelian.
+
+For the Lorentz group SO(1,1), the generator can be taken as:
+
+$$
+K_{\text{Lorentz}} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+$$
+
+and for the Galilean group:
+
+$$
+K_{\text{Gal}} = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}
+$$
+
+Both generators satisfy $[K, K] = 0$, but they are distinct matrices and lead to different group actions.
+
+Exponentiating these generators, we obtain the group elements:
+
+For the Lorentz group:
+
+$$
+\exp(\eta K_{\text{Lorentz}}) = \begin{pmatrix} \cosh \eta & \sinh \eta \\ \sinh \eta & \cosh \eta \end{pmatrix}
+$$
+
+For the Galilean group:
+
+$$
+\exp(v K_{\text{Gal}}) = \begin{pmatrix} 1 & 0 \\ v & 1 \end{pmatrix}
+$$
+
+These exponentials show that the Lorentz group acts hyperbolically, while the Galilean group acts linearly.
+
+Despite having isomorphic Lie algebras (both are isomorphic to $\mathbb{R}$,
+the one-dimensional Abelian Lie algebra), the groups themselves are isomorphic
+as well, since they are both simply connected and isomorphic to $\mathbb{R}$. However, their actions on space-time are fundamentally different, as evidenced by the distinct forms of their group elements and the metrics they preserve.
+
+To see this difference explicitly, we can determine the metrics preserved by
+each group. A group $G$ preserves a bilinear form $B$ if:
+
+$$
+g^T B g = B \quad \text{for all } g \in G
+$$
+
+Equivalently, for the Lie algebra, the generators $K$ must satisfy:
+
+$$
+K^T B + B K = 0
+$$
+
+Let us solve this condition for both groups.
+
+#### Lorentz Group
+
+For $K_{\text{Lorentz}} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, and
+assuming $B = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$, the condition becomes:
+
+$$
+\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ b & c \end{pmatrix} + \begin{pmatrix} a & b \\ b & c \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+Computing the left-hand side:
+
+$$
+\begin{pmatrix} b & c \\ a & b \end{pmatrix} + \begin{pmatrix} b & a \\ c & b \end{pmatrix} = \begin{pmatrix} 2b & c + a \\ a + c & 2b \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+Thus, we have:
+
+$$
+2b = 0 \implies b = 0
+$$
+
+$$
+c + a = 0 \implies c = -a
+$$
+
+So, $B = \begin{pmatrix} a & 0 \\ 0 & -a \end{pmatrix}$, which is proportional
+to the Minkowski metric $\text{diag}(1, -1)$ or $\text{diag}(-1, 1)$,
+depending on the sign of $a$. This is a non-degenerate metric, with
+determinant $\det B = -a^2$ (assuming $a \neq 0$).
+
+#### Galilean Group
+
+For $K_{\text{Gal}} = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}$, and again
+$B = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$, the condition is:
+
+$$
+\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ b & c \end{pmatrix} + \begin{pmatrix} a & b \\ b & c \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+Since $K_{\text{Gal}}^T = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, we have:
+
+$$
+\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ b & c \end{pmatrix} = \begin{pmatrix} b & c \\ 0 & 0 \end{pmatrix}, \quad \begin{pmatrix} a & b \\ b & c \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} b & 0 \\ c & 0 \end{pmatrix}
+$$
+
+Thus,
+
+$$
+\begin{pmatrix} b & c \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} b & 0 \\ c & 0 \end{pmatrix} = \begin{pmatrix} 2b & c \\ c & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+So,
+
+$$
+2b = 0 \implies b = 0
+$$
+
+$$
+c = 0
+$$
+
+Therefore, $B = \begin{pmatrix} a & 0 \\ 0 & 0 \end{pmatrix}$, which is
+degenerate, with determinant $\det B = 0$.
+
+Hence, the Galilean group preserves a degenerate bilinear form, specifically
+the temporal metric $\text{diag}(1,0)$, while the Lorentz group preserves a
+non-degenerate metric $\text{diag}(1,-1)$.
+
+This illustrates that even though the Lie algebras are isomorphic, the specific representations of the groups on space-time lead to different invariant structures. In the case of the Lorentz group, it preserves a non-degenerate metric, which defines the causal structure of special relativity. For the Galilean group, the invariant structure is degenerate, reflecting the absolute time in Newtonian physics.
+
+Furthermore, in 1+1 dimensions, both groups are simply connected and isomorphic
+to $\mathbb{R}$, but their actions are distinct. This distinction becomes more pronounced in higher dimensions, where the Lie algebras themselves differ, as seen in the 3+1 dimensional case discussed earlier.
+
+It is also worth noting that these groups can be extended by including discrete transformations, such as time reversal or space inversion, leading to disconnected groups like O(1,1) for the Lorentz group, which includes both proper and improper transformations.
+
+In summary, while the Lie algebras of the homogeneous Galilean and Lorentz groups in 1+1 dimensions are isomorphic, their representations and the structures they preserve on space-time are fundamentally different, highlighting the distinct physical theories they underlie.
+
+#### Connection to Higher Dimensions
+
+In higher dimensions, such as 3+1, the Lie algebras of the Galilean and Lorentz
+groups differ. For the Lorentz group SO(3,1), the commutation relations include
+$[K_i, K_j] = -\epsilon_{ijk} J_k$, introducing non-commutativity among the
+boost generators, whereas for the Galilean group, $[K_i, K_j] = 0$, as shown in the main text. This difference leads to distinct group structures and representations, further emphasizing the unique characteristics of each group in describing physical symmetries.
+
+#### Additional Notes on Group Extensions
+
+As mentioned, one can consider extensions of these groups by including discrete transformations. For example, in the Lorentz group, adding space inversion or time reversal leads to the full orthochronous Lorentz group or the complete Lorentz group, which have multiple connected components. Similarly, for the Galilean group, one can include reflections to obtain a larger group. These extensions are important for understanding the full symmetry group of physical theories, including parity and time-reversal symmetries.
+
+However, for the purposes of this discussion, we focus on the connected components containing the identity, which are the homogeneous groups discussed above.
+
+---
+
+This additional section provides a detailed comparison of the Galilean and Lorentz groups in 1+1 dimensions, emphasizing their differences in representations and invariant metrics despite having isomorphic Lie algebras. It complements the existing discussion on higher-dimensional cases and reinforces the understanding of how these groups act on space-time.
