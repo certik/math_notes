@@ -28,30 +28,31 @@ J_z = Matrix([[0, 0, 0, 0],
               [0, 0, 0, 0]])
 
 # Define boost generators (mixing time t with x, y, z)
-K_x = Matrix([[0, 1, 0, 0],
-              [0, 0, 0, 0],
-              [0, 0, 0, 0],
-              [0, 0, 0, 0]])
-
-K_y = Matrix([[0, 0, 1, 0],
-              [0, 0, 0, 0],
+K_x = Matrix([[0, 0, 0, 0],
+              [1, 0, 0, 0],
               [0, 0, 0, 0],
               [0, 0, 0, 0]])
 
-K_z = Matrix([[0, 0, 0, 1],
+K_y = Matrix([[0, 0, 0, 0],
               [0, 0, 0, 0],
-              [0, 0, 0, 0],
+              [1, 0, 0, 0],
               [0, 0, 0, 0]])
 
-# Compute commutators for rotation invariance: [J_i, C] = J_i C - C J_i
-comm_J_x = simplify(J_x * C - C * J_x)
-comm_J_y = simplify(J_y * C - C * J_y)
-comm_J_z = simplify(J_z * C - C * J_z)
+K_z = Matrix([[0, 0, 0, 0],
+              [0, 0, 0, 0],
+              [0, 0, 0, 0],
+              [1, 0, 0, 0]])
 
-# Compute boost invariance conditions: K_i^T C + C K_i
-cond_K_x = simplify(K_x.transpose() * C + C * K_x)
-cond_K_y = simplify(K_y.transpose() * C + C * K_y)
-cond_K_z = simplify(K_z.transpose() * C + C * K_z)
+# Compute commutators for rotation invariance: J_i C + C J_i^T
+# Note: the above can be written as  J_i C - C J_i = [J_i, C]
+comm_J_x = simplify(J_x * C + C * J_x.transpose())
+comm_J_y = simplify(J_y * C + C * J_y.transpose())
+comm_J_z = simplify(J_z * C + C * J_z.transpose())
+
+# Compute boost invariance conditions: K_i C + C K_i^T
+cond_K_x = simplify(K_x * C + C * K_x.transpose())
+cond_K_y = simplify(K_y * C + C * K_y.transpose())
+cond_K_z = simplify(K_z * C + C * K_z.transpose())
 
 # Collect all equations by setting each matrix element to zero
 equations = []
