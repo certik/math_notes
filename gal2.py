@@ -1,4 +1,4 @@
-from sympy import Matrix, symbols, simplify, solve
+from sympy import Matrix, symbols, simplify, solve, pprint
 
 # Define symbols for the components of C
 c00, c01, c02, c03 = symbols('c00 c01 c02 c03')
@@ -31,6 +31,9 @@ J_x = Matrix([[0, 0, 0, 0],
 commutator_z = simplify(J_z * C - C * J_z)
 commutator_y = simplify(J_y * C - C * J_y)
 commutator_x = simplify(J_x * C - C * J_x)
+print(commutator_x)
+print(commutator_y)
+print(commutator_z)
 
 # Collect equations by setting each commutator to zero
 equations = []
