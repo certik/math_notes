@@ -1,4 +1,4 @@
-from sympy import Matrix, symbols, simplify, solve
+from sympy import Matrix, symbols, simplify, solve, pprint
 
 # Define symbols for a general symmetric 4x4 matrix C
 c00, c01, c02, c03 = symbols('c00 c01 c02 c03')
@@ -61,6 +61,9 @@ for matrix in [comm_J_x, comm_J_y, comm_J_z, cond_K_x, cond_K_y, cond_K_z]:
             if matrix[i, j] != 0:
                 equations.append(matrix[i, j])
 
+print("The following termsa are all equal to 0:")
+pprint(equations)
+
 # Variables to solve for
 variables = [c00, c01, c02, c03, c11, c12, c13, c22, c23, c33]
 
@@ -75,6 +78,6 @@ if solutions:
     # Substitute the solution into C
     C_solution = C.subs(sol_dict)
     print("\nFinal matrix C:")
-    print(C_solution)
+    pprint(C_solution)
 else:
     print("No solutions found.")
