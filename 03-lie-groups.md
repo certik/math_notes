@@ -625,3 +625,172 @@ $$
 h^{\mu\nu}=\text{diag}(0, 1, 1, 1)
 $$
 They satisfy $\tau_{\mu\nu}h^{\mu\nu} = 0$.
+
+
+### Extending Metrics Preserved by Galilean and Lorentz Groups from 1+1 to 3+1 Spacetime
+
+To extend the computation of the metrics preserved by the Galilean and Lorentz groups from 1+1 spacetime (one time and one spatial dimension) to 3+1 spacetime (one time and three spatial dimensions), we determine the covariant metric $B$ and the contravariant metric $C$ that remain invariant under the boost transformations of these groups. These metrics satisfy specific invariance conditions derived from the boost generators: $K^T B + B K = 0$ for the covariant metric and $K C + C K^T = 0$ for the contravariant metric, where $K$ represents the boost generators in 3+1 dimensions. Assuming $B$ and $C$ are symmetric 4x4 matrices, we solve these equations systematically for each group.
+
+#### **Galilean Group in 3+1 Spacetime**
+
+The Galilean group governs transformations in Newtonian physics, where time is absolute, and boosts represent velocity shifts between inertial frames. In 3+1 dimensions, there are three boost generators corresponding to the spatial directions $x$, $y$, and $z$, denoted $K_x$, $K_y$, and $K_z$. Based on the transformation $t' = t$, $\mathbf{r}' = \mathbf{r} + \mathbf{v} t$, the generators are:
+
+- $K_x = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$, transposition gives $K_x^T = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$,
+- $K_y = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$, with $K_y^T = \begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$,
+- $K_z = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix}$, with $K_z^T = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$.
+
+These matrices generate infinitesimal boosts, mixing time with each spatial coordinate.
+
+##### **Covariant Metric $B$**
+
+Assume $B$ is a symmetric 4x4 matrix:
+
+$$ B = \begin{pmatrix} b_{00} & b_{01} & b_{02} & b_{03} \\ b_{01} & b_{11} & b_{12} & b_{13} \\ b_{02} & b_{12} & b_{22} & b_{23} \\ b_{03} & b_{13} & b_{23} & b_{33} \end{pmatrix} $$
+
+We solve $K_i^T B + B K_i = 0$ for $i = x, y, z$.
+
+- **For $K_x$:**
+
+$$ K_x^T B = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} B = \begin{pmatrix} b_{01} & b_{11} & b_{12} & b_{13} \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} $$
+
+$$ B K_x = B \begin{pmatrix} 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} b_{01} & 0 & 0 & 0 \\ b_{11} & 0 & 0 & 0 \\ b_{12} & 0 & 0 & 0 \\ b_{13} & 0 & 0 & 0 \end{pmatrix} $$
+
+$$ K_x^T B + B K_x = \begin{pmatrix} 2 b_{01} & b_{11} & b_{12} & b_{13} \\ b_{11} & 0 & 0 & 0 \\ b_{12} & 0 & 0 & 0 \\ b_{13} & 0 & 0 & 0 \end{pmatrix} = 0 $$
+
+This gives:
+- $2 b_{01} = 0 \Rightarrow b_{01} = 0$,
+- $b_{11} = 0$,
+- $b_{12} = 0$,
+- $b_{13} = 0$.
+
+- **For $K_y$:**
+
+$$ K_y^T B + B K_y = \begin{pmatrix} 2 b_{02} & b_{12} & b_{22} & b_{23} \\ b_{12} & 0 & 0 & 0 \\ b_{22} & 0 & 0 & 0 \\ b_{23} & 0 & 0 & 0 \end{pmatrix} = 0 $$
+
+This implies:
+- $2 b_{02} = 0 \Rightarrow b_{02} = 0$,
+- $b_{12} = 0$ (consistent),
+- $b_{22} = 0$,
+- $b_{23} = 0$.
+
+- **For $K_z$:**
+
+$$ K_z^T B + B K_z = \begin{pmatrix} 2 b_{03} & b_{13} & b_{23} & b_{33} \\ b_{13} & 0 & 0 & 0 \\ b_{23} & 0 & 0 & 0 \\ b_{33} & 0 & 0 & 0 \end{pmatrix} = 0 $$
+
+This gives:
+- $2 b_{03} = 0 \Rightarrow b_{03} = 0$,
+- $b_{13} = 0$ (consistent),
+- $b_{23} = 0$ (consistent),
+- $b_{33} = 0$.
+
+Thus, $B$ reduces to:
+
+$$ B = \begin{pmatrix} b_{00} & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} $$
+
+Setting $b_{00} = 1$ (a common choice), we obtain:
+
+$$ B = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} = \text{diag}(1, 0, 0, 0) $$
+
+The determinant is $\det B = 1 \cdot 0 \cdot 0 \cdot 0 = 0$, indicating a degenerate metric, which aligns with the absolute time of Galilean physics.
+
+##### **Contravariant Metric $C$**
+
+Assume $C$ is symmetric:
+
+$$ C = \begin{pmatrix} c_{00} & c_{01} & c_{02} & c_{03} \\ c_{01} & c_{11} & c_{12} & c_{13} \\ c_{02} & c_{12} & c_{22} & c_{23} \\ c_{03} & c_{13} & c_{23} & c_{33} \end{pmatrix} $$
+
+Solve $K_i C + C K_i^T = 0$.
+
+- **For $K_x$:**
+
+$$ K_x C + C K_x^T = \begin{pmatrix} 0 & c_{00} & 0 & 0 \\ c_{00} & 2 c_{01} & c_{02} & c_{03} \\ 0 & c_{02} & 0 & 0 \\ 0 & c_{03} & 0 & 0 \end{pmatrix} = 0 $$
+
+This implies:
+- $c_{00} = 0$,
+- $2 c_{01} = 0 \Rightarrow c_{01} = 0$,
+- $c_{02} = 0$,
+- $c_{03} = 0$.
+
+- **For $K_y$ and $K_z$:**
+
+Similar calculations confirm $c_{00} = c_{01} = c_{02} = c_{03} = 0$. Thus:
+
+$$ C = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & c_{11} & c_{12} & c_{13} \\ 0 & c_{12} & c_{22} & c_{23} \\ 0 & c_{13} & c_{23} & c_{33} \end{pmatrix} $$
+
+The boost generators constrain only the time-related components. However, the Galilean group includes spatial rotations, with generators $J_x$, $J_y$, $J_z$:
+
+- $J_x = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 \\ 0 & 0 & 1 & 0 \end{pmatrix}$,
+- $J_y = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \end{pmatrix}$,
+- $J_z = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$.
+
+Since $J_i^T = -J_i$, the condition $J_i C + C J_i^T = 0$ becomes $J_i C = C J_i$, meaning $C$ must commute with the rotation generators. For the spatial block:
+
+$$ C_{\text{spatial}} = \begin{pmatrix} c_{11} & c_{12} & c_{13} \\ c_{12} & c_{22} & c_{23} \\ c_{13} & c_{23} & c_{33} \end{pmatrix} $$
+
+- **For $J_z$ (spatial part $\begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$):**
+
+$$ J_z C = \begin{pmatrix} 0 & -c_{12} & -c_{22} & -c_{23} \\ 0 & c_{11} & c_{12} & c_{13} \\ 0 & 0 & 0 & 0 \end{pmatrix}, \quad C J_z = \begin{pmatrix} 0 & c_{12} & c_{11} & 0 \\ 0 & c_{22} & c_{12} & 0 \\ 0 & c_{23} & c_{13} & 0 \end{pmatrix} $$
+
+Equating $J_z C = C J_z$:
+- $-c_{12} = c_{12} \Rightarrow c_{12} = 0$,
+- $-c_{22} = c_{11} \Rightarrow c_{11} = -c_{22}$,
+- $c_{11} = c_{22} \Rightarrow c_{11} = c_{22} = 0$ (if consistent with others).
+
+- **For $J_x$ and $J_y$:**
+
+Similar computations yield $c_{12} = c_{13} = c_{23} = 0$ and $c_{11} = c_{22} = c_{33} = c$. Thus:
+
+$$ C = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & c & 0 & 0 \\ 0 & 0 & c & 0 \\ 0 & 0 & 0 & c \end{pmatrix} $$
+
+Choosing $c = 1$:
+
+$$ C = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} = \text{diag}(0, 1, 1, 1) $$
+
+The determinant is $\det C = 0$, a degenerate spatial metric.
+
+#### **Lorentz Group in 3+1 Spacetime**
+
+The Lorentz group governs special relativity, with boost generators:
+
+- $K_x = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$,
+- $K_y = \begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$,
+- $K_z = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix}$.
+
+All are symmetric ($K_i^T = K_i$).
+
+##### **Covariant Metric $B$**
+
+For $K_x$:
+
+$$ K_x B + B K_x = \begin{pmatrix} 2 b_{01} & b_{11} + b_{00} & b_{12} & b_{13} \\ b_{00} + b_{11} & 2 b_{01} & b_{02} & b_{03} \\ b_{12} & b_{02} & 0 & 0 \\ b_{13} & b_{03} & 0 & 0 \end{pmatrix} = 0 $$
+
+This gives $b_{01} = 0$, $b_{11} = -b_{00}$, $b_{12} = b_{13} = b_{02} = b_{03} = 0$. Solving for $K_y$ and $K_z$ similarly, we find $b_{22} = b_{33} = -b_{00}$, all off-diagonal terms zero. Thus:
+
+$$ B = \begin{pmatrix} b_{00} & 0 & 0 & 0 \\ 0 & -b_{00} & 0 & 0 \\ 0 & 0 & -b_{00} & 0 \\ 0 & 0 & 0 & -b_{00} \end{pmatrix} $$
+
+With $b_{00} = -1$:
+
+$$ B = \text{diag}(-1, 1, 1, 1) $$
+
+The determinant is $-1$, non-degenerate (Minkowski metric).
+
+##### **Contravariant Metric $C$**
+
+Since $K_i C + C K_i = 0$ mirrors the covariant condition, we get:
+
+$$ C = \text{diag}(-1, 1, 1, 1) $$
+
+Here, $C = B$, consistent with $B$ being its own inverse.
+
+#### **Conclusion**
+
+- **Galilean Group:**
+  - $B = \text{diag}(1, 0, 0, 0)$ (temporal, degenerate),
+  - $C = \text{diag}(0, 1, 1, 1)$ (spatial, degenerate).
+  - Extends 1+1 case ($B = \text{diag}(1, 0)$, $C = \text{diag}(0, 1)$).
+
+- **Lorentz Group:**
+  - $B = C = \text{diag}(-1, 1, 1, 1)$ (non-degenerate).
+  - Extends 1+1 case ($B = C = \text{diag}(-1, 1)$).
+
+The Galilean metrics separate time and space, while the Lorentz metric unifies spacetime relativistically.
