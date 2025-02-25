@@ -418,6 +418,23 @@ Or:
 $$ g^T B g = B $$
 :::
 
+Important: The above derivation works for the covariant metric $B_{\mu\nu}$.
+For contravariant metric $C^{\mu\nu}$ we get:
+
+$$ C(\tilde{\mathbf{u}}g^{-1}, \tilde{\mathbf{w}} g^{-1})
+= C(\tilde{\mathbf{u}}, \tilde{\mathbf{w}}) $$
+
+Where $C(\tilde{\mathbf{u}}, \tilde{\mathbf{w}})=C^{\mu\nu} u_\mu w_\nu
+=\tilde{\mathbf{u}} C \tilde{\mathbf{w}}^T$, so we get:
+
+$$g^{-1} C (g^{-1})^T = C$$
+
+And since $g' = g^{-1}$ belongs into the group, we get $g' C g'^T = C$ and we
+can rename $g'$ to just $g$ to obtain the final equation for $C$:
+
+$$g C g^T = C$$.
+
+
 ### Derivation of $K^T B + B K = 0$
 
 Now consider an infinitesimal transformation near the identity, parameterized as $g(\epsilon) = I + \epsilon K$, where $K$ is a matrix in the Lie algebra of $G$, and $\epsilon$ is a small parameter. This must satisfy the preservation condition:
