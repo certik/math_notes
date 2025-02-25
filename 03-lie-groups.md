@@ -131,13 +131,17 @@ The $J_i$ are generators of rotations, and $K_i$ are Galilean boosts.
 Let's compute the exponential in [](#Gexp1):
 $$
 e^{\phi_1 J_1 + \phi_2 J_2 + \phi_3 J_3 + v_1 K_1 + v_2 K_2 + v_3 K_3}
-=...
+=\cdots=\begin{pmatrix}
+1 & 0 \\
+\mathbf{v} & R
+\end{pmatrix}
 $$
+The dots skip the tedious direct computation, but it can be done.
 
-This transformation leaves invariant both the spatial
-metric $\mathrm{diag}(0,1,1,1)$ and the independent dual temporal metric
-$\mathrm{diag}(1,0,0,0)$. This can be computed. The Lorentz/Poincaré group
-leaves the Minkowski metric invariant and that can also be computed.
+This transformation leaves invariant both the spatial contravariant metric
+$\mathrm{diag}(0,1,1,1)$ and the independent dual temporal covariant metric
+$\mathrm{diag}(1,0,0,0)$. This is computed below. The Lorentz/Poincaré group
+leaves the Minkowski metric invariant and that is also computed below.
 Furthermore, from the metric one can derive the transformation also.
 
 The commutation relations [](#Gcommut) allow many representations of the
