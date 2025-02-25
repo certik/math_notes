@@ -465,3 +465,148 @@ This condition characterizes the generators $K$ of the Lie algebra associated wi
 - **Infinitesimal condition**: $K^T B + B K = 0$ defines the Lie algebra generators of $G$.
 
 These results apply to groups like the Lorentz group, where $B = \text{diag}(-1, 1, 1, 1)$, preserving the spacetime metric in special relativity.
+
+
+The article has already been rewritten to use `$` for inline math and `$$` for display math, as requested. Below is the complete rewritten version, ready for your use.
+
+---
+
+## Metrics Preserved by Galilean and Lorentz Boost Generators
+
+In this article, we use the generator $K$ approach to derive the covariant metric $B$ and contravariant metric $C$ preserved by the Galilean and Lorentz boost generators in 1+1 dimensions. The covariant metric satisfies $K^T B + B K = 0$, and the contravariant metric satisfies $K C + C K^T = 0$. We assume $B$ and $C$ are symmetric 2x2 matrices and solve these equations to determine their forms, examining their degeneracy via the determinant.
+
+### Galilean Boost Generator
+
+The Galilean boost generator in 1+1 dimensions, representing a velocity boost in Newtonian spacetime, is:
+
+$$
+K = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, \quad K^T = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}
+$$
+
+#### Covariant Metric $B$
+
+Let $B = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$. Compute:
+
+$$
+K^T B = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ b & c \end{pmatrix} = \begin{pmatrix} b & c \\ 0 & 0 \end{pmatrix}
+$$
+
+$$
+B K = \begin{pmatrix} a & b \\ b & c \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} b & 0 \\ c & 0 \end{pmatrix}
+$$
+
+$$
+K^T B + B K = \begin{pmatrix} b & c \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} b & 0 \\ c & 0 \end{pmatrix} = \begin{pmatrix} 2b & c \\ c & 0 \end{pmatrix} = 0
+$$
+
+This gives $2b = 0$ and $c = 0$, so $b = 0$, $c = 0$. Thus:
+
+$$
+B = \begin{pmatrix} a & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+Choosing $a = 1$, we get $B = \text{diag}(1, 0)$. The determinant is:
+
+$$
+\det B = 1 \cdot 0 = 0
+$$
+
+This metric is **degenerate**, reflecting the absolute time in Galilean spacetime.
+
+#### Contravariant Metric $C$
+
+Let $C = \begin{pmatrix} p & q \\ q & r \end{pmatrix}$. Compute:
+
+$$
+K C = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} p & q \\ q & r \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ p & q \end{pmatrix}
+$$
+
+$$
+C K^T = \begin{pmatrix} p & q \\ q & r \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & p \\ 0 & q \end{pmatrix}
+$$
+
+$$
+K C + C K^T = \begin{pmatrix} 0 & p \\ p & 2q \end{pmatrix} = 0
+$$
+
+This gives $p = 0$ and $2q = 0$, so $q = 0$. Thus:
+
+$$
+C = \begin{pmatrix} 0 & 0 \\ 0 & r \end{pmatrix}
+$$
+
+Choosing $r = 1$, we get $C = \text{diag}(0, 1)$, with:
+
+$$
+\det C = 0 \cdot 1 = 0
+$$
+
+This metric is also **degenerate**, consistent with the spatial separation in Galilean symmetry.
+
+### Lorentz Boost Generator
+
+The Lorentz boost generator in 1+1 dimensions, representing a relativistic velocity boost, is:
+
+$$
+K = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}, \quad K^T = K
+$$
+
+#### Covariant Metric $B$
+
+Let $B = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$. Since $K^T = K$, the equation becomes $K B + B K = 0$. Compute:
+
+$$
+K B = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ b & c \end{pmatrix} = \begin{pmatrix} -b & -c \\ -a & -b \end{pmatrix}
+$$
+
+$$
+B K = \begin{pmatrix} a & b \\ b & c \end{pmatrix} \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix} = \begin{pmatrix} -b & -a \\ -c & -b \end{pmatrix}
+$$
+
+$$
+K B + B K = \begin{pmatrix} -2b & -(a + c) \\ -(a + c) & -2b \end{pmatrix} = 0
+$$
+
+This gives $-2b = 0$ and $-(a + c) = 0$, so $b = 0$, $a = -c$. Thus:
+
+$$
+B = \begin{pmatrix} a & 0 \\ 0 & -a \end{pmatrix}
+$$
+
+Choosing $a = -1$, we get $B = \text{diag}(-1, 1)$, with:
+
+$$
+\det B = (-1) \cdot 1 = -1 \neq 0
+$$
+
+This metric is **non-degenerate**, reflecting the unified spacetime of relativity.
+
+#### Contravariant Metric $C$
+
+Since $K^T = K$, the equation $K C + C K^T = 0$ is identical to $K C + C K = 0$. The calculation mirrors the covariant case, yielding:
+
+$$
+C = \begin{pmatrix} p & 0 \\ 0 & -p \end{pmatrix}
+$$
+
+Choosing $p = -1$, we get $C = \text{diag}(-1, 1)$, with $\det C = -1 \neq 0$, also **non-degenerate**.
+
+### Conclusion
+
+- **Galilean Boost**: $B = \text{diag}(1, 0)$ and $C = \text{diag}(0, 1)$ are degenerate ($\det = 0$), indicating separate time and space structures.
+- **Lorentz Boost**: $B = \text{diag}(-1, 1)$ and $C = \text{diag}(-1, 1)$ are non-degenerate ($\det \neq 0$), reflecting the integrated spacetime of special relativity.
+
+This distinction highlights the fundamental difference between Newtonian and relativistic symmetries.
+
+Specifically it shows that in the Lorentz case we can define a spacetime
+non-degenerate metric $g_{\mu\nu}=\text{diag}(-1, 1, 1, 1)$ (and the same for
+upper indices), and we can use it to raise and lower indices, while in the
+Galilean case we obtained the following covariant metric:
+$$
+\tau_{\mu\nu}=\text{diag}(1, 0, 0, 0)
+$$
+and the following contravariant metric:
+$$
+h^{\mu\nu}=\text{diag}(0, 1, 1, 1)
+$$
+They satisfy $\tau_{\mu\nu}h^{\mu\nu} = 0$.
