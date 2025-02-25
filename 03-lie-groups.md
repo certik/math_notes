@@ -185,12 +185,23 @@ All physics can be formulated to be invariant to the Galilean group, including
 electromagnetism, but it's more complex and not unique, and quantum mechanics
 (Schroedinger equation), and gravity (Newton-Cartan).
 
-Can the metric change from inertial to inertial system? Answer: as long as the
-Galilean or Lorentz transformation leaves it invariant, then yes, otherwise no.
-Usually in the derivations we assume the same metric in both systems. Can we
-change, say, the signature of the metric? Let's write the Lorentz
-transformation for it and an example. But it seems the metric is only useful if
-it is exactly the same metric for both.
+:::{note}
+Can the metric change from inertial to inertial system? Answer: it cannot, the
+choice of $a$ in the metric $g_{\mu\nu}=\textrm{diag}(-a, a)$ must apply to the
+whole spacetime, because if you choose let's say $a=1$ for one inertial system,
+then thanks to the Lorentz transformation it is preserved as $a=1$ for all
+other inertial systems, so if you choose $a=-1$ for some other inertial system
+you get contradictions: the spacetime interval for the two inertial systems
+would not be preserved, despite using Lorentz transformation between them. The
+interval only gets preserved if $a$ is chosen the same in both systems.
+
+$$ ds'^2 = x^T g^T \eta g x = x^T \eta x = ds^2$$
+
+In the above equation we used $g^T \eta g = \eta$ which only works if we use
+exactly the same $a$ for both LHS and RHS, otherwise it doesn't.
+
+:::
+
 
 ### Galilean and Lorentz Groups in 1+1 Dimensions
 
