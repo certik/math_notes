@@ -1,33 +1,33 @@
 from sympy import Matrix, symbols, simplify, solve
 
-# Define symbols for the symmetric matrix C
+# Define symbols for a general symmetric 4x4 matrix C
 c00, c01, c02, c03 = symbols('c00 c01 c02 c03')
 c11, c12, c13 = symbols('c11 c12 c13')
 c22, c23, c33 = symbols('c22 c23 c33')
 
-# Define C as a symmetric 4x4 matrix
+# Construct the symmetric matrix C
 C = Matrix([[c00, c01, c02, c03],
             [c01, c11, c12, c13],
             [c02, c12, c22, c23],
             [c03, c13, c23, c33]])
 
-# Define rotation generators
-J_z = Matrix([[0, 0, 0, 0],
-              [0, 0, -1, 0],
-              [0, 1, 0, 0],
-              [0, 0, 0, 0]])
+# Define rotation generators (acting on spatial coordinates x, y, z)
+J_x = Matrix([[0, 0, 0, 0],
+              [0, 0, 0, 0],
+              [0, 0, 0, -1],
+              [0, 0, 1, 0]])
 
 J_y = Matrix([[0, 0, 0, 0],
               [0, 0, 0, 1],
               [0, 0, 0, 0],
               [0, -1, 0, 0]])
 
-J_x = Matrix([[0, 0, 0, 0],
-              [0, 0, 0, 0],
-              [0, 0, 0, -1],
-              [0, 0, 1, 0]])
+J_z = Matrix([[0, 0, 0, 0],
+              [0, 0, -1, 0],
+              [0, 1, 0, 0],
+              [0, 0, 0, 0]])
 
-# Define boost generators
+# Define boost generators (mixing time t with x, y, z)
 K_x = Matrix([[0, 1, 0, 0],
               [0, 0, 0, 0],
               [0, 0, 0, 0],
@@ -43,49 +43,36 @@ K_z = Matrix([[0, 0, 0, 1],
               [0, 0, 0, 0],
               [0, 0, 0, 0]])
 
-# Compute commutators
-commutator_J_z = simplify(J_z * C - C * J_z)
-commutator_J_y = simplify(J_y * C - C * J_y)
-commutator_J_x = simplify(J_x * C - C * J_x)
-commutator_K_x = simplify(K_x * C - C * K_x)
-commutator_K_y = simplify(K_y * C - C * K_y)
-commutator_K_z = simplify(K_z * C - C * K_z)
+# Compute commutators for rotation invariance: [J_i, C] = J_i C - C J_i
+comm_J_x = simplify(J_x * C - C * J_x)
+comm_J_y = simplify(J_y * C - C * J_y)
+comm_J_z = simplify(J_z * C - C * J_z)
 
-# Print intermediate results
-print("Commutator [J_z, C]:")
-print(commutator_J_z)
-print("\nCommutator [J_y, C]:")
-print(commutator_J_y)
-print("\nCommutator [J_x, C]:")
-print(commutator_J_x)
-print("\nCommutator [K_x, C]:")
-print(commutator_K_x)
-print("\nCommutator [K_y, C]:")
-print(commutator_K_y)
-print("\nCommutator [K_z, C]:")
-print(commutator_K_z)
+# Compute boost invariance conditions: K_i^T C + C K_i
+cond_K_x = simplify(K_x.transpose() * C + C * K_x)
+cond_K_y = simplify(K_y.transpose() * C + C * K_y)
+cond_K_z = simplify(K_z.transpose() * C + C * K_z)
 
-# Collect equations from commutators
+# Collect all equations by setting each matrix element to zero
 equations = []
-for commutator in [commutator_J_z, commutator_J_y, commutator_J_x,
-                   commutator_K_x, commutator_K_y, commutator_K_z]:
-    for row in range(4):
-        for col in range(4):
-            if commutator[row, col] != 0:
-                equations.append(commutator[row, col])
+for matrix in [comm_J_x, comm_J_y, comm_J_z, cond_K_x, cond_K_y, cond_K_z]:
+    for i in range(4):
+        for j in range(4):
+            if matrix[i, j] != 0:
+                equations.append(matrix[i, j])
 
-# Define variables to solve for
+# Variables to solve for
 variables = [c00, c01, c02, c03, c11, c12, c13, c22, c23, c33]
 
-# Solve the system
+# Solve the system of equations
 solutions = solve(equations, variables, dict=True)
 
-# Print the solution
-print("\nSolutions for the components of C:")
+# Output the results
+print("Solutions for the components of C:")
 if solutions:
-    print(solutions[0])
-    # Construct and print the final matrix C
     sol_dict = solutions[0]
+    print(sol_dict)
+    # Substitute the solution into C
     C_solution = C.subs(sol_dict)
     print("\nFinal matrix C:")
     print(C_solution)
