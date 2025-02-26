@@ -50,48 +50,48 @@ K_z = Matrix([[0, 0, 0, 1],
 # For g^ij:
 # A g A^T = g
 # K g + g K^T = 0
-covariant=False
-if covariant:
-    J_x = J_x.T
-    J_y = J_y.T
-    J_z = J_z.T
-    K_x = K_x.T
-    K_y = K_y.T
-    K_z = K_z.T
-# Compute generator invariance conditions for g^{ij} if covariant=False,
-# otherwise for g_{ij}:
-cond_J_x = simplify(J_x * C + C * J_x.T)
-cond_J_y = simplify(J_y * C + C * J_y.T)
-cond_J_z = simplify(J_z * C + C * J_z.T)
-cond_K_x = simplify(K_x * C + C * K_x.T)
-cond_K_y = simplify(K_y * C + C * K_y.T)
-cond_K_z = simplify(K_z * C + C * K_z.T)
+for covariant in [False, True]:
+    if covariant:
+        J_x = J_x.T
+        J_y = J_y.T
+        J_z = J_z.T
+        K_x = K_x.T
+        K_y = K_y.T
+        K_z = K_z.T
+    # Compute generator invariance conditions for g^{ij} if covariant=False,
+    # otherwise for g_{ij}:
+    cond_J_x = simplify(J_x * C + C * J_x.T)
+    cond_J_y = simplify(J_y * C + C * J_y.T)
+    cond_J_z = simplify(J_z * C + C * J_z.T)
+    cond_K_x = simplify(K_x * C + C * K_x.T)
+    cond_K_y = simplify(K_y * C + C * K_y.T)
+    cond_K_z = simplify(K_z * C + C * K_z.T)
 
-# Collect all equations by setting each matrix element to zero
-equations = []
-for matrix in [cond_J_x, cond_J_y, cond_J_z, cond_K_x, cond_K_y, cond_K_z]:
-    for i in range(4):
-        for j in range(4):
-            if matrix[i, j] != 0:
-                equations.append(matrix[i, j])
+    # Collect all equations by setting each matrix element to zero
+    equations = []
+    for matrix in [cond_J_x, cond_J_y, cond_J_z, cond_K_x, cond_K_y, cond_K_z]:
+        for i in range(4):
+            for j in range(4):
+                if matrix[i, j] != 0:
+                    equations.append(matrix[i, j])
 
-print("The following termsa are all equal to 0:")
-pprint(equations)
+    #print("The following termsa are all equal to 0:")
+    #pprint(equations)
 
-# Variables to solve for
-variables = [c00, c01, c02, c03, c11, c12, c13, c22, c23, c33]
+    # Variables to solve for
+    variables = [c00, c01, c02, c03, c11, c12, c13, c22, c23, c33]
 
-# Solve the system of equations
-solutions = solve(equations, variables, dict=True)
+    # Solve the system of equations
+    solutions = solve(equations, variables, dict=True)
 
-# Output the results
-print("Solutions for the components of C:")
-if solutions:
-    sol_dict = solutions[0]
-    print(sol_dict)
-    # Substitute the solution into C
-    C_solution = C.subs(sol_dict)
-    print("\nFinal matrix C:")
-    pprint(C_solution)
-else:
-    print("No solutions found.")
+    # Output the results
+    #print("Solutions for the components of C:")
+    if solutions:
+        sol_dict = solutions[0]
+        #print(sol_dict)
+        # Substitute the solution into C
+        C_solution = C.subs(sol_dict)
+        print(f"\nFinal matrix C for covariant={covariant}:")
+        pprint(C_solution)
+    else:
+        print("No solutions found.")
