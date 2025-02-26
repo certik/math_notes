@@ -28,20 +28,37 @@ J_z = Matrix([[0, 0, 0, 0],
               [0, 0, 0, 0]])
 
 # Define boost generators (mixing time t with x, y, z)
-K_x = Matrix([[0, 1, 0, 0],
-              [1, 0, 0, 0],
-              [0, 0, 0, 0],
-              [0, 0, 0, 0]])
+galileian_boosts = True
+if galileian_boosts:
+    K_x = Matrix([[0, 0, 0, 0],
+                  [1, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 0]])
 
-K_y = Matrix([[0, 0, 1, 0],
-              [0, 0, 0, 0],
-              [1, 0, 0, 0],
-              [0, 0, 0, 0]])
+    K_y = Matrix([[0, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [1, 0, 0, 0],
+                  [0, 0, 0, 0]])
 
-K_z = Matrix([[0, 0, 0, 1],
-              [0, 0, 0, 0],
-              [0, 0, 0, 0],
-              [1, 0, 0, 0]])
+    K_z = Matrix([[0, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [1, 0, 0, 0]])
+else:
+    K_x = Matrix([[0, 1, 0, 0],
+                  [1, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 0]])
+
+    K_y = Matrix([[0, 0, 1, 0],
+                  [0, 0, 0, 0],
+                  [1, 0, 0, 0],
+                  [0, 0, 0, 0]])
+
+    K_z = Matrix([[0, 0, 0, 1],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 0],
+                  [1, 0, 0, 0]])
 
 # A is the transformation matrix, g is the metric, K is the generator:
 # For covariant metric g_ij:
