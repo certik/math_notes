@@ -50,7 +50,16 @@ K_z = Matrix([[0, 0, 0, 0],
 # For g^ij:
 # A g A^T = g
 # K g + g K^T = 0
-# Compute generator invariance conditions for g^{ij}:
+covariant=False
+if covariant:
+    J_x = J_x.T
+    J_y = J_y.T
+    J_z = J_z.T
+    K_x = K_x.T
+    K_y = K_y.T
+    K_z = K_z.T
+# Compute generator invariance conditions for g^{ij} if covariant=False,
+# otherwise for g_{ij}:
 cond_J_x = simplify(J_x * C + C * J_x.T)
 cond_J_y = simplify(J_y * C + C * J_y.T)
 cond_J_z = simplify(J_z * C + C * J_z.T)
