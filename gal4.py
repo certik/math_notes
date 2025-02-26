@@ -51,12 +51,12 @@ K_z = Matrix([[0, 0, 0, 0],
 # A g A^T = g
 # K g + g K^T = 0
 # Compute generator invariance conditions for g^{ij}:
-cond_J_x = simplify(J_x * C + C * J_x.transpose())
-cond_J_y = simplify(J_y * C + C * J_y.transpose())
-cond_J_z = simplify(J_z * C + C * J_z.transpose())
-cond_K_x = simplify(K_x * C + C * K_x.transpose())
-cond_K_y = simplify(K_y * C + C * K_y.transpose())
-cond_K_z = simplify(K_z * C + C * K_z.transpose())
+cond_J_x = simplify(J_x * C + C * J_x.T)
+cond_J_y = simplify(J_y * C + C * J_y.T)
+cond_J_z = simplify(J_z * C + C * J_z.T)
+cond_K_x = simplify(K_x * C + C * K_x.T)
+cond_K_y = simplify(K_y * C + C * K_y.T)
+cond_K_z = simplify(K_z * C + C * K_z.T)
 
 # Collect all equations by setting each matrix element to zero
 equations = []
