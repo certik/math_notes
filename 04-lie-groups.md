@@ -90,3 +90,43 @@ $$
 + {1\over 3!}{d^3 \over dt^3} e^{tX} Y e^{-tX}
 + \cdots |_{t=0} =
 $$
+
+$$
+= e^{tX} Y e^{-tX} t^0
++ {1\over 1!}{d \over dt} e^{tX} Y e^{-tX} t^1
++ {1\over 2!}{d^2 \over dt^2} e^{tX} Y e^{-tX} t^2
++ {1\over 3!}{d^3 \over dt^3} e^{tX} Y e^{-tX} t^3
++ \cdots |_{t=0} =
+$$
+
+$$
+= \exp(e^{tX} Y e^{-tX} +t) |_{t=0}
+$$
+
+Matrix function:
+
+$$
+f(x)= e^{xX} Y e^{-xX}
+$$
+
+Taylor series:
+
+$$
+f(t+h)= f(t)
++ {1\over 1!}f'(t) h
++ {1\over 2!}f''(t) h^2
++ {1\over 3!}f'''(t) h^3
++ \cdots
+$$
+we get:
+
+$$
+e^{(t+h)X} Y e^{-(t+h)X} = e^{tX} Y e^{-tX}
++ {1\over 1!}e^{tX} [X,Y] e^{-tX} h +
+$$
+$$
++ {1\over 2!}e^{tX} [X,[X,Y]] e^{-tX} h^2
++ {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
++ \cdots
+$$
+We set $t=0$ and $h=1$.
