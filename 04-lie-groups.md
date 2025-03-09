@@ -45,7 +45,7 @@ $$
 = e^{tX} [X, Y] e^{-tX}\,.
 $$
 
-Now we apply it recursively for the second derivative:
+We apply it recursively for the second derivative:
 
 $$
 f''(t) = {d^2\over d t^2} \mathrm{Ad}_{e^{tX}}(Y)
@@ -60,31 +60,30 @@ $$
 = e^{tX} [X, [X, Y]] e^{-tX}\,. 
 $$
 
-Now we expand $f(t+h)$ using a Taylor series:
+We evaluate these derivatives at $t=0$:
+$$
+f(0)=Y\,,
+$$
+$$
+f'(0)=[X, Y]\,,
+$$
+$$
+f''(0)=[X, [X, Y]]\,.
+$$
+
+We expand $f(h)$ using a Taylor series:
 
 $$
-f(t+h)= f(t)
-+ {1\over 1!}f'(t) h
-+ {1\over 2!}f''(t) h^2
-+ {1\over 3!}f'''(t) h^3
+f(h)= f(0)
++ {1\over 1!}f'(0) h
++ {1\over 2!}f''(0) h^2
++ {1\over 3!}f'''(0) h^3
 + \cdots
 $$
 and we get:
 
 $$
-e^{(t+h)X} Y e^{-(t+h)X} = e^{tX} Y e^{-tX}
-+ {1\over 1!}e^{tX} [X,Y] e^{-tX} h +
-$$
-$$
-+ {1\over 2!}e^{tX} [X,[X,Y]] e^{-tX} h^2
-+ {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
-+ \cdots
-$$
-We can set $t=0$ (or equivalently we can multiply by $e^{-tX}$ from the left
-and by $e^{tX}$ from the right):
-
-$$
-e^{hX} Y e^{-hX} = Y
+f(h) = e^{hX} Y e^{-hX} = Y
 + {1\over 1!} [X,Y] h
 + {1\over 2!} [X,[X,Y]] h^2
 + {1\over 3!} [X,[X,[X,Y]]] h^3
@@ -94,7 +93,7 @@ $$
 We can set $h=1$:
 
 $$
-e^{X} Y e^{-X} = Y
+f(1) = e^{X} Y e^{-X} = Y
 + {1\over 1!} [X,Y]
 + {1\over 2!} [X,[X,Y]]
 + {1\over 3!} [X,[X,[X,Y]]]
