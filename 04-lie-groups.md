@@ -71,26 +71,26 @@ $$
 f''(0)=[X, [X, Y]]\,.
 $$
 
-We expand $f(h)$ using a Taylor series:
+We expand $f(t)$ using a Taylor series around the point $t=0$:
 
 $$
-f(h)= f(0)
-+ {1\over 1!}f'(0) h
-+ {1\over 2!}f''(0) h^2
-+ {1\over 3!}f'''(0) h^3
+f(t)= f(0)
++ {1\over 1!}f'(0) t
++ {1\over 2!}f''(0) t^2
++ {1\over 3!}f'''(0) t^3
 + \cdots
 $$
 and we get:
 
 $$
-f(h) = e^{hX} Y e^{-hX} = Y
-+ {1\over 1!} [X,Y] h
-+ {1\over 2!} [X,[X,Y]] h^2
-+ {1\over 3!} [X,[X,[X,Y]]] h^3
+f(t) = e^{tX} Y e^{-tX} = Y
++ {1\over 1!} [X,Y] t
++ {1\over 2!} [X,[X,Y]] t^2
++ {1\over 3!} [X,[X,[X,Y]]] t^3
 + \cdots
 $$
 
-We can set $h=1$:
+We can set $t=1$:
 
 $$
 f(1) = e^{X} Y e^{-X} = Y
