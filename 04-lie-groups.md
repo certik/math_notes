@@ -129,4 +129,23 @@ $$
 + {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
 + \cdots
 $$
-We set $t=0$ and $h=1$.
+We can set $t=0$, or we can multiply by $e^{-tX}$ from the left and by $e^{tX}$
+from the right:
+
+$$
+e^{hX} Y e^{-hX} = Y
++ {1\over 1!} [X,Y] h
++ {1\over 2!} [X,[X,Y]] h^2
++ {1\over 3!} [X,[X,[X,Y]]] h^3
++ \cdots
+$$
+
+We can set $h=1$:
+
+$$
+e^{X} Y e^{-X} = Y
++ {1\over 1!} [X,Y]
++ {1\over 2!} [X,[X,Y]]
++ {1\over 3!} [X,[X,[X,Y]]]
++ \cdots
+$$
