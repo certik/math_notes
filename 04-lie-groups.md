@@ -18,14 +18,14 @@ We define $\mathrm{Ad}_{X}(Y)$ by:
 
 $$ \mathrm{Ad}_{X}(Y) = X Y X^{-1} $$
 
-and compute:
+and define a matrix function $f(t)$ by:
 
-$$ \mathrm{Ad}_{e^{tX}}(Y) = e^{tX} Y e^{-tX}\,. $$
+$$ f(t) = \mathrm{Ad}_{e^{tX}}(Y) = e^{tX} Y e^{-tX}\,. $$
 
-Differentiate:
+Differentiate $f(t)$:
 
 $$
-{d\over d t} \mathrm{Ad}_{e^{tX}}(Y)
+f'(t) = {d\over d t} \mathrm{Ad}_{e^{tX}}(Y)
 = {d\over d t} e^{tX} Y e^{-tX} =
 $$
 
@@ -48,7 +48,7 @@ $$
 Now we apply it recursively for the second derivative:
 
 $$
-{d^2\over d t^2} \mathrm{Ad}_{e^{tX}}(Y)
+f''(t) = {d^2\over d t^2} \mathrm{Ad}_{e^{tX}}(Y)
 = {d^2\over d t^2} e^{tX} Y e^{-tX} =
 $$
 
@@ -60,14 +60,7 @@ $$
 = e^{tX} [X, [X, Y]] e^{-tX}\,. 
 $$
 
-
-We start from a matrix function:
-
-$$
-f(x)= e^{xX} Y e^{-xX}\,.
-$$
-
-Use a Taylor series:
+Now we expand $f(t+h)$ using a Taylor series:
 
 $$
 f(t+h)= f(t)
@@ -87,8 +80,8 @@ $$
 + {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
 + \cdots
 $$
-We can set $t=0$, or we can multiply by $e^{-tX}$ from the left and by $e^{tX}$
-from the right:
+We can set $t=0$ (or equivalently we can multiply by $e^{-tX}$ from the left
+and by $e^{tX}$ from the right):
 
 $$
 e^{hX} Y e^{-hX} = Y
