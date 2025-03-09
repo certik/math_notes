@@ -20,7 +20,7 @@ $$ \mathrm{Ad}_{X}(Y) = X Y X^{-1} $$
 
 and compute:
 
-$$ \mathrm{Ad}_{e^{tX}}(Y) = e^{tX} Y e^{-tX} $$
+$$ \mathrm{Ad}_{e^{tX}}(Y) = e^{tX} Y e^{-tX}\,. $$
 
 Differentiate:
 
@@ -59,6 +59,56 @@ $$
 $$
 = e^{tX} [X, [X, Y]] e^{-tX}\,. 
 $$
+
+
+We start from a matrix function:
+
+$$
+f(x)= e^{xX} Y e^{-xX}\,.
+$$
+
+Use a Taylor series:
+
+$$
+f(t+h)= f(t)
++ {1\over 1!}f'(t) h
++ {1\over 2!}f''(t) h^2
++ {1\over 3!}f'''(t) h^3
++ \cdots
+$$
+and we get:
+
+$$
+e^{(t+h)X} Y e^{-(t+h)X} = e^{tX} Y e^{-tX}
++ {1\over 1!}e^{tX} [X,Y] e^{-tX} h +
+$$
+$$
++ {1\over 2!}e^{tX} [X,[X,Y]] e^{-tX} h^2
++ {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
++ \cdots
+$$
+We can set $t=0$, or we can multiply by $e^{-tX}$ from the left and by $e^{tX}$
+from the right:
+
+$$
+e^{hX} Y e^{-hX} = Y
++ {1\over 1!} [X,Y] h
++ {1\over 2!} [X,[X,Y]] h^2
++ {1\over 3!} [X,[X,[X,Y]]] h^3
++ \cdots
+$$
+
+We can set $h=1$:
+
+$$
+e^{X} Y e^{-X} = Y
++ {1\over 1!} [X,Y]
++ {1\over 2!} [X,[X,Y]]
++ {1\over 3!} [X,[X,[X,Y]]]
++ \cdots
+$$
+
+## Old Notes
 
 Now we can compute:
 
@@ -101,51 +151,4 @@ $$
 
 $$
 = \exp(e^{tX} Y e^{-tX} +t) |_{t=0}
-$$
-
-Matrix function:
-
-$$
-f(x)= e^{xX} Y e^{-xX}
-$$
-
-Taylor series:
-
-$$
-f(t+h)= f(t)
-+ {1\over 1!}f'(t) h
-+ {1\over 2!}f''(t) h^2
-+ {1\over 3!}f'''(t) h^3
-+ \cdots
-$$
-we get:
-
-$$
-e^{(t+h)X} Y e^{-(t+h)X} = e^{tX} Y e^{-tX}
-+ {1\over 1!}e^{tX} [X,Y] e^{-tX} h +
-$$
-$$
-+ {1\over 2!}e^{tX} [X,[X,Y]] e^{-tX} h^2
-+ {1\over 3!}e^{tX} [X,[X,[X,Y]]] e^{-tX} h^3
-+ \cdots
-$$
-We can set $t=0$, or we can multiply by $e^{-tX}$ from the left and by $e^{tX}$
-from the right:
-
-$$
-e^{hX} Y e^{-hX} = Y
-+ {1\over 1!} [X,Y] h
-+ {1\over 2!} [X,[X,Y]] h^2
-+ {1\over 3!} [X,[X,[X,Y]]] h^3
-+ \cdots
-$$
-
-We can set $h=1$:
-
-$$
-e^{X} Y e^{-X} = Y
-+ {1\over 1!} [X,Y]
-+ {1\over 2!} [X,[X,Y]]
-+ {1\over 3!} [X,[X,[X,Y]]]
-+ \cdots
 $$
