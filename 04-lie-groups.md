@@ -113,6 +113,23 @@ The following can be proven:
 3. $g$ is the tangent space to $G$ at $I$.
 4. $\exp: g \rightarrow G$ is locally invertible
 
+*Invariant subgroup* $a$ of a group $g$: for every $a$ and
+$g$ the following holds:
+$$
+g a g^{-1} = a'\,,
+$$
+where $a'$ is a member of $a$.
+
+*Invariant abelian subgroup*: is an invariant subgroup that is abelian: $a a' =
+a' a$, or $[a, a'] = 0$.
+
+Lie group is:
+
+* *simple* if it does not posses an invariant Lie subgroup.
+* *semisimple* if it does not posses an abelian invariant Lie subgroup.
+
+Typical examples of semisimple groups are the direct products of simple groups.
+
 ### Examples
 
 In each case we have two equivalent approaches:
@@ -282,6 +299,31 @@ $$
 where $f_{ij}{}^k$ are called the structure constants that define the Lie
 algebra.
 :::
+
+#### Translation-Rotation Group
+
+The group of all translations $T$ and rotations $R$ has six generators $P_1$,
+$P_2$, $P_3$, $J_1$, $J_2$, $J_3$. The translations $P_i$ are an abelian
+subgroup. We have for every $T$ and every element $R$:
+$$
+R T R^{-1} = T'
+$$
+So $T$ is an *invariant subgroup*. Furthermore for all $T$ and $T'$ we have:
+$$
+[T, T'] = 0
+$$
+So $T$ is *abelian invariant subgroup*.
+
+The commutation relations of the generators:
+$$
+[J_i, J_j] = \epsilon_{ijk} J_k\,,
+$$
+$$
+[J_i, P_j] = \epsilon_{ijk} P_k\,,
+$$
+$$
+[P_i, P_j] = 0\,.
+$$
 
 #### SL(2, C)
 
