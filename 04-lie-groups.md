@@ -102,8 +102,8 @@ $$
 
 ## Lie Algebra
 
-Lie algebra for a Lie group that is a topologically closed subgroup of GL(n,
-R) is defined by:
+Lie algebra $g$ for a Lie group $G$ that is a topologically closed subgroup of
+GL(n, R) is defined by:
 $$
 g = \{X: \exp(t X) \in G \quad \forall t \in \mathbb{R}\}\,.
 $$
@@ -161,6 +161,127 @@ $n \times n$:
 $$
 \mathfrak{o}(n) = \{X: X^T = -X\}\,.
 $$
+Taking a determinant of $X^T X = 1$ we get:
+$$
+1 = \det(X^T X) = \det(X^T)\det(X) = \det(X)\det(X) = \det(X)^2\,,
+$$
+$$
+\det(X) = \pm 1\,.
+$$
+The group thus has two connected components:
+$$
+\mathrm{O}(n) = \{-1, 1\} \times \mathrm{SO}(n)\,.
+$$
+Where the special orthogonal group SO(n) is:
+$$
+\mathrm{SO}(n) = \{X: X^T X = 1,\quad \det X = 1\}\,.
+$$
+
+#### O(3)
+
+$$
+\mathrm{O}(3) = \{-1, 1\} \times \mathrm{SO}(3)\,.
+$$
+$$
+\mathrm{SO}(3) = \{X: X^T X = 1,\quad \det X = 1\}\,.
+$$
+$$
+\mathfrak{so}(3) = \{x: x^T = -x\}\,.
+$$
+The $\mathfrak{so}(3)$ matrices thus look like:
+
+$$
+x =
+\begin{pmatrix}
+    0     &  \theta_3 & -\theta_2 \\
+-\theta_3 &     0     &  \theta_1 \\
+ \theta_2 & -\theta_1 &     0
+\end{pmatrix} = \theta_1 J_1 + \theta_2 J_2 + \theta_3 J_3\,,
+$$
+where we have three generators $J_i$ for $i=1, 2, 3$:
+
+$$
+J_1 =
+\begin{pmatrix}
+ 0 &  0 & 0 \\
+ 0 &  0 & 1 \\
+ 0 & -1 & 0
+\end{pmatrix}\,.
+$$
+$$
+J_2 =
+\begin{pmatrix}
+ 0 & 0 & -1 \\
+ 0 & 0 &  0 \\
+ 1 & 0 &  0
+\end{pmatrix}\,,
+$$
+$$
+J_3 =
+\begin{pmatrix}
+ 0 & 1 & 0 \\
+-1 & 0 & 0 \\
+ 0 & 0 & 0
+\end{pmatrix}\,,
+$$
+
+The matrices $J_i$ form a basis of the $\mathfrak{so}(3)$ vector space and they
+satisfy the following commutation relations (Lie bracket):
+$$
+[J_i, J_j]=\epsilon_{ijk} J_k\,.
+$$
+
+The general element $X$ of the Lie group is:
+$$
+X = \exp x = \exp (\theta_1 J_1 + \theta_2 J_2 + \theta_3
+J_3)\,.
+$$
+
+:::{note}
+We can also write every element $X$ as:
+$$
+X = \exp (\theta_1' J_1)\exp(\theta_2' J_2)\exp(\theta_3' J_3)\,.
+$$
+That is a different parametrization and one can compute the relation between
+$\theta_i$ and $\theta_i'$. One can convert one to the other using the BCH
+formula.
+:::
+
+:::{note}
+Note that $X = \exp tx$, but since $x$ is a vector space, then if $x$ belongs
+to it, so does $tx$, so we can just write $X = \exp x$.
+:::
+
+:::{note}
+We can change the basis, for example $J_z=J_3$,
+$J_\pm={1\over2}(J_1\pm i J_2)$, then we obtain different Lie brackets:
+$$
+[J_z, J_+] = J_+\,,
+$$
+$$
+[J_z, J_-] = -J_-\,,
+$$
+$$
+[J_+, J_-] = 2J_z\,.
+$$
+But the Lie algebras are equivalent.
+:::
+
+:::{note}
+Every Lie bracket is always equal to a linear combination of all the
+generators, e.g.:
+$$
+[J_1, J_2] = \alpha J_1 + \beta J_2 + \gamma J_3\,,
+$$
+because the Lie bracket lies in the same vector space and the generators form a
+basis. In the above example we get $\alpha=\beta=0$ and $\gamma=1$. In general
+we always have:
+$$
+[J_i, J_j] = f_{ij}{}^k J_k\,,
+$$
+where $f_{ij}{}^k$ are called the structure constants that define the Lie
+algebra.
+:::
 
 #### SL(2, C)
 
