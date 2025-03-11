@@ -115,6 +115,21 @@ The following can be proven:
 
 ### Examples
 
+In each case we have two equivalent approaches:
+
+1. We can start from the definition of the Lie group itself, for example the
+   orghogonal Lie group O(n) is defined as all transformations that leave the
+   Euclidean metric invariant. Then we derive the Lie algebra and the
+   commutation relations.
+2. Or we start from the Lie algebra, defined using the commutation relations,
+   and we derive the Lie group from it.
+
+The first approach is in some ways simpler, but it requires to assume what
+metric we are preserving. The second approach is more work to derive
+everything, but it has less assumptions, the only assumption is how many
+generators there are and their commutation relations. From that we derive the
+Lie group and what metric it leaves invariant.
+
 #### O(n)
 
 The orthogonal Lie group can be defined as:
