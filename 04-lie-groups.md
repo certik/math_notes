@@ -105,7 +105,7 @@ $$
 Lie algebra for a Lie group that is a topologically closed subgroup of GL(n,
 R) is defined by:
 $$
-g = \{X: \exp(t X) \in G \quad \forall t \in \mathbb{R}\}
+g = \{X: \exp(t X) \in G \quad \forall t \in \mathbb{R}\}\,.
 $$
 The following can be proven:
 1. $g$ is a vector space
@@ -134,45 +134,79 @@ Lie group and what metric it leaves invariant.
 
 The orthogonal Lie group can be defined as:
 $$
-\mathrm{O}(n) = \{X: X^T X = 1\}
+\mathrm{O}(n) = \{X: X^T X = 1\}\,.
 $$
-The corresponding Lie algebra can be shown to be all antisymmetric matrices $n
-\times n$:
+To find the Lie algebra, we write $X = \exp(t x)$ and get:
 $$
-\mathfrak{o}(n) = \{X: X^T = -X\}
+(\exp(tx))^T \exp(tx) = 1\,,
+$$
+$$
+\exp(tx^T) \exp(tx) = 1\,,
+$$
+$$
+\exp(tx^T + tx) = 1\,,
+$$
+$$
+\exp(t(x^T + x)) = 1\,,
+$$
+which is equivalent to:
+$$
+t(x^T + x) = 0\,,
+$$
+$$
+x^T + x = 0\,.
+$$
+The corresponding Lie algebra is thus all antisymmetric matrices
+$n \times n$:
+$$
+\mathfrak{o}(n) = \{X: X^T = -X\}\,.
 $$
 
 #### SL(2, C)
 
 The special linear Lie group can be defined as $2\times2$ matrices:
 $$
-\mathrm{SL}(2,\mathbb{C}) = \{X: \det X = 1\}
+\mathrm{SL}(2,\mathbb{C}) = \{X: \det X = 1\}\,.
 $$
-The corresponding Lie algebra can be shown to be all antisymmetric matrices $n
-\times n$:
+To find the Lie algebra, we use:
 $$
-\mathfrak{sl}(2,\mathbb{C}) = \{X: \mathrm{Tr}(X) = 0\}
+\det\exp x = \exp \mathrm{Tr}\,x\,.
+$$
+We write $X = \exp(t x)$ and get:
+$$
+1 = \det X = \det\exp(t x)=\exp\mathrm{Tr}\, tx=\exp (t\,\mathrm{Tr}\, x)\,,
+$$
+that is equivalent to:
+$$
+t\,\mathrm{Tr}\, x = 0\,,
+$$
+$$
+\mathrm{Tr}\, x = 0\,.
+$$
+The corresponding Lie algebra is thus all $n \times n$ matrices with zero trace:
+$$
+\mathfrak{sl}(2,\mathbb{C}) = \{x: \mathrm{Tr}(x) = 0\}\,.
 $$
 One can choose a basis of this space as:
 $$
-H = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+H = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\,,
 $$
 $$
-X = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}
+X = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\,,
 $$
 $$
-Y = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}
+Y = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}\,.
 $$
 
 The Lie brackets are:
 $$
-[H, X] = 2X
+[H, X] = 2X\,,
 $$
 $$
-[H, Y] = -2Y
+[H, Y] = -2Y\,,
 $$
 $$
-[X, Y] = H
+[X, Y] = H\,.
 $$
 
 #### SU(2, C)
@@ -180,61 +214,61 @@ $$
 The special unitary Lie group can be defined as $2\times2$ unitary matrices
 with determinant 1:
 $$
-\mathrm{SU}(2,\mathbb{C}) = \{X: X^\dagger X = 1, \quad \det X = 1\}
+\mathrm{SU}(2,\mathbb{C}) = \{X: X^\dagger X = 1, \quad \det X = 1\}\,.
 $$
-The corresponding Lie algebra can be shown to be all skew-Hermitian matrices
-$2 \times 2$ with trace zero:
+Using the above derivations, the corresponding Lie algebra is
+all $2 \times 2$ skew-Hermitian matrices with trace zero:
 $$
-\mathfrak{su}(2,\mathbb{C}) = \{X: X^H=-X, \quad \mathrm{Tr}(X) = 0\}
+\mathfrak{su}(2,\mathbb{C}) = \{X: X^H=-X, \quad \mathrm{Tr}(X) = 0\}\,.
 $$
 One can choose a basis of this space as:
 $$
-u_1 = +i\sigma_1 = \begin{pmatrix} 0 & i \\ i & 0 \end{pmatrix}
+u_1 = +i\sigma_1 = \begin{pmatrix} 0 & i \\ i & 0 \end{pmatrix}\,,
 $$
 $$
-u_2 = -i\sigma_2 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+u_2 = -i\sigma_2 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}\,,
 $$
 $$
-u_3 = +i\sigma_3 = \begin{pmatrix} i & 0 \\ 0 & -i \end{pmatrix}
+u_3 = +i\sigma_3 = \begin{pmatrix} i & 0 \\ 0 & -i \end{pmatrix}\,.
 $$
 The matrices are a representation of quaternions.
 
 The Lie brackets are:
 $$
-[u_1, u_2] = 2u_3
+[u_1, u_2] = 2u_3\,,
 $$
 $$
-[u_2, u_3] = 2u_1
+[u_2, u_3] = 2u_1\,,
 $$
 $$
-[u_3, u_1] = 2u_2
+[u_3, u_1] = 2u_2\,.
 $$
 
 One can pass to the complexified Lie algebra:
 $$
 \mathfrak{su}(2,\mathbb{C}) + i\,\mathfrak{su}(2,\mathbb{C})=
-\mathfrak{sl}(2,\mathbb{C})
+\mathfrak{sl}(2,\mathbb{C})\,.
 $$
 The complexified Lie algebra is spanned by three elements X, Y, H:
 $$
-H = {1\over i} u_3 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+H = {1\over i} u_3 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\,,
 $$
 $$
-X = {1\over 2i}(u_1-i u_2) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}
+X = {1\over 2i}(u_1-i u_2) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\,,
 $$
 $$
-Y = {1\over 2i}(u_1+i u_2) =\begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}
+Y = {1\over 2i}(u_1+i u_2) =\begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}\,.
 $$
 
 The Lie brackets are:
 $$
-[H, X] = 2X
+[H, X] = 2X\,,
 $$
 $$
-[H, Y] = -2Y
+[H, Y] = -2Y\,,
 $$
 $$
-[X, Y] = H
+[X, Y] = H\,.
 $$
 
 #### Computing $\exp(\theta J_3) P_1 \exp(-\theta J_3)$
