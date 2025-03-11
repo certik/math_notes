@@ -130,6 +130,31 @@ Lie group is:
 
 Typical examples of semisimple groups are the direct products of simple groups.
 
+Using the structure constants $[L_i, L_j] = C_{ij}{}^k L_k$ we can define a
+*metric tensor* (also called *Killing form*):
+$$
+g_{ij} = g_{ji} = C_{ik}{}^l C_{jl}{}^k\,.
+$$
+The regular representation is:
+$$
+(L_i)_{j}{}^k = C_{ij}{}^k\,.
+$$
+From this it follows:
+$$
+g_{ij} = C_{ik}{}^l C_{jl}{}^k = (L_i)_{k}{}^l (L_j)_{l}{}^k
+= \mathrm{Tr} (L_i, L_j) \equiv (L_i, L_j)\,.
+$$
+This fulfills all properties of a metric, e.g.:
+$$
+(L_i,L_j) = (L_j, L_i)\,,
+$$
+$$
+(L_i+L_j,L_k) = (L_i, L_k) + (L_j, L_k)\,,
+$$
+but it is not necessarily positive definite (i.e., $(L_i, L_i) > 0$).
+
+Theorem: a Lie algebra is semisimple if and only if $\det g_{ij} \neq 0$.
+
 ### Examples
 
 In each case we have two equivalent approaches:
@@ -299,6 +324,21 @@ $$
 where $f_{ij}{}^k$ are called the structure constants that define the Lie
 algebra.
 :::
+
+The structure constants are $C_{ij}{}^k = \epsilon_{ij}{}^k$. The metric tensor
+is:
+$$
+g_{ij} = C_{ik}{}^l C_{jl}{}^k = \epsilon_{ik}{}^l \epsilon_{jl}{}^k = 
+-2 \delta_{ij}\,.
+$$
+:::{warning} TODO
+The metric tensor might be defined with a minus sign.
+:::
+We have:
+$$
+\det g_{ij} = 8 \neq 0
+$$
+So the SO(3) group is semisimple.
 
 #### Translation-Rotation Group
 
