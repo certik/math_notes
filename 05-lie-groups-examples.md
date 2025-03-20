@@ -12,8 +12,6 @@ bibliography:
 ---
 # Lie Groups III Examples
 
-### Examples
-
 In each case we have two equivalent approaches:
 
 1. We can start from the definition of the Lie group itself, for example the
@@ -29,7 +27,9 @@ everything, but it has less assumptions, the only assumption is how many
 generators there are and their commutation relations. From that we derive the
 Lie group and what metric it leaves invariant.
 
-#### O(n)
+# Examples
+
+## O(n)
 
 The orthogonal Lie group can be defined as:
 $$
@@ -76,11 +76,14 @@ $$
 \mathrm{SO}(n) = \{X: X^T X = 1,\quad \det X = 1\}\,.
 $$
 
-#### O(3)
+## O(3)
 
 $$
 \mathrm{O}(3) = \{-1, 1\} \times \mathrm{SO}(3)\,.
 $$
+
+## SO(3)
+
 $$
 \mathrm{SO}(3) = \{X: X^T X = 1,\quad \det X = 1\}\,.
 $$
@@ -197,7 +200,7 @@ $$
 $$
 So the SO(3) group is semisimple.
 
-#### Translation-Rotation Group
+## Translation-Rotation Group
 
 The group of all translations $T$ and rotations $R$ has six generators $P_1$,
 $P_2$, $P_3$, $J_1$, $J_2$, $J_3$. The translations $P_i$ are an abelian
@@ -222,7 +225,7 @@ $$
 [P_i, P_j] = 0\,.
 $$
 
-#### SL(2, C)
+## SL(2, C)
 
 The special linear Lie group can be defined as $2\times2$ matrices:
 $$
@@ -269,7 +272,7 @@ $$
 [X, Y] = H\,.
 $$
 
-#### SU(2, C)
+## SU(2, C)
 
 The special unitary Lie group can be defined as $2\times2$ unitary matrices
 with determinant 1:
@@ -331,7 +334,9 @@ $$
 [X, Y] = H\,.
 $$
 
-#### Computing $\exp(\theta J_3) P_1 \exp(-\theta J_3)$
+# Utilities
+
+## Computing $\exp(\theta J_3) P_1 \exp(-\theta J_3)$
 
 Where $J_i$ are generators of the SO(3) group and $P_1$ are generators of the
 translation group. We do not know their matrices, we only know their
