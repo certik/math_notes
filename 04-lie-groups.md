@@ -163,3 +163,14 @@ Z(G) = \{z ∈ G \quad | \quad  ∀g ∈ G, \quad zg = gz\}\,.
 $$
 
 The center is a normal subgroup of G, so the quotient $G / Z(G)$ is a group.
+
+To construct every other connected Lie group with the same Lie algebra su(2) as
+SU(2), such as SO(3), we take quotients of SU(2) by discrete subgroups of its
+center $Z(SU(2))=\{I,−I\}$. The possible quotients are:
+
+$$
+SU(2)/\{I\}≅SU(2),
+$$
+$$
+SU(2)/\{I,−I\}≅SO(3).
+$$
