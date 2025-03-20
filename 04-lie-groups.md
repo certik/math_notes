@@ -154,3 +154,12 @@ $$
 but it is not necessarily positive definite (i.e., $(L_i, L_i) > 0$).
 
 Theorem: a Lie algebra is semisimple if and only if $\det g_{ij} \neq 0$.
+
+The center of a group G is a set of elements that commute with every element of
+G:
+
+$$
+Z(G) = \{z ∈ G \quad | \quad  ∀g ∈ G, \quad zg = gz\}\,.
+$$
+
+The center is a normal subgroup of G, so the quotient $G / Z(G)$ is a group.
