@@ -234,3 +234,108 @@ $[J_i, J_j] = \epsilon_{ijk} J_k$ and obtain:
 $$
 e^{\theta J_3} J_1 e^{-\theta J_3} = J_1 \cos(\theta) + J_2 \sin(\theta)\,.
 $$
+
+## Rodrigues' Rotation Formula
+
+If $\mathbf{v}$ is a vector in R^3 and $\mathbf{k}$ is a unit vector (axis of
+rotation) and $\theta$ the angle of rotation, then the vector $\mathbf{v}$ gets
+rotated to $\mathbf{v}_\mathrm{rot}$.
+
+We define a matrix $\mathbf{K}$ using:
+
+$$
+\mathbf{K}_{ij} = -\epsilon_{ijk} k^k
+= \begin{pmatrix}
+  0  & -k^3 &  k^2 \\
+ k^3 &   0  & -k^1 \\
+-k^2 &  k^1 &   0
+\end{pmatrix}
+$$
+
+Note that $|\mathbf{k}|^2 = k_1^2 + k_2^2 + k_3^3 = 1$. We get:
+
+$$
+(\mathbf{K}\mathbf{v})_i
+=\mathbf{K}_{ij} v^j
+= -\epsilon_{ijk} k^k v^j
+= \epsilon_{ikj} k^k v^j
+= (\mathbf{k}\times\mathbf{v})_i\,.
+$$
+
+Now we compute the characteristic polynomial:
+
+$$
+P(t) = \det(\mathbf{K}-t\mathbf{I})=-t^3-t(k_1^2+k_2^2+k_3^2) = -t^3-t\,,
+$$
+$$P(\mathbf{K}) = 0\,,$$
+$$-\mathbf{K}^3-\mathbf{K} = 0\,,$$
+$$\mathbf{K}^3=-\mathbf{K}\,.$$
+
+From the last equation we get $\mathbf{K}^4=-\mathbf{K}^2$ and
+$\mathbf{K}^5=-\mathbf{K}^3=\mathbf{K}$ and so on.
+
+Then the rotation matrix $\mathbf{R}$ is:
+
+$$
+\mathbf{R}
+= e^{\theta \mathbf{K}}
+= \sum_{k=0}^\infty {(\theta\mathbf{K})^k \over k!}
+= \mathbf{I} + \theta\mathbf{K}
++ {(\theta\mathbf{K})^2 \over 2!}
++ {(\theta\mathbf{K})^3 \over 3!}
++ \cdots =
+$$
+$$
+= \mathbf{I}
++ \mathbf{K}\left(\theta - {\theta^3\over3!} + {\theta^5\over5!} - \cdots\right)
++ \mathbf{K}^2\left({\theta^2\over2!} - {\theta^4\over4!} + {\theta^6\over6!} - \cdots\right)
+=
+$$
+$$
+= \mathbf{I}
++ \mathbf{K}\sin\theta
++ \mathbf{K}^2(1-\cos\theta)\,.
+$$
+
+So we got:
+$$
+\mathbf{R} = \mathbf{I}
++\mathbf{K} \sin\theta
++\mathbf{K}^2 (1-\cos\theta)\,.
+$$
+
+Now we can write:
+
+$$
+\mathbf{v}_\mathrm{rot} = \mathbf{R} \mathbf{v}
+$$
+
+and get:
+
+$$
+\mathbf{v}_\mathrm{rot} = \mathbf{v}
++\mathbf{K}\mathbf{v} \sin\theta
++\mathbf{K}^2\mathbf{v} (1-\cos\theta)\,.
+$$
+
+We use:
+
+$$
+\mathbf{K}\mathbf{v} = \mathbf{k}\times\mathbf{v}\,,
+$$
+$$
+\mathbf{K}^2\mathbf{v} = \mathbf{K}(\mathbf{K}\mathbf{v})
+= \mathbf{k}\times(\mathbf{k}\times\mathbf{v})
+= \mathbf{k}(\mathbf{k}\cdot\mathbf{v}) - (\mathbf{k}\cdot\mathbf{k})\mathbf{v}
+= \mathbf{k}(\mathbf{k}\cdot\mathbf{v}) - \mathbf{v}
+$$
+
+and get:
+
+$$
+\mathbf{v}_\mathrm{rot} = \mathbf{v} \cos\theta
++(\mathbf{k}\times\mathbf{v}) \sin\theta
++\mathbf{k}(\mathbf{k}\cdot\mathbf{v}) (1-\cos\theta)\,.
+$$
+
+This is called the Rodrigues' formula.
