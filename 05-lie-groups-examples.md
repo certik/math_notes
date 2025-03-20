@@ -344,3 +344,27 @@ We have $\{I,−I\}$ as the center of the SU(2) group and:
 $$
 \mathrm{SU}(2)/\{I,−I\} \cong \mathrm{SO}(3)\,.
 $$
+
+## O(4)
+
+## ISO(3)
+
+ISO(3) / O(3) is the 3D Euclidean space.
+
+We can derive the metric diag(1, 1, 1).
+
+## Surface of the sphere
+
+[P,P]=J
+[J,P]=P
+[J,J]=J
+
+## ISO(4)
+
+## Lorentz O(3,1)
+
+## Poincare ISO(3,1)
+
+## Galilei
+
+## Carroll
