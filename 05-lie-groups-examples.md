@@ -69,7 +69,7 @@ $$
 $$
 The group thus has two connected components:
 $$
-\mathrm{O}(n) = \{-1, 1\} \times \mathrm{SO}(n)\,.
+\mathrm{O}(n) \cong \{-1, 1\} \times \mathrm{SO}(n)\,.
 $$
 Where the special orthogonal group SO(n) is:
 $$
@@ -79,7 +79,11 @@ $$
 ## O(3)
 
 $$
-\mathrm{O}(3) = \{-1, 1\} \times \mathrm{SO}(3)\,.
+\mathrm{O}(3) \cong \{-1, 1\} \times \mathrm{SO}(3)\,.
+$$
+
+$$
+\mathrm{O}(3)/\{I,−I\} \cong \mathrm{SO}(3)
 $$
 
 ## SO(3)
@@ -332,6 +336,11 @@ $$
 $$
 $$
 [X, Y] = H\,.
+$$
+
+We have $\{I,−I\}$ as the center of the SU(2) group and:
+$$
+\mathrm{SU}(2)/\{I,−I\} \cong \mathrm{SO}(3)
 $$
 
 # Utilities
