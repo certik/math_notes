@@ -27,6 +27,8 @@ everything, but it has less assumptions, the only assumption is how many
 generators there are and their commutation relations. From that we derive the
 Lie group and what metric it leaves invariant.
 
+For now we only do the first approach.
+
 # Examples
 
 ## O(n)
@@ -94,7 +96,7 @@ $$
 $$
 \mathfrak{so}(3) = \{x: x^T = -x\}\,.
 $$
-The $\mathfrak{so}(3)$ matrices thus look like:
+The $\mathfrak{so}(3)$ matrices thus look like $x_{ij}=\epsilon_{ijk}\theta^k$:
 
 $$
 x =
@@ -340,5 +342,5 @@ $$
 
 We have $\{I,−I\}$ as the center of the SU(2) group and:
 $$
-\mathrm{SU}(2)/\{I,−I\} \cong \mathrm{SO}(3)
+\mathrm{SU}(2)/\{I,−I\} \cong \mathrm{SO}(3)\,.
 $$
