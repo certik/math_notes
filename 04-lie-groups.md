@@ -262,6 +262,17 @@ $$
 = (\mathbf{k}\times\mathbf{v})_i\,.
 $$
 
+We will also need:
+
+$$
+\left(\mathbf{K}^2\right)_{ij}
+=K_i{}^k K_{kj}
+=(-\epsilon_i{}^k{}_l\, k^l)(-\epsilon_{kjm} k^m)
+=(\delta_{jl} \delta_{mi}-\delta_{ji}\delta_{ml}) k^l k^m
+=k_i k_j - \delta_{ij}\,,
+$$
+where we used $\delta_{ml}k^l k^m=1$.
+
 Now we compute the characteristic polynomial:
 
 $$
@@ -338,4 +349,23 @@ $$
 +\mathbf{k}(\mathbf{k}\cdot\mathbf{v}) (1-\cos\theta)\,.
 $$
 
-This is called the Rodrigues' formula.
+This is called the Rodrigues' formula. In components:
+
+$$
+\mathbf{R}_{ij} = \mathbf{I}_{ij}
++\mathbf{K}_{ij} \sin\theta
++\left(\mathbf{K}^2\right)_{ij} (1-\cos\theta)\,.
+$$
+
+We can simplify:
+
+$$
+R_{ij} = \delta_{ij}
+-\epsilon_{ij}{}^k n_k \sin\theta
++(n_i n_j - \delta_{ij}) (1-\cos\theta)\,,
+$$
+
+$$
+R_{ij}=\cos\theta\delta_{ij}+(1-\cos\theta)n_i n_j
+-\sin\theta\,\epsilon_{ij}{}^k n_k\,.
+$$
