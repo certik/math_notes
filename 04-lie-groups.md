@@ -12,7 +12,7 @@ bibliography:
 ---
 # Lie Groups II
 
-## Adjoint Representation
+# Adjoint Representation and Campbell Identity
 
 We define $\mathrm{Ad}_{X}(Y)$ by:
 
@@ -100,6 +100,8 @@ f(1) = e^{X} Y e^{-X} = Y
 + \cdots
 $$
 
+This last equation is called the Campbell identity.
+
 ## Lie Algebra
 
 Lie algebra $g$ for a Lie group $G$ that is a topologically closed subgroup of
@@ -173,4 +175,62 @@ SU(2)/\{I\}≅SU(2),
 $$
 $$
 SU(2)/\{I,−I\}≅SO(3).
+$$
+
+
+# Utilities
+
+## Computing $\exp(\theta J_3) P_1 \exp(-\theta J_3)$
+
+Where $J_i$ are generators of the SO(3) group and $P_1$ are generators of the
+translation group. We do not know their matrices, we only know their
+commutators. We use the formula above with
+$t = \theta$, $X=J_3$ and $Y=P_1$:
+
+$$
+e^{\theta J_3} P_1 e^{-\theta J_3} = P_1
++ {1\over 1!} [J_3,P_1] \theta
++ {1\over 2!} [J_3,[J_3,P_1]] \theta^2
++ {1\over 3!} [J_3,[J_3,[J_3,P_1]]] \theta^3
++ \cdots\,.
+$$
+
+We need to compute the commutators. The Lie algebra commutator is:
+$$
+[J_i, P_j] = \epsilon_{ijk} P_k\,.
+$$
+So:
+$$
+[J_3, P_1] = \epsilon_{312} P_2 = P_2\,,
+$$
+$$
+[J_3, [J_3, P_1]] = [J_3, P_2] = \epsilon_{321} P_1 = -P_1\,,
+$$
+$$
+[J_3, [J_3, [J_3, P_1]]] = [J_3, -P_1] = -\epsilon_{312} P_2 = -P_2\,.
+$$
+And higher terms repeat. The commutators alternate between $P_2$ and $P_1$ and
+their signs:
+
+$$
+e^{\theta J_3} P_1 e^{-\theta J_3} = P_1
++ {1\over 1!} P_2 \theta
++ {1\over 2!} (-P_1) \theta^2
++ {1\over 3!} (-P_2) \theta^3
++ {1\over 4!} P_1 \theta^4
++ {1\over 5!} P_2 \theta^5
++ \cdots =
+$$
+$$
+= P_1 (1 - {1\over 2!} \theta^2 + {1\over 4!} \theta^4 + \cdots)
++ P_2 ({1\over 1!} \theta - {1\over 3!} \theta^3 + {1\over 5!} \theta^5 + \cdots) =
+$$
+$$
+= P_1 \cos(\theta) + P_2 \sin(\theta)\,.
+$$
+
+Any vector operator has the same Lie bracket, for example for $J_i$ we have
+$[J_i, J_j] = \epsilon_{ijk} J_k$ and obtain:
+$$
+e^{\theta J_3} J_1 e^{-\theta J_3} = J_1 \cos(\theta) + J_2 \sin(\theta)\,.
 $$
