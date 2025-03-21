@@ -217,7 +217,7 @@ The irreducible representations of the SO(3) group, derived from the so(3) Lie a
 
 In quantum mechanics, for a system with angular momentum quantum number $j = 1$, the angular momentum operators are represented in the basis $|1, 1\rangle$, $|1, 0\rangle$, and $|1, -1\rangle$. We start with the ladder operators and $J_z$, compute $J_x$ and $J_y$, and then apply a unitary transformation to obtain transformed operators.
 
-### 1. Ladder Operators and $J_z$
+## 1. Ladder Operators and $J_z$
 
 The ladder operators $J_+$ (raising) and $J_-$ (lowering), along with the $z$-component $J_z$, are defined as follows:
 
@@ -248,7 +248,7 @@ The ladder operators $J_+$ (raising) and $J_-$ (lowering), along with the $z$-co
   \end{pmatrix}
   $$
 
-### 2. Computation of $J_x$ and $J_y$
+## 2. Computation of $J_x$ and $J_y$
 
 Using the ladder operators, we compute $J_x$ and $J_y$ as follows:
 
@@ -274,7 +274,7 @@ Using the ladder operators, we compute $J_x$ and $J_y$ as follows:
 
 These matrices, along with $J_z$, satisfy the angular momentum commutation relations, such as $[J_x, J_y] = i J_z$.
 
-### 3. Unitary Transformation Matrix $U$
+## 3. Unitary Transformation Matrix $U$
 
 To transform the operators into a basis where certain properties (e.g., real rotation matrices) are emphasized, we use the unitary matrix $U$:
 
@@ -288,7 +288,7 @@ $$
 
 This matrix is unitary, satisfying $U^\dagger U = I$, where $U^\dagger$ is the conjugate transpose of $U$.
 
-### 4. Transformed Angular Momentum Operators
+## 4. Transformed Angular Momentum Operators
 
 The transformed operators are computed using the similarity transformation $J_i' = U^\dagger J_i U$ for $i = x, y, z$:
 
@@ -319,7 +319,7 @@ The transformed operators are computed using the similarity transformation $J_i'
   \end{pmatrix}
   $$
 
-### 5. Verification with $i J_i'$
+## 5. Verification with $i J_i'$
 
 To explore the properties of the transformed operators, consider $i J_i'$:
 
@@ -329,7 +329,7 @@ To explore the properties of the transformed operators, consider $i J_i'$:
 
 Each $i J_i'$ is real and skew-symmetric (i.e., $(i J_i')^T = -i J_i'$), which is consistent with generators of real rotation matrices in SO(3).
 
-### Computing the rotation matrices
+## Computing the rotation matrices
 
 In this section we use:
 
