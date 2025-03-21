@@ -211,3 +211,120 @@ The Lie algebra so(3) is isomorphic to su(2), and its representations are labele
 
 ## Final Answer
 The irreducible representations of the SO(3) group, derived from the so(3) Lie algebra via the ladder operator approach, are labeled by integers $j = 0, 1, 2, \ldots$, with dimension $2j + 1$, where $J_z$ has eigenvalues $m = -j, \ldots, j$, and $J^2 = j (j + 1) I$.
+
+
+# Angular Momentum Operators and Their Transformation for $j = 1$
+
+In quantum mechanics, for a system with angular momentum quantum number $j = 1$, the angular momentum operators are represented in the basis $|1, 1\rangle$, $|1, 0\rangle$, and $|1, -1\rangle$. We start with the ladder operators and $J_z$, compute $J_x$ and $J_y$, and then apply a unitary transformation to obtain transformed operators.
+
+### 1. Ladder Operators and $J_z$
+
+The ladder operators $J_+$ (raising) and $J_-$ (lowering), along with the $z$-component $J_z$, are defined as follows:
+
+- **Raising operator $J_+$** raises the magnetic quantum number $m$ by 1:
+  $$
+  J_+ = \begin{pmatrix}
+  0 & \sqrt{2} & 0 \\
+  0 & 0 & \sqrt{2} \\
+  0 & 0 & 0
+  \end{pmatrix}
+  $$
+
+- **Lowering operator $J_-$** lowers the magnetic quantum number $m$ by 1:
+  $$
+  J_- = \begin{pmatrix}
+  0 & 0 & 0 \\
+  \sqrt{2} & 0 & 0 \\
+  0 & \sqrt{2} & 0
+  \end{pmatrix}
+  $$
+
+- **$z$-component $J_z$** is diagonal with eigenvalues corresponding to $m$:
+  $$
+  J_z = \begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 0 & 0 \\
+  0 & 0 & -1
+  \end{pmatrix}
+  $$
+
+### 2. Computation of $J_x$ and $J_y$
+
+Using the ladder operators, we compute $J_x$ and $J_y$ as follows:
+
+- **$J_x$ is the average of the raising and lowering operators**:
+  Using the relation $J_x = \frac{1}{2} (J_+ + J_-)$,
+  $$
+  J_x = \begin{pmatrix}
+  0 & \frac{\sqrt{2}}{2} & 0 \\
+  \frac{\sqrt{2}}{2} & 0 & \frac{\sqrt{2}}{2} \\
+  0 & \frac{\sqrt{2}}{2} & 0
+  \end{pmatrix}
+  $$
+
+- **$J_y$ involves the imaginary unit**:
+  Using $J_y = \frac{1}{2i} (J_+ - J_-)$, where $\frac{1}{i} = -i$,
+  $$
+  J_y = \begin{pmatrix}
+  0 & -\frac{\sqrt{2} i}{2} & 0 \\
+  \frac{\sqrt{2} i}{2} & 0 & -\frac{\sqrt{2} i}{2} \\
+  0 & \frac{\sqrt{2} i}{2} & 0
+  \end{pmatrix}
+  $$
+
+These matrices, along with $J_z$, satisfy the angular momentum commutation relations, such as $[J_x, J_y] = i J_z$.
+
+### 3. Unitary Transformation Matrix $U$
+
+To transform the operators into a basis where certain properties (e.g., real rotation matrices) are emphasized, we use the unitary matrix $U$:
+
+$$
+U = \begin{pmatrix}
+-\frac{1}{\sqrt{2}} & \frac{i}{\sqrt{2}} & 0 \\
+0 & 0 & 1 \\
+\frac{1}{\sqrt{2}} & \frac{i}{\sqrt{2}} & 0
+\end{pmatrix}
+$$
+
+This matrix is unitary, satisfying $U^\dagger U = I$, where $U^\dagger$ is the conjugate transpose of $U$.
+
+### 4. Transformed Angular Momentum Operators
+
+The transformed operators are computed using the similarity transformation $J_i' = U^\dagger J_i U$ for $i = x, y, z$:
+
+- **Transformed $J_x'$**:
+  $$
+  J_x' = \begin{pmatrix}
+  0 & 0 & 0 \\
+  0 & 0 & -i \\
+  0 & i & 0
+  \end{pmatrix}
+  $$
+
+- **Transformed $J_y'$**:
+  $$
+  J_y' = \begin{pmatrix}
+  0 & 0 & i \\
+  0 & 0 & 0 \\
+  -i & 0 & 0
+  \end{pmatrix}
+  $$
+
+- **Transformed $J_z'$**:
+  $$
+  J_z' = \begin{pmatrix}
+  0 & -i & 0 \\
+  i & 0 & 0 \\
+  0 & 0 & 0
+  \end{pmatrix}
+  $$
+
+### 5. Verification with $i J_i'$
+
+To explore the properties of the transformed operators, consider $i J_i'$:
+
+- $i J_x' = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & -1 & 0 \end{pmatrix}$
+- $i J_y' = \begin{pmatrix} 0 & 0 & -1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$
+- $i J_z' = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$
+
+Each $i J_i'$ is real and skew-symmetric (i.e., $(i J_i')^T = -i J_i'$), which is consistent with generators of real rotation matrices in SO(3).
