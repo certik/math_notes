@@ -10,16 +10,16 @@ exports:
 bibliography:
   - references.bib
 ---
-# Lie Groups III Examples
+# Lie Groups III Examples Top Down
 
 In each case we have two equivalent approaches:
 
-1. We can start from the definition of the Lie group itself, for example the
-   orghogonal Lie group O(n) is defined as all transformations that leave the
-   Euclidean metric invariant. Then we derive the Lie algebra and the
+1. *Top Down*: We can start from the definition of the Lie group itself, for
+   example the orghogonal Lie group O(n) is defined as all transformations that
+   leave the Euclidean metric invariant. Then we derive the Lie algebra and the
    commutation relations.
-2. Or we start from the Lie algebra, defined using the commutation relations,
-   and we derive the Lie group from it.
+2. *Bottom Up*: Or we start from the Lie algebra, defined using the commutation
+   relations, and we derive the Lie group from it.
 
 The first approach is in some ways simpler, but it requires to assume what
 metric we are preserving. The second approach is more work to derive
@@ -27,11 +27,10 @@ everything, but it has less assumptions, the only assumption is how many
 generators there are and their commutation relations. From that we derive the
 Lie group and what metric it leaves invariant.
 
-For now we only do the first approach.
+In this section we only do the top down approach. In the next section we do the
+bottom up approach.
 
-# Examples
-
-## O(n)
+# O(n)
 
 The orthogonal Lie group can be defined as:
 $$
@@ -78,7 +77,7 @@ $$
 \mathrm{SO}(n) = \{X: X^T X = 1,\quad \det X = 1\}\,.
 $$
 
-## O(3)
+# O(3)
 
 $$
 \mathrm{O}(3) \cong \{-1, 1\} \times \mathrm{SO}(3)\,.
@@ -88,7 +87,7 @@ $$
 \mathrm{O}(3)/\{I,−I\} \cong \mathrm{SO}(3)
 $$
 
-## SO(3)
+# SO(3)
 
 $$
 \mathrm{SO}(3) = \{X: X^T X = 1,\quad \det X = 1\}\,.
@@ -206,7 +205,7 @@ $$
 $$
 So the SO(3) group is semisimple.
 
-## Translation-Rotation Group
+# Translation-Rotation Group
 
 The group of all translations $T$ and rotations $R$ has six generators $P_1$,
 $P_2$, $P_3$, $J_1$, $J_2$, $J_3$. The translations $P_i$ are an abelian
@@ -231,7 +230,7 @@ $$
 [P_i, P_j] = 0\,.
 $$
 
-## SL(2, C)
+# SL(2, C)
 
 The special linear Lie group can be defined as $2\times2$ matrices:
 $$
@@ -278,7 +277,7 @@ $$
 [X, Y] = H\,.
 $$
 
-## SU(2, C)
+# SU(2, C)
 
 The special unitary Lie group can be defined as $2\times2$ unitary matrices
 with determinant 1:
@@ -345,26 +344,26 @@ $$
 \mathrm{SU}(2)/\{I,−I\} \cong \mathrm{SO}(3)\,.
 $$
 
-## O(4)
+# O(4)
 
-## ISO(3)
+# ISO(3)
 
 ISO(3) / O(3) is the 3D Euclidean space.
 
 We can derive the metric diag(1, 1, 1).
 
-## Surface of the sphere
+# Surface of the sphere
 
 [P,P]=J
 [J,P]=P
 [J,J]=J
 
-## ISO(4)
+# ISO(4)
 
-## Lorentz O(3,1)
+# Lorentz O(3,1)
 
-## Poincare ISO(3,1)
+# Poincare ISO(3,1)
 
-## Galilei
+# Galilei
 
-## Carroll
+# Carroll
