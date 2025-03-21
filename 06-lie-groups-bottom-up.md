@@ -328,3 +328,87 @@ To explore the properties of the transformed operators, consider $i J_i'$:
 - $i J_z' = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$
 
 Each $i J_i'$ is real and skew-symmetric (i.e., $(i J_i')^T = -i J_i'$), which is consistent with generators of real rotation matrices in SO(3).
+
+### Computing the rotation matrices
+
+In this section we use:
+
+- $J_x = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & -1 & 0 \end{pmatrix}$
+- $J_y = \begin{pmatrix} 0 & 0 & -1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$
+- $J_z = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$
+
+We have:
+
+$$J_x^2 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix}\,,$$
+
+$$J_y^2 = \begin{pmatrix} -1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & -1 \end{pmatrix}\,,$$
+
+$$J_z^2 = \begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 0 \end{pmatrix}\,,$$
+
+and:
+
+$$J_x^2 + J_y^2 + J_z^2 = \begin{pmatrix} -2 & 0 & 0 \\ 0 & -2 & 0 \\ 0 & 0 & -2 \end{pmatrix}\,.$$
+
+We have $J_x^3=J_x J_x^2 = -J_x$ and $J_x^4=J_x^2 J_x^2 = -J_x^2$ and
+$J_x^5=-J_x^3=J_x$.
+
+Now we compute:
+
+$$
+\mathbf{R}_x(\theta) = e^{\theta\mathbf{J}_x}
+=\mathbf{I}
++ \theta\mathbf{J}_x
++ {(\theta\mathbf{J}_x)^2 \over 2!}
++ {(\theta\mathbf{J}_x)^3 \over 3!}
++ \cdots
+=
+$$
+
+$$
+=\mathbf{I}
++ \theta\mathbf{J}_x
++ {\theta^2\mathbf{J}_x^2 \over 2!}
+- {\theta^3\mathbf{J}_x \over 3!}
+- {\theta^4\mathbf{J}_x^2 \over 4!}
++ {\theta^5\mathbf{J}_x \over 5!}
++ \cdots
+=
+$$
+
+$$
+=\mathbf{I}
++ \mathbf{J}_x \left(\theta
+- {\theta^3 \over 3!}
++ {\theta^5 \over 5!}
+- \cdots
+\right)
++ \mathbf{J}_x^2\left( {\theta^2 \over 2!} - {\theta^4 \over 4!} + \cdots
+\right)
+=
+$$
+
+$$
+=\mathbf{I} + \mathbf{J}_x^2
++ \mathbf{J}_x \left(\theta
+- {\theta^3 \over 3!}
++ {\theta^5 \over 5!}
+- \cdots
+\right)
+- \mathbf{J}_x^2\left(1 - {\theta^2 \over 2!} + {\theta^4 \over 4!} - \cdots
+\right)
+=
+$$
+
+$$
+=\mathbf{I} + \mathbf{J}_x^2
++ \mathbf{J}_x \sin\theta
+- \mathbf{J}_x^2 \cos\theta
+=
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos\theta & \sin\theta \\
+0 & -\sin\theta & \cos\theta
+\end{pmatrix}\,.
+$$
+
+That is the rotation matrix around the $x$-axis.
