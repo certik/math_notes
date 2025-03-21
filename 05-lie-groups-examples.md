@@ -30,12 +30,32 @@ Lie group and what metric it leaves invariant.
 In this section we only do the top down approach. In the next section we do the
 bottom up approach.
 
+# Euclidean group ISO(n)
+
+The Euclidean group ISO(n) is defined as all (nonlinear) transformations that
+leave the metric $\mathrm{diag}(1, 1, \dots, 1)$ invariant. Sometimes it is
+called E(n).
+
+It can be shown that the transformation must be linear, of the form $Ax + b$,
+where the matrix $A$ satisfies:
+$$
+A^T A = 1\,.
+$$
+The matrix $A$ belongs to O(n) and the tranlation $b$ to the translational
+group T(n) and:
+
+$$
+\mathrm{ISO}(n) = \mathrm{T}(n) \rtimes \mathrm{O}(n)\,.
+$$
+
 # O(n)
 
-The orthogonal Lie group can be defined as:
+From the previous section we can see that
+the orthogonal Lie group is defined as:
 $$
 \mathrm{O}(n) = \{X: X^T X = 1\}\,.
 $$
+It represents all matrices that leave the Euclidean metric invariant.
 To find the Lie algebra, we write $X = \exp(t x)$ and get:
 $$
 (\exp(tx))^T \exp(tx) = 1\,,
@@ -205,7 +225,14 @@ $$
 $$
 So the SO(3) group is semisimple.
 
-# Translation-Rotation Group
+# Translation-Rotation Group SE(3)
+
+Also called the special Euclidean group.
+The group decomposes as:
+
+$$
+\mathrm{SE}(3) = \mathrm{T}(3) \rtimes \mathrm{SO}(3)\,.
+$$
 
 The group of all translations $T$ and rotations $R$ has six generators $P_1$,
 $P_2$, $P_3$, $J_1$, $J_2$, $J_3$. The translations $P_i$ are an abelian
