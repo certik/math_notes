@@ -1,5 +1,39 @@
 from sympy import *
-from sympy.matrices.matrices import kronecker_product
+
+def kronecker_product(A, B):
+    """
+    Compute the Kronecker product of two SymPy matrices A and B.
+    
+    Parameters:
+    A : SymPy Matrix (m x n)
+    B : SymPy Matrix (p x q)
+    
+    Returns:
+    Matrix : The Kronecker product A ⊗ B (mp x nq)
+    """
+    # Get dimensions of input matrices
+    m, n = A.shape  # Rows and columns of A
+    p, q = B.shape  # Rows and columns of B
+    
+    # Initialize the result matrix with zeros
+    result = zeros(m * p, n * q)
+    
+    # Loop over each element of A
+    for i in range(m):
+        for j in range(n):
+            # Extract the element A[i, j]
+            a_ij = A[i, j]
+            # Scale matrix B by this element
+            block = a_ij * B
+            # Calculate the position for this block in the result
+            row_start = i * p
+            row_end = row_start + p
+            col_start = j * q
+            col_end = col_start + q
+            # Assign the block to the result matrix
+            result[row_start:row_end, col_start:col_end] = block
+    
+    return result
 
 # Define Pauli matrices
 sigma_x = Matrix([[0, 1], [1, 0]])
