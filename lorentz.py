@@ -81,12 +81,12 @@ U = Matrix.hstack(t, x, y, z)
 U_dagger = U.adjoint()
 
 # Transform all generators into the new basis
-J_x_prime = (U_dagger * J_x * U).simplify()
-J_y_prime = (U_dagger * J_y * U).simplify()
-J_z_prime = (U_dagger * J_z * U).simplify()
-K_x_prime = (U_dagger * K_x * U).simplify()
-K_y_prime = (U_dagger * K_y * U).simplify()
-K_z_prime = (U_dagger * K_z * U).simplify()
+J_x_prime = U_dagger * J_x * U
+J_y_prime = U_dagger * J_y * U
+J_z_prime = U_dagger * J_z * U
+K_x_prime = U_dagger * K_x * U
+K_y_prime = U_dagger * K_y * U
+K_z_prime = U_dagger * K_z * U
 
 # Define standard generators for comparison
 J_z_std = Matrix([[0, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 0]])
@@ -121,6 +121,7 @@ print("\nStandard K_z for comparison:")
 pprint(K_z_std)
 
 # Verify unitarity of U (U^\dagger U should be identity)
-unitarity_check = (U_dagger * U).simplify()
-print(r"\nU^\dagger U (should be identity matrix if U is unitary):")
+unitarity_check = U_dagger * U
+print()
+print(r"U^\dagger U (should be identity matrix if U is unitary):")
 pprint(unitarity_check)
