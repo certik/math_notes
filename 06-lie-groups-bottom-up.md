@@ -482,26 +482,28 @@ $$
 $$
 
 $$
-= i \epsilon_{ijk} J_k - \epsilon_{ijk} K_k + \epsilon_{ijk} K_k + i \epsilon_{ijk} J_k,
+= i \epsilon_{ijk} J_k - \epsilon_{ijk} K_k - \epsilon_{ijk} K_k + i \epsilon_{ijk} J_k,
 $$
 
 $$
-= 2 i \epsilon_{ijk} J_k + 0,
+= 2 i \epsilon_{ijk} J_k -2\epsilon_{ijk} K_k,
+$$
+
+$$
+= 4 i \epsilon_{ijk} (J_k +i K_k)/2,
+$$
+
+$$
+= 4 i \epsilon_{ijk} A_k,
 $$
 
 so:
 
 $$
-[A_i, A_j] = \frac{1}{4} (2 i \epsilon_{ijk} J_k) = \frac{i \epsilon_{ijk}}{2} J_k.
+[A_i, A_j] = \frac{1}{4} (4 i \epsilon_{ijk} A_k)
+= i \epsilon_{ijk} A_k\,.
 $$
 
-Since $J_k = A_k + B_k$, and we need $[A_i, A_j]$ in terms of $A_k$, compute further, but first:
-
-$$
-[A_i, A_j] = i \epsilon_{ijk} \frac{J_k + i K_k}{2} = i \epsilon_{ijk} A_k,
-$$
-
-(verified explicitly for $i=1, j=2$, etc., consistently yields $i \epsilon_{ijk} A_k$).
 
 #### Commutator $[B_i, B_j]$:
 
