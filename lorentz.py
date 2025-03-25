@@ -1,5 +1,5 @@
 from sympy import *
-from sympy.physics.matrices import msigma, tensorproduct
+from sympy.matrices.matrices import kronecker_product
 
 # Define Pauli matrices
 sigma_x = Matrix([[0, 1], [1, 0]])
@@ -10,12 +10,12 @@ sigma_z = Matrix([[1, 0], [0, -1]])
 I2 = eye(2)
 
 # Compute A_i and B_i using tensor products
-A_x = Rational(1, 2) * tensorproduct(sigma_x, I2)
-A_y = Rational(1, 2) * tensorproduct(sigma_y, I2)
-A_z = Rational(1, 2) * tensorproduct(sigma_z, I2)
-B_x = Rational(1, 2) * tensorproduct(I2, sigma_x)
-B_y = Rational(1, 2) * tensorproduct(I2, sigma_y)
-B_z = Rational(1, 2) * tensorproduct(I2, sigma_z)
+A_x = Rational(1, 2) * kronecker_product(sigma_x, I2)
+A_y = Rational(1, 2) * kronecker_product(sigma_y, I2)
+A_z = Rational(1, 2) * kronecker_product(sigma_z, I2)
+B_x = Rational(1, 2) * kronecker_product(I2, sigma_x)
+B_y = Rational(1, 2) * kronecker_product(I2, sigma_y)
+B_z = Rational(1, 2) * kronecker_product(I2, sigma_z)
 
 # Compute original generators J_i and K_i
 J_x = A_x + B_x
@@ -88,5 +88,5 @@ pprint(K_z_std)
 
 # Verify unitarity of U (U^\dagger U should be identity)
 unitarity_check = (U_dagger * U).simplify()
-print("\nU^\dagger U (should be identity matrix if U is unitary):")
+print(r"\nU^\dagger U (should be identity matrix if U is unitary):")
 pprint(unitarity_check)
