@@ -68,10 +68,10 @@ K_z = -I * (A_z - B_z)
 # |x> = (|0> + |3>)/sqrt(2)
 # |y> = -I * (|0> - |3>)/sqrt(2)
 
-t = Matrix([0, 1/sqrt(2), 1/sqrt(2), 0])           # |t>
-z = Matrix([0, 1/sqrt(2), -1/sqrt(2), 0])          # |z>
-x = Matrix([1/sqrt(2), 0, 0, 1/sqrt(2)])          # |x>
-y = -I * Matrix([1/sqrt(2), 0, 0, -1/sqrt(2)])    # |y>
+t = I*Matrix([0, 1/sqrt(2), 1/sqrt(2), 0])     # |t>
+x = Matrix([1/sqrt(2), 0, 0, 1/sqrt(2)])       # |x>
+y = I*Matrix([1/sqrt(2), 0, 0, -1/sqrt(2)])    # |y>
+z = Matrix([0, 1/sqrt(2), -1/sqrt(2), 0])      # |z>
 
 # Construct transformation matrix U with columns in order |t>, |x>, |y>, |z>
 # This order matches the standard (t, x, y, z) components
