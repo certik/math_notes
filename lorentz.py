@@ -69,9 +69,9 @@ K_z = -I * (A_z - B_z)
 # |y> = -I * (|0> - |3>)/sqrt(2)
 
 t = I*Matrix([0, 1/sqrt(2), -1/sqrt(2), 0])     # |t>
-x = Matrix([1/sqrt(2), 0, 0, -1/sqrt(2)])       # |x>
-y = I*Matrix([1/sqrt(2), 0, 0, 1/sqrt(2)])    # |y>
-z = Matrix([0, 1/sqrt(2), 1/sqrt(2), 0])      # |z>
+x = I*Matrix([1/sqrt(2), 0, 0, -1/sqrt(2)])       # |x>
+y = -I*I*Matrix([1/sqrt(2), 0, 0, 1/sqrt(2)])    # |y>
+z = -I*Matrix([0, 1/sqrt(2), 1/sqrt(2), 0])      # |z>
 
 # Construct transformation matrix U with columns in order |t>, |x>, |y>, |z>
 # This order matches the standard (t, x, y, z) components
@@ -87,6 +87,14 @@ J_z_prime = U_dagger * J_z * U
 K_x_prime = U_dagger * K_x * U
 K_y_prime = U_dagger * K_y * U
 K_z_prime = U_dagger * K_z * U
+
+# The generators are pure imaginary, we make them real
+J_x_prime = -I * J_x_prime
+J_y_prime = -I * J_y_prime
+J_z_prime = -I * J_z_prime
+K_x_prime = -I * K_x_prime
+K_y_prime = -I * K_y_prime
+K_z_prime = -I * K_z_prime
 
 # Define standard generators for comparison
 J_z_std = Matrix([[0, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 0]])
