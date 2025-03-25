@@ -524,11 +524,11 @@ $$
 $$
 
 $$
-= \frac{1}{4} (i \epsilon_{ijk} J_k + \epsilon_{ijk} K_k - \epsilon_{ijk} K_k + i \epsilon_{ijk} J_k),
+= \frac{1}{4} (i \epsilon_{ijk} J_k + \epsilon_{ijk} K_k + \epsilon_{ijk} K_k + i \epsilon_{ijk} J_k),
 $$
 
 $$
-= \frac{1}{4} (2 i \epsilon_{ijk} J_k) = i \epsilon_{ijk} \frac{J_k - i K_k}{2} = i \epsilon_{ijk} B_k.
+= \frac{1}{4} (2 i \epsilon_{ijk} J_k + 2\epsilon_{ijk} K_k) = i \epsilon_{ijk} \frac{J_k - i K_k}{2} = i \epsilon_{ijk} B_k.
 $$
 
 #### Commutator $[A_i, B_j]$:
