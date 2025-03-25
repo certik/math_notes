@@ -629,15 +629,6 @@ In the standard vector representation, $J_i$ and $K_i$ act on $(t, x, y, z)$:
 - $J_z = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$,
 - $K_z = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix}$.
 
-Define a new basis:
-
-- $|t\rangle = (|1/2, -1/2\rangle + |-1/2, 1/2\rangle)/\sqrt{2}$,
-- $|z\rangle = (|1/2, -1/2\rangle - |-1/2, 1/2\rangle)/\sqrt{2}$,
-- $|x\rangle = (|1/2, 1/2\rangle + |-1/2, -1/2\rangle)/\sqrt{2}$,
-- $|y\rangle = -i (|1/2, 1/2\rangle - |-1/2, -1/2\rangle)/\sqrt{2}$.
-
-Transformation matrix $U$ maps the original basis to $(t, x, y, z)$, adjusting $J_z$ and $K_z$ to standard form (after similarity transformation).
-
 ### Step 9: Exponentiate Generators
 
 - **Rotation around z-axis**:
@@ -649,6 +640,147 @@ In standard basis, $e^{\theta J_z} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos\t
 $e^{\zeta K_z} = \begin{pmatrix} \cosh\zeta & 0 & 0 & \sinh\zeta \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ \sinh\zeta & 0 & 0 & \cosh\zeta \end{pmatrix}$.
 
 These are the standard Lorentz transformation matrices, derived via exponentiation in the adjusted basis.
+
+## Transformation of Lorentz Group Generators
+
+In this section, we derive the standard real generators of the Lorentz group in the four-vector representation, starting from the $(1/2, 1/2)$ representation. This process involves a change of basis using a unitary matrix $U$ followed by a rescaling by $-i$ to obtain real-valued generators.
+
+### Original Generators in the $(1/2, 1/2)$ Representation
+
+The $(1/2, 1/2)$ representation arises from the tensor product of two spin-$1/2$ representations, typically constructed using Pauli matrices. The original generators consist of rotation generators $J_i$ and boost generators $K_i$, defined as follows:
+
+$$
+\begin{align*}
+J_x &= \begin{pmatrix}
+0 & \frac{1}{2} & \frac{1}{2} & 0 \\
+\frac{1}{2} & 0 & 0 & \frac{1}{2} \\
+\frac{1}{2} & 0 & 0 & \frac{1}{2} \\
+0 & \frac{1}{2} & \frac{1}{2} & 0
+\end{pmatrix}, \\
+J_y &= \begin{pmatrix}
+0 & -\frac{i}{2} & -\frac{i}{2} & 0 \\
+\frac{i}{2} & 0 & 0 & -\frac{i}{2} \\
+\frac{i}{2} & 0 & 0 & -\frac{i}{2} \\
+0 & \frac{i}{2} & \frac{i}{2} & 0
+\end{pmatrix}, \\
+J_z &= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix}, \\
+K_x &= \begin{pmatrix}
+0 & \frac{i}{2} & -\frac{i}{2} & 0 \\
+\frac{i}{2} & 0 & 0 & -\frac{i}{2} \\
+-\frac{i}{2} & 0 & 0 & \frac{i}{2} \\
+0 & -\frac{i}{2} & \frac{i}{2} & 0
+\end{pmatrix}, \\
+K_y &= \begin{pmatrix}
+0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+-\frac{1}{2} & 0 & 0 & -\frac{1}{2} \\
+\frac{1}{2} & 0 & 0 & \frac{1}{2} \\
+0 & \frac{1}{2} & -\frac{1}{2} & 0
+\end{pmatrix}, \\
+K_z &= \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & -i & 0 & 0 \\
+0 & 0 & i & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}.
+\end{align*}
+$$
+
+These matrices are Hermitian, ensuring a unitary representation suitable for quantum mechanics, and they satisfy the Lorentz algebra with commutation relations involving factors of $i$.
+
+### Change of Basis Matrix $U$
+
+To transform these generators into the standard four-vector representation, we define a change of basis using a unitary matrix $U$. This matrix is constructed from basis vectors corresponding to the four-vector components $(t, x, y, z)$:
+
+$$
+\begin{align*}
+|t\rangle &= i \begin{pmatrix} 0 \\ \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \\ 0 \end{pmatrix}, \\
+|x\rangle &= i \begin{pmatrix} \frac{1}{\sqrt{2}} \\ 0 \\ 0 \\ -\frac{1}{\sqrt{2}} \end{pmatrix}, \\
+|y\rangle &= \begin{pmatrix} \frac{1}{\sqrt{2}} \\ 0 \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \\
+|z\rangle &= -i \begin{pmatrix} 0 \\ \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \\ 0 \end{pmatrix}.
+\end{align*}
+$$
+
+The matrix $U$ is formed by arranging these vectors as columns:
+
+$$
+U = \begin{pmatrix}
+0 & \frac{i \sqrt{2}}{2} & \frac{\sqrt{2}}{2} & 0 \\
+\frac{i \sqrt{2}}{2} & 0 & 0 & -\frac{i \sqrt{2}}{2} \\
+-\frac{i \sqrt{2}}{2} & 0 & 0 & -\frac{i \sqrt{2}}{2} \\
+0 & -\frac{i \sqrt{2}}{2} & \frac{\sqrt{2}}{2} & 0
+\end{pmatrix}.
+$$
+
+This matrix is unitary, satisfying $U^\dagger U = I$, where $U^\dagger$ is the conjugate transpose of $U$, ensuring that the transformation preserves the algebraic structure.
+
+### Transformation and Rescaling by $-i$
+
+We apply a similarity transformation to the original generators using $U$:
+
+$$
+J_i' = U^\dagger J_i U, \quad K_i' = U^\dagger K_i U.
+$$
+
+The resulting matrices $J_i'$ and $K_i'$ are purely imaginary due to the properties of the original generators and $U$. To match the standard real four-vector representation used in classical relativity, we rescale by multiplying by $-i$:
+
+$$
+J_i^{\text{real}} = -i J_i', \quad K_i^{\text{real}} = -i K_i'.
+$$
+
+This step converts the Hermitian, unitary representation into a real, antisymmetric one, aligning with the conventions of the Lorentz group in four-vector form.
+
+### Final Real Generators
+
+After applying the transformation and rescaling, the final real generators are:
+
+$$
+\begin{align*}
+J_x^{\text{real}} &= \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}, \\
+J_y^{\text{real}} &= \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 \\
+0 & -1 & 0 & 0
+\end{pmatrix}, \\
+J_z^{\text{real}} &= \begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}, \\
+K_x^{\text{real}} &= \begin{pmatrix}
+0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}, \\
+K_y^{\text{real}} &= \begin{pmatrix}
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}, \\
+K_z^{\text{real}} &= \begin{pmatrix}
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0
+\end{pmatrix}.
+\end{align*}
+$$
+
+These generators are real and antisymmetric, matching the standard form of the Lorentz group generators in the four-vector representation, where $J_i^{\text{real}}$ generate rotations and $K_i^{\text{real}}$ generate boosts.
+
 
 ## Final Summary
 
