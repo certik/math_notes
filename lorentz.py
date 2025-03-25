@@ -96,6 +96,24 @@ K_z_std = Matrix([[0, 0, 0, 1], [0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0]])
 print("Transformation matrix U:")
 pprint(U)
 
+print("\nJ_x:")
+pprint(J_x)
+
+print("\nJ_y:")
+pprint(J_y)
+
+print("\nJ_z:")
+pprint(J_z)
+
+print("\nK_x:")
+pprint(K_x)
+
+print("\nK_y:")
+pprint(K_y)
+
+print("\nK_z:")
+pprint(K_z)
+
 print("\nTransformed J_x:")
 pprint(J_x_prime)
 
