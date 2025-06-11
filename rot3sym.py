@@ -11,6 +11,10 @@ J_plus = sp.Matrix([
     [0, 0, 0]
 ])
 
+m1  = sp.Matrix([[1], [0], [0]])
+m0  = sp.Matrix([[0], [1], [0]])
+mm1 = sp.Matrix([[0], [0], [1]])
+
 J_minus = sp.Matrix([
     [0, 0, 0],
     [sqrt2, 0, 0],
