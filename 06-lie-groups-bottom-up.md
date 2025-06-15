@@ -997,6 +997,7 @@ $$
 = T(\mathbf{a'} + R' {\bf a}) R' R \,.
 $$
 
+We derived the same group law as before.
 
 ### Note 1
 
@@ -1004,6 +1005,64 @@ Above we derived a specific case that describes how the translation generators
 $P_i$ are transformed by the rotation $R'$:
 
 $$\exp(t J_3) P_1 \exp(-t J_3) = P_1 \cos(t) + P_2 \sin(t)$$
+
+I think that the following can also be derived:
+
+$$\exp(t J_3) P_2 \exp(-t J_3) = -P_1 \sin(t) + P_2 \cos(t)$$
+
+$$\exp(t J_3) P_3 \exp(-t J_3) = P_3$$
+
+These three relations can thus be written as:
+
+$$
+R
+\begin{pmatrix}
+ P_1 \\
+ P_2 \\
+ P_3 \\
+\end{pmatrix}
+R^{-1}
+=\begin{pmatrix}
+ P_1 \cos t + P_2 \sin t \\
+-P_2 \sin t + P_2 \cos t \\
+ P_3 \\
+\end{pmatrix} \,.
+$$
+
+The RHS can be written as:
+
+$$
+\begin{pmatrix}
+ P_1 \cos t + P_2 \sin t \\
+-P_2 \sin t + P_2 \cos t \\
+ P_3 \\
+\end{pmatrix}
+=\begin{pmatrix}
+ \cos t & \sin t & 0 \\
+-\sin t & \cos t & 0 \\
+ 0      & 0      & 1 \\ 
+\end{pmatrix}
+\begin{pmatrix}
+ P_1 \\
+ P_2 \\
+ P_3 \\
+\end{pmatrix}
+=R
+\begin{pmatrix}
+ P_1 \\
+ P_2 \\
+ P_3 \\
+\end{pmatrix}
+\,.
+$$
+
+So we get:
+
+$$
+R {\bf P} (R)^{-1} = R {\bf P}
+$$
+
+Where in this case $R$ is a rotation around the $z$ axis.
 
 This is an example of the adjoint action of the rotation group on the translation generators. The commutation relation between rotation and translation generators is $[J_i, P_j] = \epsilon_{ijk} P_k$. This rule implies that the generators of translation $(P_1, P_2, P_3)$ transform as a vector under conjugation by a rotation operator.
 
