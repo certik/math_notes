@@ -785,3 +785,117 @@ These generators are real and antisymmetric, matching the standard form of the L
 ## Final Summary
 
 The $so(1,3)$ algebra, via the $A$ and $B$ trick, is represented as $(j_1, j_2)$, with the four-vector representation being $(1/2, 1/2)$. The transformation matrices for $SO(1,3)$ in this representation are the standard Lorentz transformations, obtained by exponentiating $J_i$ and $K_i$ after basis adjustment.
+
+# Translation-Rotation Group SE(3)
+
+We start from the commutation relations of the generators:
+$$
+[J_i, J_j] = \epsilon_{ijk} J_k\,,
+$$
+$$
+[J_i, P_j] = \epsilon_{ijk} P_k\,,
+$$
+$$
+[P_i, P_j] = 0\,.
+$$
+
+Assumption: we postulate a particular representation using 4x4 matrices as
+follows:
+
+$$
+J_1 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 1 & 0 \\
+ 0 & -1 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+J_2 =
+\begin{pmatrix}
+ 0 & 0 & -1 & 0 \\
+ 0 & 0 &  0 & 0 \\
+ 1 & 0 &  0 & 0 \\
+ 0 & 0 &  0 & 0 \\
+\end{pmatrix}\,,
+$$
+$$
+J_3 =
+\begin{pmatrix}
+ 0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+\end{pmatrix}\,,
+$$
+$$
+P_1 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 1 \\
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+P_2 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 1 \\
+ 0 &  0 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+P_3 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 1 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,.
+$$
+
+These satisfy the commutation relations, but we have not computed them, nor
+shown what other representations there are. So this treatment is not complete
+yet. But assuming the above, the rest is then rigorous.
+
+A general rotation is then:
+$$
+R({\bf n}) = e^{{\bf n}\cdot{\bf J}}
+=\begin{pmatrix}
+ {\bf R} &  0 \\
+ 0 &  1 \\
+\end{pmatrix}\,.
+$$
+A general translation is then:
+$$
+T({\bf t}) = e^{{\bf t}\cdot{\bf P}}
+=\begin{pmatrix}
+ 1 &  {\bf t} \\
+ 0 &  1 \\
+\end{pmatrix}\,.
+$$
+
+A general group element is:
+
+$$
+g = ({\bf t}, {\bf n}) = T({\bf t}) R({\bf n}) 
+ = e^{{\bf t}\cdot{\bf P}} e^{{\bf n}\cdot{\bf J}} =
+$$
+$$
+=\begin{pmatrix}
+ 1 &  {\bf t} \\
+ 0 &  1 \\
+\end{pmatrix}
+\begin{pmatrix}
+ {\bf R} &  0 \\
+ 0 &  1 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+ {\bf R} & {\bf t} \\
+ 0 &  1 \\
+\end{pmatrix}\,.
+$$

@@ -257,6 +257,63 @@ $$
 [P_i, P_j] = 0\,.
 $$
 
+One way to represent these is using 4x4 matrices as follows:
+
+$$
+J_1 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 1 & 0 \\
+ 0 & -1 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+J_2 =
+\begin{pmatrix}
+ 0 & 0 & -1 & 0 \\
+ 0 & 0 &  0 & 0 \\
+ 1 & 0 &  0 & 0 \\
+ 0 & 0 &  0 & 0 \\
+\end{pmatrix}\,,
+$$
+$$
+J_3 =
+\begin{pmatrix}
+ 0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+\end{pmatrix}\,,
+$$
+$$
+P_1 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 1 \\
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+P_2 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 1 \\
+ 0 &  0 & 0 & 0 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,,
+$$
+$$
+P_3 =
+\begin{pmatrix}
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 0 \\
+ 0 &  0 & 0 & 1 \\ 
+ 0 &  0 & 0 & 0 \\ 
+\end{pmatrix}\,.
+$$
+
 # SL(2, C)
 
 The special linear Lie group can be defined as $2\times2$ matrices:
