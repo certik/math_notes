@@ -799,6 +799,8 @@ $$
 [P_i, P_j] = 0\,.
 $$
 
+## Postulating Matrices
+
 Assumption: we postulate a particular representation using 4x4 matrices as
 follows:
 
@@ -938,3 +940,94 @@ $$
 (t_1, R_1) \cdot (x, 0) = (t_1 + R_1 x, 0)\,.
 $$
 Comparing to $(t_3, R_3)$ we get $t_3 = R_1 x + t_1$.
+
+## Direct Derivation
+
+Let's derive the group composition law for the rotation-translation group, SE(3). This is the group of rigid body motions.
+
+### Setup and Goal
+
+A general element `g` of the group SE(3) can be written as a product of a translation and a rotation. Using the operator formalism:
+
+$$g = \exp(\mathbf{a} \cdot \mathbf{P}) \exp(\mathbf{n} \cdot \mathbf{J}) = T(\mathbf{a}) R(\mathbf{n})\,.$$
+
+where:
+* $\mathbf{P} = (P_1, P_2, P_3)$ are the generators of translation.
+* $\mathbf{J} = (J_1, J_2, J_3)$ are the generators of rotation.
+* $\mathbf{a} = (a_1, a_2, a_3)$ is the translation vector.
+* $T(\mathbf{a}) = \exp(\mathbf{a} \cdot \mathbf{P})$ is the translation operator.
+* $R(\mathbf{n}) = \exp(\mathbf{n} \cdot \mathbf{J})$ is the rotation operator.
+
+We want to find the composition law for $g'' = g' g$.
+Let $g = T(\mathbf{a})R$ and $g' = T(\mathbf{a'})R'$. The product is:
+
+$$g'' = g' g = \left( T(\mathbf{a'}) R' \right) \left( T(\mathbf{a}) R \right) = T(\mathbf{a'}) R' T(\mathbf{a}) R\,.$$
+
+Our goal is to express $g''$ in the same form, $g'' = T(\mathbf{a''}) R''$, and find the expressions for $\mathbf{a''}$ and $R''$.
+
+### Deriving the Composition Law
+
+Now we compute:
+
+$$
+g'' = g' g = T(\mathbf{a'}) R' T(\mathbf{a}) R =
+$$
+
+$$
+= T(\mathbf{a'}) R' T(\mathbf{a}) (R')^{-1} R' R =
+$$
+
+$$
+= T(\mathbf{a'}) R' e^{{\bf a} \cdot {\bf P}} (R')^{-1} R' R =
+$$
+
+$$
+= T(\mathbf{a'}) e^ {R' {\bf a} \cdot {\bf P} (R')^{-1} } R' R =
+$$
+
+$$
+= T(\mathbf{a'}) e^ {(R' {\bf a}) \cdot {\bf P} } R' R =
+$$
+
+$$
+= T(\mathbf{a'}) T(R' {\bf a}) R' R =
+$$
+
+$$
+= T(\mathbf{a'} + R' {\bf a}) R' R \,.
+$$
+
+
+### Note 1
+
+Above we derived a specific case that describes how the translation generators
+$P_i$ are transformed by the rotation $R'$:
+
+$$\exp(t J_3) P_1 \exp(-t J_3) = P_1 \cos(t) + P_2 \sin(t)$$
+
+This is an example of the adjoint action of the rotation group on the translation generators. The commutation relation between rotation and translation generators is $[J_i, P_j] = \epsilon_{ijk} P_k$. This rule implies that the generators of translation $(P_1, P_2, P_3)$ transform as a vector under conjugation by a rotation operator.
+
+Therefore, the conjugation of a generator $P_j$ by a rotation $R'$ results in a linear combination of the generators, where the coefficients are the elements of the rotation matrix corresponding to $R'$:
+
+$R' P_j (R')^{-1} = \sum_{i=1}^3 R'_{ij} P_i$
+
+where $R'_{ij}$ is the element in the i-th row and j-th column of the matrix representation of $R'$.
+
+Applying this to our expression for the exponent:
+
+$R' (\mathbf{a} \cdot \mathbf{P}) (R')^{-1} = \sum_{j=1}^3 a_j \left( \sum_{i=1}^3 R'_{ij} P_i \right) = \sum_{i=1}^3 \left( \sum_{j=1}^3 R'_{ij} a_j \right) P_i$
+
+The term in the parenthesis is the i-th component of the vector that results from applying the rotation $R'$ to the vector $\mathbf{a}$. Let's denote this rotated vector as $R'\mathbf{a}$. So we have:
+
+$R' (\mathbf{a} \cdot \mathbf{P}) (R')^{-1} = (R'\mathbf{a}) \cdot \mathbf{P}$
+
+Substituting this back into the expression for the conjugated translation operator:
+
+$R' T(\mathbf{a}) (R')^{-1} = \exp((R'\mathbf{a}) \cdot \mathbf{P}) = T(R'\mathbf{a})$
+
+### Note 2
+
+
+Since the translation generators commute with each other ($[P_i, P_j] = 0$), the product of two translation operators is a single translation operator whose vector is the sum of the individual vectors:
+
+$T(\mathbf{x}) T(\mathbf{y}) = \exp(\mathbf{x} \cdot \mathbf{P}) \exp(\mathbf{y} \cdot \mathbf{P}) = \exp((\mathbf{x}+\mathbf{y}) \cdot \mathbf{P}) = T(\mathbf{x}+\mathbf{y})$
