@@ -100,7 +100,22 @@ f(1) = e^{X} Y e^{-X} = Y
 + \cdots
 $$
 
-This last equation is called the Campbell identity.
+This last equation is called the Campbell identity. We can also write it as:
+
+$$
+e^{-X} Y e^{X} = Y
++ {1\over 1!} [-X,Y]
++ {1\over 2!} [-X,[-X,Y]]
++ {1\over 3!} [-X,[-X,[-X,Y]]]
++ \cdots =
+$$
+$$
+= Y
++ {1\over 1!} [Y,X]
++ {1\over 2!} [[Y,X],X]
++ {1\over 3!} [[[Y,X],X],X]
++ \cdots
+$$
 
 ## Lie Algebra
 
@@ -233,6 +248,30 @@ Any vector operator has the same Lie bracket, for example for $J_i$ we have
 $[J_i, J_j] = \epsilon_{ijk} J_k$ and obtain:
 $$
 e^{\theta J_3} J_1 e^{-\theta J_3} = J_1 \cos(\theta) + J_2 \sin(\theta)\,.
+$$
+
+## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
+
+
+The identity
+$$
+g e^X g^{-1} = e^{g X g^{-1}}
+$$
+can be proven using:
+$$
+g e^X g^{-1}=g \left( \sum_{n=0}^\infty {X^n\over n!} \right) g^{-1}
+=\sum_{n=0}^\infty {g X^n g^{-1} \over n!}
+=\sum_{n=0}^\infty {(g X g^{-1})^n \over n!}
+=e^{g X g^{-1}}\,.
+$$
+
+## Computing $\exp(\theta_3 J_3) \exp(\theta_1 P_1) \exp(-\theta_3 J_3)$
+
+Using the identity $g e^X g^{-1} = e^{g X g^{-1}}$ we get:
+$$
+e^{\theta_3 J_3} e^{\theta_1 P_1} e^{-\theta_3 J_3}
+=\exp\left(e^{\theta_3 J_3} (\theta_1 P_1) e^{-\theta_3 J_3}\right)
+=e^{\theta_1 \left(P_1 \cos\theta_3 + P_2 \sin\theta_3\right)} \,.
 $$
 
 ## Rodrigues' Rotation Formula
