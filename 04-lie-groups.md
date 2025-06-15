@@ -250,6 +250,48 @@ $$
 e^{\theta J_3} J_1 e^{-\theta J_3} = J_1 \cos(\theta) + J_2 \sin(\theta)\,.
 $$
 
+## Computing $\exp(\theta J_3) P_2 \exp(-\theta J_3)$
+
+Similarly, let's compute:
+
+$$
+e^{\theta J_3} P_2 e^{-\theta J_3} = P_2
++ {1\over 1!} [J_3,P_2] \theta
++ {1\over 2!} [J_3,[J_3,P_2]] \theta^2
++ {1\over 3!} [J_3,[J_3,[J_3,P_2]]] \theta^3
++ \cdots =
+$$
+
+$$
+= P_2
++ {1\over 1!} (-P_1) \theta
++ {1\over 2!} (-P_2) \theta^2
++ {1\over 3!} P_1 \theta^3
++ {1\over 4!} P_2 \theta^4
++ {1\over 5!} (-P_1) \theta^5
++ \cdots =
+$$
+$$
+= P_1 \left(-{\theta\over 1!} + {\theta^3\over 3!} - {\theta^5\over 5!} + \cdots\right)
++ P_2 \left(1 - {\theta^2\over 2!} + {\theta^4\over 4!} + \cdots \right) =
+$$
+$$
+= -P_1 \sin(\theta) + P_2 \cos(\theta)\,.
+$$
+
+## Computing $\exp(\theta J_3) P_3 \exp(-\theta J_3)$
+
+Finally:
+
+$$
+e^{\theta J_3} P_3 e^{-\theta J_3} = P_3
++ {1\over 1!} [J_3,P_3] \theta
++ {1\over 2!} [J_3,[J_3,P_3]] \theta^2
++ \cdots = P_3\,,
+$$
+since all the commutators are zero.
+
+
 ## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
 
 
