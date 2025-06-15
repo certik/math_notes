@@ -913,3 +913,28 @@ $$
 (t_1, R_1) \cdot (t_2, R_2) = (t_1 + R_1 t_2, R_1 R_2)\,.
 $$
 
+The action of $(t, R)$ on a point $x$ in $\mathbb{R}^3$ is:
+
+$$
+\begin{pmatrix}
+ {\bf R} & {\bf t} \\
+ 0 &  1 \\
+\end{pmatrix}
+\begin{pmatrix}
+ {\bf x} \\
+ 1 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+ {\bf R x + t} \\
+ 1 \\
+\end{pmatrix}\,.
+$$
+So $x \rightarrow Rx + t$.
+
+Another way to derive this is from the group law:
+
+$$
+(t_1, R_1) \cdot (x, 0) = (t_1 + R_1 x, 0)\,.
+$$
+Comparing to $(t_3, R_3)$ we get $t_3 = R_1 x + t_1$.
