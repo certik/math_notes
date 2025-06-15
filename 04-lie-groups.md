@@ -291,6 +291,65 @@ e^{\theta J_3} P_3 e^{-\theta J_3} = P_3
 $$
 since all the commutators are zero.
 
+## Summary
+
+We have thus shown that for any operator satisfying
+$[J_i, P_j] = \epsilon_{ijk} P_k$ we get:
+
+$$
+\begin{aligned}
+e^{\theta J_3} P_1 e^{-\theta J_3} &= P_1 \cos(\theta) + P_2 \sin(\theta)\,, \\
+e^{\theta J_3} P_2 e^{-\theta J_3} &= -P_1 \sin(\theta) + P_2 \cos(\theta)\,, \\
+e^{\theta J_3} P_3 e^{-\theta J_3} &= P_3\,.
+\end{aligned}
+$$
+
+We can thus write these as a single equation:
+
+$$
+e^{\theta J_3}
+\begin{pmatrix}
+ P_1 \\
+ P_2 \\
+ P_3 \\
+\end{pmatrix}
+e^{-\theta J_3}
+=\begin{pmatrix}
+ P_1 \cos \theta + P_2 \sin \theta \\
+-P_2 \sin \theta + P_2 \cos \theta \\
+ P_3 \\
+\end{pmatrix}
+=\begin{pmatrix}
+ \cos \theta & \sin \theta & 0 \\
+-\sin \theta & \cos \theta & 0 \\
+ 0      & 0      & 1 \\ 
+\end{pmatrix}
+\begin{pmatrix}
+ P_1 \\
+ P_2 \\
+ P_3 \\
+\end{pmatrix}
+\,.
+$$
+
+Note that $P_i$ are operators. In index notation:
+
+$$
+e^{\theta J_3} P_j e^{-\theta J_3}
+=(R_3)^i{}_j P_i
+$$
+
+where the matrix $(R_3)^i{}_j$ is a rotation around the $z$-axis:
+
+$$
+(R_3)^i{}_j
+=\begin{pmatrix}
+ \cos \theta &-\sin \theta & 0 \\
+ \sin \theta & \cos \theta & 0 \\
+ 0      & 0      & 1 \\ 
+\end{pmatrix}
+$$
+
 
 ## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
 
