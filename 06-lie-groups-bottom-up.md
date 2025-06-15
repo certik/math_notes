@@ -899,3 +899,17 @@ $$
  0 &  1 \\
 \end{pmatrix}\,.
 $$
+
+A composition of elements is:
+
+$$
+g_1 = \begin{bmatrix} R_1 & t_1 \\ 0 & 1 \end{bmatrix}, \quad g_2 = \begin{bmatrix} R_2 & t_2 \\ 0 & 1 \end{bmatrix},
+$$
+$$
+g_1 g_2 = \begin{bmatrix} R_1 & t_1 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} R_2 & t_2 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} R_1 R_2 & R_1 t_2 + t_1 \\ 0 & 1 \end{bmatrix}.
+$$
+And thus we derived the group law:
+$$
+(t_1, R_1) \cdot (t_2, R_2) = (t_1 + R_1 t_2, R_1 R_2)\,.
+$$
+
