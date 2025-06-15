@@ -304,52 +304,80 @@ e^{\theta J_3} P_3 e^{-\theta J_3} &= P_3\,.
 \end{aligned}
 $$
 
-We can thus write these as a single equation:
-
-$$
-e^{\theta J_3}
-\begin{pmatrix}
- P_1 \\
- P_2 \\
- P_3 \\
-\end{pmatrix}
-e^{-\theta J_3}
-=\begin{pmatrix}
- P_1 \cos \theta + P_2 \sin \theta \\
--P_2 \sin \theta + P_2 \cos \theta \\
- P_3 \\
-\end{pmatrix}
-=\begin{pmatrix}
- \cos \theta & \sin \theta & 0 \\
--\sin \theta & \cos \theta & 0 \\
- 0      & 0      & 1 \\ 
-\end{pmatrix}
-\begin{pmatrix}
- P_1 \\
- P_2 \\
- P_3 \\
-\end{pmatrix}
-\,.
-$$
-
-Note that $P_i$ are operators. In index notation:
+We can thus write these as a single equation in index notation:
 
 $$
 e^{\theta J_3} P_j e^{-\theta J_3}
-=(R_3)^i{}_j P_i
+=(R_3)^i{}_j P_i\,,
 $$
 
 where the matrix $(R_3)^i{}_j$ is a rotation around the $z$-axis:
 
 $$
-(R_3)^i{}_j
+(R_3(\theta))^i{}_j
 =\begin{pmatrix}
  \cos \theta &-\sin \theta & 0 \\
  \sin \theta & \cos \theta & 0 \\
  0      & 0      & 1 \\ 
-\end{pmatrix}
+\end{pmatrix}\,.
 $$
 
+We are interested in computing ${\bf a} \cdot {\bf P} = a^j P_j$:
+
+$$
+e^{\theta J_3} a^j P_j e^{-\theta J_3}
+=(R_3)^i{}_j a^j P_i
+$$
+
+and using the below indentity:
+
+$$
+e^{\theta J_3} e^{a^j P_j} e^{-\theta J_3}
+=e^{e^{\theta J_3} a^j P_j e^{-\theta J_3}}
+=e^{(R_3)^i{}_j a^j P_i}\,,
+$$
+
+or:
+
+$$
+e^{\theta J_3} T({\bf a}) e^{-\theta J_3} =T(R_3(\theta) {\bf a})\,.
+$$
+
+In an analogous way we can obtain:
+
+$$
+e^{\theta J_1} T({\bf a}) e^{-\theta J_1} =T(R_1(\theta) {\bf a})\,,
+$$
+
+$$
+e^{\theta J_2} T({\bf a}) e^{-\theta J_2} =T(R_2(\theta) {\bf a})\,.
+$$
+
+Putting it all together we get:
+
+$$
+e^{\theta_1 J_1} e^{\theta_2 J_2} e^{\theta_3 J_3}
+T({\bf a})
+e^{-\theta_3 J_3} e^{-\theta_2 J_2} e^{-\theta_1 J_1}=
+$$
+$$
+= e^{\theta_1 J_1} e^{\theta_2 J_2}
+T(R_3(\theta_3) {\bf a})
+e^{-\theta_2 J_2} e^{-\theta_1 J_1}=
+$$
+$$
+= e^{\theta_1 J_1} T(R_2(\theta_2) R_3(\theta_3) {\bf a}) e^{-\theta_1 J_1}
+$$
+$$
+= T(R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) {\bf a}) \,.
+$$
+
+In other words, we can see how a general element of the rotation group
+$e^{\theta_1 J_1} e^{\theta_2 J_2} e^{\theta_3 J_3}$ acts on a general element
+of the translation group $T({\bf a})$. The result is another translation
+$T(R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) {\bf a})$ and the translation
+vector ${\bf a}$ gets rotated with the three rotation matrices
+${\bf a} \rightarrow R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) {\bf a}$.
 
 ## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
 
