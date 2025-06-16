@@ -430,6 +430,92 @@ cancels out in the sandwich, so 360 degree rotation transforms $\bf n$ into
 itself. To obtain the 360 rotation equal to -1 we need to act with just the
 left part of the sandwich on some "spinor", and it would transform it to -1.
 
+Thus we have proven:
+
+$$
+U(\theta_1, \theta_2, \theta_3)
+\ {\bf a} \cdot {\bf J}\ 
+U(\theta_1, \theta_2, \theta_3)^{-1}
+=
+(R(\theta_1, \theta_2, \theta_3) {\bf a}) \cdot {\bf J}\,,
+$$
+
+where:
+
+$$
+U(\theta_1, \theta_2, \theta_3)
+=e^{\theta_1 J_1} e^{\theta_2 J_2} e^{\theta_3 J_3}\,,
+$$
+$$
+R(\theta_1, \theta_2, \theta_3)
+= R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) \,.
+$$
+
+Now we would like to show for spin $j={1\over2}$ that:
+
+$$
+U(\theta_1, \theta_2, \theta_3)
+=e^{i\theta_1 \sigma_1} e^{i\theta_2 \sigma_2} e^{i\theta_3 \sigma_3}
+=U({\bf n}, \theta) = e^{i {\theta\over2}\left({\bf n}\cdot {\bf\sigma} \right)}
+$$
+
+Where ${\bf n}$ is a unit vector representing the axis of rotation and $\theta$
+is the rotation around this axis.
+
+I think our $J_i = i \sigma_i$, but somehow it can be shown that we can combine
+the exponentials. We also want to prove that the three rotation matrices can be
+written as just one matrix:
+
+$$
+R(\theta_1, \theta_2, \theta_3)
+= R_1(\theta_1) R_2(\theta_2) R_3(\theta_3)
+= R({\bf n}, \theta)\,.
+$$
+
+Then we get:
+
+$$
+U({\bf n}, \theta)
+\ {\bf a} \cdot {\bf \sigma}\ 
+U({\bf n}, \theta)^{-1}
+=
+(R({\bf n}, \theta) {\bf a}) \cdot {\bf \sigma}\,,
+$$
+
+Here $U$ can be expanded as:
+
+$$
+U({\bf n}, \theta) = e^{i {\theta\over2}\left({\bf n}\cdot {\bf\sigma} \right)}
+= \cos\left({\theta\over 2}\right) + i \sin\left({\theta\over2}\right) \left({\bf n}\cdot {\bf\sigma} \right)\,.
+$$
+
+We can now identify this relation with quaternions as follows:
+
+$$
+U({\bf n}, \theta)
+= \cos\left({\theta\over 2}\right) - \sin\left({\theta\over2}\right)
+\left(n^1 (-i\sigma_1) + n^2 (-i\sigma_2) + n^3 (-i\sigma_3) \right)\,,
+$$
+$$
+q
+= \cos\left({\theta\over 2}\right) - \sin\left({\theta\over2}\right)
+\left(n^1 i + n^2 j + n^3 k \right)\,.
+$$
+
+And the rotation equation is:
+
+$$
+q (a^1 i + a^2 j + a^3 k) q^{-1} = (R(q){\bf a}) \cdot (i, j, k)
+$$
+
+In other words, the LHS is encoding the vector ${\bf a}$ into a quaternion as
+$a^1 i + a^2 j + a^3 k$, and the RHS gives us the rotated quaternion vector
+that we can decode back.
+
+TODO: Typically the $q$ is defined with a plus sign, but
+that's minor, possibly $J_i = -i\sigma_i$, and/or there is another minus in U
+in front of $i$.
+
 ## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
 
 
