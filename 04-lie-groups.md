@@ -379,6 +379,57 @@ $T(R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) {\bf a})$ and the translation
 vector ${\bf a}$ gets rotated with the three rotation matrices
 ${\bf a} \rightarrow R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) {\bf a}$.
 
+## For T=J
+
+As a special case, we'll use $P_i = J_i$, and we'll use $\bf n$ instead of $\bf
+a$:
+
+$$
+e^{\theta J_3} n^j J_j e^{-\theta J_3}
+=(R_3)^i{}_j n^j J_i
+$$
+
+In an analogous way we can obtain:
+
+$$
+e^{\theta J_1} n^j J_j e^{-\theta J_1}
+=(R_1)^i{}_j n^j J_i
+$$
+$$
+e^{\theta J_2} n^j J_j e^{-\theta J_2}
+=(R_2)^i{}_j n^j J_i
+$$
+
+Putting it all together we get:
+
+$$
+e^{\theta_1 J_1} e^{\theta_2 J_2} e^{\theta_3 J_3}
+n^j J_j
+e^{-\theta_3 J_3} e^{-\theta_2 J_2} e^{-\theta_1 J_1}=
+$$
+$$
+= e^{\theta_1 J_1} e^{\theta_2 J_2}
+(R_3)^i{}_j n^j J_i
+e^{-\theta_2 J_2} e^{-\theta_1 J_1}=
+$$
+$$
+= e^{\theta_1 J_1}
+(R_2)^i{}_j (R_3)^j{}_k n^k J_i
+e^{-\theta_1 J_1} =
+$$
+$$
+= (R_1)^i{}_j (R_2)^j{}_k (R_3)^k{}_l n^l J_i \,.
+$$
+
+This shows how to "encode" the 3D vector $\bf n$ into any $j$ representation.
+The RHS is encoding the rotated vector, the LHS is encoding the original vector
+and then transforming it using the "sandwich" formula. Thus showing that the
+"sandwich" transformation is equivalent to a rotation. It is thus showing how
+any SU(2) transformation corresponds to SO(3) transformation, the "minus"
+cancels out in the sandwich, so 360 degree rotation transforms $\bf n$ into
+itself. To obtain the 360 rotation equal to -1 we need to act with just the
+left part of the sandwich on some "spinor", and it would transform it to -1.
+
 ## Identity $g e^X g^{-1} = e^{g X g^{-1}}$
 
 
