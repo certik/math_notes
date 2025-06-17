@@ -451,19 +451,30 @@ R(\theta_1, \theta_2, \theta_3)
 = R_1(\theta_1) R_2(\theta_2) R_3(\theta_3) \,.
 $$
 
-Now we would like to show for spin $j={1\over2}$ that:
+## Spin 1/2
+
+For spin j=1/2 we have:
+
+$$
+J_i = -i {1\over 2} \sigma_i
+$$
+
+Now we would like to show that:
 
 $$
 U(\theta_1, \theta_2, \theta_3)
-=e^{i\theta_1 \sigma_1} e^{i\theta_2 \sigma_2} e^{i\theta_3 \sigma_3}
-=U({\bf n}, \theta) = e^{-i {\theta\over2}\left({\bf n}\cdot {\bf\sigma} \right)}
+=e^{-i{\theta_1\over2} \sigma_1} e^{-i{\theta_2\over2} \sigma_2} e^{-i{\theta_3\over2} \sigma_3}
+=U({\bf n}, \theta) = e^{-i {\theta\over2}\left({\bf n}\cdot {\bf\sigma} \right)}\,,
 $$
 
-Where ${\bf n}$ is a unit vector representing the axis of rotation and $\theta$
-is the rotation around this axis.
+where ${\bf n}$ is a unit vector representing the axis of rotation and $\theta$
+is the rotation around this axis. This follows from the fact that the LHS is a
+general element of the SU(2) group, and so is the RHS.
 
-I think our $J_i = i \sigma_i$, but somehow it can be shown that we can combine
-the exponentials. We also want to prove that the three rotation matrices can be
+TODO: Show this constructively, step by step, that we can combine the
+exponentials.
+
+TODO: We also want to prove that the three rotation matrices can be
 written as just one matrix:
 
 $$
