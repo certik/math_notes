@@ -113,7 +113,8 @@ if __name__ == "__main__":
 
     # Compute RHS: cos(theta/2) I - i sin(theta/2) (n.sigma)
     n_dot_sigma = n_computed[0] * sigma1 + n_computed[1] * sigma2 + n_computed[2] * sigma3
-    RHS = np.cos(theta_computed / 2) * identity - 1j * np.sin(theta_computed / 2) * n_dot_sigma
+    #RHS = np.cos(theta_computed / 2) * identity - 1j * np.sin(theta_computed / 2) * n_dot_sigma
+    RHS = expm(-0.5j * theta_computed * n_dot_sigma)
 
     # Print results
     print("--- Example: Rotations of pi/2 around X, then pi/2 around Y, then 0 around Z ---")
