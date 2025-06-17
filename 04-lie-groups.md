@@ -469,10 +469,8 @@ $$
 
 where ${\bf n}$ is a unit vector representing the axis of rotation and $\theta$
 is the rotation around this axis. This follows from the fact that the LHS is a
-general element of the SU(2) group, and so is the RHS.
-
-TODO: Show this constructively, step by step, that we can combine the
-exponentials.
+general element of the SU(2) group, and so is the RHS. Constructively, this is
+proven in a separate file.
 
 TODO: We also want to prove that the three rotation matrices can be
 written as just one matrix:
