@@ -3,7 +3,7 @@ from scipy.linalg import expm
 
 def compute_equivalent_rotation(theta1, theta2, theta3):
     """
-    Computes the equivalent rotation angle theta and axis n for a sequence of
+    Computes the equivalent rotation angle theta, axis n, and the LHS matrix U for a sequence of
     three rotations around the x, y, and z axes.
 
     The function implements the identity:
@@ -18,6 +18,7 @@ def compute_equivalent_rotation(theta1, theta2, theta3):
         tuple: A tuple containing:
             - theta (float): The equivalent single rotation angle (in radians).
             - n (np.ndarray): The 3D unit vector representing the axis of rotation.
+            - U (np.ndarray): The 2x2 LHS matrix (product of the three rotations).
     """
     # Define the Pauli matrices
     sigma1 = np.array([[0, 1], [1, 0]], dtype=complex)
@@ -55,9 +56,9 @@ def compute_equivalent_rotation(theta1, theta2, theta3):
 
     # Handle the case where theta is 0 or a multiple of 2*pi (sin(theta/2) is zero)
     if np.isclose(sin_half_theta, 0):
-        # If the rotation angle is zero, the axis is undefined.
-        # We can return any unit vector, e.g., [1, 0, 0] or a zero vector.
-        return theta, np.array([0.0, 0.0, 0.0])
+        # If the rotation angle is zero or 2pi, the axis is undefined.
+        # Return n as zero vector; RHS will depend only on cos(theta/2).
+        return theta, np.array([0.0, 0.0, 0.0]), U
 
     # Calculate Ck = (i/2) * Tr(sigma_k * U)
     c1 = (0.5j * np.trace(sigma1 @ U)).real
@@ -76,12 +77,17 @@ def compute_equivalent_rotation(theta1, theta2, theta3):
     if not np.isclose(norm_n, 0):
         n = n / norm_n
 
-    return theta, n
+    return theta, n, U
 
 # --- Example Usage ---
 if __name__ == "__main__":
-    # Example 1: A 90-degree rotation around x, then 90-degree around y, ...
-    # These are Euler angles. For this sequence, the result is well-known.
+    # Define Pauli matrices for RHS computation
+    sigma1 = np.array([[0, 1], [1, 0]], dtype=complex)
+    sigma2 = np.array([[0, -1j], [1j, 0]], dtype=complex)
+    sigma3 = np.array([[1, 0], [0, -1]], dtype=complex)
+    identity = np.identity(2, dtype=complex)
+
+    # Example 1: A 90-degree rotation around x, then 90-degree around y, then 0 around z
     t1 = np.pi / 2  # 90 degrees
     t2 = np.pi / 2  # 90 degrees
     t3 = 0
@@ -102,19 +108,28 @@ if __name__ == "__main__":
     expected_sin_n_vec = np.array([expected_c1, expected_c2, expected_c3])
     expected_n = expected_sin_n_vec / np.sin(expected_theta/2)
 
-
     # Run the numerical computation
-    theta_computed, n_computed = compute_equivalent_rotation(t1, t2, t3)
+    theta_computed, n_computed, U = compute_equivalent_rotation(t1, t2, t3)
 
-    print("--- Example: Rotations of pi/2 around X, then pi/2 around Y ---")
+    # Compute RHS: cos(theta/2) I - i sin(theta/2) (n.sigma)
+    n_dot_sigma = n_computed[0] * sigma1 + n_computed[1] * sigma2 + n_computed[2] * sigma3
+    RHS = np.cos(theta_computed / 2) * identity - 1j * np.sin(theta_computed / 2) * n_dot_sigma
+
+    # Print results
+    print("--- Example: Rotations of pi/2 around X, then pi/2 around Y, then 0 around Z ---")
     print(f"Input angles (rad): theta1={t1:.4f}, theta2={t2:.4f}, theta3={t3:.4f}")
     print("-" * 50)
     print(f"Computed Angle (theta): {theta_computed:.4f} rad")
     print(f"Computed Axis (n): {n_computed}")
     print("-" * 50)
+    print("LHS matrix U:")
+    print(U)
+    print("\nRHS matrix:")
+    print(RHS)
+    print("-" * 50)
+    print(f"Are U and RHS equal? {np.allclose(U, RHS)}")
+    print("-" * 50)
     print("Expected values from analytical formulas:")
     print(f"Expected Angle (theta): {expected_theta:.4f} rad")
     print(f"Expected Axis (n): {expected_n}")
     print("\nNote: A 90-deg rot around x, then 90-deg around y is equivalent to a 120-deg rot around (1,1,1)/sqrt(3).")
-
-
