@@ -7,13 +7,16 @@ In quantum mechanics, the operators for position $X_i$, momentum $P_i$, and angu
 The four fundamental commutation relations are:
 
 1. $[L_i, L_j] = i \hbar \epsilon_{ijk} L_k$
-   - Describes the angular momentum algebra.
 2. $[L_i, X_j] = i \hbar \epsilon_{ijk} X_k$
-   - Indicates how angular momentum transforms position.
 3. $[L_i, P_j] = i \hbar \epsilon_{ijk} P_k$
-   - Indicates how angular momentum transforms momentum.
 4. $[X_i, P_j] = i \hbar \delta_{ij}$
-   - The canonical commutation relation for position and momentum.
+
+All generators are Hermitian. Here:
+
+1. Describes the angular momentum algebra.
+2. Indicates how angular momentum transforms position (vector operator).
+3. Indicates how angular momentum transforms momentum (vector operator).
+4. The canonical commutation relation for position and momentum.
 
 Here, $\epsilon_{ijk}$ is the Levi-Civita symbol, $\delta_{ij}$ is the Kronecker delta, and $\hbar$ is the reduced Planck constant.
 
@@ -27,6 +30,9 @@ The operators $X_i$ and $P_i$ must be infinite-dimensional due to the commutatio
 This contradiction implies that $n$ cannot be finite; hence, the Hilbert space must be infinite-dimensional, such as $L^2(\mathbb{R}^3)$.
 
 ## Form of $X_i$ and $P_i$
+
+The Stone-von Neumann theorem says that $X_i$ and $P_i$ are uniquely determined
+as below, except a unitary transformation.
 
 In the position representation on $L^2(\mathbb{R}^3)$:
 
@@ -49,7 +55,52 @@ Thus, $[X_i, P_j] = i \hbar \delta_{ij}$, confirming the forms.
 
 ## Unitary Rotation Operator $U$
 
-For a rotation by angle $\theta$ around axis $\mathbf{n}$, the unitary operator is:
+In a previous chapter we derived for any vector operator (we will use the
+vector operator $X_i$):
+
+$$
+U X_i U^{-1} = R^j{}_i X_j\,.
+$$
+
+Now we can write, using the known properties of $X_i$ derived above:
+
+$$
+X_i |x\rangle = x_i |x\rangle\,,
+$$
+$$
+U X_i |x\rangle = U x_i |x\rangle\,,
+$$
+$$
+U X_i |x\rangle = x_i U |x\rangle\,,
+$$
+$$
+R^j{}_i X_j U |x\rangle = x_i U |x\rangle\,,
+$$
+$$
+X_j U |x\rangle = (R^{-1})_j{}^i x_i U |x\rangle\,.
+$$
+
+Comparing with $X_i |x'\rangle = x_i' |x'\rangle$ we get
+$U |x\rangle=|x'\rangle$ and $x_i' = (R^{-1})_j{}^i x_i$, so:
+$$
+U |x\rangle=|x'\rangle = | R^{-1} x\rangle\,.
+$$
+
+Then we can compute:
+
+$$\langle x | \psi' \rangle
+=\psi'(x)
+= U\psi(x)
+= \langle x | U | \psi' \rangle
+= \langle R^{-1} x | \psi' \rangle
+= \psi(R^{-1} x)\,.
+$$
+
+So we derived:
+
+$$ U\psi(x) = \psi(R^{-1} x)\,. $$
+
+For a rotation by angle $\theta$ around axis $\mathbf{n}$, the unitary operator $U$ is:
 
 $$
 U = \exp\left(-\frac{i}{\hbar} \theta n^k L_k\right)
@@ -137,5 +188,8 @@ The four commutation relations uniquely determine:
 - $X_i = x_i$ (position operator)
 - $P_i = -i \hbar \frac{\partial}{\partial x_i}$ (momentum operator)
 - $L_i = \epsilon_{ijk} X_j P_k$ (angular momentum operator)
+- Acting in the infinite-dimensional Hilbert space $L^2(\mathbb{R}^3)$
 
-in the infinite-dimensional Hilbert space $L^2(\mathbb{R}^3)$.
+No other solution is possible. One can then extend this Hilbert space for
+example to also include spin, but in the smallest space $L^2(\mathbb{R}^3)$ the
+above solution is unique.
