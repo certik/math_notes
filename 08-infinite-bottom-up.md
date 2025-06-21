@@ -29,6 +29,11 @@ The operators $X_i$ and $P_i$ must be infinite-dimensional due to the commutatio
 
 This contradiction implies that $n$ cannot be finite; hence, the Hilbert space must be infinite-dimensional, such as $L^2(\mathbb{R}^3)$.
 
+Both $X_i$ and $P_i$ must be infinite-dimensional, and consequently also $L_i$,
+otherwise the commutators like $[L_i, X_j]$ would not make sense. All the
+generators must be from the same space. When infinite-dimensional space is
+needed, the $L^2(\mathbb{R}^3)$ is usually used, so we will use it as well.
+
 ## Form of $X_i$ and $P_i$
 
 The Stone-von Neumann theorem says that $X_i$ and $P_i$ are uniquely determined
