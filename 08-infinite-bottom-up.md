@@ -226,3 +226,34 @@ Finally:
 $$U = \exp\left(-\frac{i}{\hbar} \theta n^k L_k\right)$$
 
 is an operator of rotation, due to $U\psi(x) = \psi(R^{-1} x)$.
+
+## Explicit Example: Rotation Operator Around the Z-Axis
+
+For a rotation by angle $\theta$ around the z-axis, with $\mathbf{n} = (0, 0, 1)$:
+
+### Angular Momentum Operator $L_z$
+$$
+L_z = -i \hbar \left( x \frac{\partial}{\partial y} - y \frac{\partial}{\partial x} \right)
+$$
+In cylindrical coordinates: $L_z = -i \hbar \frac{\partial}{\partial \phi}$
+
+### Rotation Operator $U$
+$$
+U = \exp\left(-\frac{i}{\hbar} \theta L_z\right)
+$$
+Explicitly:
+- Cartesian: $U = \exp\left(-\theta \left( x \frac{\partial}{\partial y} - y \frac{\partial}{\partial x} \right)\right)$
+- Cylindrical: $U = \exp\left(-\theta \frac{\partial}{\partial \phi}\right)$
+
+### Action on Wave Function
+$$
+(U \psi)(x, y, z) = \psi(x \cos \theta + y \sin \theta, -x \sin \theta + y \cos \theta, z)
+$$
+$$
+(U \psi)(\rho, \phi, z) = \psi(\rho, \phi - \theta, z)
+$$
+
+Matches $\psi(R^{-1} \mathbf{x})$, where:
+$$
+R = \begin{pmatrix} \cos \theta & -\sin \theta & 0 \\ \sin \theta & \cos \theta & 0 \\ 0 & 0 & 1 \end{pmatrix}
+$$
