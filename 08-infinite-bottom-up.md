@@ -1,6 +1,9 @@
-# Derivation of Quantum Mechanical Operators from Commutation Relations
+# Derivation of L, X and P Operators from Commutation Relations
 
-In quantum mechanics, the operators for position $X_i$, momentum $P_i$, and angular momentum $L_i$ are determined by their commutation relations. This document provides a bottom-up derivation of their forms, demonstrates their infinite-dimensional nature, and proves their uniqueness in the Hilbert space $L^2(\mathbb{R}^3)$.
+This document provides a bottom-up derivation starting with the commutation
+relations of the operators for position $X_i$, momentum $P_i$, and angular
+momentum $L_i$. We compute their form, demonstrate their infinite-dimensional
+nature, and prove their uniqueness in the Hilbert space $L^2(\mathbb{R}^3)$.
 
 ## Commutation Relations
 
@@ -11,20 +14,26 @@ The four fundamental commutation relations are:
 3. $[L_i, P_j] = i \hbar \epsilon_{ijk} P_k$
 4. $[X_i, P_j] = i \hbar \delta_{ij}$
 
-All generators are Hermitian. Here:
-
-1. Describes the angular momentum algebra.
-2. Indicates how angular momentum transforms position (vector operator).
-3. Indicates how angular momentum transforms momentum (vector operator).
-4. The canonical commutation relation for position and momentum.
+All generators are Hermitian. The relation 1. describes the angular momentum
+Lie algebra, relations 2. and 3. indicate that $X_i$ and $P_i$ are vector
+operators with repsect to $L_i$. The relation 4. is the canonical commutation
+relation for position and momentum.
 
 Here, $\epsilon_{ijk}$ is the Levi-Civita symbol, $\delta_{ij}$ is the Kronecker delta, and $\hbar$ is the reduced Planck constant.
 
 ## Infinite-Dimensional Nature of $X_i$ and $P_i$
 
-The operators $X_i$ and $P_i$ must be infinite-dimensional due to the commutation relation $[X_i, P_j] = i \hbar \delta_{ij}$. In a finite-dimensional Hilbert space of dimension $n$, the trace of a commutator $[A, B]$ is zero because $\text{Tr}(AB) = \text{Tr}(BA)$. Thus:
+The operators $X_i$ and $P_i$ must be infinite-dimensional due to the commutation relation $[X_i, P_j] = i \hbar \delta_{ij}$. In a finite-dimensional Hilbert space of dimension $n$, the trace of a commutator $[A, B]$ is zero:
 
-- Left side: $\text{Tr}([X_i, P_j]) = 0$
+$$\text{Tr}([A, B])
+=\text{Tr}(AB-BA)
+=\text{Tr}(AB)-\text{Tr}(BA)
+=\text{Tr}(AB)-\text{Tr}(AB)
+=0\,.
+$$
+Thus:
+
+- Left side: $\text{Tr}([X_i, P_j]) = 0$.
 - Right side: $\text{Tr}(i \hbar \delta_{ij} I) = i \hbar \delta_{ij} n$, which is non-zero for $i = j$ and $n \neq 0$.
 
 This contradiction implies that $n$ cannot be finite; hence, the Hilbert space must be infinite-dimensional, such as $L^2(\mathbb{R}^3)$.
