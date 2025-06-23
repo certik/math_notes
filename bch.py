@@ -1,4 +1,5 @@
-from sympy import symbols, factorial, prod, eye, Mul, expand, Matrix
+from sympy import (symbols, factorial, prod, eye, Mul, expand,
+        Matrix, Symbol)
 
 def bch_term(n, A_symbol='A', B_symbol='B'):
     """
@@ -47,8 +48,9 @@ def bch_term(n, A_symbol='A', B_symbol='B'):
     # Extract the polynomial p at position [0, n] (SymPy uses 0-based indexing)
     p = expand(logFG[0, n])
     
-    # Define symbols for A and B
-    A, B = symbols(A_symbol), symbols(B_symbol)
+    # Define symbols for A and B as noncommutative
+    A = Symbol(A_symbol, commutative=False)
+    B = Symbol(B_symbol, commutative=False)
     
     # Initialize z_n
     z_n = 0
