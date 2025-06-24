@@ -1,5 +1,4 @@
-from sympy import (symbols, factorial, prod, eye, Mul, expand,
-        Matrix, Symbol)
+from sympy import Symbol, Rational, factorial, prod, eye, Mul, expand, Matrix, simplify
 
 def bch_term(n, A_symbol='A', B_symbol='B'):
     """
@@ -11,13 +10,13 @@ def bch_term(n, A_symbol='A', B_symbol='B'):
     - B_symbol: String, symbol for the second variable (default 'B').
     
     Returns:
-    - z_n: Symbolic expression representing the nth term.
+    - z_n: Symbolic expression with exact rational coefficients.
     """
     # Define symbolic variables s1, s2, ..., sn
-    s = symbols(f's1:{n+1}')  # Creates s1, s2, ..., sn
+    s = [Symbol(f's{k+1}') for k in range(n)]  # Creates s1, s2, ..., sn
     
     # Define matrix F: F[i,j] = 1/(j-i)! if j >= i, else 0
-    F = Matrix(n+1, n+1, lambda i, j: 1/factorial(j-i) if j >= i else 0)
+    F = Matrix(n+1, n+1, lambda i, j: Rational(1, factorial(j-i)) if j >= i else 0)
     
     # Define matrix G: G[i,j] = 1/(j-i)! * Product(s_k for k from i to j-1) if j > i,
     #                  G[i,i] = 1, G[i,j] = 0 if j < i
@@ -25,10 +24,10 @@ def bch_term(n, A_symbol='A', B_symbol='B'):
     for i in range(n+1):
         for j in range(n+1):
             if j > i:
-                G[i,j] = 1/factorial(j-i) * prod(s[k] for k in range(i, j))
+                G[i,j] = Rational(1, factorial(j-i)) * prod(s[k] for k in range(i, j))
             elif i == j:
                 G[i,j] = 1
-            # Else G[i,j] = 0, which is already set by Matrix.zeros
+            # Else G[i,j] = 0, already set by Matrix.zeros
     
     # Compute F * G
     FG = F * G
@@ -40,10 +39,10 @@ def bch_term(n, A_symbol='A', B_symbol='B'):
     FGm1 = FG - I
     
     # Compute log(FG) using series: sum_{q=1}^n (-1)^(q+1)/q * (FG - I)^q
-    # Initialize with zero matrix to avoid type mismatch
+    # Initialize with zero matrix
     logFG = Matrix.zeros(n+1)
     for q in range(1, n+1):
-        logFG += (-1)**(q+1)/q * FGm1**q
+        logFG += Rational((-1)**(q+1), q) * FGm1**q
     
     # Extract the polynomial p at position [0, n] (SymPy uses 0-based indexing)
     p = expand(logFG[0, n])
@@ -66,7 +65,8 @@ def bch_term(n, A_symbol='A', B_symbol='B'):
             word = Mul(*[B if j in indices else A for j in range(n)])
         z_n += coeff * word
     
-    return z_n
+    # Simplify to eliminate numerical noise
+    return simplify(z_n)
 
 # Example usage
 if __name__ == "__main__":
