@@ -1,18 +1,15 @@
-Thomas-Fermi-Dirac Theory
--------------------------
+# Thomas-Fermi-Dirac Theory
 
 There are two ways to derive equations for Thomas-Fermi-Dirac theory. One way
 is to start from grand potential and derive all equations from it. The other
 way is to start with low level equations and build our way up. Will start with
 the former.
 
-Top Down Approach
-~~~~~~~~~~~~~~~~~
+## Top Down Approach
 
 We start with a grand potential for fermions:
 
-.. math::
-
+$$
     \Omega[\beta, \mu]
     = -\sum_i {1\over\beta}
         \log\left(\sum_{N=0}^1 e^{-\beta\left(N\epsilon_i - N\mu\right)}\right)
@@ -49,36 +46,36 @@ We start with a grand potential for fermions:
     = -{2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
         \int I_{3\over2}\left(\beta\left(\mu-V({\bf x})\right)\right) \,\d^3 x
         -E_{ee} - {1\over3}E_{xc}
+$$
 
 The potential
 $V({\bf x}) = V_{en}({\bf x}) + V_{ee}({\bf x}) + V_{xc}({\bf x})$
 is the total potential that the electrons experience (it contains nuclear,
 Hartree, and XC terms) and $E_{ee}$ is the Hartree energy:
 
-.. math::
-
+$$
     E_{en} = \int n_e({\bf x}) V_{en}({\bf x})\,\d^3 x\,,
 
     E_{ee}
         = \half \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \d^3 x\,,
 
     E_{xc} = {3\over 4}\int n_e({\bf x}) V_{xc}({\bf x})\,\d^3 x\,.
+$$
 
 For simplicity, we assume here that $V_{xc}$ only contains the exchange of the
 homogeneous electron gas. For a general XC functional, the relation is
 nonlinear and one must simply numerically calculate the XC energy density
 $e_{xc}({\bf x})$ and calculate the XC energy using:
 
-.. math::
-
+$$
     E_{xc} = \int n_e({\bf x}) e_{xc}({\bf x})\,\d^3 x\,.
+$$
 
 In our case here, we have $e_{xc} = {3\over4}V_{xc}({\bf x})$, which is only
 true for the exchange in homogeneous electron gas. Otherwise the relation is
 nonlinear. In the general case, the correction that must be applied is:
 
-.. math::
-
+$$
     E_{en} + E_{ee} + E_{xc} - \int n_e({\bf x}) V({\bf x})\,\d^3 x =
 
     = \int n_e({\bf x})\left(
@@ -102,12 +99,12 @@ nonlinear. In the general case, the correction that must be applied is:
     - {1\over 3}{3\over 4}\int n_e({\bf x}) V_{xc} \d^3 x =
 
     = -E_{ee} - {1\over 3} E_{xc}
+$$
 
 The density is a functional derivative with respect to
 $\mu$:
 
-.. math::
-
+$$
     n_e({\bf x}) = - {\delta \Omega[\beta, \mu] \over \delta \mu}
         = {2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
             {\partial \over \partial \mu}
@@ -118,30 +115,30 @@ $\mu$:
 
         = {\sqrt2 \over \pi^2 \beta^{3\over2}} I_{1\over2}
                 \left(\beta\left(\mu-V({\bf x})\right)\right)
+$$
 
 By defining the function $\Phi(n_e({\bf x}))$:
 
-.. math::
-
+$$
     \Phi(n_e({\bf x})) = \beta\left(\mu-V({\bf x})\right)
         = I_{1\over2}^{-1}\left(
                 {\pi^2 \beta^{3\over2} \over \sqrt 2} n_e({\bf x})
             \right)
+$$
 
 we can express the grand potential using $n_e$ as follows:
 
-.. math::
-
+$$
     \Omega[\beta, n_e]
         = -{2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \d^3 x
           - \half \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \d^3
           - {1\over 4} \int n_e(\mathbf{x}) V_{xc}(\mathbf{x}) \d^3 x\,.
+$$
 
 Now we can calculate the free energy:
 
-.. math::
-
+$$
     F_e[\beta, n_e] = \Omega[\beta, n_e] + \mu N
         = \Omega[\beta, n_e] + \mu \int n_e({\bf x}) \,\d^3 x =
 
@@ -171,6 +168,7 @@ Now we can calculate the free energy:
                   +\half V_{ee}(\mathbf{x})
                   + {3\over 4} V_{xc}(\mathbf{x}) \right)
                 \right)\d^3 x\,,
+$$
 
 where we used the fact that $\mu = {1\over \beta} \Phi(n_e({\bf x})) + V({\bf
 x})$, i.e. the left hand side $\mu$ is a constant, thus the sum of the terms on
@@ -180,8 +178,7 @@ not).
 We can calculate the entropy
 $S=-\left(\partial\Omega\over\partial T\right)_{V,\mu}$ as follows:
 
-.. math::
-
+$$
     TS
         =-T \left(\partial\Omega\over\partial T\right)_{V,\mu} =
 
@@ -223,12 +220,12 @@ $S=-\left(\partial\Omega\over\partial T\right)_{V,\mu}$ as follows:
         = {5\over3}{\sqrt2 \over \pi^2 \beta^{5\over2}}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \d^3 x
             -\mu N + E_{en}+2E_{ee} + {4\over 3}E_{xc}
+$$
 
 
 The total energy is then equal to:
 
-.. math::
-
+$$
     E = \Omega + \mu N + TS =
 
         = \left(-{2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
@@ -242,25 +239,26 @@ The total energy is then equal to:
         = {\sqrt2 \over \pi^2 \beta^{5\over2}}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \d^3 x
             + E_{en} + E_{ee} + E_{xc}
+$$
 
 From which we can see that the kinetic energy $E_{kin}$ is equal to:
 
-.. math::
-
+$$
     E_{kin} = E - (E_{en} + E_{ee} + E_{xc}) =
 
         = {\sqrt2 \over \pi^2 \beta^{5\over2}}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \d^3 x
+$$
 
 The relation between the total energy and free energy can be also written as:
 
-.. math::
-
+$$
     E = F + TS = F +
         \beta \left(\partial\Omega\over\partial \beta\right)_{V,\mu} =
 
         = F + \beta \left(\partial F\over\partial \beta\right)_{V,\mu}
         = \left(\partial (\beta F)\over\partial \beta\right)_{V,\mu}
+$$
 
 But it gives the same result as we obtained above.
 
@@ -268,19 +266,18 @@ To determine the kinetic part of the free energy, we set all potentials equal
 to zero ($V({\bf x}) = V_{en}({\bf x}) = V_{ee}({\bf x}) = V_{xc}({\bf x}) =
 0$) and obtain:
 
-.. math::
-
+$$
     F_{kin}[\beta, n_e]
         = \int \left(-{2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
               I_{3\over2}(\Phi(n_e({\bf x})))
             + {1\over \beta} n_e({\bf x}) \Phi(n_e({\bf x}))
                 \right)\d^3 x\,.
+$$
 
 If the potentials are zero, then the pressure can be calculated
 from:
 
-.. math::
-
+$$
     P = -{1\over V}\Omega[\beta, n_e]
         = {2\sqrt2 \over 3 \pi^2 \beta^{5\over2}V}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \,\d^3 x =
@@ -288,11 +285,11 @@ from:
     = {2\sqrt2 \over 3 \pi^2 \beta^{5\over2}V}
             \int I_{3\over2}(\beta\mu) \,\d^3 x
     = {2\sqrt2 \over 3 \pi^2 \beta^{5\over2}} I_{3\over2}(\beta\mu) \,.
+$$
 
 If the potentials are not zero, then one can calculate the pressure using:
 
-.. math::
-
+$$
     P = - \left(\partial\Omega\over\partial V\right)_{\mu,T}
         = - \left(\partial F\over\partial V\right)_{T,N} =
 
@@ -338,11 +335,11 @@ If the potentials are not zero, then one can calculate the pressure using:
         {1\over 3V} (E_{en}+E_{ee}) =
 
         = {1\over 3V}(2E_{kin} + E_{en} + E_{ee} + E_{xc})
+$$
 
 Summary:
 
-.. math::
-
+$$
     \Omega = -{2\over 3} E_{kin} - E_{ee} - {1\over3}E_{xc}
 
     F_e = \Omega + \mu N = -{2\over 3} E_{kin} - E_{ee} - {1\over3}E_{xc}
@@ -351,11 +348,11 @@ Summary:
     TS = {5\over3} E_{kin} + E_{en} + 2 E_{ee} + {4\over3}E_{xc} - \mu N
 
     E = F + TS = \Omega + \mu N + TS = E_{kin} + E_{en} + E_{ee} + E_{xc}\,,
+$$
 
 where:
 
-.. math::
-
+$$
     E_{kin} = {\sqrt2 \over \pi^2 \beta^{5\over2}}
             \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \d^3 x
 
@@ -376,11 +373,11 @@ where:
     N = \int n_e({\bf x})\, \d^3 x
 
     \mu = {1\over \beta} \Phi(n_e({\bf x})) + V({\bf x})
+$$
 
 and $\mu N$ is calculated as follows:
 
-.. math::
-
+$$
     \mu N = \int \mu n_e({\bf x})\, \d^3 x =
 
         = {1\over \beta} \int \Phi(n_e({\bf x})) n_e({\bf x})\, \d^3 x
@@ -388,13 +385,14 @@ and $\mu N$ is calculated as follows:
 
         = {1\over \beta} \int \Phi(n_e({\bf x})) n_e({\bf x})\, \d^3 x
             + E_{en} + 2 E_{ee} + {4\over3} E_{xc} \,.
+$$
 
 So $F_e$ can also be expressed as:
 
-.. math::
-
+$$
     F_e = -{2\over 3} E_{kin} - E_{ee} - {1\over3}E_{xc} + \mu N =
 
         = -{2\over 3} E_{kin}
            + {1\over \beta} \int \Phi(n_e({\bf x})) n_e({\bf x})\, \d^3 x
             + E_{en} + E_{ee} + E_{xc} \,.
+$$
