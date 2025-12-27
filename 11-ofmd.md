@@ -7,10 +7,11 @@ the former.
 
 ## Top Down Approach
 
-The full interacting grand potential function is:
+The full interacting grand partition function is:
+
 $$
-\cdots
-$$.
+\Xi = \sum_{N=0}^\infty \frac{z^N}{N!} \int \prod_{i=1}^N \frac{d^3 r_i \, d^3 p_i}{(2\pi \hbar)^3} \, \exp\left( -\beta \left[ \sum_{i=1}^N \frac{p_i^2}{2m} + U(\mathbf{r}_1, \mathbf{r}_2, \dots, \mathbf{r}_N) \right] \right).
+$$
 
 We are approximating it with a trial grand potential that is non-interacting:
 
