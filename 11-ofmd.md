@@ -81,10 +81,30 @@ $$
 
 where E_xc is added as a functional of the trial density n(r) (e.g., Dirac: $E_x = -\frac{3}{4} \left( \frac{3}{\pi} \right)^{1/3} \int n^{4/3} d^3 r$).
 
+More rigorously, here is how it works using DFT (both KS and OF) for the full
+system at zero temperature, but the analogous derivation works for a finite
+temperature also:
+
+$$
+E[n]=(T+U)[n]+V[n]=T_s[n]+E_H[n]+(T-T_s+U-E_H)[n]+V[n]=
+$$
+$$
+=T_s[n]+E_H[n]+E_{xc}[n]+V[n]\,.
+$$
+
+In other words, both for the full Hamiltonian and for the trial Hamiltonian, we
+make some approximation to the kinetic term (TF in our case), and the
+difference is taken care of using the XC potential.
+
 In the correction:
 
 $$
-\langle H - H_{\text{trial}} \rangle_{\text{trial}} = [T_s + \int n v_{\text{ext}} + E_H + E_{xc}] - [T_s + \int n v_{\text{ext}} + \int n v_H + \int n v_{xc}] = (E_H - \int n v_H) + (E_{xc} - \int n v_{xc}).
+\langle H - H_{\text{trial}} \rangle_{\text{trial}} =
+$$
+$$
+= [T_s + \int n v_{\text{ext}} + E_H + E_{xc}] - [T_s + \int n v_{\text{ext}} + \int n v_H + \int n v_{xc}] =
+$$
+$$= (E_H - \int n v_H) + (E_{xc} - \int n v_{xc}).
 $$
 
 With $\int n v_H = 2 E_H$ and $\int n v_{xc} = \frac{4}{3} E_{xc}$ (for Dirac), it becomes $-E_H - (1/3) E_{xc}$.
