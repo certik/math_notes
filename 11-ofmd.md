@@ -65,7 +65,7 @@ E_{en} = \int n_e({\bf x}) V_{en}({\bf x})\,\,\mathrm{d}^3 x\,,
 $$
 $$
 E_{ee}
-    = 1/2 \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \,\mathrm{d}^3 x\,,
+    = {1\over2} \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \,\mathrm{d}^3 x\,,
 $$
 $$
 E_{xc} = {3\over 4}\int n_e({\bf x}) V_{xc}({\bf x})\,\,\mathrm{d}^3 x\,.
@@ -97,18 +97,18 @@ $$
 $$
     = \int n_e({\bf x})\left(
         0
-        +\left(1/2 V_{ee}-V_{ee}\right)
+        +\left({1\over2} V_{ee}-V_{ee}\right)
         +\left({3\over 4}V_{xc}-V_{xc}\right)
         \right)\,\,\mathrm{d}^3 x =
 $$
 $$
     = \int n_e({\bf x})\left(
-        -1/2 V_{ee}
+        -{1\over2} V_{ee}
         -{1\over 4}V_{xc}
         \right)\,\,\mathrm{d}^3 x =
 $$
 $$
-    = -1/2\int n_e({\bf x}) V_{ee} \,\mathrm{d}^3 x
+    = -{1\over2}\int n_e({\bf x}) V_{ee} \,\mathrm{d}^3 x
     - {1\over 3}{3\over 4}\int n_e({\bf x}) V_{xc} \,\mathrm{d}^3 x =
 $$
 $$
@@ -147,7 +147,7 @@ $$
 \Omega[\beta, n_e]
     = -{2\sqrt2 \over 3 \pi^2 \beta^{5\over2}}
         \int I_{3\over2}(\Phi(n_e({\bf x}))) \, \,\mathrm{d}^3 x
-      - 1/2 \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \,\mathrm{d}^3
+      - {1\over2} \int n_e(\mathbf{x}) V_{ee}(\mathbf{x}) \,\mathrm{d}^3 x
       - {1\over 4} \int n_e(\mathbf{x}) V_{xc}(\mathbf{x}) \,\mathrm{d}^3 x\,.
 $$
 
@@ -162,7 +162,7 @@ $$
           I_{3\over2}(\Phi(n_e({\bf x})))
         + \mu n_e({\bf x})
         - n_e(\mathbf{x}) \left(
-            1/2 V_{ee}(\mathbf{x})
+            {1\over2} V_{ee}(\mathbf{x})
             +{1\over 4} V_{xc}(\mathbf{x})
             \right)
             \right)\,\mathrm{d}^3 x =
@@ -173,7 +173,7 @@ $$
         + {1\over \beta} n_e({\bf x}) \Phi(n_e({\bf x}))
             + n_e({\bf x}) V({\bf x})
             - n_e(\mathbf{x}) \left(
-                1/2 V_{ee}(\mathbf{x})
+                {1\over2} V_{ee}(\mathbf{x})
                 +{1\over 4} V_{xc}(\mathbf{x})
                 \right)
             \right)\,\mathrm{d}^3 x =
@@ -183,7 +183,7 @@ $$
           I_{3\over2}(\Phi(n_e({\bf x})))
         + {1\over \beta} n_e({\bf x}) \Phi(n_e({\bf x}))
             + n_e({\bf x})\left( V_{en}({\bf x})
-              +1/2 V_{ee}(\mathbf{x})
+              +{1\over2} V_{ee}(\mathbf{x})
               + {3\over 4} V_{xc}(\mathbf{x}) \right)
             \right)\,\mathrm{d}^3 x\,,
 $$
@@ -405,7 +405,7 @@ $$
 E_{en} = \int n_e({\bf x}) V_{en}({\bf x})\, \,\mathrm{d}^3 x
 $$
 $$
-E_{ee} = 1/2 \int n_e({\bf x}) V_{ee}({\bf x})\, \,\mathrm{d}^3 x
+E_{ee} = {1\over2} \int n_e({\bf x}) V_{ee}({\bf x})\, \,\mathrm{d}^3 x
 $$
 $$
 E_{xc} = {3\over4}\int n_e({\bf x}) V_{xc}({\bf x})\, \,\mathrm{d}^3 x
