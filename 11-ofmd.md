@@ -1,3 +1,4 @@
+
 # Thomas-Fermi-Dirac Theory
 
 There are two ways to derive equations for Thomas-Fermi-Dirac theory. One way
@@ -63,6 +64,31 @@ Now, evaluate the correction $\langle H - H_{\text{trial}} \rangle_{\text{trial}
 - Dirac exchange: $E_{xc} = \int \epsilon_{xc}(n_e(\mathbf{r})) n_e(\mathbf{r}) \, d^3 r$, with $\epsilon_{xc} \propto -n^{1/3}$. Then $V_{xc} = \frac{\delta E_{xc}}{\delta n_e} = \frac{4}{3} \epsilon_{xc}$, so $\langle \sum_i V_{xc}(\mathbf{r}_i) \rangle_{\text{trial}} = \int n_e V_{xc} \, d^3 r = \frac{4}{3} E_{xc}$, and contribution: $E_{xc} - \frac{4}{3} E_{xc} = -\frac{1}{3} E_{xc}$.
 
 - External: Cancels exactly (included in both $H$ and $H_{\text{trial}}$).
+
+In the variational approximation: $\Omega[\rho] = \mathrm{Tr} \rho (H - \mu N + \frac{1}{\beta} \ln \rho)$, using a non-interacting trial $\rho_{\text{trial}}$:
+
+$$
+\langle H \rangle_{\text{trial}} = \mathrm{Tr} \rho_{\text{trial}} H = T_s + \int n v_{\text{ext}} + \langle U \rangle_{\text{trial}},
+$$
+
+where T_s is exact in KS (orbital kinetic) or approximate in TFD (semiclassical).
+
+For U (true Coulomb), the trial average $\langle U \rangle_{\text{trial}} = \frac{1}{2} \mathrm{Tr} \rho_{\text{trial}} \sum_{i \neq j} \frac{1}{r_{ij}}$. Since $\rho_{\text{trial}}$ is non-interacting (product of single-particle states), it factorizes to the Hartree term E_H, but to capture quantum exchange-correlation, we *approximate*:
+
+$$
+\langle U \rangle_{\text{trial}} \approx E_H + E_{xc}[n],
+$$
+
+where E_xc is added as a functional of the trial density n(r) (e.g., Dirac: $E_x = -\frac{3}{4} \left( \frac{3}{\pi} \right)^{1/3} \int n^{4/3} d^3 r$).
+
+In the correction:
+
+$$
+\langle H - H_{\text{trial}} \rangle_{\text{trial}} = [T_s + \int n v_{\text{ext}} + E_H + E_{xc}] - [T_s + \int n v_{\text{ext}} + \int n v_H + \int n v_{xc}] = (E_H - \int n v_H) + (E_{xc} - \int n v_{xc}).
+$$
+
+With $\int n v_H = 2 E_H$ and $\int n v_{xc} = \frac{4}{3} E_{xc}$ (for Dirac), it becomes $-E_H - (1/3) E_{xc}$.
+
 
 Thus the correction that must be applied is:
 
