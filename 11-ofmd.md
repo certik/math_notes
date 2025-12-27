@@ -7,18 +7,110 @@ the former.
 
 ## Top Down Approach
 
-We start with a grand potential for fermions:
+The full interacting grand potential function is:
+$$
+\cdots
+$$.
+
+We are approximating it with a trial grand potential that is non-interacting:
+
+$$
+\Omega_\mathrm{trial}[\beta, \mu]
+    = -\sum_i {1\over\beta}
+        \log\left(\sum_{N=0}^1 e^{-\beta\left(N\epsilon_i - N\mu\right)}\right)
+    =
+$$
+$$
+    = -\sum_i {1\over\beta}
+        \log\left(1 + e^{-\beta\left(\epsilon_i - \mu\right)}\right) =
+$$
+$$
+    = -{1\over\beta}
+        \int \int {2\,\mathrm{d}^3 x \,\mathrm{d}^3 p \over (2\pi)^3} \log\left(1 +
+            e^{-\beta\left(H_\mathrm{trial}(\mathbf{p}, \mathbf{x}) - \mu\right)}\right) =
+$$
+$$
+    = -{1\over\beta}
+        \int \int {2\,\mathrm{d}^3 x \,\mathrm{d}^3 p \over (2\pi)^3} \log\left(1 +
+            e^{-\beta\left({p^2\over 2} + V({\bf x}) - \mu\right)}\right)\,.
+$$
+
+And the relation between the two is:
+
+$$
+\Omega[\beta, \mu]
+= \Omega_\mathrm{trial}[\beta, \mu]
++\langle H - H_\mathrm{trial} \rangle_\mathrm{trial}
+$$
+
+Where the full Hamiltonian contains:
+
+$$H = \sum_i \left({p_i^2\over 2} + V_{en}({\bf x}_i)\right) + {1\over2}\sum_{i \ne j} {1\over |\mathbf{x}_i - \mathbf{x}_j|}$$
+
+And the non-interacting trial Hamiltonian is for each particle (the total
+Hamiltonian is a sum of these):
+
+$$H_\mathrm{trial}(\mathbf{p}, \mathbf{x}) = {p^2\over 2} + V({\bf x})$$
+
+where:
+$V({\bf x}) = V_{en}({\bf x}) + V_{ee}({\bf x}) + V_{xc}({\bf x})$.
+
+Now, evaluate the correction $\langle H - H_{\text{trial}} \rangle_{\text{trial}}$. The true $H$ includes Hartree $U_H = \frac{1}{2} \sum_{i \neq j} \frac{1}{|\mathbf{r}_i - \mathbf{r}_j|}$ and exchange-correlation (approximated as LDA for simplicity). In the mean-field:
+
+- Hartree: $\langle U_H \rangle_{\text{trial}} \approx E_{ee} = \frac{1}{2} \int n_e(\mathbf{r}) V_{ee}(\mathbf{r}) \, d^3 r$, and $\langle \sum_i V_{ee}(\mathbf{r}_i) \rangle_{\text{trial}} = \int n_e V_{ee} \, d^3 r = 2 E_{ee}$, so contribution: $E_{ee} - 2 E_{ee} = -E_{ee}$.
+
+- Dirac exchange: $E_{xc} = \int \epsilon_{xc}(n_e(\mathbf{r})) n_e(\mathbf{r}) \, d^3 r$, with $\epsilon_{xc} \propto -n^{1/3}$. Then $V_{xc} = \frac{\delta E_{xc}}{\delta n_e} = \frac{4}{3} \epsilon_{xc}$, so $\langle \sum_i V_{xc}(\mathbf{r}_i) \rangle_{\text{trial}} = \int n_e V_{xc} \, d^3 r = \frac{4}{3} E_{xc}$, and contribution: $E_{xc} - \frac{4}{3} E_{xc} = -\frac{1}{3} E_{xc}$.
+
+- External: Cancels exactly (included in both $H$ and $H_{\text{trial}}$).
+
+Thus the correction that must be applied is:
+
+$$
+E_{en} + E_{ee} + E_{xc} - \int n_e({\bf x}) V({\bf x})\,\,\mathrm{d}^3 x =
+$$
+$$
+    = \int n_e({\bf x})\left(
+        (e_{en}-V_{en})
+        +(e_{ee}-V_{ee})
+        +(e_{xc}-V_{xc})
+        \right)\,\,\mathrm{d}^3 x =
+$$
+$$
+    = \int n_e({\bf x})\left(
+        0
+        +\left({1\over2} V_{ee}-V_{ee}\right)
+        +\left({3\over 4}V_{xc}-V_{xc}\right)
+        \right)\,\,\mathrm{d}^3 x =
+$$
+$$
+    = \int n_e({\bf x})\left(
+        -{1\over2} V_{ee}
+        -{1\over 4}V_{xc}
+        \right)\,\,\mathrm{d}^3 x =
+$$
+$$
+    = -{1\over2}\int n_e({\bf x}) V_{ee} \,\mathrm{d}^3 x
+    - {1\over 3}{3\over 4}\int n_e({\bf x}) V_{xc} \,\mathrm{d}^3 x =
+$$
+$$
+    = -E_{ee} - {1\over 3} E_{xc}
+$$
+
+
+We start with a grand potential for non-interacting fermions (they interact in
+terms of the mean field potential $V({\bf x})$, but not directly), and add to
+it the corrections above:
 
 $$
 \Omega[\beta, \mu]
     = -\sum_i {1\over\beta}
         \log\left(\sum_{N=0}^1 e^{-\beta\left(N\epsilon_i - N\mu\right)}\right)
-            =
+            -E_{ee} - {1\over3}E_{xc} =
 $$
 $$
     = -\sum_i {1\over\beta}
         \log\left(1 + e^{-\beta\left(\epsilon_i - \mu\right)}\right)
-            =
+            -E_{ee} - {1\over3}E_{xc} =
 $$
 $$
     = -{1\over\beta}
@@ -82,38 +174,7 @@ $$
 
 In our case here, we have $e_{xc} = {3\over4}V_{xc}({\bf x})$, which is only
 true for the exchange in homogeneous electron gas. Otherwise the relation is
-nonlinear. In the general case, the correction that must be applied is:
-
-$$
-E_{en} + E_{ee} + E_{xc} - \int n_e({\bf x}) V({\bf x})\,\,\mathrm{d}^3 x =
-$$
-$$
-    = \int n_e({\bf x})\left(
-        (e_{en}-V_{en})
-        +(e_{ee}-V_{ee})
-        +(e_{xc}-V_{xc})
-        \right)\,\,\mathrm{d}^3 x =
-$$
-$$
-    = \int n_e({\bf x})\left(
-        0
-        +\left({1\over2} V_{ee}-V_{ee}\right)
-        +\left({3\over 4}V_{xc}-V_{xc}\right)
-        \right)\,\,\mathrm{d}^3 x =
-$$
-$$
-    = \int n_e({\bf x})\left(
-        -{1\over2} V_{ee}
-        -{1\over 4}V_{xc}
-        \right)\,\,\mathrm{d}^3 x =
-$$
-$$
-    = -{1\over2}\int n_e({\bf x}) V_{ee} \,\mathrm{d}^3 x
-    - {1\over 3}{3\over 4}\int n_e({\bf x}) V_{xc} \,\mathrm{d}^3 x =
-$$
-$$
-    = -E_{ee} - {1\over 3} E_{xc}
-$$
+nonlinear.
 
 The density is a functional derivative with respect to
 $\mu$:
