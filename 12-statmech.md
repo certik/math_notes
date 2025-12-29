@@ -38,3 +38,15 @@ $$
 = {1\over e^{\beta(\epsilon_i - \mu)} + 1}
   \,.
 $$
+
+The total (average) number of particles in the full system is:
+$$
+N = -\left(\partial\Omega\over\partial\mu\right)_{T,V}
+= -\left(\partial\sum_i\Omega_i\over\partial\mu\right)_{T,V}
+= \sum_i \left(-\left(\partial\Omega_i\over\partial\mu\right)_{T,V}\right) =
+$$
+$$
+= \sum_i N_i
+= \sum_i {1\over e^{\beta(\epsilon_i - \mu)} + 1}
+\,.
+$$
