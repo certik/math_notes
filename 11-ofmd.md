@@ -45,6 +45,121 @@ $$
 +\langle H - H_\mathrm{trial} \rangle_\mathrm{trial}
 $$
 
+## Proof
+
+The given relation is an approximation to the exact grand potential Ω[β, μ] = −(1/β) ln Ξ, derived using a mean-field-like approach based on a first-order cumulant expansion (or equivalently, approximating the average of an exponential by the exponential of the average). This is a standard technique in statistical mechanics for approximating partition functions when using a trial Hamiltonian, particularly in theories like Thomas-Fermi-Dirac (TFD) or mean-field approximations where fluctuations beyond the trial system are neglected.
+
+### Step 1: Recall the exact grand partition function and grand potential
+The exact grand partition function for the interacting system is:
+
+$$
+\Xi = \sum_{N=0}^\infty e^{\beta \mu N} \operatorname{Tr}_N \left[ e^{-\beta H^{(N)}} \right] = \operatorname{Tr} \left[ e^{-\beta (H - \mu N)} \right],
+$$
+
+where the trace is over all particle numbers N and states, H is the full interacting Hamiltonian (including kinetic energy, external potential V_en, and electron-electron interactions), μ is the chemical potential, β = 1/(kT), and N is the particle number operator.
+
+The exact grand potential is then:
+
+$$
+\Omega[\beta, \mu] = -\frac{1}{\beta} \ln \Xi.
+$$
+
+This is intractable to compute exactly for interacting systems, so we introduce a non-interacting trial system.
+
+### Step 2: Introduce the trial Hamiltonian and its grand partition function
+Define a trial Hamiltonian H_trial that is non-interacting (i.e., a sum of single-particle terms, as given in the notes: H_trial = ∑_i (p_i²/2 + V(x_i)), where V(x) = V_en(x) + V_ee(x) + V_xc(x) is an effective mean-field potential). The trial system is solvable exactly, as it reduces to independent fermions in the potential V(x).
+
+The trial grand partition function is:
+
+$$
+\Xi_{\mathrm{trial}} = \operatorname{Tr} \left[ e^{-\beta (H_{\mathrm{trial}} - \mu N)} \right],
+$$
+
+and the trial grand potential is:
+
+$$
+\Omega_{\mathrm{trial}}[\beta, \mu] = -\frac{1}{\beta} \ln \Xi_{\mathrm{trial}}.
+$$
+
+As shown in the notes, this can be explicitly computed in the semiclassical (Thomas-Fermi) approximation:
+
+$$
+\Omega_{\mathrm{trial}}[\beta, \mu] = -\frac{1}{\beta} \int \int \frac{2 \, d^3 x \, d^3 p}{(2\pi)^3} \log \left( 1 + e^{-\beta \left( \frac{p^2}{2} + V(\mathbf{x}) - \mu \right)} \right).
+$$
+
+(Here, the factor of 2 accounts for spin degeneracy.)
+
+### Step 3: Rewrite the exact Ξ in terms of the trial system
+To connect the exact and trial systems, rewrite the exact grand partition function using H = H_trial + (H - H_trial):
+
+$$
+\Xi = \operatorname{Tr} \left[ e^{-\beta (H_{\mathrm{trial}} - \mu N + (H - H_{\mathrm{trial}}))} \right] = \operatorname{Tr} \left[ e^{-\beta (H_{\mathrm{trial}} - \mu N)} \, e^{-\beta (H - H_{\mathrm{trial}})} \right].
+$$
+
+This can be expressed as:
+
+$$
+\Xi = \Xi_{\mathrm{trial}} \left\langle e^{-\beta (H - H_{\mathrm{trial}})} \right\rangle_{\mathrm{trial}},
+$$
+
+where ⟨⋅⟩_trial denotes the expectation value in the trial ensemble:
+
+$$
+\left\langle O \right\rangle_{\mathrm{trial}} = \frac{1}{\Xi_{\mathrm{trial}}} \operatorname{Tr} \left[ O \, e^{-\beta (H_{\mathrm{trial}} - \mu N)} \right].
+$$
+
+Let ΔH = H - H_trial for brevity (ΔH captures the difference between the true interactions and the mean-field approximation in H_trial). Then:
+
+$$
+\Xi = \Xi_{\mathrm{trial}} \left\langle e^{-\beta \Delta H} \right\rangle_{\mathrm{trial}}.
+$$
+
+### Step 4: Take the logarithm to get the grand potential
+The grand potential is:
+
+$$
+\Omega[\beta, \mu] = -\frac{1}{\beta} \ln \Xi = -\frac{1}{\beta} \ln \Xi_{\mathrm{trial}} - \frac{1}{\beta} \ln \left\langle e^{-\beta \Delta H} \right\rangle_{\mathrm{trial}} = \Omega_{\mathrm{trial}}[\beta, \mu] - \frac{1}{\beta} \ln \left\langle e^{-\beta \Delta H} \right\rangle_{\mathrm{trial}}.
+$$
+
+This is still exact, but the term ln ⟨e^{-β ΔH}⟩_trial is difficult to compute.
+
+### Step 5: Apply the first-order cumulant approximation (mean-field approximation)
+To approximate ln ⟨e^X⟩_trial where X = -β ΔH, use the cumulant expansion:
+
+$$
+\ln \left\langle e^{X} \right\rangle = \left\langle X \right\rangle + \frac{1}{2} \left( \left\langle X^2 \right\rangle - \left\langle X \right\rangle^2 \right) + \cdots.
+$$
+
+In the mean-field approximation (common in TFD and similar theories), we truncate at first order, neglecting higher-order cumulants (which represent fluctuations/correlations beyond the mean field):
+
+$$
+\ln \left\langle e^{X} \right\rangle \approx \left\langle X \right\rangle.
+$$
+
+This is equivalent to the Jensen's inequality-based approximation ⟨e^X⟩ ≈ e^{⟨X⟩} (since ln is concave, this gives an upper bound, but in practice, it's used as an approximation here).
+
+Substituting X = -β ΔH:
+
+$$
+\ln \left\langle e^{-\beta \Delta H} \right\rangle_{\mathrm{trial}} \approx \left\langle -\beta \Delta H \right\rangle_{\mathrm{trial}} = -\beta \left\langle \Delta H \right\rangle_{\mathrm{trial}}.
+$$
+
+Plug this back into the expression for Ω:
+
+$$
+\Omega[\beta, \mu] \approx \Omega_{\mathrm{trial}}[\beta, \mu] - \frac{1}{\beta} \left( -\beta \left\langle \Delta H \right\rangle_{\mathrm{trial}} \right) = \Omega_{\mathrm{trial}}[\beta, \mu] + \left\langle \Delta H \right\rangle_{\mathrm{trial}} = \Omega_{\mathrm{trial}}[\beta, \mu] + \left\langle H - H_{\mathrm{trial}} \right\rangle_{\mathrm{trial}}.
+$$
+
+This is the desired relation. The equality in the notes is understood as this approximation (not exact equality), which becomes accurate in the limit where correlations (higher cumulants) are small, such as in high-density or semiclassical regimes relevant to TFD.
+
+### Additional Notes on the Approximation
+- **Validity**: This first-order truncation is exact if ΔH is constant (no fluctuations), but in general, it's a mean-field approximation. In TFD, it's justified because the trial H_trial already includes mean-field effects via V(x), and the semiclassical kinetic energy approximation further simplifies things.
+- **Connection to variational principle**: This relates to the Gibbs-Bogoliubov-Feynman inequality, which states Ω ≤ Ω_trial + ⟨H - H_trial⟩_trial (an upper bound on Ω). In the notes, the approximation treats it as equality for the purpose of deriving the TFD equations, with minimization over the trial parameters (e.g., V(x) or the density n_e(x)) to find the best approximation.
+
+
+
+## Evaluate $\langle H - H_{\text{trial}} \rangle_{\text{trial}}$ explicitly
+
 Where the full Hamiltonian contains:
 
 $$H = \sum_i \left({p_i^2\over 2} + V_{en}({\bf x}_i)\right) + {1\over2}\sum_{i \ne j} {1\over |\mathbf{x}_i - \mathbf{x}_j|}$$
