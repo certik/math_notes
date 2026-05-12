@@ -830,6 +830,163 @@ sharply: the coordinate components of the metric vary, but the
 object) vanishes. The bracket-level distinction $[\mathfrak{m},
 \mathfrak{m}] = 0$ is doing exactly the work that makes flat space flat.
 
+#### Cartesian derivation: $\sigma = \exp(x P^1 + y P^2)$
+
+The derivation above was the *traditional* one — it used a section
+$\sigma = e^{\phi J}\, e^{r P^1}$ with the rotation generator $J$
+inside (as a "fiber direction") and a translation generator radially.
+The same machinery accepts another natural choice: skip the rotation
+entirely and use only the translations,
+
+$$
+\sigma(x, y) \;=\; \exp(x\, P^1 + y\, P^2).
+$$
+
+Geometrically, this is a *single* translation by the vector
+$(x, y)$ from the basepoint. Because $[P^1, P^2] = 0$, this is the
+same as $e^{xP^1}\, e^{yP^2}$ in either order — the two translations
+commute, so no Baker–Campbell–Hausdorff correction arises. Let us run
+the four-step algorithm with this section.
+
+##### Step 1 — structure constants
+
+The Klein pair is unchanged: $\mathfrak{h} = \mathrm{span}(J)$,
+$\mathfrak{m} = \mathrm{span}(P^1, P^2)$. The non-zero brackets are
+
+$$
+[J, P^1] = P^2, \qquad [J, P^2] = -P^1.
+$$
+
+The crucial novelty is the $\mathfrak{m}$–$\mathfrak{m}$ bracket:
+$[P^1, P^2] = 0$. We will see exactly what this triviality does to the
+algorithm.
+
+##### Step 2 — Maurer–Cartan form
+
+We need $\omega = \sigma^{-1}\, d\sigma$. Use the standard
+$3 \times 3$ affine representation of $\mathfrak{e}(2)$:
+
+$$
+P^1 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}, \quad
+P^2 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad
+J = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}.
+$$
+
+The Lie-algebra element $V := x P^1 + y P^2$ has $V^2 = 0$ in this
+representation (both translation matrices are strictly upper-triangular
+and their product vanishes). So the exponential series terminates
+after one term:
+
+$$
+\sigma(x, y) \;=\; \exp(V) \;=\; I + V \;=\;
+\begin{pmatrix} 1 & 0 & x \\ 0 & 1 & y \\ 0 & 0 & 1 \end{pmatrix}.
+$$
+
+This is just the affine matrix for translation by $(x, y)$ — as
+expected. The inverse:
+
+$$
+\sigma^{-1} \;=\;
+\begin{pmatrix} 1 & 0 & -x \\ 0 & 1 & -y \\ 0 & 0 & 1 \end{pmatrix},
+\qquad
+d\sigma \;=\;
+\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}.
+$$
+
+The bottom row of $d\sigma$ is zero, so the matrix product
+$\sigma^{-1}\, d\sigma$ leaves the upper-right column $(dx, dy)^T$
+untouched:
+
+$$
+\boxed{\;
+\omega \;=\; \sigma^{-1}\, d\sigma \;=\;
+\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}
+\;=\; P^1\, dx + P^2\, dy.
+\;}
+$$
+
+Decomposed into the $\mathfrak{m}$- and $\mathfrak{h}$-parts
+$\omega = e^a X_a + \omega_{\mathfrak{h}}$:
+
+$$
+e^1 \;=\; dx, \qquad e^2 \;=\; dy, \qquad
+\omega_{\mathfrak{h}} \;=\; 0.
+$$
+
+The **vielbein is the identity matrix**: $e^a{}_\mu = \delta^a_\mu$.
+The **spin connection vanishes identically**. Both consequences trace
+back to $[P^1, P^2] = 0$ — the BCH formula contributes no nonlinear
+correction, and the rotation generator $J$ never appears in $\omega$.
+
+##### Step 3 — invariance equation
+
+The invariance equation is the *same one we solved in the polar
+derivation*. With $\mathrm{ad}_J|_{\mathfrak{m}}$ a $90°$ rotation in
+the $(P^1, P^2)$-plane, the symmetric matrix $\eta$ satisfying $\eta\,
+\mathrm{ad}_J + (\mathrm{ad}_J)^T\, \eta = 0$ is
+
+$$
+\eta \;=\; \lambda\, I_{2 \times 2}, \qquad \lambda > 0.
+$$
+
+A single positive scale parameter — the same answer as before. The
+invariance condition is a property of the $(\mathfrak{g},
+\mathfrak{h})$ Klein pair and does not depend on which section was
+chosen.
+
+##### Step 4 — assemble the metric
+
+$g = \eta_{ab}\, e^a \otimes e^b = \lambda\, ((e^1)^2 + (e^2)^2)$ with
+$e^1 = dx$, $e^2 = dy$:
+
+$$
+\boxed{\;ds^2 \;=\; \lambda\, (dx^2 + dy^2).\;}
+$$
+
+Setting $\lambda = 1$ for the standard normalization, we recover the
+Cartesian metric of $\mathbb{R}^2$ in the most direct possible way.
+The intrinsic geometry is identical to the polar result
+$ds^2 = dr^2 + r^2\, d\phi^2$ — it is the same flat metric in
+different coordinates — but the coordinate components are now
+*constants* instead of being $r$-dependent.
+
+##### Why this works globally
+
+Three structural features make Cartesian coordinates better-behaved
+than polar in this example:
+
+- **Single-step exponential.** $\sigma(x, y) = \exp(xP^1 + yP^2)$ is
+  well-defined for all $(x, y) \in \mathbb{R}^2$, with no coordinate
+  singularity (compare polar: $r = 0$ is a singularity).
+- **Identity vielbein.** $\det e^a{}_\mu = 1 \neq 0$ everywhere. No
+  point is excluded from the chart.
+- **Vanishing spin connection.** $\omega_{\mathfrak{h}} \equiv 0$
+  globally on the chart, so no curvature term is even present.
+
+All three are consequences of one algebraic fact: $[\mathfrak{m},
+\mathfrak{m}] = 0$. The translations commute, so the BCH formula
+reduces to the linear sum, no $\mathfrak{h}$-generator can appear in
+$\sigma^{-1} d\sigma$, and the exponential map $\mathbb{R}^2 \to G/H$
+is a global diffeomorphism. This is the algebraic signature of
+*flatness with a globally trivial chart*. We will see in the next
+subsection that the same condition $[\mathfrak{m}, \mathfrak{m}] = 0$
+is also what makes the **position vector** globally well-defined on
+$\mathbb{R}^2$.
+
+##### Killing vector fields
+
+The three Killing fields generated by $\xi \in \{P^1, P^2, J\}$ acting
+on the section. Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
+(\mathrm{Ad}_{\sigma^{-1}} \xi)^a|_{\mathfrak{m}}$ with vielbein the
+identity:
+
+- $\xi = P^1$ produces $\partial_x$.
+- $\xi = P^2$ produces $\partial_y$.
+- $\xi = J$ produces $-y\, \partial_x + x\, \partial_y$.
+
+These are exactly the three Killing fields familiar from elementary
+geometry — two translations and a rotation around the origin.
+
 #### Christoffel symbols, frame vectors, and the position vector
 
 Once the metric $ds^2 = dr^2 + r^2\, d\phi^2$ is in hand, everything
@@ -1891,6 +2048,210 @@ mechanical — exactly the kind of computation a physicist would write
 out using only the tools of GR. The same four steps applied to any
 other reductive Klein pair $(\mathfrak{g}, \mathfrak{h})$ with section
 $\sigma$ yield the corresponding metric.
+
+#### Cartesian-like derivation: $\sigma = \exp(a J^1 + b J^2)$
+
+The streamlined derivation above used a *product* section,
+$\sigma = e^{\phi J^3}\, e^{\theta J^2}$, in which an
+$\mathfrak{h}$-generator ($J^3$) handles the azimuthal direction. The
+natural analogue of the Cartesian section on $\mathbb{R}^2$ — built
+entirely from $\mathfrak{m}$-generators in a single exponential — is
+
+$$
+\sigma(a, b) \;=\; \exp(a\, J^1 + b\, J^2).
+$$
+
+Geometrically, this is a *single* rotation: about the axis
+$(a, b, 0)/\sqrt{a^2 + b^2}$ in the equatorial plane, by angle
+$\rho = \sqrt{a^2 + b^2}$. The coordinates $(a, b)$ are **geodesic
+normal coordinates** at the north pole — exponentiating an
+$\mathfrak{m}$-vector of length $\rho$ moves the basepoint along the
+geodesic of arclength $\rho$ in direction $(\cos\psi, \sin\psi)$ where
+$\psi = \arctan(b/a)$.
+
+This is precisely the $\mathbb{R}^2$ recipe of the previous section
+transplanted onto $S^2$. Let us run the four-step algorithm and see
+what comes out — and exactly where the chart breaks down.
+
+##### Step 1 — structure constants
+
+Unchanged from the polar derivation: $[J^i, J^j] = \epsilon^{ijk} J^k$,
+with Klein pair $\mathfrak{h} = \mathrm{span}(J^3)$, $\mathfrak{m} =
+\mathrm{span}(J^1, J^2)$.
+
+The crucial bracket is now $[J^1, J^2] = J^3 \in \mathfrak{h}$, *not*
+zero. Already at this stage we can predict — by comparison with the
+$\mathbb{R}^2$ Cartesian case — that the BCH formula will not collapse
+and that the spin connection will not vanish.
+
+##### Step 2 — Maurer–Cartan form
+
+The exponential $\sigma = \exp(V)$ with $V = aJ^1 + bJ^2$ no longer
+truncates after one term. In the standard $3 \times 3$ representation
+of $\mathfrak{so}(3)$,
+
+$$
+V \;=\; \begin{pmatrix} 0 & 0 & b \\ 0 & 0 & -a \\ -b & a & 0 \end{pmatrix},
+$$
+
+which is the skew-symmetric matrix representing infinitesimal rotation
+about the axis $(a, b, 0)$. Direct computation shows
+$V^3 = -\rho^2 V$ with $\rho = \sqrt{a^2 + b^2}$, so the exponential
+series collapses to the **Rodrigues formula**:
+
+$$
+\sigma \;=\; \exp(V) \;=\; I + \frac{\sin\rho}{\rho}\, V
+                       + \frac{1 - \cos\rho}{\rho^2}\, V^2.
+$$
+
+This is a rotation by angle $\rho$ about the axis $(a, b, 0)$ — a
+well-known elementary fact.
+
+The Maurer–Cartan form is $\omega = \sigma^{-1}\, d\sigma$ (using
+$\sigma^{-1} = \sigma^T$ since $\sigma \in SO(3)$). Carrying out the
+matrix differentiation and projecting onto the basis $(J^1, J^2, J^3)$
+gives (computed with [`klein_geometry.py`](klein_geometry.py))
+
+$$
+e^1{}_a \;=\; \frac{a^2}{\rho^2} + \frac{b^2 \sin\rho}{\rho^3}, \qquad
+e^1{}_b \;=\; \frac{ab\,(\rho - \sin\rho)}{\rho^3},
+$$
+
+$$
+e^2{}_a \;=\; \frac{ab\,(\rho - \sin\rho)}{\rho^3}, \qquad
+e^2{}_b \;=\; \frac{a^2 \sin\rho}{\rho^3} + \frac{b^2}{\rho^2},
+$$
+
+$$
+\omega_{\mathfrak{h}}^{\;3} \;=\; \frac{1 - \cos\rho}{\rho^2}\,
+(b\, da - a\, db).
+$$
+
+These are not pretty in $(a, b)$ coordinates. But the vielbein
+determinant simplifies dramatically:
+
+$$
+\det\!\begin{pmatrix} e^1{}_a & e^1{}_b \\ e^2{}_a & e^2{}_b \end{pmatrix}
+\;=\; \frac{\sin\rho}{\rho}.
+$$
+
+This is *the* key formula. It is nonzero on the open disc
+$0 < \rho < \pi$, vanishes first at $\rho = \pi$, becomes negative for
+$\pi < \rho < 2\pi$, vanishes again at $\rho = 2\pi$, and so on. The
+chart is non-singular only inside the disc of radius $\pi$ centered at
+the origin in $(a, b)$ space.
+
+**Cleaning up by switching to geodesic-polar coordinates.** Set
+$a = \rho \cos\psi$, $b = \rho \sin\psi$, so $\rho \ge 0$ is the
+geodesic distance from the basepoint and $\psi$ is the angle around
+it. Then $da = \cos\psi\, d\rho - \rho \sin\psi\, d\psi$ and
+$db = \sin\psi\, d\rho + \rho \cos\psi\, d\psi$. Substituting and
+simplifying:
+
+$$
+\boxed{\;e^1 \;=\; \cos\psi\, d\rho - \sin\rho\, \sin\psi\, d\psi, \quad
+e^2 \;=\; \sin\psi\, d\rho + \sin\rho\, \cos\psi\, d\psi.\;}
+$$
+
+$$
+\boxed{\;\omega_{\mathfrak{h}}^{\;3} \;=\; (\cos\rho - 1)\, d\psi.\;}
+$$
+
+In these coordinates, the vielbein determinant is $\sin\rho$ — the
+$1/\rho$ singularity at the origin came purely from the conversion
+$(a, b) \leftrightarrow (\rho, \psi)$, the usual artifact of polar
+coordinates at the origin. The remaining zero at $\rho = \pi$ is the
+genuine failure of the section.
+
+##### Step 3 — invariance equation
+
+Unchanged: $\mathrm{ad}_{J^3}|_{\mathfrak{m}}$ is a $90°$ rotation in
+the $(J^1, J^2)$-plane, and the invariance equation gives $\eta =
+\lambda\, I_{2 \times 2}$ with $\lambda > 0$. Set $\lambda = R^2$ to
+match the standard convention.
+
+##### Step 4 — assemble the metric
+
+$g = \eta_{ab}\, e^a \otimes e^b = R^2\, ((e^1)^2 + (e^2)^2)$ in
+geodesic-polar coordinates:
+
+$$
+g \;=\; R^2\, \big[(\cos\psi\, d\rho - \sin\rho\, \sin\psi\, d\psi)^2
++ (\sin\psi\, d\rho + \sin\rho\, \cos\psi\, d\psi)^2\big].
+$$
+
+The cross-terms cancel (the $\cos\psi \sin\psi$ pieces have opposite
+signs) and the diagonal terms collapse by
+$\cos^2\psi + \sin^2\psi = 1$:
+
+$$
+\boxed{\;ds^2 \;=\; R^2\,(d\rho^2 + \sin^2\rho\, d\psi^2).\;}
+$$
+
+Setting $R = 1$: $ds^2 = d\rho^2 + \sin^2\rho\, d\psi^2$. This *is* the
+round metric on the unit sphere — the same intrinsic geometry as
+$ds^2 = d\theta^2 + \sin^2\theta\, d\phi^2$ from the streamlined polar
+derivation. The geodesic-polar coordinates $(\rho, \psi)$ are
+essentially relabelled colatitude/longitude: $\theta = \rho$ (on a
+unit sphere, colatitude *is* the geodesic distance from the pole), and
+$\phi = \psi$ (longitude *is* the angle around the pole). The two
+sections produce identical metrics up to this relabelling.
+
+##### What "fails" — and what it teaches us
+
+The Cartesian-like section on $S^2$ does *not* fail algebraically.
+The four-step algorithm runs to completion and produces the correct,
+$SO(3)$-invariant, constant-curvature round metric. What is different
+from $\mathbb{R}^2$ Cartesian is in the columns below:
+
+| Property | $\mathbb{R}^2$ Cartesian | $S^2$ Cartesian-like |
+|---|---|---|
+| Section | $\exp(xP^1 + yP^2)$ | $\exp(aJ^1 + bJ^2)$ |
+| BCH series | Terminates ($V^2 = 0$) | Doesn't terminate (Rodrigues) |
+| Vielbein in section coords | Identity | $\sin\rho/\rho$-modulated |
+| Spin connection | $0$ identically | $(\cos\rho - 1)\, d\psi \neq 0$ |
+| Vielbein determinant | $1$ everywhere | $\sin\rho$, vanishes at $\rho = 0, \pi$ |
+| Global chart? | Yes — covers all of $\mathbb{R}^2$ | No — covers $S^2 \setminus \{\text{south pole}\}$ |
+| Curvature | $0$ | $1/R^2$ |
+
+The non-trivial entries on the right are not flaws in the algorithm —
+they are the algebra honestly reporting the geometry of the sphere:
+
+- The non-vanishing $\omega_{\mathfrak{h}} = (\cos\rho - 1)\, d\psi$
+  is the canonical Cartan connection for the round metric. Its
+  exterior derivative $d\omega_{\mathfrak{h}} = \sin\rho\, d\rho \wedge
+  d\psi$, times $J^3$, encodes the constant positive Gaussian
+  curvature $K = 1/R^2$.
+- The vanishing of $\det e^a{}_\mu = \sin\rho$ at $\rho = \pi$ is the
+  algebra reporting the **injectivity radius** of the exponential map.
+  Geometrically: a tangent vector at the north pole of length $\pi$
+  traces out a half-great-circle and reaches the south pole; tangent
+  vectors of length $\pi$ in *all* directions $\psi$ converge to the
+  same antipodal point. The chart cannot distinguish them, so the
+  Jacobian collapses.
+- Beyond $\rho = \pi$ the exponential map is no longer injective at
+  all; tangent vectors of length $\rho + 2\pi$ produce the same group
+  element as those of length $\rho$. The Cartesian-like chart cannot
+  be extended to all of $S^2$ no matter how cleverly you stitch it.
+
+So no algebraic failure. The *only* failure is **topological**: $S^2$
+is compact and cannot be covered by a single $\mathbb{R}^2$-valued
+chart. The algebra-level signal of this — visible already before any
+matrix arithmetic — is that the bracket $[J^1, J^2] = J^3$ lives in
+$\mathfrak{h}$, not in $\{0\}$. That is precisely the curvature of
+the canonical connection, and it is also precisely what prevents the
+exponential map from being a global diffeomorphism.
+
+The price of insisting on a single-exponential, Cartesian-like
+section on $S^2$ is therefore: (i) an incomplete chart (missing one
+point), and (ii) metric components $(d\rho^2, \sin^2\rho\, d\psi^2)$
+that — by coincidence of $\theta = \rho$ on the unit sphere — happen
+to match the usual spherical form anyway. The product section
+$\sigma = e^{\phi J^3}\, e^{\theta J^2}$ trades these for a chart
+that is *also* incomplete (the poles are singular there too) but
+where the metric components are immediately recognizable from
+elementary spherical geometry. Both sections describe the same
+Riemannian manifold; only the coordinate dress is different.
 
 ### The 3-sphere $S^3$
 
