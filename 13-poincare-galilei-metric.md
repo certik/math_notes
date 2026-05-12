@@ -92,9 +92,29 @@ for every generator $X \in \{J_i, K_i\}$ and every $\mu, \nu$. This is the
 **Leibniz condition**: invariance is the statement that $X$ acts as a
 derivation on $g$ with zero output.
 
-It is a necessary condition. It is also sufficient: if the condition holds
-for every $X$, then by composing infinitesimal transformations every finite
-group element preserves $g$.
+It is a necessary condition. It is also sufficient: the **infinitesimal**
+Leibniz condition (at $\theta = 0$) implies the **finite** group invariance
+$g(U P^\mu U^{-1}, U P^\nu U^{-1}) = g(P^\mu, P^\nu)$ for **all** $\theta \in
+\mathbb{R}$. To see this, define
+
+$$
+f(\theta) := g\big(U(\theta) P^\mu U(\theta)^{-1},\ U(\theta) P^\nu U(\theta)^{-1}\big), \qquad U(\theta) = e^{\theta X}.
+$$
+
+Differentiating at an arbitrary $\theta$:
+
+$$
+f'(\theta) = g\big([X, P^\mu_\theta], P^\nu_\theta\big) + g\big(P^\mu_\theta, [X, P^\nu_\theta]\big),
+\qquad P^\mu_\theta := U(\theta) P^\mu U(\theta)^{-1} \in V.
+$$
+
+By closure of $V$ under the adjoint action, $P^\mu_\theta \in V$, so the
+Leibniz condition (which holds for *every* pair of vectors in $V$, not just
+the basis) gives $f'(\theta) = 0$ identically. Hence $f$ is constant,
+$f(\theta) = f(0) = g(P^\mu, P^\nu)$, for all $\theta$. So the infinitesimal
+Leibniz condition is equivalent to finite group invariance along each
+one-parameter subgroup, and composing these recovers invariance under every
+element of the identity component of the group.
 
 Writing $g(P^\mu, P^\nu) = \eta^{\mu\nu}$ with $\eta^{\mu\nu} =
 \eta^{\nu\mu}$, the Leibniz condition becomes a finite system of linear
