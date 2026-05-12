@@ -1489,6 +1489,81 @@ $(\mathbb{R}^3, \delta_{ij})$ is the full $E(3)$, not just $T^3$: $T^3$ is the
 isometry group of *every* constant-metric flat geometry on $\mathbb{R}^3$,
 whereas $E(3)$ is the one that singles out the round metric.
 
+**The weak isotropy principle.** What is the *minimal* physical input that
+forces the rotation algebra $\mathfrak{so}(3)$? Not "preservation of a
+positive-definite metric" (which presupposes that a metric exists), nor
+"preservation of length" (which presupposes a notion of length), nor any
+quantitative geometric structure. The minimal input is a single qualitative
+statement:
+
+> **Weak isotropy principle.** At each point of space, all directions are
+> physically equivalent: for any two unit vectors $\hat u, \hat v$ in the
+> tangent space, there exists a (closed, bounded) symmetry transformation
+> $h$ taking $\hat u$ to $\hat v$.
+
+That is: the stabilizer $\mathfrak{h}$ at each point integrates to a closed
+Lie subgroup $H \subset GL(n,\mathbb{R})$ that acts *transitively on the unit
+sphere $S^{n-1}$* of directions. No assumption about distances, angles,
+metric, or any quantitative structure is made — only that all directions
+are "the same".
+
+**Inevitability of $\mathfrak{so}(3)$.** From weak isotropy alone — just
+"directions are transitive" — the $\mathfrak{so}(3)$ algebra emerges
+inevitably, by a structural theorem (Borel; Montgomery–Samelson; Onishchik,
+1940s–60s):
+
+> Every compact connected Lie group $H$ acting transitively on a sphere
+> $S^{n-1}$ ($n \geq 3$) contains $SU(2) \cong SO(3)$ as a closed subgroup.
+
+At the Lie-algebra level: every algebra $\mathfrak{h}$ implementing weak
+isotropy in dimension $\geq 3$ contains $\mathfrak{so}(3)$ as a subalgebra,
+with the commutation relations $[J^i, J^j] = \epsilon^{ijk} J^k$ baked in.
+
+The minimal compact transitive groups in low dimensions:
+
+| ambient $\mathbb{R}^n$ | sphere $S^{n-1}$ | minimal compact transitive group | algebra | contains $\mathfrak{so}(3)$? |
+|---|---|---|---|---|
+| $n = 3$ | $S^2$ | $SO(3)$ | $\mathfrak{so}(3)$ | ✓ (it *is* $\mathfrak{so}(3)$) |
+| $n = 4$ | $S^3$ | $SU(2)$ | $\mathfrak{su}(2) \cong \mathfrak{so}(3)$ | ✓ |
+| $n = 5$ | $S^4$ | $SO(5)$ | $\mathfrak{so}(5)$ | ✓ ($\mathfrak{so}(3) \subset \mathfrak{so}(5)$) |
+| $n = 6$ | $S^5$ | $SU(3)$ | $\mathfrak{su}(3)$ | ✓ ($\mathfrak{su}(2) \subset \mathfrak{su}(3)$) |
+| $n = 7$ | $S^6$ | $G_2$ | $\mathfrak{g}_2$ (14-dim, exceptional!) | ✓ (root $\mathfrak{su}(2)$ inside) |
+| $n = 8$ | $S^7$ | $\mathrm{Spin}(7)$ | $\mathfrak{spin}(7) = \mathfrak{so}(7)$ | ✓ |
+
+The structural reason: any compact connected non-abelian Lie algebra contains
+$\mathfrak{su}(2)$ as a subalgebra — one copy for each root in its root
+system. Transitive action on a sphere of dimension $\geq 2$ forces
+non-abelianness (abelian groups have torus orbits, not spherical orbits). So
+every isotropy algebra in dimension $\geq 3$ must contain $\mathfrak{so}(3)$.
+
+Even in dimensions where the *full* rotation algebra $\mathfrak{so}(n)$ is
+not required for isotropy — e.g., $n = 6$ where $\mathfrak{su}(3)$ (8-dim) is
+already sufficient, or $n = 7$ where the exceptional $\mathfrak{g}_2$
+(14-dim) is — the $\mathfrak{so}(3)$ subalgebra is *always* present. It is
+the irreducible algebraic content of "isotropy".
+
+**Everything else is a derived consequence, not an additional assumption.**
+Once $\mathfrak{so}(3) \subset \mathfrak{h}$ is forced, the Leibniz invariance
+equation with the rotation generators $J^i$ acting on $\mathfrak{m}$
+automatically gives:
+
+- A unique (up to scale) invariant Riemannian metric $\eta = \alpha\,\delta^{ij}$
+  on $\mathfrak{m}$ (the calculation done earlier).
+- Hence a notion of *length* $|\vec u| = \sqrt{\delta_{ij}\, u^i u^j}$.
+- Hence a notion of *angle* $\cos\theta = \delta_{ij}\, u^i v^j /(|\vec u||\vec v|)$.
+- Hence the existence of orthonormal frames at each point.
+- Hence (combined with translation-invariance and flatness from $[\mathfrak{m},
+  \mathfrak{m}] = 0$) the standard global metric $ds^2 = (dx^1)^2 + (dx^2)^2
+  + (dx^3)^2$ on $\mathbb{R}^3$.
+
+None of these structures were assumed up front. They are all *forced* by
+the single weak-isotropy principle (giving $\mathfrak{so}(3) \subset
+\mathfrak{h}$) plus translation invariance (giving the flat-manifold
+structure). This is a striking conceptual economy of the Klein-geometric
+viewpoint: a single qualitative statement — *"all directions are
+equivalent"* — generates the entire quantitative scaffolding of Euclidean
+geometry.
+
 **The four 3-dim quotients side-by-side.** Each 3-dim Klein quotient
 corresponds to "things modulo a different stabilizer":
 
