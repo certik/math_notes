@@ -1391,6 +1391,215 @@ $\mathfrak{m}$. The translation block dies. So:
 This narrows the candidates to $\{0\}$, $\langle J^3 \rangle$, and
 $\mathfrak{so}(3)$.
 
+#### The stabilizer: what it is, and what each candidate $\mathfrak{h}$ fixes
+
+So far $\mathfrak{h}$ has been treated as a piece of algebra. Each $\mathfrak{h}$
+has a vivid geometric meaning, however: it is the **stabilizer** of some
+configuration in $\mathbb{R}^3$, and the homogeneous space $G/H$ is *the
+space of all configurations of that type*. Once we make this precise we can
+compute, for each candidate above, what $H$ is "fixing", and then argue
+unambiguously why $\mathfrak{h} = \mathfrak{so}(3)$ is the physically
+correct choice.
+
+##### Definition of the stabilizer
+
+Suppose a Lie group $G$ acts on a set $X$ (whose elements we call
+*configurations* — they could be points, lines, planes, frames, ...). For
+any $\xi \in X$, the **stabilizer subgroup** of $\xi$ is
+
+$$
+H_\xi \;:=\; \{\, g \in G : g \cdot \xi = \xi \,\},
+$$
+
+i.e., all group elements that leave $\xi$ untouched. It is automatically a
+closed subgroup of $G$. Differentiating at the identity gives the
+**stabilizer subalgebra**
+
+$$
+\mathfrak{h}_\xi \;:=\; \{\, X \in \mathfrak{g} : X \cdot \xi = 0 \,\},
+$$
+
+i.e., all infinitesimal generators whose flow leaves $\xi$ fixed
+instantaneously.
+
+##### The orbit–stabilizer correspondence
+
+If the $G$-action is transitive on the orbit of $\xi$, the smooth bijection
+
+$$
+G / H_\xi \;\xrightarrow{\ \sim\ }\; G \cdot \xi, \qquad
+g H_\xi \ \mapsto\ g \cdot \xi
+$$
+
+makes $G/H_\xi$ into "the space of all configurations of type $\xi$":
+- if $\xi$ is a *point*, then $G/H_\xi$ is the space of all points;
+- if $\xi$ is an *oriented line*, then $G/H_\xi$ is the space of oriented lines;
+- if $\xi$ is an *oriented plane*, $G/H_\xi$ is the space of oriented planes;
+- if $\xi$ is a *frame* (point + 3 orthonormal vectors), $G/H_\xi$ is the
+  space of frames.
+
+So **choosing a Klein pair $(\mathfrak{g}, \mathfrak{h})$ is equivalent to
+choosing what geometric object the homogeneous space is made of**. The
+different reductive subalgebras $\mathfrak{h}$ of $\mathfrak{e}(3)$ are not
+"competing answers to one question"; they answer different questions about
+$\mathbb{R}^3$.
+
+##### How to read the stabilizer from the algebra
+
+For $E(3)$ acting on $\mathbb{R}^3$, the standard infinitesimal generators
+act on a point $\vec x \in \mathbb{R}^3$ by
+
+$$
+P^j \cdot \vec x \;=\; \hat e_j
+\qquad\text{(uniform translation in direction } \hat e_j\text{)},
+$$
+$$
+J^i \cdot \vec x \;=\; \hat e_i \times \vec x
+\qquad\text{(rotation around axis } \hat e_i \text{ through the origin)}.
+$$
+
+For a general element $X = a^j P^j + b^i J^i \in \mathfrak{e}(3)$, the
+infinitesimal motion of $\vec x$ is
+
+$$
+X \cdot \vec x \;=\; \vec a + \vec b \times \vec x.
+$$
+
+Whether $X$ fixes a given configuration $\xi$ is then a linear check:
+
+- *fixes a point $\vec p$* iff $\vec a + \vec b \times \vec p = 0$;
+- *fixes a line* $\{\vec p + t \hat n : t \in \mathbb{R}\}$ as a set iff
+  $\vec a + \vec b \times \vec p \parallel \hat n$ and $\vec b \times \hat n
+  = 0$ (translation along, rotation about);
+- *fixes a plane* $\{\vec x : (\vec x - \vec p) \cdot \hat n = 0\}$ as a set
+  iff translations lie in the plane and rotations are about $\hat n$;
+- *fixes a direction $\hat n$* (an "unattached arrow") iff $\vec b \times
+  \hat n = 0$, i.e., $\vec b \parallel \hat n$;
+- *fixes a frame* (point + 3 orthonormal vectors at it) iff $\vec a = 0$
+  and $\vec b = 0$, i.e., $X = 0$.
+
+Using the conjugation freedom (orient the distinguished axis along
+$\hat z$, place rotation centers at the origin) we can read off the
+maximal $\xi$ fixed by each candidate $\mathfrak{h}$ at a glance.
+
+##### Stabilizer of each candidate
+
+For each Klein-pair candidate we list the *richest* (highest-content)
+configuration $\xi$ such that every $X \in \mathfrak{h}$ fixes $\xi$. The
+resulting $G/H = G/H_\xi$ is then "the space of all $\xi$-type
+configurations":
+
+| $\dim\mathfrak{h}$ | $\mathfrak{h}$ | What each $X \in \mathfrak{h}$ does to $\vec x$ | Maximal $\xi$ fixed by $\mathfrak{h}$ | $G/H$ = "space of..." |
+|---|---|---|---|---|
+| 0 | $\{0\}$ | nothing | a full **orthonormal frame** (point + 3 directions) | frames (6-dim) |
+| 1 | $\langle P^3 \rangle$ | translates along $\hat z$ | a **horizontal foliation** $\{z = \text{const}\}$; no point fixed | frames mod $z$-shift (5-dim) |
+| 1 | $\langle J^3 \rangle$ | rotates about $z$-axis through origin | **origin + direction $\hat z$** (a "pointed direction") | (point, direction)-pairs $\mathbb{R}^3 \times S^2$ (5-dim) |
+| 1 | $\langle J^3 + a P^3 \rangle$, $a>0$ | screws along $\hat z$ with pitch $a$ | the **$z$-axis as an unparameterized line** | screw axes of pitch $a$ (5-dim) |
+| 2 | $\langle P^1, P^2 \rangle$ | translates in $xy$-plane | the **horizontal foliation**; no point fixed | (non-reductive — no metric) |
+| 2 | $\langle J^3, P^3 \rangle$ | rotation + translation along $\hat z$ | the **$z$-axis as an oriented line** | oriented lines in $\mathbb{R}^3$ (4-dim) |
+| 3 | $\mathfrak{so}(3)$ | all rotations about origin | the **origin (a single point)** | **points of $\mathbb{R}^3$** ★ |
+| 3 | $\mathfrak{t}$ | all translations | **nothing** is fixed | (non-reductive — no metric) |
+| 3 | $\mathfrak{e}(2)$ | rotation about $\hat z$ + translation in $xy$ | the **plane $z = 0$** (as oriented set) | oriented planes $\mathbb{R} \times S^2$ (3-dim) |
+| 3 | screw-$\mathfrak{e}(2)$, $a>0$ | screwy version of $\mathfrak{e}(2)$ | a **"twisted plane"** with helical pitch | (non-reductive — no metric) |
+| 4 | $\langle J^3, P^1, P^2, P^3 \rangle$ | rotation about $\hat z$ + all translations | only the **direction $\hat z$** (no point, no line) | directions $S^2$ (2-dim) |
+
+A few rows deserve a sanity check:
+
+- *$\mathfrak{so}(3)$ fixes the origin.* Every $J^i \cdot \vec 0 = \hat e_i
+  \times \vec 0 = 0$, while no nonzero translation fixes the origin. So
+  $\mathfrak{h}_{\vec 0} = \langle J^i \rangle = \mathfrak{so}(3)$. ✓
+- *$\langle J^3 \rangle$ fixes "origin + $\hat z$ direction".* $J^3$ fixes the
+  origin (rotation about origin) and fixes $\hat z$ (rotation axis), but not
+  any other direction. ✓
+- *$\mathfrak{e}(2)$ fixes the plane $z = 0$ as a set, not pointwise.*
+  $P^1, P^2$ shift the plane along itself; $J^3$ rotates it within itself.
+  But $P^1, P^2$ move every point of the plane to a *different* point of
+  the plane — so no single point is fixed, only the plane as a whole. ✓
+- *$\mathfrak{t}$ fixes nothing.* For any configuration $\xi$, at least one
+  translation moves it. Translations act freely on every reasonable
+  geometric structure on $\mathbb{R}^3$. So $\mathfrak{h}_\xi = 0$ for every
+  $\xi \neq$ "nothing" — meaning if we want $\mathfrak{h} = \mathfrak{t}$
+  there is no associated configuration in $\mathbb{R}^3$ at all. (The
+  resulting space $G/H = E(3)/T^3 \cong SO(3)$ is a space of *rotations*,
+  not a space "inside $\mathbb{R}^3$".)
+
+##### Why we want $\mathfrak{h} = \mathfrak{so}(3)$: stabilizing a point
+
+Every row of the table above defines a perfectly self-consistent Klein
+geometry. They differ in *what kind of object* the homogeneous space is
+made of. So the question "which is right?" only has an answer if we say
+*what we want $\mathbb{R}^3$ to be a space of*. The physical answer is
+unambiguous: $\mathbb{R}^3$ is the space of **points** — places where a
+particle can sit, where a field can take a value, where an event can occur.
+This singles out exactly one row:
+
+> *We want $\mathfrak{h}$ to stabilize a single point and nothing more.*
+
+Among the candidates, $\mathfrak{so}(3)$ is the unique one fitting this
+description, for the following reasons.
+
+1. **The space of points is logically prior.** Lines, planes, frames,
+   directions, etc., are all *constructed from* points (a line is a
+   1-parameter family of points; a plane is a 2-parameter family of points;
+   a frame is a point with extra data). One cannot conversely reconstruct
+   points from, say, the space of planes without extra information. Among
+   our candidates, only $\mathfrak{so}(3)$ has "points" as its $G/H$
+   elements; the others have higher-order objects.
+
+2. **"Stabilize a point" is precise.** It means: at our chosen base point,
+   every transformation in $\mathfrak{h}$ leaves that point exactly where
+   it is. Translations move points; rotations about the point do not.
+   So $\mathfrak{h}$ for "point" must consist of rotations about that point
+   only. In 3D that's exactly $\mathfrak{so}(3)$. (Any sub-algebra of
+   $\mathfrak{so}(3)$ would stabilize the point *plus* a preferred axis,
+   contradicting "and nothing more".)
+
+3. **Stabilizing a plane gives a different space.** If $\mathfrak{h} =
+   \mathfrak{e}(2)$ — translations in the plane and rotations in the plane
+   — then $G/H$ is the **space of oriented planes** in $\mathbb{R}^3$, *not*
+   the space of points. This is a perfectly real and useful space (used in
+   the theory of integral geometry, foliations, Radon transforms), but it
+   is not what physicists call "physical space". A plane is a 2-parameter
+   family of points; the moduli space of all such planes is 3-dimensional
+   but topologically $\mathbb{R} \times S^2$, not $\mathbb{R}^3$.
+
+4. **Stabilizing a line gives the space of oriented lines.** Choosing
+   $\mathfrak{h} = \langle J^3, P^3 \rangle$ stabilizes the $z$-axis. The
+   resulting $G/H$ is the 4-manifold of oriented lines in $\mathbb{R}^3$
+   ($\mathbb{R}^2 \times S^2$, roughly). Again interesting (this is the
+   space of "rays of light" or worldline projections), but again not
+   "points".
+
+5. **Stabilizing a frame gives the bundle of frames.** Choosing
+   $\mathfrak{h} = \{0\}$ stabilizes the entire orthonormal frame at the
+   origin. The space $G/\{e\} = G$ itself is the 6-dim **frame bundle** of
+   $\mathbb{R}^3$, a useful object (it appears in Cartan geometry as the
+   total space of the principal $SO(3)$-bundle), but each "point" of it
+   carries 3 extra direction labels — more information than a position.
+
+6. **$\mathfrak{so}(3)$ is the largest stabilizer that fixes only the point.**
+   This is the "maximality" criterion: enlarge $\mathfrak{h}$ as much as
+   possible while keeping the fixed configuration to a single point.
+   Smaller subalgebras of $\mathfrak{so}(3)$ would fix the point *plus*
+   some extra structure (a preferred axis $\hat z$ for $\langle J^3\rangle$,
+   for example), so they fail "and nothing more". Larger subalgebras (e.g.,
+   $\mathfrak{e}(2)$ or $\mathfrak{t}$) include translations and therefore
+   fail to fix any point. So in this precise sense $\mathfrak{so}(3)$ is
+   *the* "stabilizer of a single point" in $\mathfrak{e}(3)$.
+
+7. **Isotropy at the point.** Stabilizing a point with the full
+   $\mathfrak{so}(3)$ (and not less) automatically guarantees that, at that
+   point, all directions are equivalent — the weak isotropy principle
+   discussed below. Stabilizing a plane or line instead would break
+   isotropy by singling out a preferred normal or axis.
+
+The slogan, summarizing all of the above:
+
+> *$\mathbb{R}^3$ as a "space of points where particles can sit" is the
+> Klein quotient $E(3) / SO(3)$, because $\mathfrak{so}(3)$ is the maximal
+> subalgebra of $\mathfrak{e}(3)$ that pins down a single point and nothing
+> more.*
+
 **Singling out $\mathbb{R}^3 = E(3)/SO(3)$.** Among these three non-degenerate
 candidates:
 
