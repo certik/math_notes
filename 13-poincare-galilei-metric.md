@@ -153,6 +153,97 @@ tangent space $T_{eH}\mathcal{M}$. The pair $(\mathfrak{g}, \mathfrak{h})$ is
 what defines the geometry; the Lie algebra $\mathfrak{g}$ alone is not
 enough.
 
+### Reductive and symmetric Klein geometries
+
+The vector-space splitting $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$
+needs a word of qualification, because the rest of this document silently
+relies on a non-trivial property of it.
+
+A Klein geometry $(G, H)$ is called **reductive** if the splitting can be
+chosen so that $\mathfrak{m}$ is preserved by the adjoint action of $H$ —
+equivalently, at the algebra level,
+
+$$
+[\mathfrak{h},\, \mathfrak{m}] \;\subset\; \mathfrak{m}.
+$$
+
+Note that $\mathfrak{m}$ is not required to be a Lie subalgebra; only that
+$\mathrm{ad}_X$ for $X \in \mathfrak{h}$ maps $\mathfrak{m}$ back into
+itself.
+
+If, in addition,
+
+$$
+[\mathfrak{m},\, \mathfrak{m}] \;\subset\; \mathfrak{h},
+$$
+
+the geometry is called **symmetric**. Every symmetric Klein geometry is
+reductive; the converse is false.
+
+**Why reductivity matters here.** Each step of our construction needs
+$\mathrm{Ad}(H)$ to act on $\mathfrak{m}$ separately from the rest of
+$\mathfrak{g}$:
+
+- The Leibniz invariance condition asks for an $\mathrm{Ad}(H)$-invariant
+  bilinear form on $\mathfrak{m}$. This presupposes that
+  $\mathrm{ad}_X(Y) \in \mathfrak{m}$ for $X \in \mathfrak{h}$, $Y \in
+  \mathfrak{m}$, i.e. exactly $[\mathfrak{h}, \mathfrak{m}] \subset
+  \mathfrak{m}$.
+- The Maurer–Cartan splitting $\omega = e + \omega_{\mathfrak{h}}$ into
+  *vielbein* and *spin connection*, used to translate the algebraic
+  metric on $\mathfrak{m}$ into a metric in coordinates (see the
+  $S^2$ derivation in Part IV), needs an $\mathrm{Ad}(H)$-equivariant
+  projection $\mathfrak{g} \to \mathfrak{m}$, which exists iff the
+  geometry is reductive.
+
+Without reductivity, "invariant form on $\mathfrak{m}$" is not even
+well-posed, because every choice of complement to $\mathfrak{h}$ in
+$\mathfrak{g}$ would lose pieces of $\mathrm{ad}_X(\mathfrak{m})$ back
+into $\mathfrak{h}$ under $\mathrm{Ad}(H)$. The whole machinery of this
+document is specifically a recipe for *reductive* Klein geometries.
+
+**Are there non-reductive Klein geometries?** Yes, and they describe
+important geometries — they are simply not the ones where a metric is
+the primary invariant. The canonical examples are the **parabolic
+geometries**, where $H$ is a parabolic subgroup of a semisimple $G$:
+
+| Geometry | $G$ | $H$ | Primary invariant on $\mathfrak{m}$ |
+|---|---|---|---|
+| Conformal | $SO(p+1, q+1)$ | parabolic | conformal class $[g]$ (no preferred metric) |
+| Projective | $PGL(n+1, \mathbb{R})$ | affine stabiliser of a line | projective class of connections |
+| CR | $SU(p+1, q+1)$ | parabolic | complex tangent distribution + Levi form |
+
+In each case the parabolic $H$ has a Levi decomposition $H = L \ltimes
+N$ with $N$ unipotent, and the nilpotent pieces in $\mathfrak{h}$
+prevent any choice of complement $\mathfrak{m}$ from being
+$\mathrm{Ad}(H)$-invariant. The right invariants on $G/H$ are no longer
+first-order tensors on $\mathfrak{m}$ (such as a metric) but live in
+*filtrations* of $\mathfrak{g}/\mathfrak{h}$ and capture geometric
+structure one or more derivative orders higher. This is the world of
+**Tanaka–Morimoto–Čap–Slovák parabolic geometry**, the modern home for
+conformal and projective geometry.
+
+**All six examples in this document.** Poincaré, Galilei, $\mathfrak{e}(2)$,
+$\mathfrak{e}(3)$, $\mathfrak{so}(3)$, and $\mathfrak{so}(4)$ — together
+with their close cousins (de Sitter, anti-de Sitter, hyperbolic space) —
+are all not just reductive but **symmetric**. That is why each one
+admits a canonical metric (or pair of metrics) determined by an
+algebraic invariance condition, and why the construction works so
+cleanly. The bracket dichotomy
+
+$$
+[\mathfrak{m}, \mathfrak{m}] \;=\; 0
+\quad\text{vs.}\quad
+[\mathfrak{m}, \mathfrak{m}] \;\subset\; \mathfrak{h}
+$$
+
+— flat vs. constant curvature, as summarised in the table after Part IV
+— is the *symmetric-space* dichotomy. The cases where it fails (e.g.,
+neither inclusion holds, or $[\mathfrak{h}, \mathfrak{m}] \not\subset
+\mathfrak{m}$ in any complement) take us out of symmetric Klein geometry
+and, in the most interesting non-reductive case, into parabolic
+geometry.
+
 Many familiar spaces are constructed this way: the sphere as $SO(3)/SO(2)$,
 Euclidean space as $E(n)/SO(n)$, hyperbolic space as $SO(n,1)/SO(n)$, and —
 the case at hand — Minkowski spacetime as $\text{Poincaré}/\text{Lorentz}$
