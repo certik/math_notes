@@ -560,9 +560,119 @@ $$
 \text{curved spacetime of GR}.
 $$
 
-The same construction applied to the Galilei algebra yields **Newton–Cartan
-geometry**, the geometric formulation of Newtonian gravity, in which the
-degenerate temporal and spatial metrics derived in Part II
-play the role of the two background tensors. A standard reference is
-Sharpe, *Differential Geometry: Cartan's Generalization of Klein's Erlangen
-Program*.
+### Why the Klein pair is not ad hoc — the Erlangen Programme
+
+The construction $G/H$ may at first look like an arbitrary technical
+device. It is not. It is the precise mathematical articulation of Felix
+Klein's **Erlangen Programme** (1872), which proposed that
+
+> *a geometry is the invariant theory of a group action on a space.*
+
+A geometry, in this view, is a pair $(X, G)$ with $G$ acting on $X$, and a
+property is "geometric" exactly when it is preserved by every element of
+$G$. This single idea unified the previously disparate Euclidean,
+projective, affine, hyperbolic, and inversive geometries into a common
+framework — each is characterised by its symmetry group acting on an
+appropriate space.
+
+Once one accepts the Erlangen point of view, the Klein pair $(G, H)$ is not
+chosen but **forced** by an elementary theorem. Three steps:
+
+1. *Homogeneity* — every point is to be on the same footing as every other
+   (no preferred origin). This is the principle of relativity in its
+   purest form: for spacetime, "no preferred event"; for space, "no
+   preferred location."
+2. *Pick a basepoint* $x_0 \in X$ and consider its stabilizer
+   $H = \{g \in G : g \cdot x_0 = x_0\}$.
+3. *Orbit–stabilizer theorem* — the map $g H \mapsto g \cdot x_0$ is a
+   $G$-equivariant bijection $G/H \to X$.
+
+So *any* homogeneous space of a Lie group $G$ is automatically of the form
+$G/H$. The Klein pair is then the most economical encoding of "(symmetry
+group) + (operational notion of a point)." In physics, $G$ comes from a
+relativity principle and $H$ comes from "what fixes a chosen event." In
+the Poincaré case this gives Minkowski space; in the Galilei case,
+Galilean spacetime.
+
+Of course the Erlangen viewpoint is not the *only* way to define a space.
+Pure manifold theory ($M$ = topological space $+$ smooth atlas) imposes no
+symmetry from the outset; metric-space, synthetic-axiomatic, algebraic,
+sheaf-theoretic, topos-theoretic, and noncommutative formulations all
+provide alternative foundations. What is special about the Klein–Cartan
+viewpoint is that it is the foundation that puts *symmetry first*, which
+is exactly what physical theories do.
+
+### Scope of the framework
+
+Within its proper domain — smooth manifolds with local Lie-group symmetry —
+Cartan geometry is remarkably comprehensive. The same construction
+specialises to:
+
+| Klein model $G/H$ | Resulting geometry |
+|---|---|
+| $E(n)/SO(n)$ | Riemannian |
+| Poincaré $/$ Lorentz | Pseudo-Riemannian / GR |
+| Galilei $/\{J, K\}$ | Newton–Cartan |
+| Conformal group $/$ stab. | Conformal |
+| $\mathrm{PGL}(n{+}1)/$stab. | Projective |
+| $\mathrm{Aff}(n)/\mathrm{GL}(n)$ | Affine |
+| $\mathrm{Sp}(2n)/$stab. | Contact / projective contact |
+
+Three-dimensional Euclidean space is the case $G/H = E(3)/SO(3)$. The
+Cartan connection consists of an orthonormal frame field $e^a$ and a
+rotation connection $\omega^a{}_b$; on flat $\mathbb{R}^3$ both torsion and
+curvature vanish, while on a curved Riemannian 3-manifold the same data
+describes the geometry. Curvilinear coordinates are simply a *change of
+frame*: the vierbein $e^a{}_\mu$ relates the orthonormal frame to a
+coordinate frame, and Christoffel symbols arise as the components of the
+connection in a coordinate basis. The whole tensor calculus used in GR —
+covariant derivatives, Christoffels, Riemann tensor — sits inside Cartan
+geometry as a particular choice of frame.
+
+A vast modern generalisation of this list is the theory of **parabolic
+geometries** of Čap and Slovák, which treats all $G/P$ with $P$ a
+parabolic subgroup uniformly.
+
+### Where Cartan is not enough
+
+Cartan geometry requires three things: a smooth manifold, a homogeneous
+local model $G/H$, and a connection *soldered* to the tangent bundle. Step
+outside any of these and one needs a different framework:
+
+- **Yang–Mills gauge theory.** Principal $G$-bundles in which $G$ is an
+  *internal* gauge group (colour $SU(3)$, electroweak $SU(2) \times U(1)$).
+  The connection here is *not* soldered to $TM$, so it is a **principal
+  connection**, not a Cartan connection. Cartan geometry is "tangential"
+  gauge theory; Yang–Mills is "internal" gauge theory.
+- **Symplectic and Poisson geometry** on non-homogeneous phase spaces — the
+  setting of most of classical mechanics on cotangent bundles of curved
+  configuration spaces.
+- **Singular and stratified spaces**: orbifolds, algebraic varieties with
+  singularities, conifold geometries.
+- **Quantum theory.** Hilbert spaces and operator algebras are not Cartan
+  geometries. The classical *background* spacetime of a QFT can be
+  Cartan, but the quantum sector itself is not.
+- **Noncommutative geometry** (Connes): replace $C^\infty(M)$ by a
+  noncommutative algebra; there is no underlying manifold.
+- **Higher gauge theory, gerbes, $\infty$-bundles**: anomalies, the $B$-field
+  of string theory, higher-form gauge fields.
+- **Generalised geometry** (Hitchin), **double field theory**, T-duality:
+  the tangent bundle is replaced by $TM \oplus T^*M$ or by a doubled
+  spacetime, which is outside the Cartan paradigm.
+- **Discrete / lattice geometries** as used in lattice gauge theory and
+  numerical relativity.
+
+So Cartan geometry covers essentially all classical relativistic field
+theory built on a spacetime manifold — including all of GR and its
+geometric extensions (Einstein–Cartan, teleparallel, Poincaré gauge
+theory, MacDowell–Mansouri). Where it falls short is exactly where one
+leaves smooth manifolds with local Lie-group symmetry behind.
+
+### Closing remark
+
+The same Cartan construction applied to the Galilei algebra yields
+**Newton–Cartan geometry**, the geometric formulation of Newtonian
+gravity, in which the degenerate temporal and spatial metrics derived in
+Part II play the role of the two background tensors. A standard reference
+is Sharpe, *Differential Geometry: Cartan's Generalization of Klein's
+Erlangen Program*.
