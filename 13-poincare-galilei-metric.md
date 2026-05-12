@@ -681,6 +681,155 @@ $\mathfrak{m}$ is an abelian ideal, the exponential map gives a global
 diffeomorphism $\mathfrak{m} \to \mathbb{R}^2$, and $\eta^{ij}$ on
 $\mathfrak{m}$ becomes $ds^2 = (dx^1)^2 + (dx^2)^2$ on $\mathbb{R}^2$.
 
+**Translating to polar coordinates.** Polar coordinates make the same
+point that was sharper on $S^2$: the *coordinate* form of the metric
+depends on the chart, while the underlying bilinear form does not. We
+run the five-step Maurer–Cartan procedure used for $S^2$, now on
+$\mathfrak{e}(2)$ instead of $\mathfrak{so}(3)$. The output is the
+familiar polar-coordinate metric of flat $\mathbb{R}^2$ — and the
+connection $\omega_{\mathfrak{h}}$ comes out flat by direct
+calculation, confirming that the space is flat despite the
+coordinate-dependent metric components.
+
+*Step 1: Coordinate-defining section.* Pick the basepoint at the origin
+and define polar coordinates $(r, \phi)$ algebraically by the section
+
+$$
+\sigma(r, \phi) \;=\; e^{\phi J}\, e^{r P^1}.
+$$
+
+$P^1$ translates the basepoint by $r$ along the 1-direction (giving
+point $(r, 0)$); $J$ then rotates by $\phi$ around the origin (giving
+$(r\cos\phi, r\sin\phi)$). These are standard polar coordinates by
+construction. The section is regular on $r > 0$; at $r = 0$ the
+$\phi$-coordinate is ill-defined, exactly as for the polar chart on
+$\mathbb{R}^2$.
+
+*Step 2: Maurer–Cartan form.* Compute
+$\sigma^{-1}\, d\sigma = \omega_r\, dr + \omega_\phi\, d\phi$.
+
+$\partial_r \sigma = e^{\phi J} P^1 e^{r P^1}$ gives, after multiplying
+on the left by $\sigma^{-1}$,
+
+$$
+\omega_r \;=\; e^{-r P^1} P^1 e^{r P^1} \;=\; P^1
+$$
+
+(since $[P^1, P^1] = 0$). Next, $\partial_\phi \sigma = J\, \sigma$
+gives
+
+$$
+\omega_\phi \;=\; \sigma^{-1} J\, \sigma
+\;=\; e^{-r P^1}\, J\, e^{r P^1}
+\;=\; \mathrm{Ad}_{e^{-r P^1}}\, J.
+$$
+
+The Lie-algebra calculation:
+$[-rP^1,\, J] = r\,[J, P^1] = r P^2$; the next bracket
+$[-rP^1,\, r P^2] = -r^2 [P^1, P^2] = 0$ closes the series. Hence
+
+$$
+\omega_\phi \;=\; J + r\, P^2.
+$$
+
+*Step 3: Read off the vielbein.* With $\mathfrak{m} = \{P^1, P^2\}$ and
+$\mathfrak{h} = \{J\}$, split $\omega = e + \omega_{\mathfrak{h}}$:
+
+$$
+\begin{aligned}
+e_r &= P^1,        & e_\phi &= r\, P^2, \\
+\omega_{\mathfrak{h},\, r} &= 0,  & \omega_{\mathfrak{h},\, \phi} &= J.
+\end{aligned}
+$$
+
+Reading off vielbein components $e_\mu = e^a{}_\mu\, P_a$:
+
+$$
+e^1{}_r = 1, \quad e^2{}_r = 0, \qquad
+e^1{}_\phi = 0, \quad e^2{}_\phi = r,
+$$
+
+equivalently the coframe
+
+$$
+e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.
+$$
+
+*Step 4: Killing vector fields.* Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
+[\mathrm{Ad}_{\sigma^{-1}}\xi]^a$, i.e. $\dot r =$ ($P^1$-coefficient of
+$\sigma^{-1} \xi\, \sigma$) and $\dot\phi =$ ($P^2$-coefficient) $/\, r$:
+
+- $\xi = J$: $\sigma^{-1} J\, \sigma = J + r P^2$ (computed above), so
+  $\dot r = 0$, $\dot\phi = 1$, giving $J = \partial_\phi$ as expected.
+- $\xi = P^1$: $\sigma^{-1} P^1 \sigma = \mathrm{Ad}_{e^{-\phi J}}\, P^1
+  = \cos\phi\, P^1 - \sin\phi\, P^2$ (rotation by $-\phi$ in the
+  $(P^1, P^2)$-plane, since $\mathrm{ad}_J$ acts on $\{P^1, P^2\}$ as a
+  90° rotation), giving
+
+  $$
+  P^1 \;=\; \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi.
+  $$
+
+- $\xi = P^2$: similarly $\sigma^{-1} P^2 \sigma = \sin\phi\, P^1 +
+  \cos\phi\, P^2$, giving
+
+  $$
+  P^2 \;=\; \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
+  $$
+
+These are the standard polar-coordinate expressions for the Cartesian
+translation Killing fields $\partial_x, \partial_y$.
+
+*Step 5: The metric in coordinates.* The bridge from form on $\mathfrak{m}$
+to tensor field on $\mathbb{R}^2$ is identical to Step 5a of the $S^2$
+case: $g = \lambda\, \delta_{ab}\, e^a \otimes e^b$. Expanding,
+
+$$
+g \;=\; \lambda\bigl[(e^1)^2 + (e^2)^2\bigr]
+\;=\; \lambda\bigl[(dr)^2 + (r\, d\phi)^2\bigr]
+\;=\; \lambda\,\bigl(dr^2 + r^2\, d\phi^2\bigr).
+$$
+
+Choosing the conventional unit $\lambda = 1$:
+
+$$
+\boxed{\;ds^2 \;=\; dr^2 + r^2\, d\phi^2.\;}
+$$
+
+This is the **flat Euclidean metric** of $\mathbb{R}^2$, written in polar
+coordinates. The coordinate components $g_{\mu\nu} = \operatorname{diag}(1, r^2)$
+*do* depend on $r$, even though the space is flat — the $r^2$ is the
+squared length of $\partial_\phi$ at radius $r$, in exact analogy with
+the $\sin^2\theta$ of $S^2$.
+
+**Why this is flat — verified at the algebra level.** The Cartan
+curvature 2-form of the connection $\omega_{\mathfrak{h}}$ on the model
+space is
+
+$$
+\Omega \;=\; d\omega_{\mathfrak{h}} + \tfrac{1}{2}[\omega_{\mathfrak{h}},\, \omega_{\mathfrak{h}}].
+$$
+
+Here $\omega_{\mathfrak{h}} = J\, d\phi$, so $d\omega_{\mathfrak{h}} =
+dJ \wedge d\phi = 0$ (since $J$ is a constant element of the algebra),
+and $[\omega_{\mathfrak{h}}, \omega_{\mathfrak{h}}] = [J, J]\, d\phi
+\wedge d\phi = 0$ trivially. Hence
+
+$$
+\Omega \;=\; 0,
+$$
+
+i.e., zero sectional curvature everywhere. By contrast, on $S^2$ one
+gets $\omega_{\mathfrak{h}} = \cos\theta\, J^3\, d\phi$, whose exterior
+derivative $-\sin\theta\, J^3\, d\theta \wedge d\phi$ is non-zero —
+precisely the constant positive curvature $1/R^2$.
+
+So the polar-coordinate $\mathbb{R}^2$ exhibits the moral lesson
+sharply: the coordinate components of the metric vary, but the
+*curvature* (read off the connection 1-form, an algebraic Lie-algebra
+object) vanishes. The bracket-level distinction $[\mathfrak{m},
+\mathfrak{m}] = 0$ is doing exactly the work that makes flat space flat.
+
 ### Three-dimensional Euclidean space $\mathbb{R}^3$
 
 The algebra $\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathbb{R}^3$
