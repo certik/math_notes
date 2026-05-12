@@ -1440,6 +1440,55 @@ uniquely (up to scale) selects $\eta^{ij} = \delta^{ij}$, and the flat
 coordinates $\vec a$ on $\mathfrak{m} = \mathfrak{t}$ give the global
 $ds^2 = (dx^1)^2 + (dx^2)^2 + (dx^3)^2$.
 
+**What translations alone give vs. what rotations add.** A natural question
+is: translations *by themselves* already act transitively on $\mathbb{R}^3$
+— any point reaches any other by a unique translation, and the stabilizer
+is trivial. So why is the full Euclidean group $E(3)$ needed at all? What
+do the rotations contribute?
+
+Concretely, take just the abelian translation group $G = T^3$ with Klein pair
+$(\mathfrak{t}, \{0\})$: $\mathfrak{m} = \mathfrak{t}$ and $\mathfrak{h} = \{0\}$.
+Topologically this still gives $T^3 / \{0\} = \mathbb{R}^3$ — the manifold is
+the same. But the Leibniz invariance condition
+
+$$
+\sum_{X \in \mathfrak{h}}\bigl(\eta\,\mathrm{ad}_X + (\mathrm{ad}_X)^T\,\eta\bigr) = 0
+$$
+
+becomes **vacuous** when $\mathfrak{h} = \{0\}$, so *every* symmetric $3 \times 3$
+matrix $\eta^{ij}$ is allowed — a **6-parameter** family of translation-invariant
+constant metrics. Concrete examples all satisfying translation-invariance:
+
+| $\eta^{ij}$ | geometry |
+|---|---|
+| $\delta^{ij}$ | standard flat Euclidean |
+| $\operatorname{diag}(1, 1, -1)$ | (2+1)-Minkowski-like indefinite form |
+| $\operatorname{diag}(1, 4, 9)$ | anisotropic / axis-scaled |
+| any symmetric $\eta$ | some constant-metric "geometry" |
+
+Translation-invariance alone forces the metric to be **constant** across
+$\mathbb{R}^3$, but says nothing about its **shape**. Adding $\mathfrak{so}(3)$
+to $\mathfrak{h}$ imposes the additional Leibniz constraints
+$\epsilon^{kil}\eta^{lj} + \epsilon^{kjl}\eta^{il} = 0$, which collapse the
+6-parameter family to a **1-parameter** family $\eta = \alpha\,\delta^{ij}$ —
+unique up to overall scale.
+
+So rotations contribute not transitivity but *shape-fixing*:
+
+1. **Isotropy** — all directions become equivalent (no axis is preferred).
+2. **Uniqueness of metric** (up to scale) — $\delta^{ij}$ is the only $\eta$
+   the rotations preserve.
+3. **Orthonormal frames** — at each point, rotations distinguish orthonormal
+   bases from skewed ones.
+
+In Erlangen-program language: $T^3$ alone gives a flat **affine** space
+(parallelism and straight lines, but no canonical distances or angles);
+enlarging to $E(3) = T^3 \rtimes SO(3)$ promotes it to a flat **Euclidean**
+space (distances and angles too). Equivalently, the isometry group of
+$(\mathbb{R}^3, \delta_{ij})$ is the full $E(3)$, not just $T^3$: $T^3$ is the
+isometry group of *every* constant-metric flat geometry on $\mathbb{R}^3$,
+whereas $E(3)$ is the one that singles out the round metric.
+
 **The four 3-dim quotients side-by-side.** Each 3-dim Klein quotient
 corresponds to "things modulo a different stabilizer":
 
