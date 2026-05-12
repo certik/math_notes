@@ -640,10 +640,21 @@ local model $G/H$, and a connection *soldered* to the tangent bundle. Step
 outside any of these and one needs a different framework:
 
 - **Yang–Mills gauge theory.** Principal $G$-bundles in which $G$ is an
-  *internal* gauge group (colour $SU(3)$, electroweak $SU(2) \times U(1)$).
-  The connection here is *not* soldered to $TM$, so it is a **principal
-  connection**, not a Cartan connection. Cartan geometry is "tangential"
-  gauge theory; Yang–Mills is "internal" gauge theory.
+  *internal* gauge group — most notably electromagnetism ($G = U(1)$, the
+  simplest Yang–Mills theory), colour ($SU(3)$), and electroweak
+  ($SU(2) \times U(1)$). The connection here is *not* soldered to $TM$,
+  so it is a **principal connection**, not a Cartan connection. The
+  technical distinction is sharp: a Cartan connection $\omega$ must be a
+  pointwise linear isomorphism $T_pP \xrightarrow{\cong} \mathfrak{g}$,
+  whose $\mathfrak{m}$-part (the vierbein) identifies $TM$ with the model
+  translation space at every point. An electromagnetic connection $A$ has
+  no such piece — $\mathfrak{u}(1) \cong \mathbb{R}$ is one-dimensional and
+  internal, and the bundle direction sits "above" spacetime rather than
+  "tangent" to it. So while $A$ and the vierbein-plus-spin-connection
+  $\omega^a{}_b + e^a$ are both principal-bundle connections with
+  curvature, only the latter is a Cartan connection. Schematically,
+  Cartan geometry is "tangential" gauge theory; Yang–Mills is "internal"
+  gauge theory.
 - **Symplectic and Poisson geometry** on non-homogeneous phase spaces — the
   setting of most of classical mechanics on cotangent bundles of curved
   configuration spaces.
@@ -667,6 +678,30 @@ theory built on a spacetime manifold — including all of GR and its
 geometric extensions (Einstein–Cartan, teleparallel, Poincaré gauge
 theory, MacDowell–Mansouri). Where it falls short is exactly where one
 leaves smooth manifolds with local Lie-group symmetry behind.
+
+There is one fascinating qualification to the statement that
+electromagnetism is not a Cartan geometry: the **Kaluza–Klein**
+observation. On a 5-manifold $M^5 = M^4 \times S^1$, a $U(1)$ rotation of
+the extra circle *is* a translation in the geometry of $M^5$. The
+gauge potential $A_\mu$ then becomes a piece of the 5-dimensional metric,
+
+$$
+g^{(5)}_{MN}
+=
+\begin{pmatrix} g_{\mu\nu} + A_\mu A_\nu & A_\mu \\ A_\nu & 1 \end{pmatrix},
+$$
+
+so that in the higher-dimensional Cartan geometry (model
+$\text{Poincaré}_5 / \text{Lorentz}_5$) electromagnetism *is* part of the
+geometry — its gauge group has been promoted from "internal" to
+"spacetime" by adding a dimension. Analogous constructions exist for
+non-abelian Yang–Mills at the cost of $\dim G$ extra dimensions, but with
+strong constraints on the higher-dimensional metric. This is the line
+pursued by Kaluza, Klein, Einstein, Pauli, and many others, and never
+quite produced a fully viable unification. The takeaway is that the
+boundary "Cartan vs. internal gauge theory" is dimension-dependent: a
+gauge field that is internal in $D$ dimensions can become geometrical in
+$D+1$.
 
 ### Closing remark
 
