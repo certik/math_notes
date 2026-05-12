@@ -1470,6 +1470,182 @@ is exactly what one would want from a derivation that starts only with
 abstract commutation relations: the algebra cannot know about units,
 but it determines everything invariant under the choice of units.
 
+## Mechanizing the algorithm
+
+By this point the same steps have been performed by hand for six
+examples: Minkowski, Galilean, $\mathbb{R}^2$, $\mathbb{R}^3$, $S^2$,
+$S^3$. The procedure is mechanical. Given a faithful matrix
+representation of $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ and
+a section $\sigma$, every step reduces to symbolic linear algebra. We
+collect the algorithm in one place here, then describe a companion
+SymPy script that runs it end-to-end.
+
+### The algorithm
+
+**Inputs.**
+
+1. A faithful matrix representation $\rho \colon \mathfrak{g} \to
+   \mathfrak{gl}(N, \mathbb{R})$ — i.e., a list of matrices $X_a$,
+   $a = 1, \dots, \dim\mathfrak{g}$, forming a basis of $\mathfrak{g}$.
+2. A partition of the basis indices into "stabilizer" indices
+   $\mathcal{H} \subset \{1, \dots, \dim\mathfrak{g}\}$ and "complement"
+   indices $\mathcal{M}$ — corresponding to the splitting
+   $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ that defines the
+   Klein pair.
+3. A coordinate chart $(x^\mu)$ on $G/H$ and a section
+   $\sigma(x^\mu) \in G$ realizing it.
+
+**Crank.**
+
+*Step 1 — Structure constants.* Compute the commutators
+$[X_a, X_b]$ in the matrix algebra, and decompose them on the basis:
+
+$$
+[X_a, X_b] = \sum_c f^c{}_{ab}\, X_c.
+$$
+
+Each decomposition is one linear system in $\dim\mathfrak{g}$ unknowns
+(the coefficients $f^c{}_{ab}$).
+
+*Step 2 — Maurer–Cartan form.* For each coordinate $x^\mu$, compute
+
+$$
+\omega_\mu \;\equiv\; \sigma^{-1}\, \partial_\mu\, \sigma
+\;=\; \sum_a \omega^a{}_\mu\, X_a,
+$$
+
+and split into $\mathfrak{m}$- and $\mathfrak{h}$-parts: the vielbein
+1-form components are $e^a{}_\mu = \omega^a{}_\mu$ for $a \in \mathcal{M}$,
+and the spin-connection components are $\omega_{\mathfrak{h}}^A{}_\mu =
+\omega^A{}_\mu$ for $A \in \mathcal{H}$.
+
+*Step 3 — Invariance equations.* For each $A \in \mathcal{H}$, build the
+$\dim\mathfrak{m} \times \dim\mathfrak{m}$ matrix
+$\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}$ from the structure constants
+(its $(a, b)$ entry, with $a, b \in \mathcal{M}$, is $f^a{}_{Ab}$).
+Solve the linear system
+
+$$
+\eta\, \mathrm{ad}_{X_A}\big|_{\mathfrak{m}}
++ \bigl(\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}\bigr)^T\, \eta \;=\; 0
+\qquad (A \in \mathcal{H})
+$$
+
+for the symmetric matrix $\eta = (\eta_{ab})_{a, b \in \mathcal{M}}$.
+The solution space is finite-dimensional (an irreducible
+$\mathfrak{h}$-rep on $\mathfrak{m}$ gives a 1-d family; reducible
+$\mathfrak{m}$ gives one scale per irreducible piece).
+
+*Step 4 — Metric in coordinates.* For any choice of $\eta$ in the
+invariant family,
+
+$$
+g_{\mu\nu}(x) \;=\; \sum_{a, b \in \mathcal{M}} \eta_{ab}\, e^a{}_\mu(x)\, e^b{}_\nu(x).
+$$
+
+*Step 5 (optional) — Curvature.* Compute the Cartan curvature 2-form
+
+$$
+\Omega^A{}_{\mu\nu}
+\;=\; \partial_\mu \omega_{\mathfrak{h}}^A{}_\nu
+- \partial_\nu \omega_{\mathfrak{h}}^A{}_\mu
++ \sum_{B, C \in \mathcal{H}} f^A{}_{BC}\, \omega_{\mathfrak{h}}^B{}_\mu\, \omega_{\mathfrak{h}}^C{}_\nu.
+$$
+
+It vanishes iff the model space is flat (e.g. $\mathbb{R}^n$,
+Minkowski, Galilean); on $S^n$ it is proportional to the volume form
+with coefficient $1/R^2$.
+
+*Step 6 (optional) — Killing vector fields.* For $\xi = \sum_a c_a X_a
+\in \mathfrak{g}$ regarded as an infinitesimal generator on $G/H$, the
+induced vector field is
+
+$$
+Y_\xi^\mu(x) \;=\; (e^{-1})^\mu{}_a(x)\, \bigl[\mathrm{Ad}_{\sigma(x)^{-1}}\, \xi\bigr]^a_{\mathfrak{m}},
+$$
+
+where $(e^{-1})^\mu{}_a$ is the inverse vielbein and the subscript
+$\mathfrak{m}$ projects onto the $\mathcal{M}$-indices.
+
+### Inputs the user has to supply
+
+Three pieces cannot be deduced from the bare Lie algebra:
+
+- **Subalgebra $\mathfrak{h}$.** Different stabilizer choices give
+  different homogeneous spaces (Galilean spacetime vs. phase space, for
+  instance; cf. Part II).
+- **Section $\sigma$.** This selects coordinates. Different sections
+  give different charts (Cartesian vs. polar vs. spherical) — the
+  intrinsic geometry is unchanged.
+- **Scale parameters in $\eta$.** Step 3 produces a family; physical
+  units fix the numerical values.
+
+Everything else — the vielbein, the connection, the curvature, the
+Killing fields, the relations among scales — is determined by Steps
+1–6 above.
+
+### The SymPy implementation
+
+The script [`klein_geometry.py`](klein_geometry.py) in this repository
+implements the algorithm as a `KleinGeometry` class with methods
+
+```text
+.structure_constants()      Step 1
+.maurer_cartan()            Step 2  →  (ω_components, e, ω_h)
+.invariant_forms()          Step 3  →  (η symbolic, free scales)
+.metric(scale_subs=...)     Step 4
+.curvature()                Step 5
+.killing_field(ξ)           Step 6
+```
+
+The four canonical examples from this document are reproduced at the
+bottom of the script: Minkowski $(1{+}1)$, Galilean $(1{+}1)$,
+$\mathbb{R}^2$ in polar coordinates, and the round $S^2$. Running it
+produces the algebra, the vielbein and connection, the dimension of
+the invariant-form space, the explicit metric in the chosen chart, the
+Cartan curvature, and the Killing fields — for each example.
+
+Self-test output from running `python klein_geometry.py`:
+
+```text
+[R^2 polar]
+  [OK] metric = dr^2 + r^2 dphi^2
+  [OK] curvature is flat
+  [OK] J = ∂_φ
+  [OK] P^1 = cos(φ) ∂_r − (sin(φ)/r) ∂_φ
+
+[S^2]
+  [OK] metric = dθ^2 + sin^2θ dφ^2
+  [OK] curvature = −sin(θ)   (so K = 1/R^2 > 0)
+
+[Minkowski (1+1)]
+  [OK] Minkowski signature is (−,+) or (+,−)
+  [OK] Minkowski curvature flat
+
+[Galilei (1+1)]
+  [OK] Galilei: 1-d family of invariant (0,2) forms
+  [OK] Galilei (0,2) form is degenerate clock dt^2
+```
+
+A few caveats worth noting:
+
+- **Only reductive Klein geometries** are handled; the splitting
+  $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ with
+  $[\mathfrak{h}, \mathfrak{m}] \subset \mathfrak{m}$ is built into
+  Step 3. Parabolic (non-reductive) geometries need additional
+  filtration data.
+- **Only (0,2)-tensors** are enumerated. The Galilean cometric
+  $h^{ij} \partial_i \otimes \partial_j$, a (2,0)-tensor, is a
+  separate invariant the routine does not look for.
+- **Local chart only.** The section $\sigma$ is the user's choice of
+  coordinates; output is local to the chart's domain.
+
+So the abstract narrative — "from commutators alone, by turning the
+Maurer–Cartan crank, the metric falls out" — really is an algorithm.
+The Lie algebra is the input; the metric, connection, curvature, and
+isometry generators are the output. The script is a small worked
+proof that the construction mechanizes.
+
 ## Comparison with [03-lie-groups.md](03-lie-groups.md)
 
 The companion document postulates the boost generators as explicit $4 \times
