@@ -467,3 +467,102 @@ The companion document postulates the boost generators as explicit $4 \times
 invariant metric. The present derivation does not need any matrix
 representation: the Leibniz invariance condition is applied directly to the
 commutators of the abstract algebra. The final metrics agree.
+
+---
+
+## Outlook: from Klein to Cartan — the connection to general relativity
+
+The Klein-geometry picture used above produces a single rigid model space
+$G/H$ in which $G$ acts globally and the curvature is zero by construction.
+Curved spacetimes of general relativity cannot be obtained this way, because
+they have no transitive symmetry group. The required generalisation —
+"Klein geometry made local" — is **Cartan geometry**.
+
+A Cartan geometry modelled on the Klein pair $(\mathfrak{g}, \mathfrak{h})$
+consists of a principal $H$-bundle $P \to M$ over a manifold $M$ of
+dimension $\dim G/H$, together with a **Cartan connection** — a
+$\mathfrak{g}$-valued 1-form $\omega \in \Omega^1(P, \mathfrak{g})$ that
+
+- is a linear isomorphism $T_pP \to \mathfrak{g}$ at every $p \in P$,
+- restricts on vertical (fibre) vectors to the Maurer–Cartan form of $H$, and
+- is $H$-equivariant under the right action.
+
+The first condition is the key one: $\omega$ identifies each tangent space
+with the *full* model algebra $\mathfrak{g}$, not just $\mathfrak{m}$. So
+the model $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ is present at
+every point of $M$ — but only the isotropy subgroup $H$ acts globally on the
+fibres. The **curvature**
+
+$$
+\Omega = d\omega + \tfrac{1}{2}[\omega, \omega]
+$$
+
+measures the failure of the Klein model to fit exactly: when $\Omega = 0$
+the Cartan geometry is locally isomorphic to $G/H$. Cartan's intuitive
+picture is that of rolling the model space $G/H$ along $M$ without
+slipping; the connection $\omega$ encodes how the model tilts as it rolls,
+and the curvature is the holonomy of a small loop.
+
+For the Klein model $G/H = \text{Poincaré}/\text{Lorentz} = \mathbb{R}^{3,1}$
+the splitting $\mathfrak{p} = \mathfrak{so}(3,1) \oplus \mathbb{R}^{3,1}$
+decomposes the Cartan connection into two fields,
+
+$$
+\omega = \underbrace{\omega^a{}_b}_{\mathfrak{so}(3,1)\text{ part}}
+\;\oplus\;
+\underbrace{e^a}_{\mathbb{R}^{3,1}\text{ part}},
+$$
+
+which are exactly the **spin connection** and the **vierbein** of the
+tetrad (or first-order) formulation of general relativity. The curvature
+$\Omega$ splits in the same way:
+
+| Cartan-geometry object | Name in GR |
+|---|---|
+| $\mathfrak{h}$-part of $\omega$ | spin connection $\omega^a{}_b$ |
+| $\mathfrak{m}$-part of $\omega$ | vierbein $e^a$ |
+| $\mathfrak{h}$-part of $\Omega$ | Riemann curvature $R^a{}_b$ |
+| $\mathfrak{m}$-part of $\Omega$ | torsion $T^a$ |
+
+Cartan's structure equations $T^a = de^a + \omega^a{}_b \wedge e^b$ and
+$R^a{}_b = d\omega^a{}_b + \omega^a{}_c \wedge \omega^c{}_b$ are nothing but
+the components of $\Omega = d\omega + \tfrac{1}{2}[\omega, \omega]$. This is
+the **Einstein–Cartan formulation** of GR; imposing $T^a = 0$ determines
+$\omega$ uniquely from $e$ (the Levi-Civita connection) and recovers
+ordinary Einstein gravity.
+
+The connection back to the present derivation is now direct. The
+$\mathfrak{m}$-part of the Cartan connection — the vierbein $e^a$ —
+identifies each tangent space $T_xM$ with the model translation subspace
+$\mathfrak{m} = \mathbb{R}^{3,1}$. The bilinear form $\eta^{\mu\nu}$ we
+derived above as the unique Lorentz-invariant form on $\mathfrak{m}$ is then
+automatically a Lorentz-invariant form on every $T_xM$, and the spacetime
+metric is
+
+$$
+g_{\mu\nu}(x) = \eta_{ab}\, e^a{}_\mu(x)\, e^b{}_\nu(x).
+$$
+
+The metric of a curved spacetime is, in this sense, "the Minkowski metric
+of the Klein model, transported from point to point by the vierbein." The
+signature, the Lorentz fibre symmetry, and the structure of the tangent
+space are all inherited from the algebraic derivation of this note; what
+Cartan geometry adds is the prescription for varying the model smoothly
+across $M$.
+
+The conceptual chain is therefore
+
+$$
+\text{Lie algebra}
+\;\xrightarrow{\text{Klein pair}}\;
+\text{flat model spacetime}
+\;\xrightarrow{\text{Cartan connection}}\;
+\text{curved spacetime of GR}.
+$$
+
+The same construction applied to the Galilei algebra yields **Newton–Cartan
+geometry**, the geometric formulation of Newtonian gravity, in which the
+degenerate temporal and spatial metrics derived in Part II
+play the role of the two background tensors. A standard reference is
+Sharpe, *Differential Geometry: Cartan's Generalization of Klein's Erlangen
+Program*.
