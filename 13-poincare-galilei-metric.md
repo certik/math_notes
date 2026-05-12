@@ -2253,6 +2253,168 @@ where the metric components are immediately recognizable from
 elementary spherical geometry. Both sections describe the same
 Riemannian manifold; only the coordinate dress is different.
 
+#### The other Klein pair: $G/\{0\}$ as a 3-manifold
+
+The enumeration of proper subalgebras of $\mathfrak{so}(3)$ at the
+start of this section listed two non-trivial Klein-pair choices:
+$\mathfrak{h} = \mathrm{span}(n^i J^i)$ for some axis (giving $S^2$),
+and $\mathfrak{h} = \{0\}$ (giving the whole group manifold). The
+first occupied the rest of the section; we now run the algorithm with
+the second choice for completeness.
+
+The setup is
+
+$$
+\mathfrak{h} = \{0\}, \qquad
+\mathfrak{m} = \mathfrak{so}(3) = \mathrm{span}(J^1, J^2, J^3).
+$$
+
+The space $G/\{0\}$ is literally the group manifold $G$, and its
+identity depends on which integration of $\mathfrak{so}(3)$ we take:
+
+| Group | $G/\{0\}$ | Topology |
+|---|---|---|
+| $SO(3)$ | $SO(3)$ | $\mathbb{RP}^3 = S^3/\mathbb{Z}_2$ |
+| $SU(2)$ (simply connected cover) | $SU(2)$ | $S^3$ |
+
+Both are 3-dimensional and carry constant positive sectional
+curvature; they differ by an antipodal $\mathbb{Z}_2$ identification.
+The Lie algebra alone does not distinguish them — only the global
+group does. Below we work with $G = SO(3)$ (the adjoint representation
+we have used throughout); $SU(2)$ would yield exactly the same local
+formulas with a doubled $r$-range.
+
+##### Step 1 — structure constants
+
+Unchanged: $[J^i, J^j] = \epsilon^{ijk}\, J^k$.
+
+##### Step 2 — Maurer–Cartan form
+
+Take the geodesic-normal section
+
+$$
+\sigma(x^1, x^2, x^3) \;=\; \exp(x^1 J^1 + x^2 J^2 + x^3 J^3),
+$$
+
+a single exponential parameterized by the whole $\mathfrak{m}$.
+Geometrically, $\sigma$ is a rotation by angle $r = \sqrt{(x^1)^2 +
+(x^2)^2 + (x^3)^2}$ about the axis $(x^1, x^2, x^3)/r$. The Rodrigues
+formula gives
+
+$$
+\sigma \;=\; I + \frac{\sin r}{r}\, V
+            + \frac{1 - \cos r}{r^2}\, V^2, \qquad
+V \;=\; x^a J^a.
+$$
+
+Express $\vec x$ in spherical coordinates: $\vec x = r\,\hat n(\theta,
+\phi)$ with $\hat n = (\sin\theta \cos\phi, \sin\theta \sin\phi,
+\cos\theta)$. Then $r \in [0, \pi]$ covers all of $SO(3)$ (rotations
+of any axis up to angle $\pi$; at $r = \pi$ a rotation by $\pi$ about
+$\hat n$ equals one about $-\hat n$, the antipodal identification of
+$\mathbb{RP}^3$). The coordinates $(r, \theta, \phi)$ are
+**three-dimensional geodesic-polar coordinates** centered at the
+identity.
+
+A direct computation of $\omega = \sigma^{-1}\, d\sigma$ (using the
+identity $\omega = (1 - e^{-\mathrm{ad}_V})/\mathrm{ad}_V \cdot dV$
+truncated by $(\mathrm{ad}_V)^3 = -r^2\, \mathrm{ad}_V$, or
+equivalently via direct matrix algebra; verified by
+[`klein_geometry.py`](klein_geometry.py)) gives a $3 \times 3$
+vielbein
+
+$$
+(e^a{}_\mu) \;=\; \begin{pmatrix}
+\sin\theta \cos\phi & * & * \\
+\sin\theta \sin\phi & * & * \\
+\cos\theta          & -\sin r\, \sin\theta & (\cos r - 1)\sin^2\theta
+\end{pmatrix},
+$$
+
+whose first column is just $\hat n$ (so $e^a$ at $\theta, \phi$ in
+the radial direction points along $\hat n$ — the radial geodesic),
+and whose orthogonal columns combine $\sin r$ and $1 - \cos r$
+factors. The remaining entries are not crucial; what matters is the
+resulting metric, computed below.
+
+##### Step 3 — invariance equation
+
+Here is the new twist. The invariance equation must hold for every
+$Z \in \mathfrak{h}$, but $\mathfrak{h} = \{0\}$ has no non-zero
+elements. The equation is therefore **vacuous**: any symmetric
+$3 \times 3$ matrix $\eta_{ab}$ is allowed.
+
+This is six parameters of freedom in $\eta$ — more than the
+single-parameter family $\eta = \lambda I_{2 \times 2}$ we got on
+$S^2$. The reason: with no $\mathfrak{h}$-symmetry to enforce, the
+algorithm produces a generic *left-invariant* metric on $G$, not a
+distinguished bi-invariant one.
+
+To single out a "natural" choice we impose one further requirement:
+invariance under the *adjoint action of the full group* $G$ — i.e.,
+$\eta$ must be $\mathrm{ad}_X$-invariant for every $X \in
+\mathfrak{g}$, not just for $X \in \mathfrak{h}$. This is the
+*bi-invariance* condition. For a compact simple Lie algebra such as
+$\mathfrak{so}(3)$, the unique (up to scale) bi-invariant inner
+product is (the negative of) the **Killing form**:
+
+$$
+K(J^i, J^j) \;=\; \mathrm{tr}(\mathrm{ad}_{J^i}\, \mathrm{ad}_{J^j})
+\;=\; -2\, \delta_{ij}.
+$$
+
+Taking $\eta_{ab} = \lambda\, \delta_{ab}$ with $\lambda > 0$ for a
+Riemannian (positive-definite) metric makes the resulting geometry
+the standard bi-invariant metric on the group.
+
+##### Step 4 — assemble the metric
+
+With $\eta_{ab} = \delta_{ab}$, computing
+$g = \delta_{ab}\, e^a \otimes e^b$ in $(r, \theta, \phi)$ coordinates:
+
+$$
+\boxed{\;ds^2 \;=\; dr^2 + 4\sin^2\!\tfrac{r}{2}\,
+(d\theta^2 + \sin^2\theta\, d\phi^2),\quad
+r \in [0, \pi].\;}
+$$
+
+This is exactly the round metric on the **3-sphere of radius 2**
+restricted to the closed ball $r \le \pi$, with the antipodal
+identification at $r = \pi$. To see this, substitute $\chi = r/2$:
+
+$$
+ds^2 \;=\; 4\, d\chi^2 + 4 \sin^2\chi\,
+(d\theta^2 + \sin^2\theta\, d\phi^2)
+\;=\; 4\,\Big[\, d\chi^2 + \sin^2\chi\, d\Omega_{S^2}^2\,\Big],
+$$
+
+which is $4$ times the standard unit-radius $S^3$ metric in
+geodesic-polar coordinates, with $\chi \in [0, \pi/2]$. So we have
+covered a closed hemisphere of unit $S^3$; the equatorial $S^2$ at
+$\chi = \pi/2$ (i.e., $r = \pi$) is identified antipodally, giving
+$\mathbb{RP}^3 = SO(3)$.
+
+Rescaling $\eta_{ab} = \tfrac{1}{4}\, \delta_{ab}$ would produce
+the round unit-radius $\mathbb{RP}^3$ instead. Lifting to $G = SU(2)$
+extends the $r$-range to $[0, 2\pi]$ (with $r = 2\pi$ identified with
+the identity rotation) and recovers the full unit $S^3$. The
+intrinsic Riemannian geometry — constant positive sectional curvature
+— is the same throughout this family of normalizations.
+
+##### Connection to the later $S^3 = SO(4)/SO(3)$ derivation
+
+The 3-sphere also appears later in this document as a different Klein
+quotient: $S^3 = SO(4)/SO(3)$, built from the algebra $\mathfrak{so}(4)$.
+That construction is genuinely independent of the present one — it uses
+a *bigger* algebra ($\mathfrak{so}(4)$ has six generators, not three),
+with $\mathfrak{m}$ four-dimensional minus a three-dimensional stabilizer.
+The fact that both constructions land on the same manifold $S^3$ is
+because $\mathfrak{so}(4) \cong \mathfrak{so}(3) \oplus \mathfrak{so}(3)$
+and the diagonal $\mathfrak{so}(3)$-action realizes $S^3$ as a coset.
+We do not pursue this isomorphism here, but it is the algebraic reason
+the two constructions agree on the geometry while differing on
+group-theoretic ancillary data.
+
 ### The 3-sphere $S^3$
 
 The algebra $\mathfrak{so}(4)$ has six generators. Writing them as
