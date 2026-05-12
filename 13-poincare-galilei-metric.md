@@ -194,6 +194,89 @@ spacetime as the space of *events* fixes the choice $\mathfrak{h} = \{J_i,
 K_i\}$ — that is, rotations and boosts are the transformations that leave a
 chosen event in place.
 
+To see this more explicitly, note that the choice of Klein pair is fixed
+*operationally*, by specifying what kind of object the points of the
+homogeneous space are meant to be. An **event** in physics is a localised
+occurrence: a flash at a place at a moment. Two observers at different
+positions or with different velocities may label it by different
+coordinates, but it is the same physical thing. Asking *which of the ten
+Galilei transformations does NOT move an event* gives a clean answer:
+
+| Transformation | Effect on an event | Fixes event? |
+|---|---|---|
+| $P^i$ (spatial translation by $a^i$) | the flash is now at a different *place* | ✗ |
+| $H$ (time translation by $\tau$) | the flash is now at a different *time* | ✗ |
+| $J^i$ (rotation around the event) | the flash stays where and when it is | ✓ |
+| $K^i$ (boost by $v^i$) | only the *observer's* velocity changes; the flash is unchanged | ✓ |
+
+So the transformations that fix an event are exactly $\{J^i, K^i\}$ and
+those that move events are exactly $\{H, P^i\}$. By the orbit–stabilizer
+theorem, the space of events is
+
+$$
+\text{(Galilean spacetime)} \;=\; G \big/ \{J^i, K^i\}, \qquad \dim = 4,
+$$
+
+with $\{H, P^i\}$ acting on it transitively.
+
+Repeating the same procedure with a different physical primitive gives a
+different homogeneous space. Take **inertial worldlines** as the primitive
+(a worldline is a constant-velocity trajectory $x(t) = a + vt$):
+
+| Transformation | Effect on an inertial worldline | Fixes worldline? |
+|---|---|---|
+| $J^i$ (rotation around the time axis) | the basepoint worldline (the time axis) is invariant | ✓ |
+| $H$ (time translation) | slides along the worldline; the worldline as a set is unchanged | ✓ |
+| $K^i$ (boost) | changes the velocity — different worldline | ✗ |
+| $P^i$ (spatial translation) | shifts to a parallel worldline | ✗ |
+
+The stabilizer of a worldline is thus $\{J^i, H\}$ and the resulting
+homogeneous space $G / \{J^i, H\}$ is the **6-dimensional space of
+inertial worldlines**, parametrised by $(a, v)$. This is the underlying
+manifold of **classical Galilean phase space**, equivalently $T^*
+\mathbb{R}^3$.
+
+One can take this further. Choosing as primitive "an event together with
+a velocity vector at it" gives a 7-dimensional homogeneous space $G /
+\{J^i\}$, with coordinates $(t, x, v)$ — Souriau's **evolution space** of
+classical mechanics. Choosing the empty stabilizer recovers the full
+10-dimensional group $G$ itself. Every choice of physical primitive thus
+gives a homogeneous space; the Lie algebra accommodates them all, and
+physics picks one by saying *what kind of object* the points are.
+
+Two remarks are in order. First, the Klein construction returns only the
+*smooth manifold* — not the symplectic structure that makes the 6D space
+a Hamiltonian phase space. The symplectic form $\omega = dp_i \wedge
+dq^i$ involves the **mass** $m$ (since $p = m v$), which is not present
+in the bare Galilei algebra; it enters via the **Bargmann central
+extension**, where one of the commutators is modified to $[K_i, P^j] = m
+\delta_{ij}\, M$ with $M$ a central generator. So bare Galilei gives the
+6D manifold; Bargmann gives the symplectic structure. More generally,
+phase spaces in physics arise as **coadjoint orbits** of (centrally
+extended) symmetry groups — the Kirillov–Kostant–Souriau picture — in
+which the Klein-pair construction supplies the manifold and the central
+extension supplies the symplectic geometry.
+
+Second, among all these candidates events are special because they are
+the most **local** and **operational** primitives: point-like, observable
+in principle by a single localised detection, and requiring no derived
+notion of velocity, mass, frame, or trajectory. Worldlines, phase-space
+points, and evolution-space points are all *built out of* events
+(equivalence classes of events under time translation, of worldlines
+under further equivalences, and so on). This operational primacy of
+events is what makes spacetime the natural arena for the laws of physics,
+and the other homogeneous spaces the natural arenas for derived
+constructions such as Hamiltonian dynamics or Lagrangian mechanics.
+
+In the Poincaré case this whole subtlety disappears. The only abelian
+ideal is the spacetime translations $\{H, P^i\}$, so there is no analog of
+the 6-dimensional abelian ideal $\{K_i, P^i\}$ and no competing Klein
+pair. The "events as primitive" choice is canonical because it is the
+*only* choice. The Galilei algebra is ambiguous precisely because
+$[K_i, P^j] = 0$ — the same single algebraic difference that destroys
+non-degeneracy of the metric is what permits two distinct Klein pairs to
+exist in the first place.
+
 The reason the translation parameters $a^\mu$ can be used directly as
 *global* coordinates on spacetime — in both the Poincaré and the standard
 Galilei case — is that in each case $\mathfrak{m}$ is an **abelian ideal**.
