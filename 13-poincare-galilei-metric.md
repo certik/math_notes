@@ -983,6 +983,74 @@ comes from the bracket $[\mathfrak{m}, \mathfrak{m}]$ (vanishing versus
 landing in $\mathfrak{h}$), which controls the *curvature* of the
 homogeneous space.
 
+## What the algebra determines (and what it doesn't)
+
+Looking back across the six examples, the Leibniz condition is doing
+something quite specific — and worth stating in its sharpest form.
+
+For an isotropy representation $\rho: \mathfrak{h} \to
+\mathfrak{gl}(\mathfrak{m})$, the Leibniz condition is the statement
+"find the $\rho$-invariant symmetric bilinear forms on $\mathfrak{m}$."
+This is a Schur's-lemma exercise, and the structure of the answer is
+dictated entirely by the decomposition of $\mathfrak{m}$ under $\rho$.
+
+**When $\rho$ is irreducible** — Poincaré, all $\mathfrak{e}(n)$,
+all $\mathfrak{so}(n+1)$, all $\mathfrak{so}(n, 1)$, de Sitter,
+anti-de Sitter — Schur's lemma forces the real vector space of invariant
+symmetric forms to be one-dimensional. The answer is then:
+
+- a **discrete** invariant — the *signature* of the form, fixed by which
+  real form of the isotropy algebra ($\mathfrak{so}(p, q)$ for some
+  $p + q = \dim\mathfrak{m}$) is acting;
+- plus **one** continuous degree of freedom — an overall positive scalar
+  (the unit of length squared).
+
+So in this case the entire derivation produces *the signature plus one
+scale*. The signature is forced by the algebra; the scale is free.
+
+**When $\rho$ is reducible** — Galilei, Carrollian, and other limiting
+algebras — the invariant forms decompose summand by summand. Each
+irreducible piece contributes its own independent scale, and isomorphic
+pieces can contribute additional off-diagonal mixing parameters. For
+Galilei, $\mathfrak{m}$ splits as $\mathbb{R}_H \oplus \mathbb{R}^3$
+under $SO(3)$, the two summands are non-isomorphic, and we get exactly
+the two independent forms — the temporal $\tau$ and the spatial $h$ —
+each with its own scale (the unit of time and the unit of length are
+algebraically independent in non-relativistic physics).
+
+**What is *not* derived.** The numerical values of the scales. The
+algebra cannot know whether you mean meters or light-years; in the
+irreducible case there is nothing else free, and in the reducible case
+the freedom is exactly one positive number per irreducible summand
+(plus any off-diagonal mixing among isomorphic summands).
+
+**Scale ratios are fixed by the algebra.** In curved cases like $S^2$,
+the bracket $[J^1, J^2] = J^3$ has a definite normalisation. Once we
+pick the metric scale $\eta^{ab} = \lambda\, \delta^{ab}$, the Cartan
+structure equation forces the sectional curvature to be $1/\lambda$:
+metric and curvature scales are *not* independent. The algebra fixes
+the **ratio** of (length scale)² to (curvature scale)⁻¹; only the
+absolute scale is free.
+
+The same applies on the Lorentzian side. Poincaré has a single scale,
+so the speed of light $c$ is the *only* dimensionful constant relating
+space and time, and the algebra lets us set $c = 1$ without loss. Galilei
+has two independent scales, so $c$ has no algebraic meaning — it is
+undefined, not merely unset.
+
+**The clean statement.** The algebra determines:
+
+1. the **signature** of the metric (a discrete invariant, fixed by the
+   real form of the isotropy algebra);
+2. the **dimensional structure** — how many independent scales appear,
+   i.e., how many irreducible pieces $\mathfrak{m}$ has under $\rho$;
+3. all **relations** among metric scales and curvature scale.
+
+It does *not* determine the absolute numerical value of any scale. This
+is exactly what one would want from a derivation that starts only with
+abstract commutation relations: the algebra cannot know about units,
+but it determines everything invariant under the choice of units.
+
 ## Comparison with [03-lie-groups.md](03-lie-groups.md)
 
 The companion document postulates the boost generators as explicit $4 \times
