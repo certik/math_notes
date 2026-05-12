@@ -763,6 +763,71 @@ Donaldson invariants, Seiberg–Witten theory, and similar 4-manifold
 invariants are about the geometry of *this* space. But that is one level
 removed from the principal-bundle setup itself.
 
+### Synthesis: Cartan for physical space, other geometries on top
+
+Stepping back from the individual items in the "Where Cartan is not
+enough" list, one notices that almost every entry is not really an
+*alternative* to Cartan geometry but an *additional* structure layered on
+top of a Cartan-modelled physical spacetime. They are not different
+descriptions of physical space; they are different *kinds of space*
+attached to it.
+
+| Theory | Physical spacetime | Extra structure on top | Geometry of the extra structure |
+|---|---|---|---|
+| Yang–Mills (EM, QCD, …) | Cartan ($M^4$, possibly curved) | Principal $G$-bundle $P \to M$ | Principal connection $(P, \omega)$ |
+| Classical mechanics | Cartan ($\mathbb{R}^3$ or curved $Q$) | Phase space $T^*Q$ | Symplectic |
+| Quantum mechanics / QFT | Cartan ($\mathbb{R}^{3,1}$ or curved) | Hilbert space $\mathcal{H}$ of states | Linear / Hilbert |
+| Statistical mechanics | Cartan ($\mathbb{R}^3$ or $\mathbb{R}^{3,1}$) | Phase space $\Gamma$ with a measure | Measure-theoretic |
+| Higher gauge theory, gerbes | Cartan | Higher principal bundle or gerbe | Higher-categorical |
+| Lattice gauge theory | Cartan $\to$ lattice $\Lambda \subset M$ | Bundle data on $\Lambda$ | Discrete |
+
+In every row, the physical spacetime is still a smooth Cartan geometry —
+Minkowski or its curved GR generalisation — and supplies the metric, the
+causal structure, and the gravitational dynamics. The additional layer
+encodes whatever the theory is *about*: internal symmetry directions
+(gauge theories), configurations and states (mechanics), quantum
+amplitudes (Hilbert spaces), or probability distributions (statistical
+mechanics). These additional structures need their own appropriate
+geometry, and there is no reason to expect them to be Cartan — they are
+not spacetime.
+
+This is particularly clear in classical mechanics, where the architecture
+is the three-layer structure
+
+$$
+\underbrace{\mathbb{R}^3}_{\text{Cartan / physical space}}
+\;\hookrightarrow\;
+\underbrace{Q}_{\text{Cartan / configuration space}}
+\;\hookrightarrow\;
+\underbrace{T^*Q}_{\text{symplectic / phase space, not Cartan}}.
+$$
+
+The physical space is $\mathbb{R}^3$, the Klein geometry $E(3)/SO(3)$.
+The configuration space $Q$ — points of $S^2$ for a particle on a sphere,
+$SO(3)$ for a rigid body, $\mathbb{R}^{3N}$ for $N$ point particles — is
+typically itself a Cartan/Riemannian manifold, with the kinetic energy
+supplying a metric. The phase space $T^*Q$, where Hamilton's equations
+live, is symplectic and not in general homogeneous, so it is not a Cartan
+geometry. Yet none of this is in conflict with the Cartan framework: each
+layer is the natural geometric setting for the data it carries.
+
+A small list of frameworks does propose genuinely modifying physical
+spacetime itself rather than adding structure on top — noncommutative
+geometry, generalised geometry, double field theory, higher-categorical
+spacetimes, and the various Planck-scale or string-theoretic notions of
+emergent or noncommutative spacetime. Those are the cases where the
+Cartan picture of *physical space* itself is being challenged. For all
+standard physics, however, the working rule is:
+
+> Physical spacetime is a Cartan geometry; everything else is additional
+> structure layered on top of it, and the geometry of those layers is not
+> Cartan.
+
+This is the reason the Lie-algebra-to-metric derivation of this note —
+followed by its Cartan extension to curved spacetimes — sits at the
+foundation of essentially all relativistic field theory: it is the
+foundation of *spacetime itself*, on which the rest of physics is built.
+
 ### Closing remark
 
 The same Cartan construction applied to the Galilei algebra yields
