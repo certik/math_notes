@@ -120,12 +120,110 @@ Writing $g(P^\mu, P^\nu) = \eta^{\mu\nu}$ with $\eta^{\mu\nu} =
 \eta^{\nu\mu}$, the Leibniz condition becomes a finite system of linear
 equations on the 10 components of $\eta$.
 
-**Identification with the spacetime metric.** A point of spacetime is
-labelled by the four translation parameters $a^\mu$ in $T_a = \exp(a^\mu
-P^\mu)$. By conjugation $U(\Lambda) T_a U(\Lambda)^{-1} = T_{\Lambda a}$ the
-parameters $a^\mu$ transform under the same representation as the basis
-$\{P^\mu\}$. Hence $\eta^{\mu\nu}$ is also the matrix of the invariant
-bilinear form on spacetime coordinates $x^\mu = a^\mu$.
+---
+
+## Spacetime as a homogeneous space
+
+So far we have treated the translation subspace $V =
+\operatorname{span}\{P^0, P^1, P^2, P^3\}$ as if its basis carried a preferred
+geometric interpretation: $P^\mu$ generates translation along the $\mu$-th
+spacetime direction, and the parameters $a^\mu$ in $T_a = \exp(a^\mu P^\mu)$
+are spacetime coordinates. This step needs justification, because the Lie
+algebra by itself does not announce which of its elements are "translations"
+and which are not.
+
+The proper framework is that of a **Klein geometry**. Given a Lie group $G$
+and a closed subgroup $H \subset G$, the coset space
+
+$$
+\mathcal{M} := G/H
+$$
+
+is a smooth manifold on which $G$ acts transitively, with $H$ playing the
+role of the stabilizer of a chosen basepoint. At the algebra level this
+corresponds to a vector-space decomposition
+
+$$
+\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m},
+$$
+
+where $\mathfrak{h}$ is the Lie subalgebra of $H$ (the isotropy at the
+basepoint) and $\mathfrak{m}$ is a complementary subspace identified with the
+tangent space $T_{eH}\mathcal{M}$. The pair $(\mathfrak{g}, \mathfrak{h})$ is
+what defines the geometry; the Lie algebra $\mathfrak{g}$ alone is not
+enough.
+
+Many familiar spaces are constructed this way: the sphere as $SO(3)/SO(2)$,
+Euclidean space as $E(n)/SO(n)$, hyperbolic space as $SO(n,1)/SO(n)$, and —
+the case at hand — Minkowski spacetime as $\text{Poincaré}/\text{Lorentz}$
+and Galilean spacetime as $\text{Galilei}/\{J, K\}$. In each case the Lie
+group encodes the symmetries, and the chosen subgroup $H$ encodes "what
+fixes the origin".
+
+For the **Poincaré algebra**, the choice of subalgebra is essentially
+canonical. The Levi decomposition reads
+
+$$
+\mathfrak{p}
+= \underbrace{\mathfrak{so}(3,1)}_{\text{semisimple Levi factor}}
+\;\ltimes\;
+\underbrace{\mathfrak{t}}_{\text{abelian radical}},
+$$
+
+with the radical $\mathfrak{t} = \operatorname{span}\{H, P^i\}$ being the
+unique maximal abelian ideal. Both $\mathfrak{t}$ and the Levi complement
+$\mathfrak{h} = \mathfrak{so}(3,1)$ are determined up to conjugation by the
+algebraic structure alone. So Minkowski spacetime $\mathbb{R}^{3,1}$ is
+intrinsically attached to the Poincaré algebra.
+
+For the **bare Galilei algebra**, the situation is genuinely ambiguous. The
+maximal abelian ideal turns out to be $\operatorname{span}\{K_i, P^i\}$ —
+six-dimensional, since $[K_i, K_j] = [K_i, P^j] = [P^i, P^j] = 0$ and one
+verifies that bracketing this subspace with any generator stays inside it.
+The standard "spacetime translations" $\{H, P^i\}$ form a *strictly smaller*
+four-dimensional abelian ideal, and indeed there are two natural Klein pairs:
+
+- $\mathfrak{h} = \{J_i, K_i\}$, $\mathfrak{m} = \{H, P^i\}$ — giving the
+  four-dimensional **Galilean spacetime**;
+- $\mathfrak{h}' = \{J_i, H\}$, $\mathfrak{m}' = \{K_i, P^i\}$ — giving the
+  six-dimensional **phase space** (position × velocity).
+
+Both are valid homogeneous spaces of the Galilei group. The Lie algebra
+alone does not single one of them out; the physical identification of
+spacetime as the space of *events* fixes the choice $\mathfrak{h} = \{J_i,
+K_i\}$ — that is, rotations and boosts are the transformations that leave a
+chosen event in place.
+
+The reason the translation parameters $a^\mu$ can be used directly as
+*global* coordinates on spacetime — in both the Poincaré and the standard
+Galilei case — is that in each case $\mathfrak{m}$ is an **abelian ideal**.
+Two consequences follow:
+
+- Because $\mathfrak{m}$ is abelian, the exponential map $\mathfrak{m} \to T
+  = \exp(\mathfrak{m})$ is a Lie-group isomorphism: $T$ is the additive
+  group $(\mathbb{R}^4, +)$, with coordinates $a^\mu$.
+- Because $\mathfrak{m}$ is an ideal complementary to $\mathfrak{h}$, every
+  coset $gH$ has a unique representative in $T$, giving a global
+  diffeomorphism $\mathcal{M} \cong T \cong \mathbb{R}^4$.
+
+This is what makes Minkowski and Galilean spacetimes **flat affine spaces**
+— a special feature of the algebras at hand. For a non-abelian or
+non-ideal $\mathfrak{m}$ — for instance $SO(3)/SO(2) = S^2$ — the exponential
+map is not a global bijection and the resulting homogeneous space is
+curved. The further generalization to spaces that are not even homogeneous
+is the framework of **Cartan geometry**, where the homogeneous model varies
+smoothly from point to point; this is how curved spacetimes of general
+relativity are described, modelled point-wise on flat Minkowski space.
+
+Finally, with the Klein-geometry picture in place, the connection between
+the abstract bilinear form $\eta^{\mu\nu}$ derived below and the spacetime
+metric is straightforward. The translation parameters $a^\mu$ transform
+under the homogeneous generators in exactly the same way as the basis
+$\{P^\mu\}$, since the conjugation $U T_a U^{-1} = T_{\Lambda a}$ at the
+group level differentiates to the same adjoint action $[X, P^\mu]$ at the
+algebra level. Hence the matrix $\eta^{\mu\nu}$ that solves the Leibniz
+invariance condition on $V$ is also the matrix of the invariant bilinear
+form on the spacetime coordinates $x^\mu = a^\mu$ — i.e., the metric.
 
 ---
 
