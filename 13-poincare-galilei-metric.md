@@ -830,6 +830,236 @@ sharply: the coordinate components of the metric vary, but the
 object) vanishes. The bracket-level distinction $[\mathfrak{m},
 \mathfrak{m}] = 0$ is doing exactly the work that makes flat space flat.
 
+#### Christoffel symbols, frame vectors, and the position vector
+
+Once the metric $ds^2 = dr^2 + r^2\, d\phi^2$ is in hand, everything
+familiar from elementary vector calculus in polar coordinates can be
+read off it. We give the short version here for completeness, then
+turn to the harder question of how to compute the **position vector**
+without going through Cartesian coordinates — a question for which the
+Klein-geometry section $\sigma$ does exactly the right thing.
+
+##### Curvilinear basis vectors
+
+The coordinate basis vectors are $\partial_r$ and $\partial_\phi$.
+Their lengths and inner products come straight from the metric:
+
+$$
+|\partial_r|^2 = g_{rr} = 1, \qquad
+|\partial_\phi|^2 = g_{\phi\phi} = r^2, \qquad
+\langle \partial_r, \partial_\phi \rangle = g_{r\phi} = 0.
+$$
+
+So $\partial_r$ is already a unit vector, while $\partial_\phi$ has
+length $r$. The **unit (orthonormal) frame vectors** are obtained by
+normalizing:
+
+$$
+\hat r \;=\; \partial_r, \qquad \hat\phi \;=\; \frac{1}{r}\,\partial_\phi.
+$$
+
+This is exactly the orthonormal frame $\vec e_1, \vec e_2$ produced by
+the Klein construction: the dual of the coframe $\{e^1 = dr,\; e^2 = r\, d\phi\}$
+satisfies $e^a(\vec e_b) = \delta^a_b$, giving
+
+$$
+\vec e_1 \;=\; \partial_r \;=\; \hat r, \qquad
+\vec e_2 \;=\; \frac{1}{r}\, \partial_\phi \;=\; \hat\phi.
+$$
+
+##### How $e^1, e^2$ came from the Maurer–Cartan form
+
+Briefly recapping the polar derivation above so the rest of this
+section is self-contained. We chose the section
+$\sigma(r, \phi) = e^{\phi J}\, e^{r P^1}$, computed
+
+$$
+\omega = \sigma^{-1}\, d\sigma
+= P^1\, dr + (J + r\, P^2)\, d\phi,
+$$
+
+and split it via $\mathfrak{m} = \mathrm{span}(P^1, P^2)$,
+$\mathfrak{h} = \mathrm{span}(J)$. The $\mathfrak{m}$-coefficients are
+the vielbein components $e^a{}_\mu$ — i.e., the coefficient of $P^a$
+in $\omega_\mu$:
+
+$$
+e^1{}_r = 1,\quad e^1{}_\phi = 0,\qquad
+e^2{}_r = 0,\quad e^2{}_\phi = r.
+$$
+
+Writing $e^a = e^a{}_\mu\, dx^\mu$,
+
+$$
+\boxed{\;e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.\;}
+$$
+
+##### Christoffel symbols
+
+For $g_{rr} = 1$, $g_{\phi\phi} = r^2$ (others zero), with inverse
+$g^{rr} = 1$, $g^{\phi\phi} = 1/r^2$, the formula
+
+$$
+\Gamma^\rho_{\mu\nu}
+= \tfrac{1}{2}\, g^{\rho\sigma}\bigl(
+\partial_\mu g_{\sigma\nu} + \partial_\nu g_{\sigma\mu}
+- \partial_\sigma g_{\mu\nu}\bigr)
+$$
+
+has only one non-zero metric derivative, $\partial_r g_{\phi\phi} = 2r$.
+Direct substitution gives two non-zero connection coefficients:
+
+$$
+\boxed{\;
+\Gamma^r{}_{\phi\phi} = -r, \qquad
+\Gamma^\phi{}_{r\phi} = \Gamma^\phi{}_{\phi r} = \frac{1}{r}.
+\;}
+$$
+
+All others vanish. (Check: $\Gamma^r{}_{\phi\phi} = -\tfrac{1}{2}\,\partial_r g_{\phi\phi}
+= -r$; $\Gamma^\phi{}_{r\phi} = \tfrac{1}{2}\, g^{\phi\phi}\, \partial_r g_{\phi\phi}
+= \tfrac{1}{2}\cdot \tfrac{1}{r^2}\cdot 2r = 1/r$.) These reproduce the
+familiar coordinate derivatives of polar unit vectors:
+
+$$
+\nabla_{\partial_r} \hat\phi = \frac{1}{r}\, \hat\phi, \qquad
+\nabla_{\partial_\phi} \hat r = \hat\phi, \qquad
+\nabla_{\partial_\phi} \hat\phi = -r\, \hat r,
+$$
+
+and the Riemann tensor is identically zero (since $\partial g$ has
+only one non-zero term and the second-derivative combinations cancel),
+consistent with the algebraic flatness $\Omega = 0$ computed earlier.
+
+##### The position vector — derived without Cartesian coordinates
+
+Now the structural question: in flat space, there is a distinguished
+object — the **position vector** $\vec r$ — that points from the
+origin to the current point. Its existence depends on the flatness
+of the space (translations form an abelian Lie algebra
+$\mathfrak{m}$, and the exponential map $\mathfrak{m} \to G/H$ is a
+global diffeomorphism). One can also see this from coordinates: in
+$\mathbb{R}^2$ the position vector is naturally
+$\vec r = x\, \hat x + y\, \hat y$, which uses the *global* Cartesian
+chart. The challenge is to compute $\vec r$ at a given polar
+coordinate point $(r, \phi)$ from the algebra alone, without
+parametrizing through Cartesian.
+
+The Klein-geometry section $\sigma$ gives the answer directly. The
+key step is to rewrite $\sigma$ as a translation times a rotation:
+
+$$
+\sigma(r, \phi) \;=\; e^{T}\, h,
+$$
+
+where $T \in \mathfrak{m}$ is a Lie-algebra translation and $h \in H$
+is the residual rotation at the destination point. Once we have $T$,
+the position vector is just $T$ identified with a vector in
+$\mathfrak{m} \cong T_o(\mathbb{R}^2)$: it is the translation that
+moves the origin to the current point.
+
+*The decomposition.* Start from our section
+$\sigma = e^{\phi J}\, e^{r P^1}$ and insert the identity factor
+$e^{-\phi J}\, e^{\phi J}$ between the two exponentials:
+
+$$
+\sigma
+\;=\; e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\, e^{\phi J}
+\;=\; \bigl(e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\bigr)\, e^{\phi J}
+\;=\; e^{r\, \mathrm{Ad}_{e^{\phi J}}(P^1)}\, e^{\phi J},
+$$
+
+using the identity $e^{\phi J}\, e^{r P^1}\, e^{-\phi J} =
+\exp\bigl(r\, \mathrm{Ad}_{e^{\phi J}}(P^1)\bigr)$ (conjugation acts
+on the exponent by the adjoint). The bracket structure on
+$\mathfrak{m}$ — $[J, P^1] = P^2$, $[J, P^2] = -P^1$ — gives, by the
+same series we used in Step 4 of the polar derivation,
+
+$$
+\mathrm{Ad}_{e^{\phi J}}(P^1) \;=\; \cos\phi\, P^1 + \sin\phi\, P^2.
+$$
+
+Therefore the section factorizes as
+
+$$
+\sigma(r, \phi)
+\;=\; e^{\,r\cos\phi\, P^1 \,+\, r\sin\phi\, P^2}\, e^{\phi J},
+$$
+
+and we read off
+
+$$
+\boxed{\;T(r, \phi) \;=\; (r\cos\phi)\, P^1 \;+\; (r\sin\phi)\, P^2 \;\in\; \mathfrak{m},\;}
+\qquad h(r, \phi) = e^{\phi J}.
+$$
+
+The vector $T$ *is* the position vector — its components in the
+algebraic basis $\{P^1, P^2\}$ of $\mathfrak{m}$ are exactly $(x, y) =
+(r\cos\phi, r\sin\phi)$. So Cartesian coordinates have re-emerged as a
+purely algebraic byproduct: they are the **components of the position
+vector in the algebra basis** of $\mathfrak{m}$. We never had to
+invoke an independent Cartesian chart; the Klein structure delivers it
+automatically when $\mathfrak{m}$ is abelian.
+
+*Expressing $\vec r$ at the current point.* The above $T$ lives in
+$\mathfrak{m}$, naturally an algebra element. To view it as a tangent
+vector field on $\mathbb{R}^2$ — as an arrow attached to the current
+point $(r, \phi)$ — push it through the translation Killing fields,
+whose polar-coordinate expressions we have from Step 4 of the polar
+derivation:
+
+$$
+\vec{P^1} = \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi, \qquad
+\vec{P^2} = \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
+$$
+
+Substituting:
+
+$$
+\begin{aligned}
+\vec r
+&\;=\; (r\cos\phi)\, \vec{P^1} \;+\; (r\sin\phi)\, \vec{P^2} \\
+&\;=\; r\cos\phi\, \Bigl(\cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi\Bigr)
+ \;+\; r\sin\phi\, \Bigl(\sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi\Bigr) \\
+&\;=\; r\,(\cos^2\phi + \sin^2\phi)\, \partial_r
+ \;+\; (-\sin\phi\cos\phi + \sin\phi\cos\phi)\, \partial_\phi \\
+&\;=\; r\, \partial_r.
+\end{aligned}
+$$
+
+The $\partial_\phi$ component cancels exactly by the Pythagorean
+identity. So in polar coordinates,
+
+$$
+\boxed{\;\vec r \;=\; r\, \partial_r \;=\; r\, \vec e_1 \;=\; r\, \hat r.\;}
+$$
+
+The familiar elementary result is recovered, but the derivation used
+only the algebra (the bracket relations and the section), not
+Cartesian coordinates. Two observations close the section:
+
+- **Why polar coordinates make the position vector look so simple.**
+  In the local orthonormal frame $\vec e_1 = \hat r$, $\vec e_2 = \hat\phi$
+  at the point $(r, \phi)$, the position vector has frame components
+  $(r, 0)$ — one non-zero entry. This is because the section
+  $\sigma = e^{\phi J}\, e^{r P^1}$ first translates along $P^1$ and
+  then rotates: the rotation aligns $\hat e_1$ with the radial
+  direction by construction, so the entire displacement $r P^1$ shows
+  up in the $\vec e_1$ slot.
+- **Why the position vector exists only in flat space.** The
+  decomposition $\sigma = e^T h$ relied on the fact that, in
+  $\mathfrak{m}$, the translation $e^{r P^1}$ stays a single
+  translation under conjugation by the rotation — there is no
+  "tilting term" added. Equivalently, $\mathrm{Ad}_h$ sends
+  $\mathfrak{m}$ to itself as an honest linear map without picking up
+  $\mathfrak{h}$-pieces, *and* $[\mathfrak{m}, \mathfrak{m}] = 0$ so
+  the exponential map $\mathfrak{m} \to G/H$ is a diffeomorphism. On
+  $S^2$ the second condition fails: $[\mathfrak{m}, \mathfrak{m}] =
+  \mathfrak{h}$, so $e^T$ does not exhaust the group, the exponential
+  map is only local, and there is no globally well-defined "position
+  vector to the basepoint." The position vector is the algebraic
+  signature of flatness.
+
 ### Three-dimensional Euclidean space $\mathbb{R}^3$
 
 The algebra $\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathbb{R}^3$
