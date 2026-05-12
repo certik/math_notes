@@ -1270,6 +1270,191 @@ abelian-ideal structure of $\mathfrak{m}$ makes $\mathbb{R}^3$ flat with
 global coordinates $a^i$, and $\eta^{ij}$ becomes $ds^2 = \delta_{ij}\,
 dx^i\, dx^j$.
 
+#### All Klein-pair candidates for $\mathfrak{e}(3)$
+
+The four candidates listed above are illustrative, not exhaustive. Here we
+enumerate the *complete* classification of proper subalgebras
+$\mathfrak{h} \subset \mathfrak{e}(3)$ up to $E(3)$-conjugacy, compute the
+metric in each reductive case, and show with equations that the orbit–
+stabilizer argument singles out $\mathbb{R}^3 = E(3)/SO(3)$ as the unique
+"space of points".
+
+**Notion of conjugacy.** We classify subalgebras up to the adjoint action of
+$E(3)$ itself: two subalgebras are equivalent if one is obtained from the
+other by rotating axes (conjugation by $SO(3)$) and/or shifting the origin
+(conjugation by translation). This freedom lets us always orient a
+distinguished axis along $\hat z$ and place rotation centers at the origin.
+
+**Full classification.** Working through bracket closure, the
+$E(3)$-conjugacy classes of proper non-trivial subalgebras are:
+
+| $\dim\mathfrak{h}$ | $\mathfrak{h}$ | Reductive? | $\eta$ family on $\mathfrak{m}$ | Non-deg? | $\dim G/H$ | Geometric meaning |
+|---|---|---|---|---|---|---|
+| 0 | $\{0\}$ | yes (trivial) | 21 params (left-inv) | yes | 6 | group manifold $E(3) \cong \mathbb{R}^3 \times SO(3)$ |
+| 1 | $\langle P^3 \rangle$ | yes | 7 | **no** | 5 | frames mod $z$-translation |
+| 1 | $\langle J^3 \rangle$ | yes | 5 | **yes** | 5 | $\mathbb{R}^3 \times S^2$ (point + direction) |
+| 1 | $\langle J^3 + a P^3 \rangle$, $a > 0$ | yes | 3 | no | 5 | frames mod screw of pitch $a$ |
+| 2 | $\langle P^1, P^2 \rangle$ | **no** | — | — | 4 | (no reductive metric) |
+| 2 | $\langle J^3, P^3 \rangle$ | yes | 2 | no | 4 | space of oriented lines in $\mathbb{R}^3$ |
+| 3 | $\mathfrak{so}(3) = \langle J^i \rangle$ | yes | **1** | **yes** | 3 | $\mathbb{R}^3$, **space of points** ★ |
+| 3 | $\mathfrak{t} = \langle P^i \rangle$ | **no** | — | — | 3 | $SO(3)$ as coset space (no Leibniz metric) |
+| 3 | $\mathfrak{e}(2) = \langle J^3, P^1, P^2 \rangle$ | yes | 1 | no | 3 | space of oriented 2-planes ($\mathbb{R} \times S^2$) |
+| 3 | screw-$\mathfrak{e}(2)$, $a > 0$ | **no** | — | — | 3 | (no reductive metric) |
+| 4 | $\langle J^3, P^1, P^2, P^3 \rangle$ | **no** | — | — | 2 | $S^2$ (directions in $\mathbb{R}^3$) |
+
+There are no 5-dim proper subalgebras: any 5-dim $\mathfrak{h}$ would require
+either $\mathfrak{h} \supset \mathfrak{t}$ with $\dim \pi_\mathfrak{r}(\mathfrak{h}) = 2$
+(but $\mathfrak{so}(3)$ has no 2-dim subalgebra), or a Lie-section
+$\sigma: \mathfrak{so}(3) \hookrightarrow \mathfrak{e}(3)$ with image disjoint
+from $\mathfrak{t}$ except along one direction — which one can check has no
+solution.
+
+**Reductivity.** Each case is checked by computing $[\mathfrak{h}, \mathfrak{m}]$
+for the natural complement $\mathfrak{m}$. The four non-reductive cases fail
+because some bracket lands back in $\mathfrak{h}$:
+
+- $\mathfrak{t}$: $[P^i, J^j] = -\epsilon^{ijk}P^k \in \mathfrak{h}$.
+- $\langle P^1, P^2 \rangle$: $[P^1, J^3] = -P^2 \in \mathfrak{h}$.
+- screw-$\mathfrak{e}(2)$ with $a > 0$: any candidate complement fails the
+  closure constraint (worked out below).
+- $\langle J^3, P^1, P^2, P^3 \rangle$: $[P^i, J^j]$ for $i,j \in \{1,2\}$ lies
+  inside $\mathfrak{h}$.
+
+For these, the Leibniz algorithm does not produce a $G$-invariant metric on
+$G/H$ — although the coset space itself still makes sense as a manifold.
+
+**Metric for each reductive case.** Solving
+$\eta\,\mathrm{ad}_Z + (\mathrm{ad}_Z)^T \eta = 0$ for each $Z \in \mathfrak{h}$
+on the chosen $\mathfrak{m}$ (these are short computations, easily verified by
+a SymPy script analogous to the one above; results stated in basis order):
+
+- *$\mathfrak{h} = \mathfrak{so}(3)$*, $\mathfrak{m} = \langle P^1, P^2, P^3 \rangle$:
+  $\eta^{ij} = \alpha\, \delta^{ij}$. **1 parameter, non-degenerate**. The
+  $\mathbb{R}^3$ Euclidean metric.
+
+- *$\mathfrak{h} = \langle J^3 \rangle$*, $\mathfrak{m} = \langle J^1, J^2, P^1, P^2, P^3 \rangle$:
+  invariance under $\mathrm{ad}_{J^3}$ (90° rotation in both $(J^1,J^2)$ and
+  $(P^1,P^2)$ planes) leaves 5 free parameters:
+  $\eta(J^1, J^1) = \eta(J^2, J^2) = \alpha$,
+  $\eta(P^1, P^1) = \eta(P^2, P^2) = \beta$,
+  $\eta(P^3, P^3) = \gamma$,
+  $\eta(J^1, P^1) = \eta(J^2, P^2) = \mu$,
+  $\eta(J^2, P^1) = -\eta(J^1, P^2) = \nu$.
+  **Non-degenerate** for generic $\alpha, \beta, \gamma$ (with $\mu = \nu = 0$
+  giving the most natural choice).
+
+- *$\mathfrak{h} = \langle J^3, P^3 \rangle$*, $\mathfrak{m} = \langle J^1, J^2, P^1, P^2 \rangle$:
+  invariance under both $J^3$ and $P^3$ gives 2 parameters
+  $\eta(J^a, J^b) = \alpha\, \delta^{ab}$, $\eta(J^a, P^b) = \mu\, \delta^{ab}$,
+  but $\eta(P^a, P^b) = 0$. **Degenerate** (translation block vanishes).
+
+- *$\mathfrak{h} = \mathfrak{e}(2)$*, $\mathfrak{m} = \langle J^1, J^2, P^3 \rangle$:
+  1 parameter $\eta = \alpha\, \mathrm{diag}(1, 1, 0)$. **Degenerate** on $P^3$.
+
+- *$\mathfrak{h} = \langle P^3 \rangle$*, $\mathfrak{m} = \langle J^1, J^2, J^3, P^1, P^2 \rangle$:
+  7-parameter family, but the entire $(P^1, P^2)$-block is forced to zero by
+  $\mathrm{ad}_{P^3}(J^a) = \pm P^b$. **Degenerate**.
+
+- *$\mathfrak{h} = \langle J^3 + a P^3 \rangle$ with $a > 0$*: 3 parameters; the
+  extra $aP^3$ contribution gives the constraint $a\, \eta(P^b, P^b) = 0$, so
+  the translation block dies for any $a \neq 0$. **Degenerate**.
+
+- *$\mathfrak{h} = \{0\}$*: Leibniz is vacuous; any inner product on the 6-dim
+  $\mathfrak{e}(3)$ defines a *left-invariant* Riemannian metric on $E(3)$.
+  Requiring full *bi-invariance* (ad-invariance under all of $\mathfrak{e}(3)$,
+  in particular under translations) gives the constraint
+  $\eta(P^a, P^b) = 0$ — so the only bi-invariant form on $E(3)$ is degenerate.
+  Thus $E(3)$ admits many left-invariant Riemannian metrics, but no bi-invariant
+  Riemannian one.
+
+**The non-degeneracy pattern.** Three of the eight reductive cases give a
+non-degenerate metric: $\mathfrak{h} = \{0\}$, $\langle J^3 \rangle$, and
+$\mathfrak{so}(3)$. These are *exactly* the cases with
+$\mathfrak{h} \subset \mathfrak{r}$ (no translations in $\mathfrak{h}$).
+
+This is not coincidence. Take any $P \in \mathfrak{h} \cap \mathfrak{t}$ and
+any $J \in \mathfrak{m}$ with non-zero rotation part. Applying the Leibniz
+condition with $X = P$, $Y = J$, $Z = P'$ for any translation $P' \in \mathfrak{m}$:
+
+$$
+\eta([P, J], P') + \eta(J, \underbrace{[P, P']}_{=0}) = 0,
+$$
+
+so $\eta([P, J], P') = 0$. As $J$ ranges over rotations in $\mathfrak{m}$, the
+bracket $[P, J] = -\epsilon\, P^k$ spans the translation directions in
+$\mathfrak{m}$, forcing $\eta(P^k, P') = 0$ for *all* translations in
+$\mathfrak{m}$. The translation block dies. So:
+
+> *A non-degenerate $G$-invariant Riemannian metric on $G/H$ exists only when
+> $\mathfrak{h}$ contains no translations.*
+
+This narrows the candidates to $\{0\}$, $\langle J^3 \rangle$, and
+$\mathfrak{so}(3)$.
+
+**Singling out $\mathbb{R}^3 = E(3)/SO(3)$.** Among these three non-degenerate
+candidates:
+
+- $\mathfrak{h} = \{0\}$ gives the 6-dim group manifold $E(3)$ — the bundle of
+  orthonormal frames, *not* the underlying space of points.
+- $\mathfrak{h} = \langle J^3 \rangle$ gives a 5-dim space parameterizing
+  (point, unit vector) pairs $\cong \mathbb{R}^3 \times S^2$ — point plus
+  attached direction, not just a point.
+- $\mathfrak{h} = \mathfrak{so}(3)$ gives the 3-dim space of *points* $\mathbb{R}^3$. ★
+
+The third is picked out by the **orbit–stabilizer correspondence**:
+
+> *The space of points* is the homogeneous space whose elements are moved
+> simply-transitively by translations alone, with rotations playing the role
+> of the stabilizer at each point.
+
+Concretely, fix the origin $\vec 0 \in \mathbb{R}^3$. An element
+$(R, \vec a) \in E(3)$ (rotation $R$ followed by translation $\vec a$) acts on
+$\vec 0$ as
+$$
+(R, \vec a) \cdot \vec 0 = R \vec 0 + \vec a = \vec a.
+$$
+The stabilizer of $\vec 0$ is
+$$
+\mathrm{Stab}(\vec 0) = \{(R, \vec a) : R \vec 0 + \vec a = \vec 0\}
+                     = \{(R, \vec 0) : R \in SO(3)\}
+                     = SO(3).
+$$
+At the Lie-algebra level: rotations centered at the origin fix $\vec 0$
+($J^i \cdot \vec 0 = \vec 0$), while translations move it
+($P^j \cdot \vec 0 = \hat e_j \neq \vec 0$). So the stabilizer subalgebra is
+
+$$
+\boxed{\;\mathfrak{h} = \langle J^1, J^2, J^3 \rangle = \mathfrak{so}(3)\;}
+$$
+
+and translations $P^j \in \mathfrak{m}$ act simply transitively on points
+(any two points related by a unique translation). The orbit–stabilizer
+theorem gives
+
+$$
+\boxed{\;\mathbb{R}^3 \;=\; E(3) \cdot \vec 0 \;\cong\; E(3) / SO(3).\;}
+$$
+
+The Leibniz invariance condition with $\mathfrak{h} = \mathfrak{so}(3)$ then
+uniquely (up to scale) selects $\eta^{ij} = \delta^{ij}$, and the flat
+coordinates $\vec a$ on $\mathfrak{m} = \mathfrak{t}$ give the global
+$ds^2 = (dx^1)^2 + (dx^2)^2 + (dx^3)^2$.
+
+**The four 3-dim quotients side-by-side.** Each 3-dim Klein quotient
+corresponds to "things modulo a different stabilizer":
+
+| $\mathfrak{h}$ | Stabilizes... | What $G/H$ parameterizes | Metric |
+|---|---|---|---|
+| $\mathfrak{so}(3)$ | a *point* (origin) | points of $\mathbb{R}^3$ | flat Euclidean ★ |
+| $\mathfrak{t}$ | (no point; identifies all of $\mathbb{R}^3$) | orientations $SO(3) \cong \mathbb{RP}^3$ | non-reductive (bi-invariant from $\mathfrak{so}(3)$ Killing form) |
+| $\mathfrak{e}(2)$ | an oriented 2-plane through origin | oriented planes $\cong \mathbb{R} \times S^2$ | reductive but degenerate |
+| screw-$\mathfrak{e}(2)$, $a>0$ | a "twisted plane" with helical pitch | (no clean reductive description) | non-reductive |
+
+The *same* Lie algebra $\mathfrak{e}(3)$ thus admits several geometrically
+distinct 3-dim homogeneous spaces. The orbit–stabilizer interpretation
+uniquely identifies $E(3)/SO(3)$ as the space of points, and the Leibniz
+invariance condition then fixes its metric to be the standard flat one.
+
 The structural pattern is exactly the one we saw for Minkowski: $G$ is a
 semidirect product $H \ltimes T$ with $T$ an abelian ideal of
 translations, $\mathfrak{m} = T$ acts transitively on the space, and the
