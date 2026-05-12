@@ -1799,6 +1799,239 @@ representation, the invariant form is positive-definite Euclidean; with
 $\mathfrak{h} = \mathfrak{so}(3,1)$ acting on $\mathfrak{m}$ by its
 defining representation, the invariant form is Minkowski.
 
+#### Can a single Lie algebra have more than one "point-stabilizing" Klein geometry?
+
+In the $\mathfrak{e}(3)$ case above the answer was particularly clean:
+exactly one reductive subalgebra ($\mathfrak{so}(3)$) fixes a single point
+and nothing more, so the "space of points" Klein geometry was unique. But
+this uniqueness is a feature of the *semidirect-product structure* of
+$\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathfrak{t}$, where
+translations are forced into $\mathfrak{m}$ and rotations are the only
+candidates for $\mathfrak{h}$.
+
+For a *simple* Lie algebra like $\mathfrak{so}(p, q)$ the situation is
+genuinely richer: the same algebra can admit **several inequivalent
+reductive point-stabilizers**, each producing a different Klein geometry
+that is still a "space of points". They differ not in *what kind of object*
+the space is made of (all are spaces of points) but in the *signature of
+the resulting metric*.
+
+##### Smallest example: $\mathfrak{so}(2, 1) \cong \mathfrak{sl}(2, \mathbb{R})$
+
+This is the lowest-dimensional simple Lie algebra where the phenomenon
+appears. Take generators $\{J, K_1, K_2\}$ with brackets
+
+$$
+[J, K_1] = K_2, \qquad [J, K_2] = -K_1, \qquad [K_1, K_2] = -J.
+$$
+
+Concretely, $J$ generates the compact "rotation" (closed orbit $S^1$) and
+$K_1, K_2$ generate non-compact "boosts" (open orbit $\mathbb{R}$). To get
+a 2-dimensional Klein geometry $G/H$ we need $\dim \mathfrak{h} = 1$. The
+1-dim subalgebras come in three conjugacy classes (by the Iwasawa /
+Cartan-classification of one-parameter subgroups of $SL(2,\mathbb{R})$):
+
+| class | representative | type | $H$ topology |
+|---|---|---|---|
+| elliptic | $\langle J \rangle$ | compact rotation | $S^1$ |
+| hyperbolic | $\langle K_1 \rangle$ | non-compact boost | $\mathbb{R}$ |
+| parabolic | $\langle J + K_2 \rangle$ | null / unipotent | $\mathbb{R}$ |
+
+For the parabolic class one finds $[\mathfrak{h}, \mathfrak{m}]$ does not
+close inside $\mathfrak{m}$ for any natural complement, so the Leibniz
+machinery does not yield a metric (it gives a *projective* line as
+$G/H$). The first two are both reductive, both give a 2-dim "space of
+points", and they yield *different signatures*.
+
+**Case 1: compact stabilizer $\mathfrak{h} = \langle J \rangle$.**
+Complement $\mathfrak{m} = \langle K_1, K_2 \rangle$. The adjoint action
+of $J$ on $\mathfrak{m}$ in the basis $(K_1, K_2)$ is
+
+$$
+\mathrm{ad}_J \big|_{\mathfrak{m}}
+\;=\;
+\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+\quad(\text{a 90° rotation in the }(K_1, K_2)\text{ plane}).
+$$
+
+Imposing Leibniz invariance $\eta\,\mathrm{ad}_J + (\mathrm{ad}_J)^T \eta = 0$
+for a generic symmetric $\eta = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$
+gives the linear system
+
+$$
+\begin{pmatrix} 2b & c - a \\ c - a & -2b \end{pmatrix} = 0
+\quad\Longrightarrow\quad b = 0, \quad a = c,
+$$
+
+so
+
+$$
+\boxed{\;\eta_{\langle J \rangle} \;=\; \alpha
+\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}.\;}
+$$
+
+**Riemannian signature $(+,+)$.** The resulting space is the **hyperbolic
+plane** $\mathbb{H}^2 = SL(2,\mathbb{R})/SO(2)$ with its negative-curvature
+Riemannian metric.
+
+**Case 2: non-compact stabilizer $\mathfrak{h} = \langle K_1 \rangle$.**
+Complement $\mathfrak{m} = \langle J, K_2 \rangle$. The adjoint action of
+$K_1$ on $\mathfrak{m}$ in basis $(J, K_2)$:
+
+$$
+\mathrm{ad}_{K_1} \big|_{\mathfrak{m}}
+\;=\;
+\begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}
+\quad(\text{a Lorentz boost in the }(J, K_2)\text{ plane}).
+$$
+
+Imposing Leibniz invariance gives
+
+$$
+\begin{pmatrix} -2b & -a - c \\ -a - c & -2b \end{pmatrix} = 0
+\quad\Longrightarrow\quad b = 0, \quad c = -a,
+$$
+
+so
+
+$$
+\boxed{\;\eta_{\langle K_1 \rangle} \;=\; \alpha
+\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.\;}
+$$
+
+**Lorentzian signature $(+,-)$.** The resulting space is 2-dimensional
+**anti-de Sitter space** $AdS^2 = SL(2,\mathbb{R})/SO(1,1)$, a Lorentzian
+spacetime of constant negative curvature.
+
+(Both calculations are verified by a one-line SymPy script analogous to
+those for $\mathbb{R}^3$ and $S^2$.)
+
+##### What just happened, physically
+
+The *same* abstract Lie algebra $\mathfrak{so}(2,1)$, with two different
+choices of "what stabilizes a point", gave two genuinely different physical
+spaces:
+
+| stabilizer $\mathfrak{h}$ | $H$ topology | $G/H$ | signature | curvature | character |
+|---|---|---|---|---|---|
+| $\langle J \rangle$, compact | $S^1$ | $\mathbb{H}^2$ | $(+,+)$ | $K = -1$ | Riemannian *space* |
+| $\langle K_1 \rangle$, non-compact | $\mathbb{R}$ | $AdS^2$ | $(+,-)$ | $K = -1$ | Lorentzian *spacetime* |
+
+Both stabilize a single point — at the base point of either coset space,
+the stabilizer fixes that point only. The difference is in the *kind of
+"rotation"* that does the stabilizing:
+
+- A **compact rotation** (the $S^1$ generated by $J$) sweeps the tangent
+  plane around in a closed orbit, treating all directions through the point
+  as equivalent up to a continuous rotation. The invariant metric is
+  positive-definite.
+- A **non-compact boost** (the $\mathbb{R}$ generated by $K_1$) hyperbolically
+  rescales two transverse directions in opposite ways. The invariant form
+  must be preserved by these "boosts", which forces it to take the
+  indefinite quadratic-form shape $u^2 - v^2$.
+
+The key structural fact is:
+
+> *The signature of the invariant metric on $\mathfrak{m}$ is determined by
+> whether $\mathrm{ad}_\mathfrak{h}\big|_\mathfrak{m}$ is conjugate to a
+> compact (orthogonal-like) or non-compact (Lorentz-like) family of
+> transformations.*
+
+So *which* one-parameter subgroup we call "the rotations of space" is what
+distinguishes a *space* from a *spacetime*. The Lie algebra alone does not
+know.
+
+##### Higher-dimensional examples
+
+The same phenomenon happens for every higher-rank $\mathfrak{so}(p, q)$,
+producing the standard zoo of constant-curvature pseudo-Riemannian
+geometries:
+
+| Lie algebra $\mathfrak{g}$ | $\mathfrak{h}$ (point-stabilizer) | $G/H$ | signature | name |
+|---|---|---|---|---|
+| $\mathfrak{so}(n+1)$ | $\mathfrak{so}(n)$ | $S^n$ | $(+,\ldots,+)$ | $n$-sphere |
+| $\mathfrak{so}(n,1)$ | $\mathfrak{so}(n)$ | $\mathbb{H}^n$ | $(+,\ldots,+)$ | hyperbolic space |
+| $\mathfrak{so}(n,1)$ | $\mathfrak{so}(n-1,1)$ | $dS^n$ | $(+,\ldots,+,-)$ | de Sitter |
+| $\mathfrak{so}(n-1,2)$ | $\mathfrak{so}(n-1,1)$ | $AdS^n$ | $(+,\ldots,+,-)$ | anti-de Sitter |
+| $\mathfrak{so}(n-1,2)$ | $\mathfrak{so}(n-1)\oplus\mathfrak{so}(2)$? | (other quotients) | mixed | ... |
+
+For example $\mathfrak{so}(3,1)$ (the 3+1 Lorentz algebra), familiar as the
+homogeneous part of the Poincaré algebra, has *two* natural reductive
+point-stabilizers:
+
+- $\mathfrak{h} = \mathfrak{so}(3)$: gives $SO(3,1)/SO(3) = \mathbb{H}^3$,
+  3-dim hyperbolic space (Riemannian, $K = -1$). Used in cosmology as the
+  spatial slice of a hyperbolic Friedmann universe.
+- $\mathfrak{h} = \mathfrak{so}(2,1)$: gives $SO(3,1)/SO(2,1) = dS^3$,
+  3-dim de Sitter space (Lorentzian, $K = +1$).
+
+Two completely different physical spaces, both stabilizing a single point,
+both built from the same Lorentz algebra.
+
+##### Physical meaning of multiple point-stabilizers
+
+This phenomenon is the **signature ambiguity** of Klein geometry. The Lie
+algebra encodes only the *abstract algebraic structure* of the symmetries;
+it does not, by itself, distinguish "rotations of a Euclidean space" from
+"boosts of a spacetime". The choice of stabilizer subalgebra is precisely
+the additional information that says *which generators we want to be
+"rotation-like" (closed orbits, compact, positive-definite invariant) and
+which we want to be "boost-like" (open orbits, non-compact, indefinite
+invariant)*.
+
+Three concrete ways this matters in physics:
+
+1. **Wick rotation.** The relationship between Minkowski space (Lorentzian)
+   and 4-dim Euclidean space (Riemannian) — central to Euclidean quantum
+   field theory — is exactly an exchange of compact-vs-non-compact
+   stabilizers in a complexified version of the Poincaré algebra. Choosing
+   $\mathfrak{so}(3,1)$ as point-stabilizer of a 5-dim parent gives
+   Minkowski; choosing $\mathfrak{so}(4)$ gives 4D-Euclidean. Same abstract
+   *complex* algebra, different *real forms* of the stabilizer.
+2. **dS / AdS / Minkowski as deformations.** The $n$-dim constant-curvature
+   spacetimes — de Sitter, anti-de Sitter, and Minkowski — are *all*
+   realized as Klein quotients $G/H$ with $\dim G = \frac{1}{2}n(n+1)$ and
+   $\dim H = \frac{1}{2}n(n-1)$, but with the algebra of $H$ chosen
+   differently in each. The cosmological constant of the resulting
+   spacetime is read off from whether $[\mathfrak{m}, \mathfrak{m}]$ closes
+   into $\mathfrak{h}$ with a $+$ sign ($AdS$), a $-$ sign ($dS$), or
+   vanishes (Minkowski).
+3. **Signature change in quantum gravity.** Models that allow the universe
+   to "tunnel" between Riemannian and Lorentzian phases (Hartle–Hawking,
+   etc.) make sense precisely because the underlying Lie-algebraic
+   structure has both as Klein quotients of the same complex algebra.
+
+##### When is the point-stabilizing geometry unique?
+
+Putting all of the above together:
+
+- For a **semidirect-product** algebra $\mathfrak{g} = \mathfrak{h}_0
+  \ltimes \mathfrak{t}$ (Euclidean, Poincaré, Galilei) the point-stabilizer
+  is essentially forced to be $\mathfrak{h}_0$ — the translations have to
+  go into $\mathfrak{m}$ in order to act transitively, and what is left is
+  the rotation/boost piece. Uniqueness as in our $\mathfrak{e}(3)$ analysis.
+
+- For a **simple** algebra $\mathfrak{g}$ (no nontrivial ideals — like
+  $\mathfrak{so}(p, q)$, $\mathfrak{sl}(n)$, etc.) there is generally a
+  *family* of point-stabilizers indexed by which real form of which
+  subalgebra one chooses. This produces the zoo of constant-curvature
+  pseudo-Riemannian geometries.
+
+- Concretely: *the number of inequivalent point-stabilizers is the number
+  of $G$-conjugacy classes of "symmetric pair" subalgebras
+  $\mathfrak{h} \subset \mathfrak{g}$ of the right codimension.* For a
+  classical $\mathfrak{so}(p, q)$ of dimension $\frac{1}{2}n(n-1)$ (with
+  $n = p + q$), the pairs $(\mathfrak{so}(p, q), \mathfrak{so}(p', q'))$
+  with $p' + q' = n - 1$ exhaust them, giving all the constant-curvature
+  pseudo-Riemannian geometries of dimension $n - 1$.
+
+In short: the $\mathfrak{e}(3)$ "unique answer" was a special feature of
+the semidirect-product structure. For simple Lie algebras, the *same*
+algebra is the symmetry algebra of a whole family of homogeneous spaces of
+different metric signature. The choice of point-stabilizer is then a
+genuine extra physical input (Riemannian space? Lorentzian spacetime? what
+cosmological constant?) — not a mathematical accident.
+
 ---
 
 ## Part IV: Spheres — $S^2$ and $S^3$
