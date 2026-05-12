@@ -2228,6 +2228,181 @@ Everything else — the vielbein, the connection, the curvature, the
 Killing fields, the relations among scales — is determined by Steps
 1–6 above.
 
+### How much freedom is there in choosing the section?
+
+Of the three user-supplied inputs above, the section is the one that
+is purely a matter of coordinates — what *parametrization* you use,
+not what *space* you describe. So in practice the natural follow-up
+question is: how much freedom do you have? Is there always a
+Cartesian-like choice that covers the whole space, like in the polar
+$\mathbb{R}^2$ section above? For $S^2$, the spherical coordinates
+worked, but did we get lucky — or could we have predicted in advance
+which choices would and would not give a global chart?
+
+The freedom is large, the obstructions are well-understood, and "luck"
+plays no role: the bracket $[\mathfrak{m}, \mathfrak{m}]$ in the algebra
+tells you in advance whether a global Cartesian-style section exists.
+
+#### What counts as a section
+
+Formally, a section over an open subset $U \subset G/H$ is any smooth
+map $\sigma \colon U \to G$ such that projecting back to $G/H$ gives
+the identity: $\pi(\sigma(x)) = x$. In plain terms, $\sigma(x)$ picks
+one specific group element representing the coset of $x$. *Any* such
+$\sigma$ is good for running the four-step algorithm, with one
+technical requirement: the resulting vielbein must be non-singular on
+$U$, i.e., $\det(e^a{}_\mu) \ne 0$. Otherwise the algorithm cannot
+read off coordinates.
+
+In practice, two natural families show up:
+
+- **Exponential normal section.** $\sigma(x^a) = \exp(x^a X_a)$, where
+  $X_a$ runs over a basis of $\mathfrak{m}$ only. Single exponential of
+  an algebra element.
+- **Product (nested) section.** $\sigma(x^1, x^2, \dots) =
+  e^{x^1 X_{i_1}}\, e^{x^2 X_{i_2}}\, \cdots$, where each $X_{i_k}$ is
+  some chosen generator from either $\mathfrak{m}$ or $\mathfrak{h}$.
+  Each factor exponentiates a single generator.
+
+The product form is more general: you can include $\mathfrak{h}$
+-generators in the section (as we did with $J^3$ for spherical, $J$ for
+polar). This is fine — the action of an $\mathfrak{h}$-generator on
+the basepoint produces a non-trivial point in $G/H$ whenever it does
+not commute with everything in $\mathfrak{m}$, so $\mathfrak{h}$
+-factors carry geometric information too. They typically produce
+*angular* coordinates (longitude, azimuth) that pair naturally with
+radial $\mathfrak{m}$-coordinates.
+
+#### Example A: Cartesian on $\mathbb{R}^2$
+
+For $\mathfrak{e}(2)$ with $\mathfrak{m} = \mathrm{span}(P^1, P^2)$,
+the exponential normal section is
+
+$$
+\sigma(x, y) \;=\; \exp(x\, P^1 + y\, P^2).
+$$
+
+Because $[P^1, P^2] = 0$, the Baker–Campbell–Hausdorff series
+collapses: $\sigma(x, y)$ is simply the pure translation by $(x, y)$.
+The product version $e^{xP^1}\, e^{yP^2}$ equals the same group
+element, for the same reason. The Maurer–Cartan form is then
+
+$$
+\omega \;=\; \sigma^{-1}\, d\sigma \;=\; P^1\, dx + P^2\, dy,
+$$
+
+so the vielbein is the identity matrix, the spin connection vanishes,
+and the metric is $g = dx^2 + dy^2$. This is *global*: the section is
+defined on all of $\mathbb{R}^2$, and the vielbein is non-singular
+everywhere. Cartesian coordinates cover the whole space.
+
+#### Example B: "Cartesian-like" on $S^2$
+
+The natural analogue for $\mathfrak{so}(3)$ with $\mathfrak{m} =
+\mathrm{span}(J^1, J^2)$ is
+
+$$
+\sigma(a, b) \;=\; \exp(a\, J^1 + b\, J^2),
+$$
+
+i.e., a single rotation by some angle around an axis in the $xy$
+-plane. This is a valid section, and in fact it gives **geodesic
+normal coordinates** at the north pole — the radial parameter is the
+geodesic distance from the pole. Re-parametrising
+$a = \rho \cos\psi$, $b = \rho \sin\psi$ (so $\rho \ge 0$ is the
+geodesic distance and $\psi$ is the angle around the basepoint),
+direct computation gives
+
+$$
+e^1 \;=\; \cos\psi\, d\rho - \sin\rho\, \sin\psi\, d\psi, \qquad
+e^2 \;=\; \sin\psi\, d\rho + \sin\rho\, \cos\psi\, d\psi,
+$$
+
+and the metric is
+
+$$
+g \;=\; (e^1)^2 + (e^2)^2
+\;=\; d\rho^2 + \sin^2\rho\, d\psi^2,
+$$
+
+after using $\sin^2\psi + \cos^2\psi = 1$. This is the same round
+metric we derived earlier with spherical coordinates — just with
+$\rho$ now interpreted as colatitude and $\psi$ as longitude. The
+intrinsic geometry is the same; only the coordinate labels differ.
+
+The crucial point about *coverage*, though: this Cartesian-like
+section does **not** cover the whole sphere. The vielbein
+determinant in the $(\rho, \psi)$ coordinates above is
+
+$$
+\det\!\begin{pmatrix}
+\cos\psi & -\sin\rho\, \sin\psi \\
+\sin\psi & \sin\rho\, \cos\psi
+\end{pmatrix}
+\;=\; \sin\rho,
+$$
+
+which vanishes at $\rho = 0$ (the basepoint, a coordinate singularity
+of the same kind as the origin in plane polars) and at $\rho = \pi$
+(the antipodal south pole, a genuine wraparound — all values of $\psi$
+collapse to the same group element there). The exponential
+$\exp\colon \mathfrak{m} \to S^2$ wraps the open disc $\{\rho < \pi\}$
+onto $S^2$ minus the south pole, and beyond $\rho = \pi$ the map is no
+longer injective. The exponential normal section is a chart on an
+open dense subset, not on all of $S^2$.
+
+#### Algebraic foreknowledge: when does a global chart exist?
+
+Here is the predictive content. From the bracket $[\mathfrak{m},
+\mathfrak{m}]$ alone:
+
+- **$[\mathfrak{m}, \mathfrak{m}] = 0$ (abelian $\mathfrak{m}$).** The
+  exponential map $\mathfrak{m} \to G/H$ is a covering, and for
+  simply-connected $G/H$ it is a global diffeomorphism. So an
+  exponential normal section is good globally. This is the
+  Cartesian situation. The same algebra-level signature also explains
+  why the *position vector* is globally well-defined here (cf. the
+  R² subsection on the position vector): both are consequences of
+  abelian $\mathfrak{m}$.
+- **$[\mathfrak{m}, \mathfrak{m}] \not\subset \{0\}$ (non-abelian
+  $\mathfrak{m}$).** The exponential map is only a local
+  diffeomorphism. In fact, $[\mathfrak{m}, \mathfrak{m}] \subset
+  \mathfrak{h}$ is *precisely* the curvature of the canonical
+  connection on $G/H$ in the abstract Cartan-geometric sense. For
+  $S^2$, $[J^1, J^2] = J^3 \in \mathfrak{h}$ is the bracket that
+  encodes the constant positive curvature $1/R^2$. From this single
+  bracket we know in advance — without doing any computation — that
+  no globally non-singular section can exist.
+
+So no luck was involved. We *knew* on entering the $S^2$ calculation
+that no chart would cover the whole sphere. The spherical product
+section $e^{\phi J^3}\, e^{\theta J^2}$ and the geodesic normal
+section $\exp(a J^1 + b J^2)$ are two different *local* charts; both
+miss measure-zero subsets (the poles, or the antipodal point and the
+basepoint), and they patch together via overlap maps in the standard
+atlas-of-charts way. The Klein construction is happy with any one of
+them.
+
+#### Pragmatic guidance
+
+- If $\mathfrak{m}$ is abelian, prefer the exponential normal section.
+  It is global, the vielbein is the identity, the spin connection
+  vanishes, and the metric in the resulting coordinates is the flat
+  $\eta$-metric — exactly Cartesian. Cf. Example A.
+- If $\mathfrak{m}$ is non-abelian, use whichever local section makes
+  the symmetries of your problem manifest. The product section, with
+  $\mathfrak{h}$-generators handling angular directions, is the
+  standard recipe — and it is what produces polar / spherical
+  coordinates throughout this document.
+- Whatever section you choose, check $\det(e^a{}_\mu)$. Where it
+  vanishes is a coordinate singularity, not an obstruction to the
+  algorithm — just switch charts there.
+
+In short, the section is a coordinate chart in the usual sense, and
+the algebra tells you in advance whether a global chart exists. The
+algorithm itself is indifferent: it produces the metric in whichever
+coordinates the section delivers.
+
 ### The SymPy implementation
 
 The script [`klein_geometry.py`](klein_geometry.py) in this repository
