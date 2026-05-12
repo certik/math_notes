@@ -30,23 +30,57 @@ explicit matrix generators and solves the same invariance condition. Here we
 
 ## Strategy
 
-The translation generators $P^0 \equiv H, P^1, P^2, P^3$ span a 4-dimensional
-vector space $V$ on which the homogeneous generators $X \in \{J_i, K_i\}$ act
-by commutation:
+### The translation subspace as a representation
+
+Let $V = \operatorname{span}\{P^0, P^1, P^2, P^3\}$ with $P^0 \equiv H$, the
+4-dimensional subspace of translation generators inside the full Lie algebra.
+
+The homogeneous generators $X \in \{J_i, K_i\}$ act on the whole algebra by
+the **adjoint action**
 
 $$
-[X, P^\mu] \in V \quad \text{for all } X, \mu.
+X \cdot Y := [X, Y] \,.
 $$
 
-The action is a derivation, so for any symmetric bilinear form
-$g(\cdot, \cdot)$ on $V$ — written in components as
+A direct inspection of the Poincaré or Galilei commutation relations (given
+in Parts I and II below) shows
+that for every generator $X \in \{J_i, K_i\}$ and every $\mu$,
 
 $$
-g(P^\mu, P^\nu) = \eta^{\mu\nu}
+[X, P^\mu] \in V \,,
 $$
 
-with $\eta^{\mu\nu} = \eta^{\nu\mu}$ — invariance under $X$ is the Leibniz
-condition
+so the adjoint action restricts to a linear representation of the homogeneous
+algebra on $V$.
+
+### Group invariance ⇒ Leibniz condition
+
+Exponentiate. The group element $U = \exp(\theta X)$ acts on $V$ by
+conjugation:
+
+$$
+U\, P^\mu\, U^{-1} = e^{\theta X} P^\mu e^{-\theta X}
+= P^\mu + \theta [X, P^\mu] + \tfrac{\theta^2}{2}\big[X, [X, P^\mu]\big] + \cdots
+$$
+
+A symmetric bilinear form $g$ on $V$ is **invariant under the group action**
+if
+
+$$
+g\big(U P^\mu U^{-1},\, U P^\nu U^{-1}\big)
+= g(P^\mu, P^\nu) \qquad \forall \theta, X \,.
+$$
+
+Differentiate at $\theta = 0$. Using $\dfrac{d}{d\theta}\big|_0 U P^\mu
+U^{-1} = [X, P^\mu]$ and the bilinearity of $g$,
+
+$$
+\frac{d}{d\theta}\Big|_{\theta=0}
+g\big(U P^\mu U^{-1}, U P^\nu U^{-1}\big)
+= g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) \,.
+$$
+
+Invariance forces this derivative to vanish:
 
 $$
 \boxed{\;
@@ -54,8 +88,17 @@ g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) = 0
 \;}
 $$
 
-for every generator $X$ and every $\mu, \nu$. This is a finite system of
-linear equations on the 10 components of $\eta$.
+for every generator $X \in \{J_i, K_i\}$ and every $\mu, \nu$. This is the
+**Leibniz condition**: invariance is the statement that $X$ acts as a
+derivation on $g$ with zero output.
+
+It is a necessary condition. It is also sufficient: if the condition holds
+for every $X$, then by composing infinitesimal transformations every finite
+group element preserves $g$.
+
+Writing $g(P^\mu, P^\nu) = \eta^{\mu\nu}$ with $\eta^{\mu\nu} =
+\eta^{\nu\mu}$, the Leibniz condition becomes a finite system of linear
+equations on the 10 components of $\eta$.
 
 **Identification with the spacetime metric.** A point of spacetime is
 labelled by the four translation parameters $a^\mu$ in $T_a = \exp(a^\mu
@@ -199,28 +242,36 @@ $$
 \xi = \xi^{\mu\nu}\, P^\mu \otimes P^\nu \in V \otimes V \,.
 $$
 
-Leibniz on $V \otimes V$ gives $X \cdot \xi = 0 \Leftrightarrow$
+The Leibniz condition for $\xi$ is derived exactly as before. The group
+element $U = \exp(\theta X)$ acts on $V \otimes V$ on both factors:
+
+$$
+U \xi\, U^{-1}
+= \xi^{\mu\nu}\, (U P^\mu U^{-1}) \otimes (U P^\nu U^{-1}) \,.
+$$
+
+Invariance $U \xi U^{-1} = \xi$ for all $\theta$, differentiated at $\theta =
+0$, gives
 
 $$
 \boxed{\;
-[X, P^\mu] \otimes P^\nu + P^\mu \otimes [X, P^\nu]
+\xi^{\mu\nu}\, \Big( [X, P^\mu] \otimes P^\nu + P^\mu \otimes [X, P^\nu] \Big) = 0
 \;}
-\quad \text{contracted with } \xi^{\mu\nu} \quad = 0 \,.
 $$
 
-Equivalently, reading off coefficients of $P^\alpha \otimes P^\beta$:
+for every generator $X \in \{J_i, K_i\}$. This is the Leibniz condition on a
+*contravariant* tensor — note that the same rule applies, but now contracted
+*against* $\xi^{\mu\nu}$ rather than evaluating $g$ on $P^\mu, P^\nu$.
+
+Reading off coefficients of the basis $P^\alpha \otimes P^\beta$ with $[X,
+P^\mu] = L^\rho{}_\mu\, P^\rho$:
 
 $$
-L^\alpha{}_\mu\, \xi^{\mu\beta} + L^\beta{}_\nu\, \xi^{\alpha\nu} = 0 \,,
-\qquad \text{where } [X, P^\mu] = L^\rho{}_\mu\, P^\rho \,.
+L^\alpha{}_\mu\, \xi^{\mu\beta} + L^\beta{}_\nu\, \xi^{\alpha\nu} = 0 \,.
 $$
-
-(This is the same Leibniz rule on a *contravariant* tensor — there is no
-metric to lower indices, so the second slot is *not* the same as for the
-covariant form.)
 
 For Galilei $K_i$, the only nonzero commutator is $[K_i, H] = P^i$, i.e.
-$L^\rho{}_0 = \delta^\rho_i$. So the invariance condition becomes
+$L^\rho{}_0 = \delta^\rho_i$. The invariance condition reduces to
 
 $$
 \delta^\alpha_i\, \xi^{0\beta} + \delta^\beta_i\, \xi^{\alpha 0} = 0
