@@ -71,7 +71,7 @@ $$
 - For fields, combine with domain: The vector at $x$ after rotation is the rotated original vector at $g^{-1} x$.
 - This follows from requiring that the vector "aligns" with rotated directions, e.g., if $V$ is a displacement, $g V$ is the rotated displacement.
 
-In components (basis introduced later), if $V(x) = V^i(x) \mathbf{e}_i$, then $V_g^i(x) = g^i_j} V^j(g^{-1} x)$.
+In components (basis introduced later), if $V(x) = V^i(x) \mathbf{e}_i$, then $V_g^i(x) = g^i{}_j V^j(g^{-1} x)$.
 
 For covector fields (one-forms) $p: \mathbb{R}^3 \to (\mathbb{R}^3)^*$, they are dual: $p(x) \cdot V(x) = \phi(x)$ (scalar). Preservation requires:
 
@@ -146,7 +146,7 @@ Higher ranks follow via Clebsch-Gordan: max $l=n$, multiplicities from symmetrie
 For a tensor field $T$ of type (k,l) (k contravariant, l covariant):
 
 $$
-T_g^{i_1 \dots i_k}_{j_1 \dots j_l}(x) = g^{i_1}_{m_1} \cdots g^{i_k}_{m_k} (g^{-1})^{n_1}_{j_1} \cdots (g^{-1})^{n_l}_{j_l} T^{m_1 \dots m_k}_{n_1 \dots n_l}(g^{-1} x).
+(T_g)^{i_1 \dots i_k}{}_{j_1 \dots j_l}(x) = g^{i_1}{}_{m_1} \cdots g^{i_k}{}_{m_k} (g^{-1})^{n_1}{}_{j_1} \cdots (g^{-1})^{n_l}{}_{j_l} T^{m_1 \dots m_k}{}_{n_1 \dots n_l}(g^{-1} x).
 $$
 
 Derived as above: contravariant legs get $g$, covariant get $g^{-1}$, plus domain shift.

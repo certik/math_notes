@@ -42,79 +42,79 @@
 {\section{Homomorfismy $R^* \rightarrow R^*$ }} 
 
 \textbf{Definice:} $R^* = R - \{0\}$, $R^*$ uažujeme jako multiplikativní grupu
-\vskip 1mm
+\vspace{1mm}
 
 Homomorfismus $R^* \rightarrow R^*$ je každá reálná funkce $g$, pro kterou platí $g(x\,y) = g(x)\,g(y)$. 
-\vskip 4mm
+\vspace{4mm}
 
 \textbf{Úloha:} Chceme zjistit, jakou formu mají všechny homomorfismy $R^* \rightarrow R^*$.
-\vskip 2mm
+\vspace{2mm}
 
 \textbf{Věta 1:} Nechť $g$ je homomorfismus $R^* \rightarrow R^*$. \\
 Pak platí, že buď $g(x) = |x|^\alpha$, nebo $g(x) = sign(x)\,|x|^\alpha$, kde $\alpha \in R$.
 
-\vskip 2mm
+\vspace{2mm}
 Důkaz: viz tvůj text, kapitoly 2  a 3 - tohle by se mělo nějak sloučit do jednoho důkazu pro $R^*$ jako multiplikativní grupu, bez odkazu na ten aditivní zápis v kap. 2, aby se vůbec nezaváděl.
 
 $\Box$
-\vskip 5mm
+\vspace{5mm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\section{Restrikce homomorfismů $GL(n) \rightarrow R^*$ na $GD(n)$}} 
 
 \textbf{Definice:} 
-\vskip 1mm
+\vspace{1mm}
 $GL(n)$ je grupa všech reálných regulárních matic.
-\vskip 1mm
+\vspace{1mm}
 Homomorfismus $GL(n) \rightarrow R^*$ je každá funkce $f$, pro kterou platí \begin{equation}
 f(AB) = f(A)\,f(B) .
 \end{equation}
 
 \textbf{Poznámka:} pro homomorfismy platí 
-\begin{eqnarray}
-f(P\,A\,P^{-1}) &=& f(P)\,f(A)\,f(P^{-1}) = f(P)\,f(P^{-1})\,f(A)=f(P\,P^{-1})\,f(A) \\
-  &=&  f(I)\,f(A) = f(A),
-\end{eqnarray}
+\begin{align*}
+f(P\,A\,P^{-1}) &= f(P)\,f(A)\,f(P^{-1}) = f(P)\,f(P^{-1})\,f(A)=f(P\,P^{-1})\,f(A) \\
+  &=  f(I)\,f(A) = f(A),
+\end{align*}
 kde jsme využili faktu, že $f(I)=1$ (viz Appendix).
 
-\vskip 2mm
+\vspace{2mm}
 
 Grupu všech regulárních diagonálních matic označíme jako $GD(n)$,\\
  je to podgrupa $GL(n)$.
-\vskip 4mm
+\vspace{4mm}
 
 \textbf{Úloha:} Chceme zjistit, jak vypadá restrikce libovolného homomorfismu\\ $GL(n) \rightarrow R^*$ na podgrupu $GD(n)$. 
-\vskip 2mm
+\vspace{2mm}
 
 \textbf{Věta 2:} Nechť $F: GL(n) \rightarrow R^*$ je homomorfismus a
  $f: GD(n) \rightarrow R^*$ \\
  je jeho restrikce na $GD(n)$. Pak $f$ se dá vyjádřit jako homomorfismus \\
  $g: R^* \rightarrow R^*$ tak, že $f(D) \equiv g(\Pi\, d_i)$.
-\vskip 2mm
+\vspace{2mm}
 
 Důkaz: 
-\vskip 1mm
+\vspace{1mm}
 Použijeme permutační matice $P_i$, které prohodí 1. a $i$-tý řádek. $P_i$ vznikne z $I$ prohozením 1. a $i$-tého řádku, resp. prohozením 1. a $i$-tého sloupce (vyjde totéž). Platí $P_i^{-1} = P_i$, násobení zleva touto maticí prohodí řádky, násobení zprava prohodí sloupce; pro diagonální matici $D$ operace $P_i D P_i^{-1}$ prohodí 1. a $i$-tý prvek na diagonále.
 
-\begin{eqnarray}
-f(D) &=&  f(diag(d_1, 1, \dots 1))\, f(diag(1, d_2, 1, \dots 1)) \dots \, f(diag(1, \dots 1,  d_n)) \\
-  &=& f(diag(d_1, 1, \dots 1))\,f(P_2\,diag(d_2, 1, \dots 1)\,P_2^{-1})\dots \\
-  &=& \dots f(P_n\,diag(d_n, 1, \dots 1)\,P_n^{-1}) \\
-  &=& f(diag(d_1, 1, \dots 1))\,f(diag(d_2, 1, \dots 1))\dots f(diag(d_n, 1, \dots 1))\, \\
-  &=& f(diag(\Pi\, d_i, 1, \dots 1)) \equiv g(\Pi\, d_i).
-\end{eqnarray}
+\begin{align*}
+f(D) &=  f(diag(d_1, 1, \dots 1))\, f(diag(1, d_2, 1, \dots 1)) \dots \, f(diag(1, \dots 1,  d_n)) \\
+  &= f(diag(d_1, 1, \dots 1))\,f(P_2\,diag(d_2, 1, \dots 1)\,P_2^{-1})\dots \\
+  &= \dots f(P_n\,diag(d_n, 1, \dots 1)\,P_n^{-1}) \\
+  &= f(diag(d_1, 1, \dots 1))\,f(diag(d_2, 1, \dots 1))\dots f(diag(d_n, 1, \dots 1))\, \\
+  &= f(diag(\Pi\, d_i, 1, \dots 1)) \equiv g(\Pi\, d_i).
+\end{align*}
 
 $g$ je homomorfismus: $g(x)$ je def. jako $g(x) = f(diag(x, 1, \dots 1)0$, takže
-\begin{eqnarray}
-g(x\,y) &=& f(diag(xy, 1, \dots 1)) 
+\begin{align*}
+g(x\,y) &= f(diag(xy, 1, \dots 1)) 
     = f(diag(x, 1, \dots 1)\, diag(y, 1, \dots 1)) \\
-  &=& f(diag(x, 1, \dots 1))\,f(diag(y, 1, \dots 1)) \\
-  &=& g(x)\,g(y)
-\end{eqnarray}
+  &= f(diag(x, 1, \dots 1))\,f(diag(y, 1, \dots 1)) \\
+  &= g(x)\,g(y)
+\end{align*}
 $\Box$
 
-\vskip 3mm
+\vspace{3mm}
 
 Jestliže $f$ je homomorfismus $GD(n) \rightarrow R^*$, pak dle Věty 2
 se dá vyjádřit jako \\
@@ -130,7 +130,7 @@ nebo
 f(D) \equiv g(\Pi\, d_i)= sign(\Pi\, d_i)\,|\Pi\, d_i|^\alpha \, ,
 \end{equation}
 kde $\alpha \in R$.
-\vskip 6mm
+\vspace{6mm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -139,22 +139,22 @@ kde $\alpha \in R$.
 
 \textbf{Úloha:} Hledáme všechny homomorfismy $GL(n) \rightarrow R^*$.
 
-\vskip 3mm
+\vspace{3mm}
 
 \textbf{Věta 3:} Každý homomorfismus na $GL(n)$ je jednoznačně určen svou restrikcí\\
  na podgrupu $GD(n)$.
 
-\vskip 2mm
+\vspace{2mm}
 Důkaz: 
-\vskip 1mm
+\vspace{1mm}
 \begin{enumerate}[label=(\alph*)]
 \item 
 If $C$ is diagonizable, then $C=P\,D\,P^{-1}$, 
 where $D$ is diagonal and $P$ is invertible, and
-\begin{eqnarray}
-f(C) &=& f(P\,D\,P^{-1}) = f(P)\,f(D) \,f(P^{-1}) = f(P)\,f(P^{-1})\,f(D)\\
- &=&  f(P\,P^{-1})\,f(D) = f(D).
-\end{eqnarray}
+\begin{align*}
+f(C) &= f(P\,D\,P^{-1}) = f(P)\,f(D) \,f(P^{-1}) = f(P)\,f(P^{-1})\,f(D)\\
+ &=  f(P\,P^{-1})\,f(D) = f(D).
+\end{align*}
 Diagonální matice $D$ je určena jednoznačně až na pořadí prvků na diagonále (jsou na ní vlastní čísla matice $C$), tj. číslo $\Pi\, d_i$ je jednoznačné.
 
 \item 
@@ -168,11 +168,11 @@ Zde již prvky matice  $D$ nejsou určeny jednoznačně, protože $D_H$ a $D_U$ 
 Matice $D$ tedy není určena jednoznačně, avšak číslo $\Pi\, d_i$ je. Ze vztahů \ref{h1} a \ref{h2} tedy plyne, že rozšíření z $GD(n)$ na $GL(n)$ je jednoznačné.
 
 $\Box$
-\vskip 3mm
+\vspace{3mm}
 
 Závěr: všechny homomorfismy $GL(n) \rightarrow R^*$ mají tvar 
 
-\vskip 1mm
+\vspace{1mm}
 buď 
 \begin{equation}
 \label{h11}
@@ -184,7 +184,7 @@ nebo
 f(A) = f(D) = sign(\Pi\,  d_i)\,|\Pi\,  d_i|^\alpha \, ,
 \end{equation}
 kde $\alpha \in R$ a $D$ je matice z \ref{AD} (přesně řečeno, kterákoliv z matic získaných tímto postupem). 
-\vskip 2mm
+\vspace{2mm}
 
 
 
@@ -193,7 +193,7 @@ kde $\alpha \in R$ a $D$ je matice z \ref{AD} (přesně řečeno, kterákoliv z 
 {\section{Homogenní homomorfismy $GL(n) \rightarrow R^*$ }} 
 
 \textbf{Definice:} 
-\vskip 1mm
+\vspace{1mm}
 Homomorfismus $f: GL(n) \rightarrow R^*$ se nazývá homogenní (stupně $n$), jestliže\\
 pro všechna $\lambda \in R^*$ platí 
 \begin{equation}
@@ -201,26 +201,26 @@ pro všechna $\lambda \in R^*$ platí
 f(\lambda I) = \lambda^n .
 \end{equation}
 \textbf{Poznámka:} 
-\vskip 1mm
+\vspace{1mm}
 Z této definice plyne $f(\lambda A) = f((\lambda I) A) =f(\lambda I) \,f(A) = \lambda^n f(A)$.
-\vskip 3mm
+\vspace{3mm}
 
 \textbf{Definice:} 
-\vskip 1mm
+\vspace{1mm}
 Homomorfismus $f: GL(n) \rightarrow R^*$ se nazývá pozitivně homogenní, jestliže rovnost \ref{homo} \\
 platí pro všechna $\lambda > 0$.
-\vskip 1mm
+\vspace{1mm}
 \textbf{Poznámka:} 
-\vskip 1mm
+\vspace{1mm}
 Pro $n$ sudé obě definice splývají.\\
 Pro $n$ liché je pozitivní homogenita pouze nutnou podmínkou pro homogenitu.
-\vskip 2mm
+\vspace{2mm}
 
 
-\vskip 3mm
+\vspace{3mm}
 \textbf{Věta 4.1:} Oba homomorfismy \ref{h11} a \ref{h22} jsou pozitivně homogenní na $GL(n)$,\\
  právě když $\alpha = 1$. 
-\vskip 2mm
+\vspace{2mm}
 Důkaz -- ověření rovnosti \ref{homo} pro $\lambda > 0$:
 \begin{equation}
 \label{hi1}
@@ -236,7 +236,7 @@ takže $f$ je pozitivně homogenní, právě když $\alpha = 1$.
 
 $\Box$
 
-\vskip 3mm
+\vspace{3mm}
 \textbf{Věta 4.2:} Každý homogenní homomorfismus $f: GL(n) \rightarrow R^*$ má tvar\\  pro sudé $n$ buď
 \begin{equation}
 \label{h111}
@@ -250,20 +250,20 @@ f(A) = f(D) = \Pi\, d_i\, ,
 kde $D$ je libovolná matice z \ref{AD} . 
 Pro liché $n$ má tvar pouze \ref{h222} .
 
-\vskip 2mm
+\vspace{2mm}
 Důkaz: 
-\vskip 1mm
+\vspace{1mm}
 Pro sudé $n$ plyne z Věty 4.1 a z toho, že pro sudé $n$ z pozitivní homogenity plyne homogenita. 
 Pro liché $n$ může nastat případ $\lambda^n < 0$, který vylučuje variantu \ref{h111}. 
 
 $\Box$
-\vskip 4mm
+\vspace{4mm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\section{Definice determinantu na $GL(n)$ }} 
 
-\vskip 4mm
+\vspace{4mm}
 
 Na $GD(n)$ definujme determinant jako homogenní homomorfismus $GD(n) \rightarrow R^*$.\\
  Z Věty 4.2 plyne, že pro liché $n$ je definice jednoznačná a že 
@@ -272,14 +272,14 @@ Na $GD(n)$ definujme determinant jako homogenní homomorfismus $GD(n) \rightarro
 \det(D) = \Pi\, d_i \, .
 \end{equation}
 Tato definice souhlasí se standardní definicí determinantu.
-\vskip 1mm
+\vspace{1mm}
 Dodatečná podmínka pro sudé $n$, aby definice byla jednoznačná ?  Nevím.
 
 Mohli bychom například přidat podmínku, že $f(P_2) < 0$, kde $P_2$ je matice\\
  z důkazu Věty 2. Nebo podmínku $f(diag(-1, 1, \dots 1)) = -1$.
 
 
-\vskip 5mm
+\vspace{5mm}
 Na $GL(n)$ definujme determinant jako rozšíření z grupy $GD(n)$, které je \\
 dle Věty 3 jednoznačné a je dáno předpisem
 \begin{equation}
@@ -287,23 +287,23 @@ dle Věty 3 jednoznačné a je dáno předpisem
 \det(A) = \det(D) \, ,
 \end{equation}
 kde $D$ je libovolná matice z \ref{AD} . 
-\vskip 4mm
+\vspace{4mm}
 
 
 \textbf{Věta 5:} Výše uvedená definice determinantu na $GL(n)$ souhlasí se standardní definicí.
 
-\vskip 2mm
+\vspace{2mm}
 Důkaz: 
-\vskip 1mm
+\vspace{1mm}
 Determinant dle standardní definice a dle naší definice se shodují na $GD(n)$.
-\vskip 1mm
+\vspace{1mm}
 Determinant na $GD(n)$ dle standardní definice i dle naší definice představují rozšíření z $GD(n)$ na $GL(n)$.
-\vskip 1mm
+\vspace{1mm}
 Věta 3 říká, že rozšíření homomorfismu z $GD(n)$ na $GL(n)$ je jednoznačné. \\
 Takže se obě definice musí shodovat.
 
 $\Box$
-\vskip 6mm
+\vspace{6mm}
 
 
 
@@ -311,17 +311,17 @@ $\Box$
 A teď se to ještě musí projít a ověřit, že $R^*$ se dá nahradit $C^*$, a pak ještě z nějaké spojitosti odvodit, že to platí i pro neregulární matice.
 
 
-\vskip 3mm
+\vspace{3mm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\section{Appendix} 
 
-\vskip 3mm
+\vspace{3mm}
 
 Platí, že složení dvou homomorfismů je homomorfismus, a že obraz jednotkového prvku je jednotkový prvek - viz např.
-\vskip 1mm
+\vspace{1mm}
 {\url{<https://sites.math.washington.edu/~greenber/GroupHomomorphisms.pdf>}}
-\vskip 2mm
+\vspace{2mm}
 
 
 \end{document}
