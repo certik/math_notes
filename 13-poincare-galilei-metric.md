@@ -2778,6 +2778,258 @@ The general pattern, then, for the orthogonal real forms:
 | $\mathfrak{so}(2,2)$ | indefinite | 2 | $\mathbb{H}^3$, $AdS_3$ |
 | $\mathfrak{so}(1,3)$ | $= \mathfrak{so}(3,1)$ | same | same |
 
+#### Worked example: the Euclidean "Poincaré" algebra $\mathfrak{iso}(4) = \mathfrak{so}(4) \ltimes \mathbb{R}^4$
+
+We now combine the previous two examples: take $\mathfrak{so}(4)$ as the
+homogeneous algebra and adjoin 4 translation generators with the standard
+Poincaré-like commutation relations. The result is the **Euclidean
+Poincaré algebra**
+
+$$
+\mathfrak{iso}(4) \;=\; \mathfrak{so}(4) \,\ltimes\, \mathbb{R}^4.
+$$
+
+This is a perfectly well-defined 10-parameter kinematical algebra — the
+same dimension as $\mathfrak{iso}(3,1)$ (Poincaré) and the Galilei
+algebra. The question is: what spacetime geometry does it produce, and why
+isn't it the physically realized one?
+
+##### Brackets
+
+Write the 10 generators as $J^i$ (3 spatial rotations), $K^i$
+(3 "Euclidean boosts", i.e., rotations in the $(t, x^i)$ planes), $H = P^0$
+(time translation), $P^i$ (3 spatial translations), with $J^i =
+\tfrac{1}{2}\epsilon^{ijk}J^{jk}$ and $K^i = J^{i0}$. From
+$[J^{\mu\nu}, J^{\rho\sigma}] = \delta^{\mu\rho}J^{\nu\sigma} - \cdots$
+and $[J^{\mu\nu}, P^\rho] = \delta^{\mu\rho}P^\nu - \delta^{\nu\rho}P^\mu$
+with Euclidean $\delta_{\mu\nu} = \mathrm{diag}(+,+,+,+)$, the brackets
+are
+
+$$
+\begin{aligned}
+{}[J^i, J^j] &= \epsilon^{ijk} J^k, \\
+[J^i, K^j] &= \epsilon^{ijk} K^k, \\
+[K^i, K^j] &= \boxed{+\epsilon^{ijk} J^k}, \\
+[J^i, H] &= 0, \qquad [J^i, P^j] = \epsilon^{ijk} P^k, \\
+[K^i, H] &= -P^i, \qquad [K^i, P^j] = \boxed{+\delta^{ij} H}, \\
+[H, P^i] &= 0, \qquad [P^i, P^j] = 0.
+\end{aligned}
+$$
+
+The two boxed signs are the **algebraic difference** between the three
+10-parameter kinematical algebras:
+
+| algebra | $[K^i, K^j]$ | $[K^i, P^j]$ |
+|---|---|---|
+| Lorentz (Poincaré) | $-\epsilon^{ijk} J^k$ (non-compact boosts) | $+\delta^{ij} H$ |
+| Galilei | $0$ (commuting boosts) | $0$ (decoupled) |
+| **Euclidean** | $+\epsilon^{ijk} J^k$ (**compact** boosts!) | $+\delta^{ij} H$ |
+
+The Euclidean version differs from Lorentz by a single sign in $[K^i,
+K^j]$ — exactly the Wick-rotation flip $t \to it$.
+
+##### Point-stabilizer and metric
+
+The non-degeneracy filter forces $\mathfrak{h} \subset \langle J^i, K^i
+\rangle$. We need $\dim\mathfrak{h} = 6$, and $\mathfrak{so}(4) =
+\langle J^i, K^i \rangle$ is exactly 6-dim. So just as in Poincaré and
+Galilei,
+
+$$
+\mathfrak{h} \;=\; \mathfrak{so}(4) \quad\text{is the unique candidate.}
+$$
+
+Solving Leibniz invariance for the symmetric metric $\eta$ on $\mathfrak{m}
+= \langle H, P^1, P^2, P^3\rangle$ (SymPy verified) gives
+
+$$
+\boxed{\;\eta_{\mathrm{Eucl}} \;=\; \alpha\,
+\mathrm{diag}(+1, +1, +1, +1).\;}
+$$
+
+Signature $(+,+,+,+)$ — **fully Riemannian 4-space**. The Klein quotient
+is
+
+$$
+\mathbb{R}^4_{\mathrm{Eucl}} \;=\; ISO(4) \,/\, SO(4),
+$$
+
+i.e., flat 4-dim Euclidean space with the round metric $dt^2 + dx^2 +
+dy^2 + dz^2$. This is the **Wick-rotated Minkowski space** of Euclidean
+QFT.
+
+##### Physical problem #1: velocity addition can give zero or negative velocity
+
+The user-flagged pathology. In Lorentz, a boost $K^1$ acts on $(t, x)$ as
+the Lorentz "rotation" $\sinh\phi$, $\cosh\phi$ with rapidity $\phi$. In
+the **Euclidean** case it acts as a literal **circular rotation**:
+
+$$
+\begin{pmatrix} t' \\ x' \end{pmatrix}
+\;=\;
+\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}
+\begin{pmatrix} t \\ x \end{pmatrix}.
+$$
+
+For a particle worldline $x = vt$, the boosted worldline has velocity
+
+$$
+v' \;=\; \frac{x'}{t'} \;=\; \frac{v\cos\theta + \sin\theta}{\cos\theta - v\sin\theta}
+\;=\; \frac{v + \tan\theta}{1 - v\tan\theta}.
+$$
+
+Identifying the *frame velocity* of the boost as $u = \tan\theta$, the
+**Euclidean velocity addition law** is
+
+$$
+\boxed{\;v_1 \oplus v_2 \;=\; \frac{v_1 + v_2}{1 - v_1 v_2}.\;}
+$$
+
+Compare:
+
+| group | addition law | comments |
+|---|---|---|
+| Galilei | $v_1 \oplus v_2 = v_1 + v_2$ | linear, unbounded |
+| Lorentz | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 + v_1 v_2}$ | $\|v\| < 1$ stays in $(-1,1)$ |
+| Euclidean | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 - v_1 v_2}$ | **singularities and sign flips** |
+
+The Euclidean law has three pathologies:
+
+1. **Pole at $v_1 v_2 = 1$**: adding two velocities of magnitude $1$ gives
+   *infinite* velocity. There's a vertical-asymptote in the addition
+   law.
+2. **Sign reversal for $v_1 v_2 > 1$**: adding two positive velocities
+   $v_1, v_2 > 1$ gives a **negative** result. Example: $v_1 = v_2 = 2$
+   gives $v_1 \oplus v_2 = 4 / (1 - 4) = -4/3 < 0$.
+3. **Periodic return to rest**: repeated boosting cycles through
+   $0 \to \infty \to -\infty \to 0$. The boost subgroup is $SO(2)$, which
+   is **compact**: a "boost by angle $\pi$" returns the velocity to zero.
+
+The geometric picture is clean: $v = \tan\theta$ where $\theta \in S^1$ is
+the rotation angle in the $(t,x)$ plane. As $\theta$ runs around the circle:
+
+| $\theta$ | $v = \tan\theta$ | description |
+|---|---|---|
+| $0$ | $0$ | rest |
+| $\pi/4$ | $1$ | "diagonal" worldline |
+| $\pi/2^-$ | $+\infty$ | worldline becomes horizontal in $(t,x)$ |
+| $\pi/2^+$ | $-\infty$ | crosses over: velocity flips sign |
+| $3\pi/4$ | $-1$ | |
+| $\pi$ | $0$ | back to rest! |
+
+Two boosts add their angles: $\theta_1 + \theta_2$. So composing a boost
+of $\theta_1 = \pi/3$ with another of $\theta_2 = 2\pi/3$ gives
+$\theta = \pi$, i.e., $v = 0$ — the moving frame is at rest with respect
+to the original. **Two non-zero boosts compose to no boost.**
+
+##### Physical problem #2: no causal structure
+
+The "boost" rotation by $\theta = \pi/2$ exactly **swaps time and space
+axes**:
+
+$$
+(t, x) \;\xrightarrow{\theta = \pi/2}\; (-x, t).
+$$
+
+So time and space are *interchangeable* by a symmetry of the algebra.
+There is:
+
+- No invariant notion of "future" vs. "past": no light cones, no causal
+  ordering.
+- No distinction between "particle" worldlines and "spatial" curves: any
+  smooth curve can be rotated into any other.
+- No fixed mass shell $\eta(p,p) = -m^2$ — only $\delta(p,p) = m^2$
+  with $m \in \mathbb{R}$, which is a 3-sphere $S^3$ in momentum space
+  (compact!), and the "energy" $p^0$ is bounded ($\|p^0\| \le m$) rather
+  than the unbounded Lorentzian hyperboloid.
+
+This is incompatible with what we actually observe: the universe has a
+preferred causal structure (events have unambiguous past/future
+relations, signals do not propagate faster than $c$, energy is bounded
+below but not above).
+
+##### Why it "works for small speeds"
+
+Expand the Euclidean addition law for small $v_1, v_2$:
+
+$$
+v_1 \oplus_{\mathrm{Eucl}} v_2 \;=\; (v_1 + v_2)(1 + v_1 v_2 + \cdots)
+\;\approx\; v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots
+$$
+
+Compare with the other two:
+
+$$
+\begin{aligned}
+v_1 \oplus_{\mathrm{Gal}} v_2 &= v_1 + v_2, \\
+v_1 \oplus_{\mathrm{Lor}} v_2 &= v_1 + v_2 - v_1 v_2 (v_1 + v_2) + \cdots, \\
+v_1 \oplus_{\mathrm{Eucl}} v_2 &= v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots.
+\end{aligned}
+$$
+
+To **first order in $v$**, all three agree with Galilei: $v_1 \oplus v_2
+\approx v_1 + v_2$. The differences appear only at $O(v^3)$:
+
+- Lorentz: correction has **negative** sign → velocities saturate at $c =
+  1$.
+- Euclidean: correction has **positive** sign → velocities accelerate
+  past any bound, eventually overflow into the pole, and reverse.
+- Galilei: no correction at all → strict additivity.
+
+This is why all three kinematical algebras agree with everyday
+experience. To distinguish them experimentally one must reach speeds
+where the cubic correction is detectable. The Michelson–Morley experiment
+and many later observations rule in favor of Lorentz (negative sign,
+$|v| < c$). The Euclidean version has never been observed because the
+cubic correction would have to *enhance* velocity addition rather than
+suppressing it.
+
+##### Connection to Wick rotation and Euclidean QFT
+
+Although $\mathfrak{iso}(4)$ is not the kinematical algebra of physical
+spacetime, it plays a crucial role in quantum field theory. The **Wick
+rotation** $t \to -i\tau$ analytically continues Lorentzian quantities to
+Euclidean ones, replacing $\mathfrak{iso}(3,1)$ with $\mathfrak{iso}(4)$
+and converting
+
+$$
+e^{iS_{\mathrm{Lor}}[\phi]} \;\longrightarrow\; e^{-S_{\mathrm{Eucl}}[\phi]},
+$$
+
+turning the oscillatory path integral into a well-defined statistical-
+mechanics partition function. The two algebras share the same
+*complexification*
+
+$$
+\mathfrak{iso}(3,1)_\mathbb{C} \;\cong\; \mathfrak{iso}(4)_\mathbb{C},
+$$
+
+so analytic continuation is meaningful and many calculations are easier
+to perform in the Euclidean version. But the **physical** algebra is the
+Lorentzian one, recovered by rotating back.
+
+##### Summary
+
+| Property | $\mathfrak{iso}(4)$ |
+|---|---|
+| Algebra | $\mathfrak{so}(4) \ltimes \mathbb{R}^4$, dim 10, semidirect |
+| Point-stabilizer | $\mathfrak{so}(4)$, unique (semidirect rigidity) |
+| Klein quotient | $\mathbb{R}^4_{\mathrm{Eucl}}$ with metric $\delta_{\mu\nu}$, signature $(+,+,+,+)$ |
+| Boost subgroup | $SO(2) \subset SO(4)$, **compact** |
+| Velocity addition | $(v_1 + v_2)/(1 - v_1 v_2)$ — pathological |
+| Causal structure | **none** (time and space interchangeable) |
+| Small-velocity limit | matches Galilei and Lorentz to first order in $v$ |
+| Physical role | Wick rotation in QFT; not a physical kinematical group |
+
+So $\mathfrak{iso}(4)$ joins our table as a fifth 10-parameter
+kinematical algebra with a *unique* point-stabilizer, giving Euclidean
+$\mathbb{R}^4$. The semidirect-product rigidity holds — but the metric it
+forces, while non-degenerate and a perfectly good Riemannian metric, has
+the wrong signature to describe spacetime. The signature of the metric is
+not a free choice: it is dictated by the bracket $[K^i, K^j]$, and
+Lorentz $(\!-\!)$ vs. Euclidean $(\!+\!)$ vs. Galilei $(0)$ are the three
+algebraically distinct options.
+
 #### Updated structural table
 
 Combining all examples done in this document so far:
@@ -2787,7 +3039,8 @@ Combining all examples done in this document so far:
 | $\mathfrak{e}(2)$ | semidirect, abelian translations | 1 | $\mathbb{R}^2$ (Euclidean) |
 | $\mathfrak{e}(3)$ | semidirect, abelian translations | 1 | $\mathbb{R}^3$ (Euclidean) |
 | $\mathfrak{gal}$ | semidirect, abelian translations | 1 | Galilean spacetime $\mathbb{R}\times\mathbb{R}^3$ (degenerate metric) |
-| $\mathfrak{iso}(3,1)$ | semidirect, abelian translations | 1 | Minkowski $\mathbb{R}^{3,1}$ |
+| $\mathfrak{iso}(3,1)$ | semidirect, abelian translations | 1 | Minkowski $\mathbb{R}^{3,1}$, signature $(-,+,+,+)$ |
+| $\mathfrak{iso}(4)$ | semidirect, abelian translations | 1 | Euclidean $\mathbb{R}^4$, signature $(+,+,+,+)$ — pathological as kinematical |
 | $\mathfrak{so}(2,1)$ | simple, indefinite | 2 | $\mathbb{H}^2$, $AdS_2$ |
 | $\mathfrak{so}(3)$ | simple, compact | 1 | $S^2$ |
 | $\mathfrak{so}(4)$ | semisimple (= sum of two ideals), compact | 1 (effective) | $S^3$ |
@@ -2800,8 +3053,12 @@ Three rules emerging:
    \mathfrak{t}$ with abelian translation ideal $\mathfrak{t}$ always have a
    **unique** point-stabilizer, namely $\mathfrak{h}_0$ itself. The metric
    on $G/H \cong \mathfrak{t}$ is determined by the action of $\mathfrak{h}_0$
-   on $\mathfrak{t}$ — and may or may not be non-degenerate. Euclidean and
-   Poincaré are non-degenerate; Galilei is degenerate.
+   on $\mathfrak{t}$ — and may be Lorentzian (Poincaré), Riemannian
+   (Euclidean $\mathfrak{iso}(4)$, Galilei spatial part), or degenerate
+   (Galilei full metric). Uniqueness of the *quotient* does not mean
+   uniqueness of the *physical interpretation*: $\mathfrak{iso}(4)$ is
+   mathematically fine but physically wrong; the signature of the metric
+   alone selects which kinematical algebra is realized.
 2. **Simple compact algebras** $\mathfrak{so}(n+1)$, $\mathfrak{su}(n)$,
    etc. have a **unique** effective point-stabilizer, yielding the
    corresponding sphere or other compact Riemannian symmetric space.
@@ -2811,11 +3068,14 @@ Three rules emerging:
    Riemannian symmetric spaces.
 
 The semidirect-product cases are the "kinematical" algebras of physics
-(Galilei, Newton–Hooke, Carroll, Poincaré, de Sitter, Bargmann), each
-yielding a unique spacetime geometry. The simple indefinite cases are
-typically the **conformal extensions** or the **cosmological-constant
-modifications** of these, where multiple geometric interpretations
-coexist.
+(Galilei, Newton–Hooke, Carroll, Poincaré, $\mathfrak{iso}(4)$, de Sitter,
+Bargmann), each yielding a unique spacetime geometry. Of these, only
+**Poincaré**, **Galilei**, and (with caveats) **Carroll / Newton–Hooke**
+describe physically realized regimes; **$\mathfrak{iso}(4)$ is ruled out
+empirically** by the velocity-addition pathologies derived above. The
+simple indefinite cases are typically the **conformal extensions** or the
+**cosmological-constant modifications** of these, where multiple
+geometric interpretations coexist.
 
 ---
 
