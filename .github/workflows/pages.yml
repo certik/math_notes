@@ -18,10 +18,21 @@ jobs:
       pull-requests: write
       deployments: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '24.15.0'
+          cache: 'npm'
+
+      - name: Install wrangler (locked, integrity-verified)
+        run: |
+          npm ci --ignore-scripts
+          npm audit signatures
 
       - name: Setup pixi
-        uses: prefix-dev/setup-pixi@v0.8.1
+        uses: prefix-dev/setup-pixi@v0.9.4
         with:
           pixi-version: v0.68.0
           cache: true
@@ -45,7 +56,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          npx --yes wrangler@4.86.0 pages deploy _build/html \
+          ./node_modules/.bin/wrangler pages deploy _build/html \
             --project-name=math-notes \
             --branch="${{ steps.branch.outputs.name }}" \
             | tee deploy.log
@@ -57,7 +68,7 @@ jobs:
 
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3.0.4
         with:
           header: cloudflare-preview
           message: |

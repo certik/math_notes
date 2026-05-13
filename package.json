@@ -1,0 +1,8 @@
+{
+  "name": "math-notes-ci",
+  "private": true,
+  "description": "CI-only dependencies (wrangler) pinned via package-lock.json for integrity-verified installs.",
+  "devDependencies": {
+    "wrangler": "4.86.0"
+  }
+}
