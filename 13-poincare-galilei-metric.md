@@ -2464,6 +2464,359 @@ Poincaré algebra explains why "special relativity is special": the algebra
 has only one geometric interpretation, and the metric signature $(-,+,+,+)$
 is forced — not assumed — by the algebraic structure alone.
 
+#### Worked example: point-stabilizers of the full 10-parameter Galilei algebra
+
+Continuing the parallel with Poincaré, we now examine the **full
+10-parameter Galilei algebra** $\mathfrak{gal} = \mathfrak{h}_0 \ltimes
+\mathfrak{t}_{1,3}$, with $\mathfrak{h}_0 = \mathfrak{so}(3) \ltimes
+\mathbb{R}^3_{\mathrm{boost}}$ the *homogeneous* Galilei algebra
+(rotations + Galilean boosts) and $\mathfrak{t}_{1,3}$ the 4-dim
+abelian ideal of time + spatial translations.
+
+##### Generators and brackets
+
+Ten generators: $J^i$ (3 rotations), $K^i$ (3 Galilean boosts, generators of
+$x' = x + vt$), $H$ (time translation), $P^i$ (3 spatial translations). The
+brackets of the **bare** Galilei algebra (no Bargmann central extension) are
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \quad
+[J^i, K^j] = \epsilon^{ijk} K^k, \quad
+[J^i, P^j] = \epsilon^{ijk} P^k, \quad
+[J^i, H] = 0,
+$$
+$$
+[K^i, K^j] = 0, \quad
+[K^i, P^j] = 0, \quad
+[K^i, H] = -P^i, \quad
+[P^i, P^j] = 0, \quad
+[P^i, H] = 0.
+$$
+
+The key qualitative differences from Poincaré:
+
+- Galilean boosts **commute** with each other: $[K^i, K^j] = 0$, not the
+  $-\epsilon^{ijk}J^k$ of Lorentz. This is the algebraic signature of
+  $c = \infty$.
+- Boosts commute with spatial translations: $[K^i, P^j] = 0$, where
+  Poincaré had $\delta^{ij} P^0$. (Reinstating the central extension $M$
+  would give $[K^i, P^j] = M \delta^{ij}$, the *Bargmann algebra* of
+  non-relativistic quantum mechanics.)
+- Boosts produce spatial translations from time: $[K^i, H] = -P^i$. (This
+  is the algebraic backbone of "moving frames pick up a position offset
+  $vt$".)
+
+##### Non-degeneracy filter (still applies)
+
+The exact same Leibniz argument as for $\mathfrak{e}(3)$ and Poincaré
+shows: any $\mathfrak{h}$ containing a translation kills the corresponding
+block of the metric on $\mathfrak{m}$. So a non-degenerate $G$-invariant
+metric (if it existed) would force $\mathfrak{h} \subset \mathfrak{h}_0 =
+\langle J^i, K^i \rangle$.
+
+For a 4-dim $G/H$ (the natural "Galilean spacetime") we need $\dim
+\mathfrak{h} = 6$, and $\mathfrak{h}_0$ is exactly 6-dim. So
+**$\mathfrak{h} = \mathfrak{h}_0$ is the unique candidate**, just as for
+Poincaré.
+
+##### What the metric looks like
+
+Take $\mathfrak{h} = \mathfrak{h}_0$ and $\mathfrak{m} = \langle H, P^1,
+P^2, P^3 \rangle$. The bracket check:
+
+- $[J^i, H] = 0$, $[J^i, P^j] = \epsilon^{ijk} P^k \in \mathfrak{m}$ ✓
+- $[K^i, H] = -P^i \in \mathfrak{m}$, $[K^i, P^j] = 0 \in \mathfrak{m}$ ✓
+
+So **reductive**. Solving the Leibniz invariance with SymPy (or by hand —
+rotations give standard so(3) constraints, the boost $K^1$ gives $\eta
+\cdot \mathrm{ad}_{K^1} + \mathrm{ad}_{K^1}^T \cdot \eta = 0$ with
+$\mathrm{ad}_{K^1}$ taking $H \mapsto -P^1$ and the spatial $P^j \mapsto
+0$) yields
+
+$$
+\boxed{\;\eta_{\mathrm{Galilei}} \;=\; \alpha\,
+\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}.\;}
+$$
+
+This is **rank 1**: only the temporal block survives, and the entire
+$3 \times 3$ spatial block is *forced to zero* by boost-invariance. There
+is **no non-degenerate Galilei-invariant metric** on $\mathfrak{m}$.
+
+##### What the degenerate metric means physically
+
+The Galilei algebra forbids a single non-degenerate 4-dim metric. Instead
+it admits **two compatible invariant tensors**, derived in Part II of this
+document:
+
+- A **temporal 1-form** $\tau = dt$ (the rank-1 covariant tensor above),
+  measuring time intervals between events.
+- A **spatial inverse metric** $h^{ij} = \delta^{ij}$ on the cotangent
+  bundle, restricted to spatial covectors (those annihilating $\tau$),
+  measuring spatial distances within a simultaneity slice.
+
+Together $(\tau, h^{ij})$ form the **Newton–Cartan structure** on
+Galilean spacetime. The reason both must exist independently is precisely
+that boost-invariance forces the spatial-covariant block to vanish: boosts
+"tilt" simultaneity slices into each other's, so no Galilei-invariant 4-dim
+metric on the tangent bundle can distinguish "simultaneous" from
+"non-simultaneous" pairs of points.
+
+##### Point-stabilizer uniqueness for Galilei
+
+Despite the metric being degenerate, the **point-stabilizer remains unique**
+by exactly the same semidirect-product argument:
+
+| Quantity | Galilei value |
+|---|---|
+| Algebra | $\mathfrak{gal} = (\mathfrak{so}(3) \ltimes \mathbb{R}^3_{\mathrm{boost}}) \ltimes (\mathbb{R} \oplus \mathbb{R}^3_{\mathrm{trans}})$ |
+| Total dim | 10 |
+| Translation ideal | 4-dim ($H, P^i$) |
+| Homogeneous part | 6-dim ($J^i, K^i$) |
+| Unique point-stabilizer | $\mathfrak{h}_0 = \langle J^i, K^i \rangle$, dim 6 |
+| Quotient | Galilean spacetime $\mathbb{R} \times \mathbb{R}^3$ (4-dim) |
+| Invariant metric | **degenerate** rank-1 temporal $\tau$ + spatial inverse $h$ |
+
+Galilean spacetime is therefore *unique* as a Klein quotient of the
+Galilei algebra — exactly as Minkowski is unique for Poincaré and
+$\mathbb{R}^3$ is unique for $\mathfrak{e}(3)$. The semidirect-product
+structure with abelian translation ideal forces the answer in all three
+cases. What distinguishes Galilei from Poincaré is not the choice of
+$\mathfrak{h}$ — it's the **bracket** $[\mathfrak{h}, \mathfrak{m}]$
+between the stabilizer and translations:
+
+- **Poincaré**: $[K^i, H] = P^i$ AND $[K^i, P^j] = \delta^{ij} H$
+  (boosts couple time and space symmetrically) → non-degenerate $\eta$ of
+  signature $(-,+,+,+)$.
+- **Galilei**: $[K^i, H] = -P^i$ but $[K^i, P^j] = 0$ (boosts couple time
+  to space, but not back) → degenerate $\eta$ with rank 1.
+
+The "missing bracket" $[K^i, P^j]$ in Galilei is the algebraic content of
+the $c \to \infty$ limit, and it is *exactly* what makes the resulting
+spacetime metric degenerate.
+
+##### Other Klein quotients of Galilei
+
+As with Poincaré, Galilei admits many other Klein quotients of higher
+dimension corresponding to attaching extra structure to each event:
+
+| $\mathfrak{h}$ | $\dim\mathfrak{h}$ | $\dim G/H$ | Geometric interpretation |
+|---|---|---|---|
+| $\mathfrak{h}_0 = \langle J^i, K^i\rangle$ | 6 | 4 | Galilean spacetime ★ |
+| $\mathfrak{so}(3) = \langle J^i\rangle$ | 3 | 7 | event + 3-velocity (Galilean phase space) |
+| $\langle K^i\rangle$ (abelian) | 3 | 7 | event + spatial axis-orientation |
+| $\langle J^3, K^3\rangle$ | 2 | 8 | event + axis direction (rotational + boost about $\hat z$) |
+| $\{0\}$ | 0 | 10 | bare Galilei group as frame bundle |
+| $\langle J^i, P^i\rangle = \mathfrak{e}(3)$ | 6 | 4 | (non-reductive — has translations) |
+
+The first row is the standard Galilean spacetime. The second row, with
+$\mathfrak{h} = \mathfrak{so}(3)$, gives 4-dim base + 3-dim Galilean
+boosts as fibre — the **Galilean phase space** $\mathbb{R}^{1+3} \times
+\mathbb{R}^3_v$, the configuration space of a single non-relativistic
+particle (event + 3-velocity).
+
+#### Worked example: point-stabilizers of $\mathfrak{so}(4)$ (compact case)
+
+For contrast with the indefinite-signature $\mathfrak{so}(2,1)$ and
+$\mathfrak{so}(3,1)$, let's examine the **compact** algebra
+$\mathfrak{so}(4)$. Its action is the symmetry of the round 3-sphere $S^3$.
+How many inequivalent point-stabilizers does it admit?
+
+##### Set-up: $\mathfrak{so}(4) \cong \mathfrak{su}(2) \oplus \mathfrak{su}(2)$
+
+The Lie algebra $\mathfrak{so}(4)$ is dim 6 and famously **not simple**: it
+splits as a direct sum of two commuting copies of $\mathfrak{su}(2)$,
+
+$$
+\mathfrak{so}(4) \;\cong\; \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R.
+$$
+
+Concretely, writing generators of $\mathfrak{so}(4)$ as antisymmetric
+4×4 matrices $M^{ij}$ ($i < j$), one can form two commuting triples
+$J^L_i = \frac{1}{2}(M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$ and
+$J^R_i = \frac{1}{2}(-M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$, satisfying
+
+$$
+[J^L_i, J^L_j] = \epsilon^{ijk} J^L_k, \qquad
+[J^R_i, J^R_j] = \epsilon^{ijk} J^R_k, \qquad
+[J^L_i, J^R_j] = 0.
+$$
+
+This decomposition is the compact analogue of $\mathfrak{so}(2,2) =
+\mathfrak{sl}(2,\mathbb{R}) \oplus \mathfrak{sl}(2,\mathbb{R})$ and is
+*not* present for $\mathfrak{so}(3,1)$ (which is simple as a real Lie
+algebra, even though $\mathfrak{so}(3,1)_\mathbb{C} \cong
+\mathfrak{sl}(2,\mathbb{C}) \oplus \mathfrak{sl}(2,\mathbb{C})$ over the
+complexification).
+
+##### The 3-dim subalgebras up to $SO(4)$-conjugacy
+
+For a 3-dim Klein quotient ($G/H$ of dim 3, hence "$S^3$-like") we need
+$\dim \mathfrak{h} = 3$. Up to $SO(4)$-conjugacy, the only 3-dim
+subalgebras are isomorphic to $\mathfrak{so}(3) \cong \mathfrak{su}(2)$
+(this is the only compact simple 3-dim Lie algebra). Their embeddings in
+$\mathfrak{so}(4) = \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R$ are
+parameterized by Lie-algebra homomorphisms $\mathfrak{su}(2) \to
+\mathfrak{su}(2) \oplus \mathfrak{su}(2)$. Up to conjugacy these are:
+
+| label | embedding $X \mapsto \mathfrak{su}(2) \oplus \mathfrak{su}(2)$ | properties |
+|---|---|---|
+| left factor | $X \mapsto (X, 0)$ | $\mathfrak{su}(2)_L$, an **ideal** of $\mathfrak{so}(4)$ |
+| right factor | $X \mapsto (0, X)$ | $\mathfrak{su}(2)_R$, an **ideal** of $\mathfrak{so}(4)$ |
+| diagonal | $X \mapsto (X, X)$ | $\mathfrak{su}(2)_{\mathrm{diag}}$, **not** an ideal |
+
+Under the outer automorphism of $\mathfrak{so}(4)$ (swapping the two
+factors), the left and right embeddings are equivalent. So there are
+two conjugacy classes: **factor** (ideal) and **diagonal**
+(non-ideal symmetric pair).
+
+##### Case 1: $\mathfrak{h} = \mathfrak{su}(2)_{\mathrm{diag}}$ — the round $S^3$
+
+Use the change of basis $X_i = J^L_i + J^R_i$ (diagonal) and $Y_i = J^L_i -
+J^R_i$ (anti-diagonal). One computes
+
+$$
+[X_i, X_j] = \epsilon^{ijk} X_k, \qquad
+[Y_i, Y_j] = \epsilon^{ijk} X_k, \qquad
+[X_i, Y_j] = \epsilon^{ijk} Y_k.
+$$
+
+So with $\mathfrak{h} = \langle X_1, X_2, X_3\rangle = \mathfrak{su}(2)_{\mathrm{diag}}$
+and $\mathfrak{m} = \langle Y_1, Y_2, Y_3\rangle$:
+
+- $[\mathfrak{h}, \mathfrak{m}]$: $\mathrm{ad}_{X_i}$ acts on $\mathfrak{m}$ as
+  the standard 3-dim rotation. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}] = X \subset \mathfrak{h}$. **Symmetric pair.** ✓
+
+Leibniz invariance with $\mathfrak{h}$ acting on $\mathfrak{m}$ as standard
+$\mathfrak{so}(3)$ rotation forces $\eta = \alpha\,\delta^{ij}$.
+
+$$
+\boxed{\;\eta_{\mathrm{diag}} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
+$$
+
+**Signature $(+,+,+)$** — Riemannian. The bracket $[\mathfrak{m},\mathfrak{m}]
+= +X$ (positive sign) gives **positive sectional curvature**. The result
+is the round 3-sphere:
+
+$$
+S^3 \;=\; SO(4) \,/\, SO(3)_{\mathrm{diag}}.
+$$
+
+##### Case 2: $\mathfrak{h} = \mathfrak{su}(2)_L$ — non-effective!
+
+Here $\mathfrak{h} = \mathfrak{su}(2)_L$ is one of the *two ideals* of
+$\mathfrak{so}(4)$. With $\mathfrak{m} = \mathfrak{su}(2)_R$:
+
+- $[\mathfrak{h}, \mathfrak{m}] = 0$ (the factors commute). Reductive,
+  yes; but the isotropy action is **trivial**.
+- $[\mathfrak{m}, \mathfrak{m}] = \mathfrak{su}(2)_R = \mathfrak{m}$. NOT a
+  symmetric pair (the bracket lands in $\mathfrak{m}$, not $\mathfrak{h}$).
+
+The Leibniz invariance condition is *vacuous* — any symmetric $\eta$ on
+$\mathfrak{m}$ is automatically $\mathfrak{h}$-invariant. SymPy confirms:
+a 6-parameter family of metrics.
+
+But there's a catch — **this Klein pair is not effective**. Because
+$\mathfrak{h} = \mathfrak{su}(2)_L$ is a non-trivial ideal of $\mathfrak{g}
+= \mathfrak{so}(4)$, the action of $G = SO(4)$ on $G/H$ has a non-trivial
+kernel: the $SO(3)_L$ factor of $SO(4)$ acts *trivially* on every coset.
+Effectively, only the $SO(3)_R$ factor acts, and it does so simply-
+transitively (= as left translation on the group manifold $SO(3)_R \cong
+S^3$).
+
+So the "Klein geometry" $(SO(4), SO(3)_L)$ is really just the group
+manifold $SO(3)_R \cong S^3 = SU(2)$ with the half-redundant $SO(4)$-
+labelling: the left $SO(3)_L$ part doesn't do anything. The 6-parameter
+family of allowed metrics is the family of **left-invariant metrics on the
+group manifold $SU(2) = S^3$** — including the round metric (the
+bi-invariant one, when both factors are scaled equally) but also the
+*Berger spheres* (anisotropic left-invariant metrics).
+
+In the standard Klein-geometry framework one requires Klein pairs to be
+*effective* — i.e., $\mathfrak{h}$ contains no non-trivial ideal of
+$\mathfrak{g}$. Excluding the two factor embeddings on this basis leaves
+**only $\mathfrak{su}(2)_{\mathrm{diag}}$ as a legitimate point-
+stabilizer**, giving the unique round $S^3$.
+
+##### Summary table for $\mathfrak{so}(4)$
+
+| $\mathfrak{h}$ | dim | effective? | $G/H$ | metric |
+|---|---|---|---|---|
+| $\mathfrak{su}(2)_{\mathrm{diag}}$ | 3 | yes (symmetric pair) | $S^3$ | round, unique up to scale ★ |
+| $\mathfrak{su}(2)_L$ (or $R$) | 3 | **no** (ideal) | $SO(3)_R \cong S^3$ as group | 6-param family of left-invariant metrics |
+| $\mathfrak{so}(2)\oplus\mathfrak{so}(2)$ | 2 | yes | $SO(4)/T^2 =$ oriented 2-Grassmannian of $\mathbb{R}^4$ | 4-dim symmetric space |
+| $\mathfrak{so}(2)$ | 1 | yes | 5-dim Stiefel-like space | various |
+| $\{0\}$ | 0 | yes | $SO(4)$ frame bundle | 6-dim, left-invariant |
+
+Among effective 3-dim Klein pairs there is **exactly one** point-
+stabilizer for $\mathfrak{so}(4)$, giving the unique round 3-sphere. The
+non-effective factor-embedding case is more naturally viewed as the group
+manifold $SU(2)$, which is the same topological $S^3$ but is no longer a
+symmetric space.
+
+##### Why only one (vs. two for $\mathfrak{so}(3,1)$)?
+
+The key contrast:
+
+> *$\mathfrak{so}(4)$ is compact — all its subalgebras are compact — so
+> all its invariant metrics are positive-definite. There is no analogue of
+> "the boost subalgebra" that could yield a Lorentzian quotient.*
+
+Whereas $\mathfrak{so}(3,1)$, being **of indefinite signature**, contains
+both a compact $\mathfrak{so}(3)$ subalgebra and a non-compact
+$\mathfrak{so}(2,1)$ subalgebra, giving Riemannian $\mathbb{H}^3$ and
+Lorentzian $dS_3$ respectively. The same dimensions, but compact $G$
+yields one Riemannian space; indefinite $G$ yields a Riemannian +
+Lorentzian pair.
+
+The general pattern, then, for the orthogonal real forms:
+
+| $\mathfrak{g}$ | type | # of effective point-stabilizers giving non-degen 3-dim quotient | spaces |
+|---|---|---|---|
+| $\mathfrak{so}(4)$ | compact | 1 | $S^3$ (Riemannian, $K = +1$) |
+| $\mathfrak{so}(3,1)$ | indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
+| $\mathfrak{so}(2,2)$ | indefinite | 2 | $\mathbb{H}^3$, $AdS_3$ |
+| $\mathfrak{so}(1,3)$ | $= \mathfrak{so}(3,1)$ | same | same |
+
+#### Updated structural table
+
+Combining all examples done in this document so far:
+
+| algebra | structure | # eff. pt-stabilizers | resulting "spaces of points" |
+|---|---|---|---|
+| $\mathfrak{e}(2)$ | semidirect, abelian translations | 1 | $\mathbb{R}^2$ (Euclidean) |
+| $\mathfrak{e}(3)$ | semidirect, abelian translations | 1 | $\mathbb{R}^3$ (Euclidean) |
+| $\mathfrak{gal}$ | semidirect, abelian translations | 1 | Galilean spacetime $\mathbb{R}\times\mathbb{R}^3$ (degenerate metric) |
+| $\mathfrak{iso}(3,1)$ | semidirect, abelian translations | 1 | Minkowski $\mathbb{R}^{3,1}$ |
+| $\mathfrak{so}(2,1)$ | simple, indefinite | 2 | $\mathbb{H}^2$, $AdS_2$ |
+| $\mathfrak{so}(3)$ | simple, compact | 1 | $S^2$ |
+| $\mathfrak{so}(4)$ | semisimple (= sum of two ideals), compact | 1 (effective) | $S^3$ |
+| $\mathfrak{so}(3,1)$ | simple, indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
+| $\mathfrak{so}(4,2)$ (conformal) | simple, indefinite | several | comp. Minkowski, $AdS_5$, $\mathbb{R}\times S^3$, ... |
+
+Three rules emerging:
+
+1. **Semidirect-product algebras** $\mathfrak{g} = \mathfrak{h}_0 \ltimes
+   \mathfrak{t}$ with abelian translation ideal $\mathfrak{t}$ always have a
+   **unique** point-stabilizer, namely $\mathfrak{h}_0$ itself. The metric
+   on $G/H \cong \mathfrak{t}$ is determined by the action of $\mathfrak{h}_0$
+   on $\mathfrak{t}$ — and may or may not be non-degenerate. Euclidean and
+   Poincaré are non-degenerate; Galilei is degenerate.
+2. **Simple compact algebras** $\mathfrak{so}(n+1)$, $\mathfrak{su}(n)$,
+   etc. have a **unique** effective point-stabilizer, yielding the
+   corresponding sphere or other compact Riemannian symmetric space.
+3. **Simple indefinite-signature algebras** $\mathfrak{so}(p,q)$ with
+   $p, q > 0$ have **multiple** point-stabilizers, yielding Riemannian /
+   Lorentzian pairs (or larger families) of constant-curvature pseudo-
+   Riemannian symmetric spaces.
+
+The semidirect-product cases are the "kinematical" algebras of physics
+(Galilei, Newton–Hooke, Carroll, Poincaré, de Sitter, Bargmann), each
+yielding a unique spacetime geometry. The simple indefinite cases are
+typically the **conformal extensions** or the **cosmological-constant
+modifications** of these, where multiple geometric interpretations
+coexist.
+
 ---
 
 ## Part IV: Spheres — $S^2$ and $S^3$
