@@ -20,6 +20,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install wrangler (locked, integrity-verified)
+        run: |
+          npm ci --ignore-scripts
+          npm audit signatures
+
       - name: Setup pixi
         uses: prefix-dev/setup-pixi@v0.8.1
         with:
@@ -45,7 +56,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          npx --yes wrangler@4.86.0 pages deploy _build/html \
+          ./node_modules/.bin/wrangler pages deploy _build/html \
             --project-name=math-notes \
             --branch="${{ steps.branch.outputs.name }}" \
             | tee deploy.log
