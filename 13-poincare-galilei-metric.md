@@ -2032,6 +2032,227 @@ different metric signature. The choice of point-stabilizer is then a
 genuine extra physical input (Riemannian space? Lorentzian spacetime? what
 cosmological constant?) — not a mathematical accident.
 
+#### Worked example: point-stabilizers of $\mathfrak{so}(3,1)$ (the Lorentz algebra)
+
+As a concrete and physically important illustration, let's enumerate all
+point-stabilizing Klein geometries arising from $\mathfrak{so}(3,1)$ — the
+homogeneous Lorentz algebra in 3+1 dimensions. This is the same algebra
+that appears in special relativity as the rotation/boost subalgebra of the
+Poincaré algebra, and we'll find that it is *simultaneously* the isometry
+algebra of three distinct 3-dimensional homogeneous spaces.
+
+##### Set-up
+
+The six generators are rotations $J^1, J^2, J^3$ and boosts $K^1, K^2,
+K^3$, with brackets
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \qquad
+[J^i, K^j] = \epsilon^{ijk} K^k, \qquad
+[K^i, K^j] = -\epsilon^{ijk} J^k.
+$$
+
+To get a 3-dim Klein quotient $G/H$ we need $\dim\mathfrak{h} = 3$. Up to
+$SO(3,1)$-conjugacy, the relevant 3-dim Lie subalgebras of $\mathfrak{so}(3,1)$
+are:
+
+| $\mathfrak{h}$ | basis | type | as a Lie algebra |
+|---|---|---|---|
+| $\mathfrak{so}(3)$ | $J^1, J^2, J^3$ | compact | rotations |
+| $\mathfrak{so}(2,1)$ | $J^3, K^1, K^2$ | split | one rotation + two boosts in the transverse plane |
+| $\mathfrak{e}(2)$ | $J^1,\;J^2 - K^3,\;J^3 + K^2$ | parabolic | rotation + two commuting "null rotations" |
+
+The first two are the **little groups** of timelike and spacelike unit
+vectors in $\mathbb{R}^{3,1}$ respectively; the third is the little group
+of a null (lightlike) vector — familiar from particle physics as the
+Wigner little group for massless particles.
+
+##### Case 1: $\mathfrak{h} = \mathfrak{so}(3)$ — compact stabilizer
+
+Complement $\mathfrak{m} = \langle K^1, K^2, K^3 \rangle$. Bracket check:
+
+- $[\mathfrak{h}, \mathfrak{m}]$: $[J^i, K^j] = \epsilon^{ijk} K^k \in \mathfrak{m}$. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}]$: $[K^i, K^j] = -\epsilon^{ijk} J^k \in \mathfrak{h}$. **Symmetric pair.** ✓
+
+Imposing Leibniz invariance with $\mathfrak{so}(3)$ acting on $\mathfrak{m}$
+by the standard rotation representation forces $\eta^{ij} = \alpha\,\delta^{ij}$:
+
+$$
+\boxed{\;\eta_{\mathfrak{so}(3)} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
+$$
+
+**Signature $(+,+,+)$** — Riemannian. The sign of the $[\mathfrak{m},
+\mathfrak{m}] \to \mathfrak{h}$ bracket is $-\epsilon^{ijk}$, which gives
+*negative* sectional curvature. The resulting space is the **3-dimensional
+hyperbolic space**
+
+$$
+\mathbb{H}^3 \;=\; SO(3,1)\,/\,SO(3),
+$$
+
+i.e., the upper sheet of the unit timelike hyperboloid in $\mathbb{R}^{3,1}$,
+with its negative-curvature Riemannian metric.
+
+##### Case 2: $\mathfrak{h} = \mathfrak{so}(2,1)$ — non-compact stabilizer
+
+Complement $\mathfrak{m} = \langle J^1, J^2, K^3 \rangle$. Bracket check
+(verified by the SymPy enumeration):
+
+- $[\mathfrak{h}, \mathfrak{m}]$ closes inside $\mathfrak{m}$. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}] = [J^1, J^2] = J^3$, $[J^1, K^3] = -K^2$,
+  $[J^2, K^3] = K^1$, all in $\mathfrak{h}$. **Symmetric pair.** ✓
+
+Solving the Leibniz equations (three invariance equations, one per
+generator of $\mathfrak{h}$) for a generic symmetric $\eta$ on $\mathfrak{m}$
+yields
+
+$$
+\boxed{\;\eta_{\mathfrak{so}(2,1)} \;=\; \alpha\,\mathrm{diag}(-1, -1, 1).\;}
+$$
+
+**Signature $(-,-,+)$**, or equivalently after overall sign $(+,+,-)$ —
+**Lorentzian**. Why the indefinite signature? Because $\mathfrak{so}(2,1)$
+acts on $\mathfrak{m}$ by mixing the *compact* rotation generators $J^1, J^2$
+with the *non-compact* boost $K^3$ via the boost generators $K^1, K^2 \in
+\mathfrak{h}$; the only invariant quadratic form distinguishes "compact-type"
+(directions $J^1, J^2$) from "non-compact-type" (direction $K^3$) with
+opposite signs.
+
+The resulting space is the **3-dimensional de Sitter space**
+
+$$
+dS_3 \;=\; SO(3,1)\,/\,SO(2,1),
+$$
+
+i.e., the unit spacelike hyperboloid in $\mathbb{R}^{3,1}$, with its
+constant-positive-curvature Lorentzian metric.
+
+##### Case 3: $\mathfrak{h} = \mathfrak{e}(2)$ — parabolic stabilizer
+
+This is the **little group of a null vector**. Take the standard null vector
+$p = (1, 1, 0, 0)$ in $\mathbb{R}^{3,1}$; one finds (and SymPy verifies) the
+stabilizer is the 3-dim algebra
+
+$$
+\mathfrak{h} \;=\; \langle\, J^1,\; J^2 - K^3,\; J^3 + K^2 \,\rangle,
+$$
+
+with structure
+
+$$
+[J^1, J^2 - K^3] = J^3 + K^2, \quad
+[J^1, J^3 + K^2] = -(J^2 - K^3), \quad
+[J^2 - K^3, J^3 + K^2] = 0.
+$$
+
+That is, $\mathfrak{h} \cong \mathfrak{e}(2)$ — a "rotation" $J^1$ together
+with two commuting "null rotations" $J^2 - K^3$ and $J^3 + K^2$. **Crucially,
+this Klein pair is non-reductive**: by the same argument we made for
+$\mathfrak{e}(3)$, any complement $\mathfrak{m}$ to $\mathfrak{h}$ ends up
+mixing with $\mathfrak{h}$ via the null-rotation generators. The Leibniz
+equations admit no non-degenerate invariant metric on $\mathfrak{m}$.
+
+Geometrically, $SO(3,1)/\mathfrak{e}(2)$ is the **future null cone minus
+the origin** in $\mathbb{R}^{3,1}$ — a 3-dim cone of null vectors that
+inherits only a degenerate "Carrollian" structure (a vector-line is
+distinguished at each point, but no full metric). This is the same
+degenerate situation we saw with $E(3)/\mathfrak{e}(2)$, where the would-be
+"space of oriented planes" had a degenerate metric.
+
+(Projectivizing the null cone — that is, enlarging $\mathfrak{h}$ to the
+4-dim parabolic subalgebra $\mathfrak{h} \oplus \langle K^1\rangle$ — gives
+the **celestial sphere** $S^2 = SO(3,1)/P$, the asymptotic boundary of
+Minkowski space. This is a 2-dim space, important for asymptotic symmetries
+and the holographic / BMS / AdS/CFT story, but it is not a *3-dim* space of
+points so we set it aside here.)
+
+##### Summary table
+
+The complete enumeration of point-stabilizing Klein geometries for
+$\mathfrak{so}(3,1)$:
+
+| $\mathfrak{h}$ | $G/H$ | $\dim$ | metric signature | curvature | character |
+|---|---|---|---|---|---|
+| $\mathfrak{so}(3)$ | $\mathbb{H}^3$ | 3 | $(+,+,+)$ | $K = -1$ | Riemannian space |
+| $\mathfrak{so}(2,1)$ | $dS_3$ | 3 | $(+,+,-)$ | $K = +1$ | Lorentzian spacetime |
+| $\mathfrak{e}(2)$ | null cone | 3 | degenerate | — | Carrollian (no metric) |
+
+So $\mathfrak{so}(3,1)$ has **two reductive point-stabilizers** giving
+non-degenerate metrics: one Riemannian, one Lorentzian. (Plus a parabolic
+"null" stabilizer giving a degenerate-metric space, which is the
+non-reductive analogue of the $\mathfrak{e}(3)/\mathfrak{e}(2)$ situation.)
+
+The picture is exactly the lower-dimensional $\mathfrak{so}(2,1)$ story
+amplified by one dimension. Compact stabilizer → Riemannian; non-compact
+stabilizer → Lorentzian. The Lie algebra itself is "agnostic" about which
+geometry it is the symmetry algebra of.
+
+##### Where $\mathfrak{so}(3,1)$ actually appears in physics
+
+In ordinary special relativity, $\mathfrak{so}(3,1)$ does *not* act on
+Minkowski space $\mathbb{R}^{3,1}$ as a homogeneous group — the
+homogeneous group of $\mathbb{R}^{3,1}$ is the Poincaré algebra
+$\mathfrak{so}(3,1) \ltimes \mathbb{R}^{3,1}$, of which $\mathfrak{so}(3,1)$
+is the *point-stabilizer* (the rotation/boost subalgebra fixing the
+origin). So $\mathfrak{so}(3,1)$ plays the role of $\mathfrak{h}$, not of
+$\mathfrak{g}$, in the standard relativistic setting.
+
+But $\mathfrak{so}(3,1)$ also plays the role of *the symmetry algebra* in
+two further physically important situations:
+
+- **$\mathbb{H}^3$ as spatial slice of an open FRW universe**: in cosmology,
+  a spatially-hyperbolic Friedmann–Lemaître–Robertson–Walker universe has
+  $\mathbb{H}^3$ as its constant-time spatial slice, and $\mathfrak{so}(3,1)$
+  is the isometry algebra of that slice (acting through case 1 above).
+- **$dS_3$ as a 3-dim de Sitter spacetime**: in lower-dim quantum-gravity
+  models, the 3-dim de Sitter universe is a Lorentzian spacetime of
+  positive cosmological constant; its isometry algebra is $\mathfrak{so}(3,1)$
+  acting through case 2 above.
+
+The *same* abstract algebra plays three roles in physics — Lorentz
+stabilizer of Minkowski, isometry of hyperbolic 3-space, isometry of 3-dim
+de Sitter — distinguished by what we want $\mathfrak{g}$ to be and what we
+want $\mathfrak{h}$ to be in the Klein pair. The choice of point-stabilizer
+$\mathfrak{h}$ within $\mathfrak{so}(3,1)$ is what selects between the
+Riemannian and Lorentzian geometries.
+
+##### Compare with $\mathfrak{so}(p, q)$ in general
+
+The pattern continues for all real forms of $\mathfrak{so}$:
+
+- $\mathfrak{so}(4)$ has one reductive point-stabilizer ($\mathfrak{so}(3)$)
+  → only $S^3$, Riemannian, $K = +1$. (The only other 3-dim subalgebra
+  is $\mathfrak{su}(2)_L$ in the left factor of $\mathfrak{so}(4) \cong
+  \mathfrak{su}(2) \oplus \mathfrak{su}(2)$, which gives the *bi-invariant*
+  3-sphere $SO(4)/SU(2)_L \cong SU(2)_R \cong S^3$ as a group manifold —
+  topologically the same, but with a slightly different geometric
+  interpretation.) The point: a *compact* simple Lie algebra has only
+  *compact* subalgebras, so only Riemannian quotients are available.
+- $\mathfrak{so}(3,1)$: two reductive point-stabilizers as above
+  ($\mathbb{H}^3$, $dS_3$).
+- $\mathfrak{so}(2,2) \cong \mathfrak{sl}(2,\mathbb{R}) \oplus
+  \mathfrak{sl}(2,\mathbb{R})$: at least two reductive point-stabilizers
+  yielding $\mathbb{H}^3$ (Riemannian, $K = -1$, with $\mathfrak{h} \cong
+  \mathfrak{so}(2,1)_{\mathrm{diag}}$) and $AdS_3$ (Lorentzian, $K = -1$,
+  with a different embedding).
+- $\mathfrak{so}(5)$ → $S^4$ only.
+- $\mathfrak{so}(4,1)$ → $\mathbb{H}^4$ (Riemannian) and $dS_4$ (Lorentzian).
+- $\mathfrak{so}(3,2)$ → $AdS_4$ (Lorentzian, $K = -1$) and a Riemannian
+  geometry of signature $(+,+,+,+)$.
+
+The general rule: for $\mathfrak{so}(p, q)$ with $p + q = n + 1$, the
+reductive point-stabilizers are conjugate to $\mathfrak{so}(p', q')$ with
+$p' + q' = n$, $0 \leq p' \leq p$, $0 \leq q' \leq q$, $|p - p'| + |q - q'| = 1$
+— giving exactly the constant-curvature pseudo-Riemannian geometries of
+dimension $n$ accessible from that Lie algebra.
+
+So $\mathfrak{so}(3,1)$ having two point-stabilizers (giving $\mathbb{H}^3$
+and $dS_3$) is exactly the next step up from $\mathfrak{so}(2,1)$ having
+two point-stabilizers (giving $\mathbb{H}^2$ and $AdS_2$). Both
+illustrate the general phenomenon: **simple Lie algebras of indefinite
+signature admit multiple inequivalent "spaces of points" as Klein quotients,
+distinguished by the compactness or non-compactness of the stabilizer**.
+
 ---
 
 ## Part IV: Spheres — $S^2$ and $S^3$
