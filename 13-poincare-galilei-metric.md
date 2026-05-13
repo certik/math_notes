@@ -28,101 +28,26 @@ The companion document [03-lie-groups.md](03-lie-groups.md) starts from
 explicit matrix generators and solves the same invariance condition. Here we
 *derive* everything from the commutation relations.
 
-## Strategy
-
-### The translation subspace as a representation
-
-Let $V = \operatorname{span}\{P^0, P^1, P^2, P^3\}$ with $P^0 \equiv H$, the
-4-dimensional subspace of translation generators inside the full Lie algebra.
-
-The homogeneous generators $X \in \{J_i, K_i\}$ act on the whole algebra by
-the **adjoint action**
-
-$$
-X \cdot Y := [X, Y] \,.
-$$
-
-A direct inspection of the Poincaré or Galilei commutation relations (given
-in Parts I and II below) shows
-that for every generator $X \in \{J_i, K_i\}$ and every $\mu$,
-
-$$
-[X, P^\mu] \in V \,,
-$$
-
-so the adjoint action restricts to a linear representation of the homogeneous
-algebra on $V$.
-
-### Group invariance ⇒ Leibniz condition
-
-Exponentiate. The group element $U = \exp(\theta X)$ acts on $V$ by
-conjugation:
-
-$$
-U\, P^\mu\, U^{-1} = e^{\theta X} P^\mu e^{-\theta X}
-= P^\mu + \theta [X, P^\mu] + \tfrac{\theta^2}{2}\big[X, [X, P^\mu]\big] + \cdots
-$$
-
-A symmetric bilinear form $g$ on $V$ is **invariant under the group action**
-if
-
-$$
-g\big(U P^\mu U^{-1},\, U P^\nu U^{-1}\big)
-= g(P^\mu, P^\nu) \qquad \forall \theta, X \,.
-$$
-
-Differentiate at $\theta = 0$. Using $\dfrac{d}{d\theta}\big|_0 U P^\mu
-U^{-1} = [X, P^\mu]$ and the bilinearity of $g$,
-
-$$
-\frac{d}{d\theta}\Big|_{\theta=0}
-g\big(U P^\mu U^{-1}, U P^\nu U^{-1}\big)
-= g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) \,.
-$$
-
-Invariance forces this derivative to vanish:
-
-$$
-\boxed{\;
-g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) = 0
-\;}
-$$
-
-for every generator $X \in \{J_i, K_i\}$ and every $\mu, \nu$. This is the
-**Leibniz condition**: invariance is the statement that $X$ acts as a
-derivation on $g$ with zero output.
-
-It is a necessary condition. It is also sufficient: the **infinitesimal**
-Leibniz condition (at $\theta = 0$) implies the **finite** group invariance
-$g(U P^\mu U^{-1}, U P^\nu U^{-1}) = g(P^\mu, P^\nu)$ for **all** $\theta \in
-\mathbb{R}$. To see this, define
-
-$$
-f(\theta) := g\big(U(\theta) P^\mu U(\theta)^{-1},\ U(\theta) P^\nu U(\theta)^{-1}\big), \qquad U(\theta) = e^{\theta X}.
-$$
-
-Differentiating at an arbitrary $\theta$:
-
-$$
-f'(\theta) = g\big([X, P^\mu_\theta], P^\nu_\theta\big) + g\big(P^\mu_\theta, [X, P^\nu_\theta]\big),
-\qquad P^\mu_\theta := U(\theta) P^\mu U(\theta)^{-1} \in V.
-$$
-
-By closure of $V$ under the adjoint action, $P^\mu_\theta \in V$, so the
-Leibniz condition (which holds for *every* pair of vectors in $V$, not just
-the basis) gives $f'(\theta) = 0$ identically. Hence $f$ is constant,
-$f(\theta) = f(0) = g(P^\mu, P^\nu)$, for all $\theta$. So the infinitesimal
-Leibniz condition is equivalent to finite group invariance along each
-one-parameter subgroup, and composing these recovers invariance under every
-element of the identity component of the group.
-
-Writing $g(P^\mu, P^\nu) = \eta^{\mu\nu}$ with $\eta^{\mu\nu} =
-\eta^{\nu\mu}$, the Leibniz condition becomes a finite system of linear
-equations on the 10 components of $\eta$.
+A companion document, [03-lie-groups.md](03-lie-groups.md), reaches the
+same metrics from the opposite direction: starting from explicit matrix
+generators acting on $(t, \vec x)$ and solving $K^T B + B K = 0$ for the
+invariant form. This document derives everything from the abstract
+commutators alone, with no matrix representation needed; the final metrics
+agree.
 
 ---
 
-## Spacetime as a homogeneous space
+## The framework
+
+Before applying the Leibniz invariance condition to specific algebras,
+we set up the four pieces it depends on: the Klein-pair description of a
+homogeneous space and the reductivity property that makes
+"invariant form on $\mathfrak{m}$" well-posed; the Leibniz invariance
+condition itself; a Schur's-lemma analysis of what the algebra
+determines; and a uniform algorithm that turns the abstract data into a
+metric in coordinates.
+
+### Spacetime as a homogeneous space (Klein pairs)
 
 So far we have treated the translation subspace $V =
 \operatorname{span}\{P^0, P^1, P^2, P^3\}$ as if its basis carried a preferred
@@ -153,7 +78,7 @@ tangent space $T_{eH}\mathcal{M}$. The pair $(\mathfrak{g}, \mathfrak{h})$ is
 what defines the geometry; the Lie algebra $\mathfrak{g}$ alone is not
 enough.
 
-### Reductive and symmetric Klein geometries
+#### Reductive and symmetric Klein geometries
 
 The vector-space splitting $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$
 needs a word of qualification, because the rest of this document silently
@@ -192,7 +117,7 @@ $\mathfrak{g}$:
 - The Maurer–Cartan splitting $\omega = e + \omega_{\mathfrak{h}}$ into
   *vielbein* and *spin connection*, used to translate the algebraic
   metric on $\mathfrak{m}$ into a metric in coordinates (see the
-  $S^2$ derivation in Part IV), needs an $\mathrm{Ad}(H)$-equivariant
+  $S^2$ derivation in chapter 'Spaces of constant curvature'), needs an $\mathrm{Ad}(H)$-equivariant
   projection $\mathfrak{g} \to \mathfrak{m}$, which exists iff the
   geometry is reductive.
 
@@ -237,7 +162,7 @@ $$
 [\mathfrak{m}, \mathfrak{m}] \;\subset\; \mathfrak{h}
 $$
 
-— flat vs. constant curvature, as summarised in the table after Part IV
+— flat vs. constant curvature, as summarised in the table at the end of chapter 'Spaces of constant curvature'
 — is the *symmetric-space* dichotomy. The cases where it fails (e.g.,
 neither inclusion holds, or $[\mathfrak{h}, \mathfrak{m}] \not\subset
 \mathfrak{m}$ in any complement) take us out of symmetric Klein geometry
@@ -399,11 +324,274 @@ algebra level. Hence the matrix $\eta^{\mu\nu}$ that solves the Leibniz
 invariance condition on $V$ is also the matrix of the invariant bilinear
 form on the spacetime coordinates $x^\mu = a^\mu$ — i.e., the metric.
 
+### The Leibniz invariance condition
+
+The Klein-pair structure above lets us read off, from the abstract
+commutation relations alone, the linear constraints that an invariant
+symmetric bilinear form on $\mathfrak{m}$ must satisfy. The constraints
+take the same shape — a Leibniz-style derivation rule — for every Klein
+pair we will encounter. We derive them now.
+
+#### The translation subspace as a representation
+
+Let $V = \operatorname{span}\{P^0, P^1, P^2, P^3\}$ with $P^0 \equiv H$, the
+4-dimensional subspace of translation generators inside the full Lie algebra.
+
+The homogeneous generators $X \in \{J_i, K_i\}$ act on the whole algebra by
+the **adjoint action**
+
+$$
+X \cdot Y := [X, Y] \,.
+$$
+
+A direct inspection of the Poincaré or Galilei commutation relations (given
+in Parts I and II below) shows
+that for every generator $X \in \{J_i, K_i\}$ and every $\mu$,
+
+$$
+[X, P^\mu] \in V \,,
+$$
+
+so the adjoint action restricts to a linear representation of the homogeneous
+algebra on $V$.
+
+#### Group invariance ⇒ Leibniz condition
+
+Exponentiate. The group element $U = \exp(\theta X)$ acts on $V$ by
+conjugation:
+
+$$
+U\, P^\mu\, U^{-1} = e^{\theta X} P^\mu e^{-\theta X}
+= P^\mu + \theta [X, P^\mu] + \tfrac{\theta^2}{2}\big[X, [X, P^\mu]\big] + \cdots
+$$
+
+A symmetric bilinear form $g$ on $V$ is **invariant under the group action**
+if
+
+$$
+g\big(U P^\mu U^{-1},\, U P^\nu U^{-1}\big)
+= g(P^\mu, P^\nu) \qquad \forall \theta, X \,.
+$$
+
+Differentiate at $\theta = 0$. Using $\dfrac{d}{d\theta}\big|_0 U P^\mu
+U^{-1} = [X, P^\mu]$ and the bilinearity of $g$,
+
+$$
+\frac{d}{d\theta}\Big|_{\theta=0}
+g\big(U P^\mu U^{-1}, U P^\nu U^{-1}\big)
+= g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) \,.
+$$
+
+Invariance forces this derivative to vanish:
+
+$$
+\boxed{\;
+g\big([X, P^\mu], P^\nu\big) + g\big(P^\mu, [X, P^\nu]\big) = 0
+\;}
+$$
+
+for every generator $X \in \{J_i, K_i\}$ and every $\mu, \nu$. This is the
+**Leibniz condition**: invariance is the statement that $X$ acts as a
+derivation on $g$ with zero output.
+
+It is a necessary condition. It is also sufficient: the **infinitesimal**
+Leibniz condition (at $\theta = 0$) implies the **finite** group invariance
+$g(U P^\mu U^{-1}, U P^\nu U^{-1}) = g(P^\mu, P^\nu)$ for **all** $\theta \in
+\mathbb{R}$. To see this, define
+
+$$
+f(\theta) := g\big(U(\theta) P^\mu U(\theta)^{-1},\ U(\theta) P^\nu U(\theta)^{-1}\big), \qquad U(\theta) = e^{\theta X}.
+$$
+
+Differentiating at an arbitrary $\theta$:
+
+$$
+f'(\theta) = g\big([X, P^\mu_\theta], P^\nu_\theta\big) + g\big(P^\mu_\theta, [X, P^\nu_\theta]\big),
+\qquad P^\mu_\theta := U(\theta) P^\mu U(\theta)^{-1} \in V.
+$$
+
+By closure of $V$ under the adjoint action, $P^\mu_\theta \in V$, so the
+Leibniz condition (which holds for *every* pair of vectors in $V$, not just
+the basis) gives $f'(\theta) = 0$ identically. Hence $f$ is constant,
+$f(\theta) = f(0) = g(P^\mu, P^\nu)$, for all $\theta$. So the infinitesimal
+Leibniz condition is equivalent to finite group invariance along each
+one-parameter subgroup, and composing these recovers invariance under every
+element of the identity component of the group.
+
+Writing $g(P^\mu, P^\nu) = \eta^{\mu\nu}$ with $\eta^{\mu\nu} =
+\eta^{\nu\mu}$, the Leibniz condition becomes a finite system of linear
+equations on the 10 components of $\eta$.
+
+### What the algebra determines (and what it doesn't)
+
+Looking back across the six examples, the Leibniz condition is doing
+something quite specific — and worth stating in its sharpest form.
+
+For an isotropy representation $\rho: \mathfrak{h} \to
+\mathfrak{gl}(\mathfrak{m})$, the Leibniz condition is the statement
+"find the $\rho$-invariant symmetric bilinear forms on $\mathfrak{m}$."
+This is a Schur's-lemma exercise, and the structure of the answer is
+dictated entirely by the decomposition of $\mathfrak{m}$ under $\rho$.
+
+**When $\rho$ is irreducible** — Poincaré, all $\mathfrak{e}(n)$,
+all $\mathfrak{so}(n+1)$, all $\mathfrak{so}(n, 1)$, de Sitter,
+anti-de Sitter — Schur's lemma forces the real vector space of invariant
+symmetric forms to be one-dimensional. The answer is then:
+
+- a **discrete** invariant — the *signature* of the form, fixed by which
+  real form of the isotropy algebra ($\mathfrak{so}(p, q)$ for some
+  $p + q = \dim\mathfrak{m}$) is acting;
+- plus **one** continuous degree of freedom — an overall positive scalar
+  (the unit of length squared).
+
+So in this case the entire derivation produces *the signature plus one
+scale*. The signature is forced by the algebra; the scale is free.
+
+**When $\rho$ is reducible** — Galilei, Carrollian, and other limiting
+algebras — the invariant forms decompose summand by summand. Each
+irreducible piece contributes its own independent scale, and isomorphic
+pieces can contribute additional off-diagonal mixing parameters. For
+Galilei, $\mathfrak{m}$ splits as $\mathbb{R}_H \oplus \mathbb{R}^3$
+under $SO(3)$, the two summands are non-isomorphic, and we get exactly
+the two independent forms — the temporal $\tau$ and the spatial $h$ —
+each with its own scale (the unit of time and the unit of length are
+algebraically independent in non-relativistic physics).
+
+**What is *not* derived.** The numerical values of the scales. The
+algebra cannot know whether the unit is meters or light-years; in the
+irreducible case there is nothing else free, and in the reducible case
+the freedom is exactly one positive number per irreducible summand
+(plus any off-diagonal mixing among isomorphic summands).
+
+**Scale ratios are fixed by the algebra.** In curved cases like $S^2$,
+the bracket $[J^1, J^2] = J^3$ has a definite normalisation. Once we
+pick the metric scale $\eta^{ab} = \lambda\, \delta^{ab}$, the Cartan
+structure equation forces the sectional curvature to be $1/\lambda$:
+metric and curvature scales are *not* independent. The algebra fixes
+the **ratio** of (length scale)² to (curvature scale)⁻¹; only the
+absolute scale is free.
+
+The same applies on the Lorentzian side. Poincaré has a single scale,
+so the speed of light $c$ is the *only* dimensionful constant relating
+space and time, and the algebra lets us set $c = 1$ without loss. Galilei
+has two independent scales, so $c$ has no algebraic meaning — it is
+undefined, not merely unset.
+
+**The clean statement.** The algebra determines:
+
+1. the **signature** of the metric (a discrete invariant, fixed by the
+   real form of the isotropy algebra);
+2. the **dimensional structure** — how many independent scales appear,
+   i.e., how many irreducible pieces $\mathfrak{m}$ has under $\rho$;
+3. all **relations** among metric scales and curvature scale.
+
+It does *not* determine the absolute numerical value of any scale. This
+is exactly what one would want from a derivation that starts only with
+abstract commutation relations: the algebra cannot know about units,
+but it determines everything invariant under the choice of units.
+
+### The algorithm
+
+**Inputs.**
+
+1. A faithful matrix representation $\rho \colon \mathfrak{g} \to
+   \mathfrak{gl}(N, \mathbb{R})$ — i.e., a list of matrices $X_a$,
+   $a = 1, \dots, \dim\mathfrak{g}$, forming a basis of $\mathfrak{g}$.
+2. A partition of the basis indices into "stabilizer" indices
+   $\mathcal{H} \subset \{1, \dots, \dim\mathfrak{g}\}$ and "complement"
+   indices $\mathcal{M}$ — corresponding to the splitting
+   $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ that defines the
+   Klein pair.
+3. A coordinate chart $(x^\mu)$ on $G/H$ and a section
+   $\sigma(x^\mu) \in G$ realizing it.
+
+**Crank.**
+
+*Step 1 — Structure constants.* Compute the commutators
+$[X_a, X_b]$ in the matrix algebra, and decompose them on the basis:
+
+$$
+[X_a, X_b] = \sum_c f^c{}_{ab}\, X_c.
+$$
+
+Each decomposition is one linear system in $\dim\mathfrak{g}$ unknowns
+(the coefficients $f^c{}_{ab}$).
+
+*Step 2 — Maurer–Cartan form.* For each coordinate $x^\mu$, compute
+
+$$
+\omega_\mu \;\equiv\; \sigma^{-1}\, \partial_\mu\, \sigma
+\;=\; \sum_a \omega^a{}_\mu\, X_a,
+$$
+
+and split into $\mathfrak{m}$- and $\mathfrak{h}$-parts: the vielbein
+1-form components are $e^a{}_\mu = \omega^a{}_\mu$ for $a \in \mathcal{M}$,
+and the spin-connection components are $\omega_{\mathfrak{h}}^A{}_\mu =
+\omega^A{}_\mu$ for $A \in \mathcal{H}$.
+
+*Step 3 — Invariance equations.* For each $A \in \mathcal{H}$, build the
+$\dim\mathfrak{m} \times \dim\mathfrak{m}$ matrix
+$\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}$ from the structure constants
+(its $(a, b)$ entry, with $a, b \in \mathcal{M}$, is $f^a{}_{Ab}$).
+Solve the linear system
+
+$$
+\eta\, \mathrm{ad}_{X_A}\big|_{\mathfrak{m}}
++ \bigl(\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}\bigr)^T\, \eta \;=\; 0
+\qquad (A \in \mathcal{H})
+$$
+
+for the symmetric matrix $\eta = (\eta_{ab})_{a, b \in \mathcal{M}}$.
+The solution space is finite-dimensional (an irreducible
+$\mathfrak{h}$-rep on $\mathfrak{m}$ gives a 1-d family; reducible
+$\mathfrak{m}$ gives one scale per irreducible piece).
+
+*Step 4 — Metric in coordinates.* For any choice of $\eta$ in the
+invariant family,
+
+$$
+g_{\mu\nu}(x) \;=\; \sum_{a, b \in \mathcal{M}} \eta_{ab}\, e^a{}_\mu(x)\, e^b{}_\nu(x).
+$$
+
+*Step 5 (optional) — Curvature.* Compute the Cartan curvature 2-form
+
+$$
+\Omega^A{}_{\mu\nu}
+\;=\; \partial_\mu \omega_{\mathfrak{h}}^A{}_\nu
+- \partial_\nu \omega_{\mathfrak{h}}^A{}_\mu
++ \sum_{B, C \in \mathcal{H}} f^A{}_{BC}\, \omega_{\mathfrak{h}}^B{}_\mu\, \omega_{\mathfrak{h}}^C{}_\nu.
+$$
+
+It vanishes iff the model space is flat (e.g. $\mathbb{R}^n$,
+Minkowski, Galilean); on $S^n$ it is proportional to the volume form
+with coefficient $1/R^2$.
+
+*Step 6 (optional) — Killing vector fields.* For $\xi = \sum_a c_a X_a
+\in \mathfrak{g}$ regarded as an infinitesimal generator on $G/H$, the
+induced vector field is
+
+$$
+Y_\xi^\mu(x) \;=\; (e^{-1})^\mu{}_a(x)\, \bigl[\mathrm{Ad}_{\sigma(x)^{-1}}\, \xi\bigr]^a_{\mathfrak{m}},
+$$
+
+where $(e^{-1})^\mu{}_a$ is the inverse vielbein and the subscript
+$\mathfrak{m}$ projects onto the $\mathcal{M}$-indices.
+
 ---
 
-## Part I: The Poincaré algebra → Minkowski metric
+## The kinematical algebras
 
-### Commutation relations
+We now apply the framework to the algebras of physical spacetime —
+Poincaré (giving Minkowski) and Galilei (giving the degenerate Newtonian
+metrics) — and, as a foil, the Euclidean four-dimensional algebra
+$\mathfrak{iso}(4)$, which produces a perfectly consistent geometry that
+is ruled out as kinematics by velocity-addition and causal pathologies.
+For each algebra we also enumerate the *other* Klein quotients it
+admits, and close the chapter with a comparative table.
+
+### Poincaré → Minkowski
+
+#### Commutation relations
 
 The Poincaré algebra has ten generators $\{J_i, K_i, P^i, H\}$ with
 
@@ -419,7 +607,7 @@ $$
 We use $P^0 = H$ and label $\eta^{\mu\nu}$ accordingly: $\eta^{00} =
 g(H, H)$, $\eta^{0i} = g(H, P^i)$, $\eta^{ij} = g(P^i, P^j)$.
 
-### Imposing invariance
+#### Imposing invariance
 
 Apply the Leibniz condition with $X = K_i$ and the indicated indices.
 
@@ -454,7 +642,7 @@ which is automatic from $\eta^{0i} = 0$.
 Rotations $J_i$ impose no further constraint: the diagonal isotropic form
 $\eta^{ij} \propto \delta^{ij}$ already commutes with them.
 
-### Result
+#### Result
 
 Setting $\eta^{00} = -1$:
 
@@ -468,11 +656,220 @@ $$
 It is non-degenerate, $\det \eta = -1$, so the inverse $\eta_{\mu\nu} =
 \operatorname{diag}(-1, 1, 1, 1)$ is also invariant and is the same matrix.
 
----
+#### Worked example: point-stabilizers of the Poincaré algebra
 
-## Part II: The bare Galilei algebra → degenerate metrics
+What happens when we *put translations back in* and ask the analogous
+question for the full Poincaré algebra $\mathfrak{iso}(3,1) =
+\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ (dim 10)? Now the natural
+"space of points" should be 4-dim **Minkowski spacetime** $\mathbb{R}^{3,1}$,
+just as $\mathbb{R}^3$ was for $\mathfrak{e}(3)$. The question is whether the
+point-stabilizer giving this Minkowski geometry is unique, or whether (like
+$\mathfrak{so}(3,1)$ taken alone) Poincaré admits several inequivalent
+"point-stabilizing" Klein geometries.
 
-### Commutation relations
+The answer turns out to be exactly the same as for $\mathfrak{e}(3)$: the
+semidirect-product structure forces uniqueness. Minkowski is the unique
+non-degenerate 4-dim point-space. The reason is the same non-degeneracy
+filter we derived earlier.
+
+##### The non-degeneracy filter applies, unchanged
+
+The Poincaré brackets relevant for the argument are
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \quad
+[J^i, K^j] = \epsilon^{ijk} K^k, \quad
+[K^i, K^j] = -\epsilon^{ijk} J^k,
+$$
+$$
+[J^i, P^j] = \epsilon^{ijk} P^k, \quad
+[J^i, P^0] = 0, \quad
+[K^i, P^0] = P^i, \quad
+[K^i, P^j] = \delta^{ij} P^0, \quad
+[P^\mu, P^\nu] = 0.
+$$
+
+Suppose $\mathfrak{h}$ contains some translation $P \in \mathfrak{t}_{3,1}$
+and the complement $\mathfrak{m}$ contains some Lorentz generator $L$ (a
+rotation or boost). Acting on $\mathfrak{m}$, the Leibniz invariance under
+$P$ reads
+
+$$
+\eta([P, L], P') + \eta(L, \underbrace{[P, P']}_{= 0}) \;=\; 0
+\qquad\Longrightarrow\qquad
+\eta\bigl([P, L], P'\bigr) = 0.
+$$
+
+But $[P, L]$ for $P \in \mathfrak{t}_{3,1}$ and $L \in \mathfrak{so}(3,1)$
+is again a non-zero translation in $\mathfrak{m}$ (the boost $L$ rotates
+$P$ into another translation direction, etc.). So as $L$ ranges over the
+Lorentz part of $\mathfrak{m}$, $[P, L]$ sweeps out the translation block
+of $\mathfrak{m}$, forcing $\eta(P^*, P') = 0$ for *all* translations $P'
+\in \mathfrak{m}$. The translation block dies — exactly as it did for
+$\mathfrak{e}(3)$.
+
+> *A non-degenerate $\mathrm{ISO}(3,1)$-invariant metric on $G/H$ requires
+> that $\mathfrak{h}$ contain no translations:* $\mathfrak{h} \subset
+> \mathfrak{so}(3,1)$.
+
+This is verified directly by SymPy: e.g., taking $\mathfrak{h} =
+\mathfrak{so}(3) \oplus \langle P^0\rangle$ (rotations + time translation,
+dim 4) and complement $\mathfrak{m} = \langle K^i, P^i \rangle$ (dim 6),
+the Leibniz equations give a degenerate $\eta$ in block form
+
+$$
+\eta \;=\; \begin{pmatrix} \alpha\,\delta_{ij} & 0 \\ 0 & 0 \end{pmatrix},
+$$
+
+i.e., the boost block has $\alpha\delta^{ij}$ but the entire spatial-
+translation block is zero. The metric on $G/H$ has rank 3, not 6.
+
+##### Among Lorentz subalgebras, only $\mathfrak{so}(3,1)$ itself has dimension 6
+
+For a 4-dim $G/H$ we need $\dim \mathfrak{h} = 6$. The non-degeneracy filter
+restricts $\mathfrak{h} \subset \mathfrak{so}(3,1)$, which is itself 6-dim.
+So $\mathfrak{h} = \mathfrak{so}(3,1)$ is the **unique** point-stabilizer
+giving a non-degenerate 4-dim spacetime:
+
+$$
+\boxed{\;\mathbb{R}^{3,1} \;\equiv\; \mathrm{Minkowski} \;=\; \mathrm{ISO}(3,1) \,/\, SO(3,1).\;}
+$$
+
+Verifying the invariance with SymPy: the Leibniz system $\eta\,\mathrm{ad}_X
++ (\mathrm{ad}_X)^T \eta = 0$ for all six $X \in \mathfrak{so}(3,1)$ acting
+on $\mathfrak{m} = \mathfrak{t}_{3,1}$ has the unique (up to scale)
+solution
+
+$$
+\eta \;=\; \alpha\,\mathrm{diag}(-1,\,+1,\,+1,\,+1),
+$$
+
+with translation block index ordering $(P^0, P^1, P^2, P^3)$. **Minkowski
+signature $(-,+,+,+)$**, exactly as expected.
+
+##### Orbit–stabilizer interpretation
+
+Concretely, fix the spacetime origin $O = (0, 0, 0, 0) \in \mathbb{R}^{3,1}$.
+The Poincaré action $(\Lambda, a) \cdot x = \Lambda x + a$ takes
+$O \mapsto a$, so the orbit of $O$ is all of $\mathbb{R}^{3,1}$ (transitive).
+The stabilizer of $O$ is
+
+$$
+\mathrm{Stab}(O) \;=\; \{(\Lambda, a) : \Lambda \cdot 0 + a = 0\}
+\;=\; \{(\Lambda, 0) : \Lambda \in SO(3,1)\}
+\;=\; SO(3,1).
+$$
+
+At the Lie algebra level: Lorentz transformations through the origin fix
+$O$ (any $J^i, K^j \in \mathfrak{so}(3,1)$ satisfies $X \cdot O = 0$), while
+translations move $O$ to $\hat e_\mu$. So $\mathfrak{h}_O = \mathfrak{so}(3,1)$
+exactly. This is the relativistic analogue of "rotations fix the origin
+of $\mathbb{R}^3$" — except now "rotations" means *Lorentz
+transformations*, which include both compact rotations and non-compact
+boosts.
+
+##### Other Klein quotients of Poincaré (lower-dim stabilizers, higher-dim spaces)
+
+Although $\mathfrak{h} = \mathfrak{so}(3,1)$ is the unique
+*point*-stabilizer, the Poincaré algebra admits many other Klein
+quotients $G/H$ corresponding to spaces of (event + extra structure). The
+key recurring fact: such an $\mathfrak{h}$ is a subalgebra of
+$\mathfrak{so}(3,1)$, hence corresponds to one of the cases we already
+enumerated for $\mathfrak{so}(3,1)$:
+
+| $\mathfrak{h} \subset \mathfrak{so}(3,1)$ | $\dim\mathfrak{h}$ | $\dim G/H$ | What is fixed in Minkowski | $G/H$ as a fiber bundle over $\mathbb{R}^{3,1}$ |
+|---|---|---|---|---|
+| $\mathfrak{so}(3,1)$ | 6 | 4 | a single event (origin) | base only: Minkowski $\mathbb{R}^{3,1}$ ★ |
+| $\mathfrak{so}(3)$ | 3 | 7 | event + future-pointing 4-velocity | $\mathbb{R}^{3,1} \times \mathbb{H}^3$ — unit timelike tangent bundle |
+| $\mathfrak{so}(2,1)$ | 3 | 7 | event + unit spacelike direction | $\mathbb{R}^{3,1} \times dS_3$ — unit spacelike tangent bundle |
+| $\mathfrak{e}(2)$ (parabolic) | 3 | 7 | event + null direction | $\mathbb{R}^{3,1} \times S^2$ — projective null-cone bundle |
+| $\langle J^3\rangle$ | 1 | 9 | event + 4-velocity + spatial axis | (point, time-axis, spatial-axis) — almost a frame |
+| $\{0\}$ | 0 | 10 | full Lorentz frame (point + 4 orthonormal vectors) | the entire Poincaré group as a frame bundle |
+
+Each row reuses one of the $\mathfrak{so}(3,1)$ point-stabilizers from the
+previous subsection — but now translated up by adding 4 translation
+directions to $\mathfrak{m}$. So Poincaré "inherits" the multiplicity from
+its Lorentz subalgebra: choosing different sub-stabilizers of $\mathfrak{so}(3,1)$
+gives different "tower" Klein geometries over Minkowski with different
+fibre geometries ($\mathbb{H}^3$, $dS_3$, $S^2$, frames). These are
+familiar from physics:
+
+- $\mathbb{R}^{3,1} \times \mathbb{H}^3$ is the **mass shell** times spacetime
+  — the phase space of a single massive particle in special relativity.
+- $\mathbb{R}^{3,1} \times S^2$ is the **bundle of light rays**; its
+  projectivization (modding out the affine null direction) is the space of
+  unoriented light rays through Minkowski, basic in optics and twistor theory.
+- $\mathbb{R}^{3,1} \times dS_3$ is the bundle of unit-spacelike vectors —
+  the configuration space of a "tachyonic" mode if one wanted such a
+  thing.
+
+So Poincaré has a *unique* "space of events" Klein quotient, but a *family*
+of richer Klein quotients indexed by what extra structure one attaches to
+each event.
+
+##### Higher-dim stabilizers (containing translations) give degenerate quotients
+
+For completeness: if $\mathfrak{h}$ contains some translations, the
+non-degeneracy filter fails. The two physically most natural examples:
+
+- $\mathfrak{h} = \langle J^i, P^i \rangle = \mathfrak{e}(3)$ (rotations +
+  spatial translations, dim 6). This is the *little group of a future-
+  pointing timelike vector* in the affine action. The Klein quotient $G/H$
+  is 4-dim, parameterized by $(K^i, P^0)$ — three boost rapidities and one
+  time offset. Geometrically, this is the space of **inertial worldlines**
+  starting at the origin, or equivalently the **Galilean limit** boundary
+  of Minkowski as $c \to \infty$. The Leibniz equations admit only a
+  degenerate metric (Galilei has *two* invariants, the temporal and spatial
+  metrics, as derived in §'Galilei → degenerate metrics').
+
+- $\mathfrak{h} = \langle J^i, K^i, P^0 \rangle$ is *not* a subalgebra
+  because $[K^i, P^0] = P^i \notin \mathfrak{h}$. There is no "stabilize a
+  spatial hyperplane $t = 0$" subalgebra of $\mathfrak{iso}(3,1)$ — boosts
+  necessarily mix time-translations with space-translations. To stabilize
+  a hyperplane one must drop the boosts, recovering Galilei.
+
+The non-existence of a "spacelike hyperplane" Klein quotient of Poincaré is
+the algebraic content of the relativity of simultaneity: there is no
+Poincaré-invariant notion of "the space at time $t$".
+
+##### Structural comparison
+
+The whole story so far is captured by a single table:
+
+| algebra $\mathfrak{g}$ | structure | # of reductive "point-stabilizers" | resulting spaces |
+|---|---|---|---|
+| $\mathfrak{e}(3)$ | semidirect: $\mathfrak{so}(3) \ltimes \mathfrak{t}_3$ | **unique**: $\mathfrak{so}(3)$ | $\mathbb{R}^3$ Euclidean only |
+| $\mathfrak{iso}(3,1)$ | semidirect: $\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ | **unique**: $\mathfrak{so}(3,1)$ | Minkowski $\mathbb{R}^{3,1}$ only |
+| $\mathfrak{so}(2,1)$ | simple | **two**: $\mathfrak{so}(2)$, $\mathfrak{so}(1,1)$ | $\mathbb{H}^2$ Riemannian, $AdS_2$ Lorentzian |
+| $\mathfrak{so}(3,1)$ | simple | **two**: $\mathfrak{so}(3)$, $\mathfrak{so}(2,1)$ | $\mathbb{H}^3$ Riemannian, $dS_3$ Lorentzian |
+| $\mathfrak{so}(4,2)$ (conformal) | simple | **several** | compactified Minkowski, $\mathbb{R} \times S^3$, $AdS_5$, $dS_4 \times S^1$, ... |
+
+The structural punchline:
+
+> *Semidirect-product (kinematical) algebras have a **unique** point-
+> stabilizing Klein geometry — the metric is forced. Simple Lie algebras
+> have a **family** of point-stabilizing geometries — Riemannian and
+> pseudo-Riemannian constant-curvature variants of various signatures.*
+
+Physically, this matches the role of these algebras in physics:
+
+- Newtonian / Euclidean physics uses $\mathfrak{e}(3)$, which produces
+  $\mathbb{R}^3$ uniquely. No metric ambiguity.
+- Special relativity uses $\mathfrak{iso}(3,1)$, which produces Minkowski
+  uniquely. No metric ambiguity.
+- Cosmology / quantum gravity / AdS-CFT, when working with constant-
+  curvature spacetimes, use $\mathfrak{so}(p,q)$. These come in pairs
+  (Riemannian and Lorentzian for each curvature sign), and the choice of
+  point-stabilizer is part of the model.
+
+In particular, the *uniqueness* of Minkowski as the Klein quotient of the
+Poincaré algebra explains why "special relativity is special": the algebra
+has only one geometric interpretation, and the metric signature $(-,+,+,+)$
+is forced — not assumed — by the algebraic structure alone.
+
+### Galilei → degenerate metrics
+
+#### Commutation relations
 
 The bare Galilei algebra has the same generators with two changes from
 Poincaré (boxed):
@@ -489,7 +886,7 @@ $$
 The two differences — $[K_i, K_j] = 0$ and $[K_i, P^j] = 0$ — are what change
 Minkowski into the Galilean structure.
 
-### Temporal metric (bilinear form on $V$)
+#### Temporal metric (bilinear form on $V$)
 
 Apply the Leibniz condition with $X = K_i$:
 
@@ -524,7 +921,7 @@ $$
 This is the spacetime interval $\Delta s^2 = (\Delta t)^2$: **absolute
 time**.
 
-### Spatial metric (symmetric 2-tensor on $V$)
+#### Spatial metric (symmetric 2-tensor on $V$)
 
 The temporal metric is degenerate ($\det = 0$), so it has no inverse. But
 the Galilei algebra admits a second, independent invariant: a symmetric
@@ -586,7 +983,7 @@ $$
 
 This is the Euclidean 3-metric on each slice of simultaneity.
 
-### Why two metrics for Galilei?
+#### Why two metrics for Galilei?
 
 The two invariants live in different spaces:
 
@@ -612,18 +1009,481 @@ That **no** non-degenerate $\eta$ exists for Galilei is visible directly from
 the calculation: the boost condition $\eta^{ij} = 0$ forces the entire
 spatial block to vanish, leaving $\det \eta = 0$.
 
+#### Worked example: point-stabilizers of the full 10-parameter Galilei algebra
+
+Continuing the parallel with Poincaré, we now examine the **full
+10-parameter Galilei algebra** $\mathfrak{gal} = \mathfrak{h}_0 \ltimes
+\mathfrak{t}_{1,3}$, with $\mathfrak{h}_0 = \mathfrak{so}(3) \ltimes
+\mathbb{R}^3_{\mathrm{boost}}$ the *homogeneous* Galilei algebra
+(rotations + Galilean boosts) and $\mathfrak{t}_{1,3}$ the 4-dim
+abelian ideal of time + spatial translations.
+
+##### Generators and brackets
+
+Ten generators: $J^i$ (3 rotations), $K^i$ (3 Galilean boosts, generators of
+$x' = x + vt$), $H$ (time translation), $P^i$ (3 spatial translations). The
+brackets of the **bare** Galilei algebra (no Bargmann central extension) are
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \quad
+[J^i, K^j] = \epsilon^{ijk} K^k, \quad
+[J^i, P^j] = \epsilon^{ijk} P^k, \quad
+[J^i, H] = 0,
+$$
+$$
+[K^i, K^j] = 0, \quad
+[K^i, P^j] = 0, \quad
+[K^i, H] = -P^i, \quad
+[P^i, P^j] = 0, \quad
+[P^i, H] = 0.
+$$
+
+The key qualitative differences from Poincaré:
+
+- Galilean boosts **commute** with each other: $[K^i, K^j] = 0$, not the
+  $-\epsilon^{ijk}J^k$ of Lorentz. This is the algebraic signature of
+  $c = \infty$.
+- Boosts commute with spatial translations: $[K^i, P^j] = 0$, where
+  Poincaré had $\delta^{ij} P^0$. (Reinstating the central extension $M$
+  would give $[K^i, P^j] = M \delta^{ij}$, the *Bargmann algebra* of
+  non-relativistic quantum mechanics.)
+- Boosts produce spatial translations from time: $[K^i, H] = -P^i$. (This
+  is the algebraic backbone of "moving frames pick up a position offset
+  $vt$".)
+
+##### Non-degeneracy filter (still applies)
+
+The exact same Leibniz argument as for $\mathfrak{e}(3)$ and Poincaré
+shows: any $\mathfrak{h}$ containing a translation kills the corresponding
+block of the metric on $\mathfrak{m}$. So a non-degenerate $G$-invariant
+metric (if it existed) would force $\mathfrak{h} \subset \mathfrak{h}_0 =
+\langle J^i, K^i \rangle$.
+
+For a 4-dim $G/H$ (the natural "Galilean spacetime") we need $\dim
+\mathfrak{h} = 6$, and $\mathfrak{h}_0$ is exactly 6-dim. So
+**$\mathfrak{h} = \mathfrak{h}_0$ is the unique candidate**, just as for
+Poincaré.
+
+##### What the metric looks like
+
+Take $\mathfrak{h} = \mathfrak{h}_0$ and $\mathfrak{m} = \langle H, P^1,
+P^2, P^3 \rangle$. The bracket check:
+
+- $[J^i, H] = 0$, $[J^i, P^j] = \epsilon^{ijk} P^k \in \mathfrak{m}$ ✓
+- $[K^i, H] = -P^i \in \mathfrak{m}$, $[K^i, P^j] = 0 \in \mathfrak{m}$ ✓
+
+So **reductive**. Solving the Leibniz invariance with SymPy (or by hand —
+rotations give standard so(3) constraints, the boost $K^1$ gives $\eta
+\cdot \mathrm{ad}_{K^1} + \mathrm{ad}_{K^1}^T \cdot \eta = 0$ with
+$\mathrm{ad}_{K^1}$ taking $H \mapsto -P^1$ and the spatial $P^j \mapsto
+0$) yields
+
+$$
+\boxed{\;\eta_{\mathrm{Galilei}} \;=\; \alpha\,
+\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}.\;}
+$$
+
+This is **rank 1**: only the temporal block survives, and the entire
+$3 \times 3$ spatial block is *forced to zero* by boost-invariance. There
+is **no non-degenerate Galilei-invariant metric** on $\mathfrak{m}$.
+
+##### What the degenerate metric means physically
+
+The Galilei algebra forbids a single non-degenerate 4-dim metric. Instead
+it admits **two compatible invariant tensors**, derived in §'Galilei → degenerate metrics' of this
+document:
+
+- A **temporal 1-form** $\tau = dt$ (the rank-1 covariant tensor above),
+  measuring time intervals between events.
+- A **spatial inverse metric** $h^{ij} = \delta^{ij}$ on the cotangent
+  bundle, restricted to spatial covectors (those annihilating $\tau$),
+  measuring spatial distances within a simultaneity slice.
+
+Together $(\tau, h^{ij})$ form the **Newton–Cartan structure** on
+Galilean spacetime. The reason both must exist independently is precisely
+that boost-invariance forces the spatial-covariant block to vanish: boosts
+"tilt" simultaneity slices into each other's, so no Galilei-invariant 4-dim
+metric on the tangent bundle can distinguish "simultaneous" from
+"non-simultaneous" pairs of points.
+
+##### Point-stabilizer uniqueness for Galilei
+
+Despite the metric being degenerate, the **point-stabilizer remains unique**
+by exactly the same semidirect-product argument:
+
+| Quantity | Galilei value |
+|---|---|
+| Algebra | $\mathfrak{gal} = (\mathfrak{so}(3) \ltimes \mathbb{R}^3_{\mathrm{boost}}) \ltimes (\mathbb{R} \oplus \mathbb{R}^3_{\mathrm{trans}})$ |
+| Total dim | 10 |
+| Translation ideal | 4-dim ($H, P^i$) |
+| Homogeneous part | 6-dim ($J^i, K^i$) |
+| Unique point-stabilizer | $\mathfrak{h}_0 = \langle J^i, K^i \rangle$, dim 6 |
+| Quotient | Galilean spacetime $\mathbb{R} \times \mathbb{R}^3$ (4-dim) |
+| Invariant metric | **degenerate** rank-1 temporal $\tau$ + spatial inverse $h$ |
+
+Galilean spacetime is therefore *unique* as a Klein quotient of the
+Galilei algebra — exactly as Minkowski is unique for Poincaré and
+$\mathbb{R}^3$ is unique for $\mathfrak{e}(3)$. The semidirect-product
+structure with abelian translation ideal forces the answer in all three
+cases. What distinguishes Galilei from Poincaré is not the choice of
+$\mathfrak{h}$ — it's the **bracket** $[\mathfrak{h}, \mathfrak{m}]$
+between the stabilizer and translations:
+
+- **Poincaré**: $[K^i, H] = P^i$ AND $[K^i, P^j] = \delta^{ij} H$
+  (boosts couple time and space symmetrically) → non-degenerate $\eta$ of
+  signature $(-,+,+,+)$.
+- **Galilei**: $[K^i, H] = -P^i$ but $[K^i, P^j] = 0$ (boosts couple time
+  to space, but not back) → degenerate $\eta$ with rank 1.
+
+The "missing bracket" $[K^i, P^j]$ in Galilei is the algebraic content of
+the $c \to \infty$ limit, and it is *exactly* what makes the resulting
+spacetime metric degenerate.
+
+##### Other Klein quotients of Galilei
+
+As with Poincaré, Galilei admits many other Klein quotients of higher
+dimension corresponding to attaching extra structure to each event:
+
+| $\mathfrak{h}$ | $\dim\mathfrak{h}$ | $\dim G/H$ | Geometric interpretation |
+|---|---|---|---|
+| $\mathfrak{h}_0 = \langle J^i, K^i\rangle$ | 6 | 4 | Galilean spacetime ★ |
+| $\mathfrak{so}(3) = \langle J^i\rangle$ | 3 | 7 | event + 3-velocity (Galilean phase space) |
+| $\langle K^i\rangle$ (abelian) | 3 | 7 | event + spatial axis-orientation |
+| $\langle J^3, K^3\rangle$ | 2 | 8 | event + axis direction (rotational + boost about $\hat z$) |
+| $\{0\}$ | 0 | 10 | bare Galilei group as frame bundle |
+| $\langle J^i, P^i\rangle = \mathfrak{e}(3)$ | 6 | 4 | (non-reductive — has translations) |
+
+The first row is the standard Galilean spacetime. The second row, with
+$\mathfrak{h} = \mathfrak{so}(3)$, gives 4-dim base + 3-dim Galilean
+boosts as fibre — the **Galilean phase space** $\mathbb{R}^{1+3} \times
+\mathbb{R}^3_v$, the configuration space of a single non-relativistic
+particle (event + 3-velocity).
+
+### Worked example: the Euclidean "Poincaré" algebra $\mathfrak{iso}(4) = \mathfrak{so}(4) \ltimes \mathbb{R}^4$
+
+We now combine the previous two examples: take $\mathfrak{so}(4)$ as the
+homogeneous algebra and adjoin 4 translation generators with the standard
+Poincaré-like commutation relations. The result is the **Euclidean
+Poincaré algebra**
+
+$$
+\mathfrak{iso}(4) \;=\; \mathfrak{so}(4) \,\ltimes\, \mathbb{R}^4.
+$$
+
+This is a perfectly well-defined 10-parameter kinematical algebra — the
+same dimension as $\mathfrak{iso}(3,1)$ (Poincaré) and the Galilei
+algebra. The question is: what spacetime geometry does it produce, and why
+isn't it the physically realized one?
+
+#### Brackets
+
+Write the 10 generators as $J^i$ (3 spatial rotations), $K^i$
+(3 "Euclidean boosts", i.e., rotations in the $(t, x^i)$ planes), $H = P^0$
+(time translation), $P^i$ (3 spatial translations), with $J^i =
+\tfrac{1}{2}\epsilon^{ijk}J^{jk}$ and $K^i = J^{i0}$. From
+$[J^{\mu\nu}, J^{\rho\sigma}] = \delta^{\mu\rho}J^{\nu\sigma} - \cdots$
+and $[J^{\mu\nu}, P^\rho] = \delta^{\mu\rho}P^\nu - \delta^{\nu\rho}P^\mu$
+with Euclidean $\delta_{\mu\nu} = \mathrm{diag}(+,+,+,+)$, the brackets
+are
+
+$$
+\begin{aligned}
+{}[J^i, J^j] &= \epsilon^{ijk} J^k, \\
+[J^i, K^j] &= \epsilon^{ijk} K^k, \\
+[K^i, K^j] &= \boxed{+\epsilon^{ijk} J^k}, \\
+[J^i, H] &= 0, \qquad [J^i, P^j] = \epsilon^{ijk} P^k, \\
+[K^i, H] &= -P^i, \qquad [K^i, P^j] = \boxed{+\delta^{ij} H}, \\
+[H, P^i] &= 0, \qquad [P^i, P^j] = 0.
+\end{aligned}
+$$
+
+The two boxed signs are the **algebraic difference** between the three
+10-parameter kinematical algebras:
+
+| algebra | $[K^i, K^j]$ | $[K^i, P^j]$ |
+|---|---|---|
+| Lorentz (Poincaré) | $-\epsilon^{ijk} J^k$ (non-compact boosts) | $+\delta^{ij} H$ |
+| Galilei | $0$ (commuting boosts) | $0$ (decoupled) |
+| **Euclidean** | $+\epsilon^{ijk} J^k$ (**compact** boosts!) | $+\delta^{ij} H$ |
+
+The Euclidean version differs from Lorentz by a single sign in $[K^i,
+K^j]$ — exactly the Wick-rotation flip $t \to it$.
+
+#### Point-stabilizer and metric
+
+The non-degeneracy filter forces $\mathfrak{h} \subset \langle J^i, K^i
+\rangle$. We need $\dim\mathfrak{h} = 6$, and $\mathfrak{so}(4) =
+\langle J^i, K^i \rangle$ is exactly 6-dim. So just as in Poincaré and
+Galilei,
+
+$$
+\mathfrak{h} \;=\; \mathfrak{so}(4) \quad\text{is the unique candidate.}
+$$
+
+Solving Leibniz invariance for the symmetric metric $\eta$ on $\mathfrak{m}
+= \langle H, P^1, P^2, P^3\rangle$ (SymPy verified) gives
+
+$$
+\boxed{\;\eta_{\mathrm{Eucl}} \;=\; \alpha\,
+\mathrm{diag}(+1, +1, +1, +1).\;}
+$$
+
+Signature $(+,+,+,+)$ — **fully Riemannian 4-space**. The Klein quotient
+is
+
+$$
+\mathbb{R}^4_{\mathrm{Eucl}} \;=\; ISO(4) \,/\, SO(4),
+$$
+
+i.e., flat 4-dim Euclidean space with the round metric $dt^2 + dx^2 +
+dy^2 + dz^2$. This is the **Wick-rotated Minkowski space** of Euclidean
+QFT.
+
+#### Physical problem #1: velocity addition can give zero or negative velocity
+
+In Lorentz, a boost $K^1$ acts on $(t, x)$ as
+the Lorentz "rotation" $\sinh\phi$, $\cosh\phi$ with rapidity $\phi$. In
+the **Euclidean** case it acts as a literal **circular rotation**:
+
+$$
+\begin{pmatrix} t' \\ x' \end{pmatrix}
+\;=\;
+\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}
+\begin{pmatrix} t \\ x \end{pmatrix}.
+$$
+
+For a particle worldline $x = vt$, the boosted worldline has velocity
+
+$$
+v' \;=\; \frac{x'}{t'} \;=\; \frac{v\cos\theta + \sin\theta}{\cos\theta - v\sin\theta}
+\;=\; \frac{v + \tan\theta}{1 - v\tan\theta}.
+$$
+
+Identifying the *frame velocity* of the boost as $u = \tan\theta$, the
+**Euclidean velocity addition law** is
+
+$$
+\boxed{\;v_1 \oplus v_2 \;=\; \frac{v_1 + v_2}{1 - v_1 v_2}.\;}
+$$
+
+Compare:
+
+| group | addition law | comments |
+|---|---|---|
+| Galilei | $v_1 \oplus v_2 = v_1 + v_2$ | linear, unbounded |
+| Lorentz | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 + v_1 v_2}$ | $\|v\| < 1$ stays in $(-1,1)$ |
+| Euclidean | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 - v_1 v_2}$ | **singularities and sign flips** |
+
+The Euclidean law has three pathologies:
+
+1. **Pole at $v_1 v_2 = 1$**: adding two velocities of magnitude $1$ gives
+   *infinite* velocity. There's a vertical-asymptote in the addition
+   law.
+2. **Sign reversal for $v_1 v_2 > 1$**: adding two positive velocities
+   $v_1, v_2 > 1$ gives a **negative** result. Example: $v_1 = v_2 = 2$
+   gives $v_1 \oplus v_2 = 4 / (1 - 4) = -4/3 < 0$.
+3. **Periodic return to rest**: repeated boosting cycles through
+   $0 \to \infty \to -\infty \to 0$. The boost subgroup is $SO(2)$, which
+   is **compact**: a "boost by angle $\pi$" returns the velocity to zero.
+
+The geometric picture is clean: $v = \tan\theta$ where $\theta \in S^1$ is
+the rotation angle in the $(t,x)$ plane. As $\theta$ runs around the circle:
+
+| $\theta$ | $v = \tan\theta$ | description |
+|---|---|---|
+| $0$ | $0$ | rest |
+| $\pi/4$ | $1$ | "diagonal" worldline |
+| $\pi/2^-$ | $+\infty$ | worldline becomes horizontal in $(t,x)$ |
+| $\pi/2^+$ | $-\infty$ | crosses over: velocity flips sign |
+| $3\pi/4$ | $-1$ | |
+| $\pi$ | $0$ | back to rest! |
+
+Two boosts add their angles: $\theta_1 + \theta_2$. So composing a boost
+of $\theta_1 = \pi/3$ with another of $\theta_2 = 2\pi/3$ gives
+$\theta = \pi$, i.e., $v = 0$ — the moving frame is at rest with respect
+to the original. **Two non-zero boosts compose to no boost.**
+
+#### Physical problem #2: no causal structure
+
+The "boost" rotation by $\theta = \pi/2$ exactly **swaps time and space
+axes**:
+
+$$
+(t, x) \;\xrightarrow{\theta = \pi/2}\; (-x, t).
+$$
+
+So time and space are *interchangeable* by a symmetry of the algebra.
+There is:
+
+- No invariant notion of "future" vs. "past": no light cones, no causal
+  ordering.
+- No distinction between "particle" worldlines and "spatial" curves: any
+  smooth curve can be rotated into any other.
+- No fixed mass shell $\eta(p,p) = -m^2$ — only $\delta(p,p) = m^2$
+  with $m \in \mathbb{R}$, which is a 3-sphere $S^3$ in momentum space
+  (compact!), and the "energy" $p^0$ is bounded ($\|p^0\| \le m$) rather
+  than the unbounded Lorentzian hyperboloid.
+
+This is incompatible with what we actually observe: the universe has a
+preferred causal structure (events have unambiguous past/future
+relations, signals do not propagate faster than $c$, energy is bounded
+below but not above).
+
+#### Why it "works for small speeds"
+
+Expand the Euclidean addition law for small $v_1, v_2$:
+
+$$
+v_1 \oplus_{\mathrm{Eucl}} v_2 \;=\; (v_1 + v_2)(1 + v_1 v_2 + \cdots)
+\;\approx\; v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots
+$$
+
+Compare with the other two:
+
+$$
+\begin{aligned}
+v_1 \oplus_{\mathrm{Gal}} v_2 &= v_1 + v_2, \\
+v_1 \oplus_{\mathrm{Lor}} v_2 &= v_1 + v_2 - v_1 v_2 (v_1 + v_2) + \cdots, \\
+v_1 \oplus_{\mathrm{Eucl}} v_2 &= v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots.
+\end{aligned}
+$$
+
+To **first order in $v$**, all three agree with Galilei: $v_1 \oplus v_2
+\approx v_1 + v_2$. The differences appear only at $O(v^3)$:
+
+- Lorentz: correction has **negative** sign → velocities saturate at $c =
+  1$.
+- Euclidean: correction has **positive** sign → velocities accelerate
+  past any bound, eventually overflow into the pole, and reverse.
+- Galilei: no correction at all → strict additivity.
+
+This is why all three kinematical algebras agree with everyday
+experience. To distinguish them experimentally one must reach speeds
+where the cubic correction is detectable. The Michelson–Morley experiment
+and many later observations rule in favor of Lorentz (negative sign,
+$|v| < c$). The Euclidean version has never been observed because the
+cubic correction would have to *enhance* velocity addition rather than
+suppressing it.
+
+#### Connection to Wick rotation and Euclidean QFT
+
+Although $\mathfrak{iso}(4)$ is not the kinematical algebra of physical
+spacetime, it plays a crucial role in quantum field theory. The **Wick
+rotation** $t \to -i\tau$ analytically continues Lorentzian quantities to
+Euclidean ones, replacing $\mathfrak{iso}(3,1)$ with $\mathfrak{iso}(4)$
+and converting
+
+$$
+e^{iS_{\mathrm{Lor}}[\phi]} \;\longrightarrow\; e^{-S_{\mathrm{Eucl}}[\phi]},
+$$
+
+turning the oscillatory path integral into a well-defined statistical-
+mechanics partition function. The two algebras share the same
+*complexification*
+
+$$
+\mathfrak{iso}(3,1)_\mathbb{C} \;\cong\; \mathfrak{iso}(4)_\mathbb{C},
+$$
+
+so analytic continuation is meaningful and many calculations are easier
+to perform in the Euclidean version. But the **physical** algebra is the
+Lorentzian one, recovered by rotating back.
+
+#### Summary
+
+| Property | $\mathfrak{iso}(4)$ |
+|---|---|
+| Algebra | $\mathfrak{so}(4) \ltimes \mathbb{R}^4$, dim 10, semidirect |
+| Point-stabilizer | $\mathfrak{so}(4)$, unique (semidirect rigidity) |
+| Klein quotient | $\mathbb{R}^4_{\mathrm{Eucl}}$ with metric $\delta_{\mu\nu}$, signature $(+,+,+,+)$ |
+| Boost subgroup | $SO(2) \subset SO(4)$, **compact** |
+| Velocity addition | $(v_1 + v_2)/(1 - v_1 v_2)$ — pathological |
+| Causal structure | **none** (time and space interchangeable) |
+| Small-velocity limit | matches Galilei and Lorentz to first order in $v$ |
+| Physical role | Wick rotation in QFT; not a physical kinematical group |
+
+So $\mathfrak{iso}(4)$ joins our table as a fifth 10-parameter
+kinematical algebra with a *unique* point-stabilizer, giving Euclidean
+$\mathbb{R}^4$. The semidirect-product rigidity holds — but the metric it
+forces, while non-degenerate and a perfectly good Riemannian metric, has
+the wrong signature to describe spacetime. The signature of the metric is
+not a free choice: it is dictated by the bracket $[K^i, K^j]$, and
+Lorentz $(\!-\!)$ vs. Euclidean $(\!+\!)$ vs. Galilei $(0)$ are the three
+algebraically distinct options.
+
+### Comparative summary table
+
+Combining all examples done in this document so far:
+
+| algebra | structure | # eff. pt-stabilizers | resulting "spaces of points" |
+|---|---|---|---|
+| $\mathfrak{e}(2)$ | semidirect, abelian translations | 1 | $\mathbb{R}^2$ (Euclidean) |
+| $\mathfrak{e}(3)$ | semidirect, abelian translations | 1 | $\mathbb{R}^3$ (Euclidean) |
+| $\mathfrak{gal}$ | semidirect, abelian translations | 1 | Galilean spacetime $\mathbb{R}\times\mathbb{R}^3$ (degenerate metric) |
+| $\mathfrak{iso}(3,1)$ | semidirect, abelian translations | 1 | Minkowski $\mathbb{R}^{3,1}$, signature $(-,+,+,+)$ |
+| $\mathfrak{iso}(4)$ | semidirect, abelian translations | 1 | Euclidean $\mathbb{R}^4$, signature $(+,+,+,+)$ — pathological as kinematical |
+| $\mathfrak{so}(2,1)$ | simple, indefinite | 2 | $\mathbb{H}^2$, $AdS_2$ |
+| $\mathfrak{so}(3)$ | simple, compact | 1 | $S^2$ |
+| $\mathfrak{so}(4)$ | semisimple (= sum of two ideals), compact | 1 (effective) | $S^3$ |
+| $\mathfrak{so}(3,1)$ | simple, indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
+| $\mathfrak{so}(4,2)$ (conformal) | simple, indefinite | several | comp. Minkowski, $AdS_5$, $\mathbb{R}\times S^3$, ... |
+
+Three rules emerging:
+
+1. **Semidirect-product algebras** $\mathfrak{g} = \mathfrak{h}_0 \ltimes
+   \mathfrak{t}$ with abelian translation ideal $\mathfrak{t}$ always have a
+   **unique** point-stabilizer, namely $\mathfrak{h}_0$ itself. The metric
+   on $G/H \cong \mathfrak{t}$ is determined by the action of $\mathfrak{h}_0$
+   on $\mathfrak{t}$ — and may be Lorentzian (Poincaré), Riemannian
+   (Euclidean $\mathfrak{iso}(4)$, Galilei spatial part), or degenerate
+   (Galilei full metric). Uniqueness of the *quotient* does not mean
+   uniqueness of the *physical interpretation*: $\mathfrak{iso}(4)$ is
+   mathematically fine but physically wrong; the signature of the metric
+   alone selects which kinematical algebra is realized.
+2. **Simple compact algebras** $\mathfrak{so}(n+1)$, $\mathfrak{su}(n)$,
+   etc. have a **unique** effective point-stabilizer, yielding the
+   corresponding sphere or other compact Riemannian symmetric space.
+3. **Simple indefinite-signature algebras** $\mathfrak{so}(p,q)$ with
+   $p, q > 0$ have **multiple** point-stabilizers, yielding Riemannian /
+   Lorentzian pairs (or larger families) of constant-curvature pseudo-
+   Riemannian symmetric spaces.
+
+The semidirect-product cases are the "kinematical" algebras of physics
+(Galilei, Newton–Hooke, Carroll, Poincaré, $\mathfrak{iso}(4)$, de Sitter,
+Bargmann), each yielding a unique spacetime geometry. Of these, only
+**Poincaré**, **Galilei**, and (with caveats) **Carroll / Newton–Hooke**
+describe physically realized regimes; **$\mathfrak{iso}(4)$ is ruled out
+empirically** by the velocity-addition pathologies derived above. The
+simple indefinite cases are typically the **conformal extensions** or the
+**cosmological-constant modifications** of these, where multiple
+geometric interpretations coexist.
+
 ---
 
-## Part III: Euclidean spaces — $\mathbb{R}^2$ and $\mathbb{R}^3$
+## Spaces of constant curvature
 
-The Poincaré and Galilei algebras are only two members of a much larger
-family. The Lie algebras $\mathfrak{e}(n)$ of Euclidean isometries — and
-the Lie algebras $\mathfrak{so}(n+1)$ of spherical isometries — admit the
-same Klein-pair + Leibniz-invariance analysis, and produce the standard
-Euclidean and spherical metrics. We work them out in 2 and 3 dimensions
-to show how generic the construction is.
+The kinematical algebras above were all flat: their translation
+subspaces $\mathfrak{m}$ are abelian ideals, $[\mathfrak{m},
+\mathfrak{m}] = 0$, and the Klein quotient is an affine space. We
+turn now to the curved counterparts. The Lie algebras $\mathfrak{e}(n)$
+of Euclidean isometries and $\mathfrak{so}(n+1)$ of spherical
+isometries admit the same Klein-pair + Leibniz analysis, and produce
+the standard Euclidean and round-sphere metrics. The single algebraic
+distinction "$[\mathfrak{m}, \mathfrak{m}] = 0$ vs. $\subset
+\mathfrak{h}$" separates the flat from the curved cases; the metric
+on $\mathfrak{m}$, in every case, is fixed by the same Leibniz
+invariance condition.
 
-### Two-dimensional Euclidean space $\mathbb{R}^2$
+### Flat: $\mathbb{R}^2$ and $\mathbb{R}^3$ as $\mathfrak{e}(n)/\mathfrak{so}(n)$
+
+For $\mathfrak{m}$ an abelian ideal, the exponential map gives a
+global diffeomorphism $\mathfrak{m} \to G/H$, the resulting space is a
+flat affine space, and the algorithm produces the round Euclidean
+metric on it. We do the cases $n = 2$ and $n = 3$ in succession; the
+explicit coordinate work (polar, Cartesian, Christoffels, position
+vector) is in chapter "Worked detail".
+
+#### Two-dimensional Euclidean space $\mathbb{R}^2$
 
 The Euclidean algebra $\mathfrak{e}(2) = \mathfrak{so}(2) \ltimes
 \mathbb{R}^2$ has three generators $\{J, P^1, P^2\}$, with
@@ -681,543 +1541,7 @@ $\mathfrak{m}$ is an abelian ideal, the exponential map gives a global
 diffeomorphism $\mathfrak{m} \to \mathbb{R}^2$, and $\eta^{ij}$ on
 $\mathfrak{m}$ becomes $ds^2 = (dx^1)^2 + (dx^2)^2$ on $\mathbb{R}^2$.
 
-**Translating to polar coordinates.** Polar coordinates make the same
-point that was sharper on $S^2$: the *coordinate* form of the metric
-depends on the chart, while the underlying bilinear form does not. We
-run the five-step Maurer–Cartan procedure used for $S^2$, now on
-$\mathfrak{e}(2)$ instead of $\mathfrak{so}(3)$. The output is the
-familiar polar-coordinate metric of flat $\mathbb{R}^2$ — and the
-connection $\omega_{\mathfrak{h}}$ comes out flat by direct
-calculation, confirming that the space is flat despite the
-coordinate-dependent metric components.
-
-*Step 1: Coordinate-defining section.* Pick the basepoint at the origin
-and define polar coordinates $(r, \phi)$ algebraically by the section
-
-$$
-\sigma(r, \phi) \;=\; e^{\phi J}\, e^{r P^1}.
-$$
-
-$P^1$ translates the basepoint by $r$ along the 1-direction (giving
-point $(r, 0)$); $J$ then rotates by $\phi$ around the origin (giving
-$(r\cos\phi, r\sin\phi)$). These are standard polar coordinates by
-construction. The section is regular on $r > 0$; at $r = 0$ the
-$\phi$-coordinate is ill-defined, exactly as for the polar chart on
-$\mathbb{R}^2$.
-
-*Step 2: Maurer–Cartan form.* Compute
-$\sigma^{-1}\, d\sigma = \omega_r\, dr + \omega_\phi\, d\phi$.
-
-$\partial_r \sigma = e^{\phi J} P^1 e^{r P^1}$ gives, after multiplying
-on the left by $\sigma^{-1}$,
-
-$$
-\omega_r \;=\; e^{-r P^1} P^1 e^{r P^1} \;=\; P^1
-$$
-
-(since $[P^1, P^1] = 0$). Next, $\partial_\phi \sigma = J\, \sigma$
-gives
-
-$$
-\omega_\phi \;=\; \sigma^{-1} J\, \sigma
-\;=\; e^{-r P^1}\, J\, e^{r P^1}
-\;=\; \mathrm{Ad}_{e^{-r P^1}}\, J.
-$$
-
-The Lie-algebra calculation:
-$[-rP^1,\, J] = r\,[J, P^1] = r P^2$; the next bracket
-$[-rP^1,\, r P^2] = -r^2 [P^1, P^2] = 0$ closes the series. Hence
-
-$$
-\omega_\phi \;=\; J + r\, P^2.
-$$
-
-*Step 3: Read off the vielbein.* With $\mathfrak{m} = \{P^1, P^2\}$ and
-$\mathfrak{h} = \{J\}$, split $\omega = e + \omega_{\mathfrak{h}}$:
-
-$$
-\begin{aligned}
-e_r &= P^1,        & e_\phi &= r\, P^2, \\
-\omega_{\mathfrak{h},\, r} &= 0,  & \omega_{\mathfrak{h},\, \phi} &= J.
-\end{aligned}
-$$
-
-Reading off vielbein components $e_\mu = e^a{}_\mu\, P_a$:
-
-$$
-e^1{}_r = 1, \quad e^2{}_r = 0, \qquad
-e^1{}_\phi = 0, \quad e^2{}_\phi = r,
-$$
-
-equivalently the coframe
-
-$$
-e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.
-$$
-
-*Step 4: Killing vector fields.* Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
-[\mathrm{Ad}_{\sigma^{-1}}\xi]^a$, i.e. $\dot r =$ ($P^1$-coefficient of
-$\sigma^{-1} \xi\, \sigma$) and $\dot\phi =$ ($P^2$-coefficient) $/\, r$:
-
-- $\xi = J$: $\sigma^{-1} J\, \sigma = J + r P^2$ (computed above), so
-  $\dot r = 0$, $\dot\phi = 1$, giving $J = \partial_\phi$ as expected.
-- $\xi = P^1$: $\sigma^{-1} P^1 \sigma = \mathrm{Ad}_{e^{-\phi J}}\, P^1
-  = \cos\phi\, P^1 - \sin\phi\, P^2$ (rotation by $-\phi$ in the
-  $(P^1, P^2)$-plane, since $\mathrm{ad}_J$ acts on $\{P^1, P^2\}$ as a
-  90° rotation), giving
-
-  $$
-  P^1 \;=\; \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi.
-  $$
-
-- $\xi = P^2$: similarly $\sigma^{-1} P^2 \sigma = \sin\phi\, P^1 +
-  \cos\phi\, P^2$, giving
-
-  $$
-  P^2 \;=\; \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
-  $$
-
-These are the standard polar-coordinate expressions for the Cartesian
-translation Killing fields $\partial_x, \partial_y$.
-
-*Step 5: The metric in coordinates.* The bridge from form on $\mathfrak{m}$
-to tensor field on $\mathbb{R}^2$ is identical to Step 5a of the $S^2$
-case: $g = \lambda\, \delta_{ab}\, e^a \otimes e^b$. Expanding,
-
-$$
-g \;=\; \lambda\bigl[(e^1)^2 + (e^2)^2\bigr]
-\;=\; \lambda\bigl[(dr)^2 + (r\, d\phi)^2\bigr]
-\;=\; \lambda\,\bigl(dr^2 + r^2\, d\phi^2\bigr).
-$$
-
-Choosing the conventional unit $\lambda = 1$:
-
-$$
-\boxed{\;ds^2 \;=\; dr^2 + r^2\, d\phi^2.\;}
-$$
-
-This is the **flat Euclidean metric** of $\mathbb{R}^2$, written in polar
-coordinates. The coordinate components $g_{\mu\nu} = \operatorname{diag}(1, r^2)$
-*do* depend on $r$, even though the space is flat — the $r^2$ is the
-squared length of $\partial_\phi$ at radius $r$, in exact analogy with
-the $\sin^2\theta$ of $S^2$.
-
-**Why this is flat — verified at the algebra level.** The Cartan
-curvature 2-form of the connection $\omega_{\mathfrak{h}}$ on the model
-space is
-
-$$
-\Omega \;=\; d\omega_{\mathfrak{h}} + \tfrac{1}{2}[\omega_{\mathfrak{h}},\, \omega_{\mathfrak{h}}].
-$$
-
-Here $\omega_{\mathfrak{h}} = J\, d\phi$, so $d\omega_{\mathfrak{h}} =
-dJ \wedge d\phi = 0$ (since $J$ is a constant element of the algebra),
-and $[\omega_{\mathfrak{h}}, \omega_{\mathfrak{h}}] = [J, J]\, d\phi
-\wedge d\phi = 0$ trivially. Hence
-
-$$
-\Omega \;=\; 0,
-$$
-
-i.e., zero sectional curvature everywhere. By contrast, on $S^2$ one
-gets $\omega_{\mathfrak{h}} = \cos\theta\, J^3\, d\phi$, whose exterior
-derivative $-\sin\theta\, J^3\, d\theta \wedge d\phi$ is non-zero —
-precisely the constant positive curvature $1/R^2$.
-
-So the polar-coordinate $\mathbb{R}^2$ exhibits the moral lesson
-sharply: the coordinate components of the metric vary, but the
-*curvature* (read off the connection 1-form, an algebraic Lie-algebra
-object) vanishes. The bracket-level distinction $[\mathfrak{m},
-\mathfrak{m}] = 0$ is doing exactly the work that makes flat space flat.
-
-#### Cartesian derivation: $\sigma = \exp(x P^1 + y P^2)$
-
-The derivation above was the *traditional* one — it used a section
-$\sigma = e^{\phi J}\, e^{r P^1}$ with the rotation generator $J$
-inside (as a "fiber direction") and a translation generator radially.
-The same machinery accepts another natural choice: skip the rotation
-entirely and use only the translations,
-
-$$
-\sigma(x, y) \;=\; \exp(x\, P^1 + y\, P^2).
-$$
-
-Geometrically, this is a *single* translation by the vector
-$(x, y)$ from the basepoint. Because $[P^1, P^2] = 0$, this is the
-same as $e^{xP^1}\, e^{yP^2}$ in either order — the two translations
-commute, so no Baker–Campbell–Hausdorff correction arises. Let us run
-the four-step algorithm with this section.
-
-##### Step 1 — structure constants
-
-The Klein pair is unchanged: $\mathfrak{h} = \mathrm{span}(J)$,
-$\mathfrak{m} = \mathrm{span}(P^1, P^2)$. The non-zero brackets are
-
-$$
-[J, P^1] = P^2, \qquad [J, P^2] = -P^1.
-$$
-
-The crucial novelty is the $\mathfrak{m}$–$\mathfrak{m}$ bracket:
-$[P^1, P^2] = 0$. We will see exactly what this triviality does to the
-algorithm.
-
-##### Step 2 — Maurer–Cartan form
-
-We need $\omega = \sigma^{-1}\, d\sigma$. Use the standard
-$3 \times 3$ affine representation of $\mathfrak{e}(2)$:
-
-$$
-P^1 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}, \quad
-P^2 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad
-J = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}.
-$$
-
-The Lie-algebra element $V := x P^1 + y P^2$ has $V^2 = 0$ in this
-representation (both translation matrices are strictly upper-triangular
-and their product vanishes). So the exponential series terminates
-after one term:
-
-$$
-\sigma(x, y) \;=\; \exp(V) \;=\; I + V \;=\;
-\begin{pmatrix} 1 & 0 & x \\ 0 & 1 & y \\ 0 & 0 & 1 \end{pmatrix}.
-$$
-
-This is just the affine matrix for translation by $(x, y)$ — as
-expected. The inverse:
-
-$$
-\sigma^{-1} \;=\;
-\begin{pmatrix} 1 & 0 & -x \\ 0 & 1 & -y \\ 0 & 0 & 1 \end{pmatrix},
-\qquad
-d\sigma \;=\;
-\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}.
-$$
-
-The bottom row of $d\sigma$ is zero, so the matrix product
-$\sigma^{-1}\, d\sigma$ leaves the upper-right column $(dx, dy)^T$
-untouched:
-
-$$
-\boxed{\;
-\omega \;=\; \sigma^{-1}\, d\sigma \;=\;
-\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}
-\;=\; P^1\, dx + P^2\, dy.
-\;}
-$$
-
-Decomposed into the $\mathfrak{m}$- and $\mathfrak{h}$-parts
-$\omega = e^a X_a + \omega_{\mathfrak{h}}$:
-
-$$
-e^1 \;=\; dx, \qquad e^2 \;=\; dy, \qquad
-\omega_{\mathfrak{h}} \;=\; 0.
-$$
-
-The **vielbein is the identity matrix**: $e^a{}_\mu = \delta^a_\mu$.
-The **spin connection vanishes identically**. Both consequences trace
-back to $[P^1, P^2] = 0$ — the BCH formula contributes no nonlinear
-correction, and the rotation generator $J$ never appears in $\omega$.
-
-##### Step 3 — invariance equation
-
-The invariance equation is the *same one we solved in the polar
-derivation*. With $\mathrm{ad}_J|_{\mathfrak{m}}$ a $90°$ rotation in
-the $(P^1, P^2)$-plane, the symmetric matrix $\eta$ satisfying $\eta\,
-\mathrm{ad}_J + (\mathrm{ad}_J)^T\, \eta = 0$ is
-
-$$
-\eta \;=\; \lambda\, I_{2 \times 2}, \qquad \lambda > 0.
-$$
-
-A single positive scale parameter — the same answer as before. The
-invariance condition is a property of the $(\mathfrak{g},
-\mathfrak{h})$ Klein pair and does not depend on which section was
-chosen.
-
-##### Step 4 — assemble the metric
-
-$g = \eta_{ab}\, e^a \otimes e^b = \lambda\, ((e^1)^2 + (e^2)^2)$ with
-$e^1 = dx$, $e^2 = dy$:
-
-$$
-\boxed{\;ds^2 \;=\; \lambda\, (dx^2 + dy^2).\;}
-$$
-
-Setting $\lambda = 1$ for the standard normalization, we recover the
-Cartesian metric of $\mathbb{R}^2$ in the most direct possible way.
-The intrinsic geometry is identical to the polar result
-$ds^2 = dr^2 + r^2\, d\phi^2$ — it is the same flat metric in
-different coordinates — but the coordinate components are now
-*constants* instead of being $r$-dependent.
-
-##### Why this works globally
-
-Three structural features make Cartesian coordinates better-behaved
-than polar in this example:
-
-- **Single-step exponential.** $\sigma(x, y) = \exp(xP^1 + yP^2)$ is
-  well-defined for all $(x, y) \in \mathbb{R}^2$, with no coordinate
-  singularity (compare polar: $r = 0$ is a singularity).
-- **Identity vielbein.** $\det e^a{}_\mu = 1 \neq 0$ everywhere. No
-  point is excluded from the chart.
-- **Vanishing spin connection.** $\omega_{\mathfrak{h}} \equiv 0$
-  globally on the chart, so no curvature term is even present.
-
-All three are consequences of one algebraic fact: $[\mathfrak{m},
-\mathfrak{m}] = 0$. The translations commute, so the BCH formula
-reduces to the linear sum, no $\mathfrak{h}$-generator can appear in
-$\sigma^{-1} d\sigma$, and the exponential map $\mathbb{R}^2 \to G/H$
-is a global diffeomorphism. This is the algebraic signature of
-*flatness with a globally trivial chart*. We will see in the next
-subsection that the same condition $[\mathfrak{m}, \mathfrak{m}] = 0$
-is also what makes the **position vector** globally well-defined on
-$\mathbb{R}^2$.
-
-##### Killing vector fields
-
-The three Killing fields generated by $\xi \in \{P^1, P^2, J\}$ acting
-on the section. Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
-(\mathrm{Ad}_{\sigma^{-1}} \xi)^a|_{\mathfrak{m}}$ with vielbein the
-identity:
-
-- $\xi = P^1$ produces $\partial_x$.
-- $\xi = P^2$ produces $\partial_y$.
-- $\xi = J$ produces $-y\, \partial_x + x\, \partial_y$.
-
-These are exactly the three Killing fields familiar from elementary
-geometry — two translations and a rotation around the origin.
-
-#### Christoffel symbols, frame vectors, and the position vector
-
-Once the metric $ds^2 = dr^2 + r^2\, d\phi^2$ is in hand, everything
-familiar from elementary vector calculus in polar coordinates can be
-read off it. We give the short version here for completeness, then
-turn to the harder question of how to compute the **position vector**
-without going through Cartesian coordinates — a question for which the
-Klein-geometry section $\sigma$ does exactly the right thing.
-
-##### Curvilinear basis vectors
-
-The coordinate basis vectors are $\partial_r$ and $\partial_\phi$.
-Their lengths and inner products come straight from the metric:
-
-$$
-|\partial_r|^2 = g_{rr} = 1, \qquad
-|\partial_\phi|^2 = g_{\phi\phi} = r^2, \qquad
-\langle \partial_r, \partial_\phi \rangle = g_{r\phi} = 0.
-$$
-
-So $\partial_r$ is already a unit vector, while $\partial_\phi$ has
-length $r$. The **unit (orthonormal) frame vectors** are obtained by
-normalizing:
-
-$$
-\hat r \;=\; \partial_r, \qquad \hat\phi \;=\; \frac{1}{r}\,\partial_\phi.
-$$
-
-This is exactly the orthonormal frame $\vec e_1, \vec e_2$ produced by
-the Klein construction: the dual of the coframe $\{e^1 = dr,\; e^2 = r\, d\phi\}$
-satisfies $e^a(\vec e_b) = \delta^a_b$, giving
-
-$$
-\vec e_1 \;=\; \partial_r \;=\; \hat r, \qquad
-\vec e_2 \;=\; \frac{1}{r}\, \partial_\phi \;=\; \hat\phi.
-$$
-
-##### How $e^1, e^2$ came from the Maurer–Cartan form
-
-Briefly recapping the polar derivation above so the rest of this
-section is self-contained. We chose the section
-$\sigma(r, \phi) = e^{\phi J}\, e^{r P^1}$, computed
-
-$$
-\omega = \sigma^{-1}\, d\sigma
-= P^1\, dr + (J + r\, P^2)\, d\phi,
-$$
-
-and split it via $\mathfrak{m} = \mathrm{span}(P^1, P^2)$,
-$\mathfrak{h} = \mathrm{span}(J)$. The $\mathfrak{m}$-coefficients are
-the vielbein components $e^a{}_\mu$ — i.e., the coefficient of $P^a$
-in $\omega_\mu$:
-
-$$
-e^1{}_r = 1,\quad e^1{}_\phi = 0,\qquad
-e^2{}_r = 0,\quad e^2{}_\phi = r.
-$$
-
-Writing $e^a = e^a{}_\mu\, dx^\mu$,
-
-$$
-\boxed{\;e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.\;}
-$$
-
-##### Christoffel symbols
-
-For $g_{rr} = 1$, $g_{\phi\phi} = r^2$ (others zero), with inverse
-$g^{rr} = 1$, $g^{\phi\phi} = 1/r^2$, the formula
-
-$$
-\Gamma^\rho_{\mu\nu}
-= \tfrac{1}{2}\, g^{\rho\sigma}\bigl(
-\partial_\mu g_{\sigma\nu} + \partial_\nu g_{\sigma\mu}
-- \partial_\sigma g_{\mu\nu}\bigr)
-$$
-
-has only one non-zero metric derivative, $\partial_r g_{\phi\phi} = 2r$.
-Direct substitution gives two non-zero connection coefficients:
-
-$$
-\boxed{\;
-\Gamma^r{}_{\phi\phi} = -r, \qquad
-\Gamma^\phi{}_{r\phi} = \Gamma^\phi{}_{\phi r} = \frac{1}{r}.
-\;}
-$$
-
-All others vanish. (Check: $\Gamma^r{}_{\phi\phi} = -\tfrac{1}{2}\,\partial_r g_{\phi\phi}
-= -r$; $\Gamma^\phi{}_{r\phi} = \tfrac{1}{2}\, g^{\phi\phi}\, \partial_r g_{\phi\phi}
-= \tfrac{1}{2}\cdot \tfrac{1}{r^2}\cdot 2r = 1/r$.) These reproduce the
-familiar coordinate derivatives of polar unit vectors:
-
-$$
-\nabla_{\partial_r} \hat\phi = \frac{1}{r}\, \hat\phi, \qquad
-\nabla_{\partial_\phi} \hat r = \hat\phi, \qquad
-\nabla_{\partial_\phi} \hat\phi = -r\, \hat r,
-$$
-
-and the Riemann tensor is identically zero (since $\partial g$ has
-only one non-zero term and the second-derivative combinations cancel),
-consistent with the algebraic flatness $\Omega = 0$ computed earlier.
-
-##### The position vector — derived without Cartesian coordinates
-
-Now the structural question: in flat space, there is a distinguished
-object — the **position vector** $\vec r$ — that points from the
-origin to the current point. Its existence depends on the flatness
-of the space (translations form an abelian Lie algebra
-$\mathfrak{m}$, and the exponential map $\mathfrak{m} \to G/H$ is a
-global diffeomorphism). One can also see this from coordinates: in
-$\mathbb{R}^2$ the position vector is naturally
-$\vec r = x\, \hat x + y\, \hat y$, which uses the *global* Cartesian
-chart. The challenge is to compute $\vec r$ at a given polar
-coordinate point $(r, \phi)$ from the algebra alone, without
-parametrizing through Cartesian.
-
-The Klein-geometry section $\sigma$ gives the answer directly. The
-key step is to rewrite $\sigma$ as a translation times a rotation:
-
-$$
-\sigma(r, \phi) \;=\; e^{T}\, h,
-$$
-
-where $T \in \mathfrak{m}$ is a Lie-algebra translation and $h \in H$
-is the residual rotation at the destination point. Once we have $T$,
-the position vector is just $T$ identified with a vector in
-$\mathfrak{m} \cong T_o(\mathbb{R}^2)$: it is the translation that
-moves the origin to the current point.
-
-*The decomposition.* Start from our section
-$\sigma = e^{\phi J}\, e^{r P^1}$ and insert the identity factor
-$e^{-\phi J}\, e^{\phi J}$ between the two exponentials:
-
-$$
-\sigma
-\;=\; e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\, e^{\phi J}
-\;=\; \bigl(e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\bigr)\, e^{\phi J}
-\;=\; e^{r\, \mathrm{Ad}_{e^{\phi J}}(P^1)}\, e^{\phi J},
-$$
-
-using the identity $e^{\phi J}\, e^{r P^1}\, e^{-\phi J} =
-\exp\bigl(r\, \mathrm{Ad}_{e^{\phi J}}(P^1)\bigr)$ (conjugation acts
-on the exponent by the adjoint). The bracket structure on
-$\mathfrak{m}$ — $[J, P^1] = P^2$, $[J, P^2] = -P^1$ — gives, by the
-same series we used in Step 4 of the polar derivation,
-
-$$
-\mathrm{Ad}_{e^{\phi J}}(P^1) \;=\; \cos\phi\, P^1 + \sin\phi\, P^2.
-$$
-
-Therefore the section factorizes as
-
-$$
-\sigma(r, \phi)
-\;=\; e^{\,r\cos\phi\, P^1 \,+\, r\sin\phi\, P^2}\, e^{\phi J},
-$$
-
-and we read off
-
-$$
-\boxed{\;T(r, \phi) \;=\; (r\cos\phi)\, P^1 \;+\; (r\sin\phi)\, P^2 \;\in\; \mathfrak{m},\;}
-\qquad h(r, \phi) = e^{\phi J}.
-$$
-
-The vector $T$ *is* the position vector — its components in the
-algebraic basis $\{P^1, P^2\}$ of $\mathfrak{m}$ are exactly $(x, y) =
-(r\cos\phi, r\sin\phi)$. So Cartesian coordinates have re-emerged as a
-purely algebraic byproduct: they are the **components of the position
-vector in the algebra basis** of $\mathfrak{m}$. We never had to
-invoke an independent Cartesian chart; the Klein structure delivers it
-automatically when $\mathfrak{m}$ is abelian.
-
-*Expressing $\vec r$ at the current point.* The above $T$ lives in
-$\mathfrak{m}$, naturally an algebra element. To view it as a tangent
-vector field on $\mathbb{R}^2$ — as an arrow attached to the current
-point $(r, \phi)$ — push it through the translation Killing fields,
-whose polar-coordinate expressions we have from Step 4 of the polar
-derivation:
-
-$$
-\vec{P^1} = \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi, \qquad
-\vec{P^2} = \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
-$$
-
-Substituting:
-
-$$
-\begin{aligned}
-\vec r
-&\;=\; (r\cos\phi)\, \vec{P^1} \;+\; (r\sin\phi)\, \vec{P^2} \\
-&\;=\; r\cos\phi\, \Bigl(\cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi\Bigr)
- \;+\; r\sin\phi\, \Bigl(\sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi\Bigr) \\
-&\;=\; r\,(\cos^2\phi + \sin^2\phi)\, \partial_r
- \;+\; (-\sin\phi\cos\phi + \sin\phi\cos\phi)\, \partial_\phi \\
-&\;=\; r\, \partial_r.
-\end{aligned}
-$$
-
-The $\partial_\phi$ component cancels exactly by the Pythagorean
-identity. So in polar coordinates,
-
-$$
-\boxed{\;\vec r \;=\; r\, \partial_r \;=\; r\, \vec e_1 \;=\; r\, \hat r.\;}
-$$
-
-The familiar elementary result is recovered, but the derivation used
-only the algebra (the bracket relations and the section), not
-Cartesian coordinates. Two observations close the section:
-
-- **Why polar coordinates make the position vector look so simple.**
-  In the local orthonormal frame $\vec e_1 = \hat r$, $\vec e_2 = \hat\phi$
-  at the point $(r, \phi)$, the position vector has frame components
-  $(r, 0)$ — one non-zero entry. This is because the section
-  $\sigma = e^{\phi J}\, e^{r P^1}$ first translates along $P^1$ and
-  then rotates: the rotation aligns $\hat e_1$ with the radial
-  direction by construction, so the entire displacement $r P^1$ shows
-  up in the $\vec e_1$ slot.
-- **Why the position vector exists only in flat space.** The
-  decomposition $\sigma = e^T h$ relied on the fact that, in
-  $\mathfrak{m}$, the translation $e^{r P^1}$ stays a single
-  translation under conjugation by the rotation — there is no
-  "tilting term" added. Equivalently, $\mathrm{Ad}_h$ sends
-  $\mathfrak{m}$ to itself as an honest linear map without picking up
-  $\mathfrak{h}$-pieces, *and* $[\mathfrak{m}, \mathfrak{m}] = 0$ so
-  the exponential map $\mathfrak{m} \to G/H$ is a diffeomorphism. On
-  $S^2$ the second condition fails: $[\mathfrak{m}, \mathfrak{m}] =
-  \mathfrak{h}$, so $e^T$ does not exhaust the group, the exponential
-  map is only local, and there is no globally well-defined "position
-  vector to the basepoint." The position vector is the algebraic
-  signature of flatness.
-
-### Three-dimensional Euclidean space $\mathbb{R}^3$
+#### Three-dimensional Euclidean space $\mathbb{R}^3$
 
 The algebra $\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathbb{R}^3$
 has six generators $\{J^i, P^j\}$ ($i, j \in \{1, 2, 3\}$) with
@@ -1270,7 +1594,766 @@ abelian-ideal structure of $\mathfrak{m}$ makes $\mathbb{R}^3$ flat with
 global coordinates $a^i$, and $\eta^{ij}$ becomes $ds^2 = \delta_{ij}\,
 dx^i\, dx^j$.
 
-#### All Klein-pair candidates for $\mathfrak{e}(3)$
+### Positive curvature: $S^2$ and $S^3$ as $\mathfrak{so}(n+1)/\mathfrak{so}(n)$
+
+The Euclidean cases above are *flat* because the translation generators
+satisfy $[\mathfrak{m}, \mathfrak{m}] = 0$. Replacing the Euclidean
+algebra by $\mathfrak{so}(n+1)$ changes exactly this bracket: now
+$[\mathfrak{m}, \mathfrak{m}] \subset \mathfrak{h}$, the homogeneous space
+acquires constant positive curvature, and one obtains the round sphere
+$S^n$. The metric on $\mathfrak{m}$ is computed by the same Leibniz
+condition, and turns out to have the same form $\delta^{ij}$; the
+curvature lives in the bracket $[\mathfrak{m}, \mathfrak{m}]$, not in the
+metric formula itself. This is the canonical example of how the
+Klein/Cartan framework separates the *shape* of the metric (controlled
+by $[\mathfrak{h}, \mathfrak{m}]$) from the *curvature* of the space
+(controlled by $[\mathfrak{m}, \mathfrak{m}]$).
+
+One subtlety should be flagged in advance, because the spherical case
+makes it impossible to ignore: the metric the Leibniz condition produces
+on $\mathfrak{m}$ is the metric in an **orthonormal frame** — equivalently,
+the metric at the basepoint in the basis given by the Lie-algebra
+generators. It is *not* the metric in some chosen coordinate chart.
+For the flat cases above, the two agree, because $\mathfrak{m}$ is an
+abelian ideal and exponentiation gives global Cartesian coordinates in
+which the orthonormal frame coincides with the coordinate basis. For
+$S^n$, this is no longer true: no single coordinate chart is orthonormal
+everywhere, so the coordinate form of the metric differs from $\delta_{ab}$.
+We treat this carefully in $S^2$ below.
+
+#### The 2-sphere $S^2$
+
+The algebra $\mathfrak{so}(3)$ has three generators $\{J^1, J^2, J^3\}$
+with
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k.
+$$
+
+**Klein-pair candidates.** The proper subalgebras of $\mathfrak{so}(3)$
+are:
+
+- $\{0\}$: $G/H = G$ is 3-dimensional (the group manifold
+  $SO(3) \cong \mathbb{RP}^3$, or $SU(2) \cong S^3$ for the double cover).
+- Any 1-dim subspace $\{n^i J^i\}$ for a unit vector $n^i$ — all such are
+  conjugate under $SO(3)$. Gives $\dim G/H = 2$.
+- No 2-dim subalgebras exist (any pair $X, Y \in \mathfrak{so}(3)$ has
+  $[X, Y]$ generically outside $\operatorname{span}\{X, Y\}$).
+
+So the only nontrivial 2-dimensional Klein geometry of $\mathfrak{so}(3)$
+is $G/\{n^i J^i\}$ for some axis $n$, and by conjugacy all choices are
+equivalent. Picking $n = \hat z$ to fix a "north pole," we take
+
+$$
+\mathfrak{h} = \{J^3\}, \qquad \mathfrak{m} = \{J^1, J^2\}, \qquad
+S^2 = SO(3)/SO(2).
+$$
+
+**Operational interpretation.** $J^3$ generates rotations around the
+$z$-axis. A point at the north pole is fixed by these rotations and
+moved by the other two generators $J^1, J^2$ (which tilt the pole toward
+the $x$- or $y$-axis). So "the points of the sphere" form the
+homogeneous space $G/H$ with this stabilizer.
+
+**Reductive check.** We need $[\mathfrak{h}, \mathfrak{m}] \subset
+\mathfrak{m}$, so that the Leibniz condition makes sense as a condition
+on $\mathfrak{m}$. Compute:
+
+$$
+[J^3, J^1] = J^2 \in \mathfrak{m}, \qquad
+[J^3, J^2] = -J^1 \in \mathfrak{m}. \;\;\checkmark
+$$
+
+What about $[\mathfrak{m}, \mathfrak{m}]$? Compute $[J^1, J^2] = J^3 \in
+\mathfrak{h}$. So $[\mathfrak{m}, \mathfrak{m}] \subset \mathfrak{h}$:
+this is the hallmark of a **symmetric space** — and it is what produces
+the curvature, as discussed below.
+
+**Metric derivation.** Set $g(J^a, J^b) = \eta^{ab}$ for $a, b \in \{1,
+2\}$, three unknowns. The Leibniz condition with $X = J^3$:
+
+$$
+g([J^3, J^a], J^b) + g(J^a, [J^3, J^b]) = 0.
+$$
+
+- $a = b = 1$: $g(J^2, J^1) + g(J^1, J^2) = 2\eta^{12} = 0$
+  $\Rightarrow \eta^{12} = 0$.
+- $a = 1, b = 2$: $g(J^2, J^2) + g(J^1, -J^1) = \eta^{22} - \eta^{11} = 0$
+  $\Rightarrow \eta^{11} = \eta^{22}$.
+
+So $\eta^{ab} = \lambda\, \delta^{ab}$ on $\mathfrak{m}$, exactly as for
+the 2D plane. This result needs careful unpacking, because read naively it
+appears to say that the metric on $S^2$ is flat — which is wrong.
+
+**What this answer is, and what it is not.** The Lie-algebra basis
+$\{J^1, J^2\}$ for $\mathfrak{m}$ is a basis of *one tangent space* —
+namely $T_N S^2$, the tangent space at the basepoint (north pole). The
+derivation gives the components of the metric in that basis on that one
+tangent space. By $G$-equivariance, the same components reappear at every
+other point if we use the basis obtained by transporting $\{J^1, J^2\}$
+around $S^2$ via the group action: that is an **orthonormal frame**
+$\{e_1, e_2\}$, in which the metric is $\delta_{ab}$ *globally*.
+
+This does not contradict $S^2$ being curved. By a standard theorem, every
+Riemannian manifold admits an orthonormal frame at every point; in that
+frame the metric components are always $\delta_{ab}$. The curvature does
+not live in the *values* of the metric in such a frame — it lives in how
+the frame must twist as one moves from point to point, encoded in the
+connection 1-form $\omega^a{}_b$. This is the same fact that underlies
+the equivalence principle in general relativity: at any point one can
+choose coordinates in which $g_{\mu\nu}(p) = \eta_{\mu\nu}$ and
+$\partial_\rho g_{\mu\nu}(p) = 0$, even on a strongly curved spacetime.
+
+The translation of this $\mathfrak{m}$-form into an explicit
+coordinate metric — in spherical coordinates, in geodesic-normal
+"Cartesian-like" coordinates, and on the group manifold $SO(3)$ — is
+worked out in chapter "Worked detail".
+
+#### The 3-sphere $S^3$
+
+The algebra $\mathfrak{so}(4)$ has six generators. Writing them as
+$\{J^i, K^i\}$ ($i = 1, 2, 3$) — three "spatial" rotations and three
+"tilts" of the fourth axis toward each spatial axis — the brackets are
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \qquad
+[J^i, K^j] = \epsilon^{ijk} K^k, \qquad
+[K^i, K^j] = \epsilon^{ijk} J^k.
+$$
+
+These match Poincaré except for the sign of $[K, K]$, which here is
+$+\epsilon J$ instead of $-\epsilon J$ — a positive sign, since the
+fourth axis enters with Euclidean (not Lorentzian) signature.
+
+**Klein-pair candidates.** $\mathfrak{so}(4) \cong \mathfrak{so}(3)
+\oplus \mathfrak{so}(3)$ via $L^i = \tfrac{1}{2}(J^i + K^i)$, $R^i =
+\tfrac{1}{2}(J^i - K^i)$, with $[L^i, R^j] = 0$. The natural
+subalgebras include:
+
+- $\{0\}$: $G/H$ is $SO(4)$ itself, six-dimensional.
+- The "diagonal" $\mathfrak{so}(3) = \{J^i\}$: gives $\dim G/H = 3$. This
+  is our choice — $S^3 = SO(4)/SO(3)$.
+- $\mathfrak{so}(3)_L = \{L^i\}$ or $\mathfrak{so}(3)_R = \{R^i\}$: each
+  also has $\dim G/H = 3$. These exhibit $S^3$ as the group manifold of
+  $SU(2)$ with its bi-invariant metric — the same Riemannian manifold,
+  realised via the group-manifold construction.
+- 1-dim subalgebras (e.g. a single $J^i$ or $K^i$): give 5-dim
+  homogeneous spaces, related to the Hopf fibration.
+
+For "the standard 3-sphere of points" the diagonal choice $\mathfrak{h} =
+\{J^i\}$ is the one that matches the orbit–stabilizer analysis:
+rotations among the three spatial axes fix the north pole on the
+fourth axis, while $K^1, K^2, K^3$ tilt the pole tangentially in three
+independent directions. So
+$\mathfrak{m} = \{K^1, K^2, K^3\}$ and
+
+$$
+S^3 = SO(4)/SO(3).
+$$
+
+**Reductive check.** $[\mathfrak{h}, \mathfrak{m}] = [J^i, K^j] =
+\epsilon^{ijk} K^k \in \mathfrak{m}$ ✓. And $[\mathfrak{m},
+\mathfrak{m}] = [K^i, K^j] = \epsilon^{ijk} J^k \in \mathfrak{h}$, so
+again $S^3$ is a symmetric space.
+
+**Metric derivation.** Set $g(K^i, K^j) = \eta^{ij}$, symmetric $3
+\times 3$. The Leibniz condition with $X = J^k$ is
+
+$$
+g(\epsilon^{kil} K^l, K^j) + g(K^i, \epsilon^{kjl} K^l) = 0
+\quad\Longleftrightarrow\quad
+\epsilon^{kil} \eta^{lj} + \epsilon^{kjl} \eta^{il} = 0,
+$$
+
+which is *exactly* the same equation as for $\mathbb{R}^3$ (with $K$
+playing the role of $P$). The unique solution up to scale is
+
+$$
+\boxed{\;\eta^{ij} = \delta^{ij} = \operatorname{diag}(1, 1, 1)\;}
+$$
+
+and the resulting $G$-invariant metric on $S^3$ is the round metric of
+radius $R$ (with $R^2$ proportional to $\lambda$). As in the $S^2$ case,
+this $\delta^{ij}$ is the metric in the orthonormal frame $\{K^1, K^2,
+K^3\}$ at the basepoint (and globally, by $G$-equivariance). In
+hyperspherical coordinates $(\chi, \theta, \phi)$ the same metric reads
+
+$$
+ds^2 = R^2\bigl(d\chi^2 + \sin^2\chi\,(d\theta^2 + \sin^2\theta\, d\phi^2)\bigr),
+$$
+
+with the coordinate-dependent factors $\sin^2\chi$ and $\sin^2\theta$
+arising — exactly as for $S^2$ — from the coordinate basis vectors having
+varying length, not from any change in the underlying bilinear form. The
+soldering form is $e^1 = R\,d\chi$, $e^2 = R\sin\chi\,d\theta$,
+$e^3 = R\sin\chi\sin\theta\,d\phi$, and $g = \delta_{ab}\, e^a \otimes e^b$.
+
+The bracket $[K^i, K^j] = \epsilon^{ijk} J^k$ — the one that distinguishes
+$\mathfrak{so}(4)$ from $\mathfrak{e}(3)$ — does *not* enter the metric
+derivation at all, because the right-hand side lies in $\mathfrak{h}$,
+not in $\mathfrak{m}$. It determines instead the **curvature** of the
+space: constant positive sectional curvature $1/R^2$.
+
+### Worked example: point-stabilizers of $\mathfrak{so}(3,1)$ (the Lorentz algebra)
+
+As a concrete and physically important illustration, let's enumerate all
+point-stabilizing Klein geometries arising from $\mathfrak{so}(3,1)$ — the
+homogeneous Lorentz algebra in 3+1 dimensions. This is the same algebra
+that appears in special relativity as the rotation/boost subalgebra of the
+Poincaré algebra, and we'll find that it is *simultaneously* the isometry
+algebra of three distinct 3-dimensional homogeneous spaces.
+
+#### Set-up
+
+The six generators are rotations $J^1, J^2, J^3$ and boosts $K^1, K^2,
+K^3$, with brackets
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \qquad
+[J^i, K^j] = \epsilon^{ijk} K^k, \qquad
+[K^i, K^j] = -\epsilon^{ijk} J^k.
+$$
+
+To get a 3-dim Klein quotient $G/H$ we need $\dim\mathfrak{h} = 3$. Up to
+$SO(3,1)$-conjugacy, the relevant 3-dim Lie subalgebras of $\mathfrak{so}(3,1)$
+are:
+
+| $\mathfrak{h}$ | basis | type | as a Lie algebra |
+|---|---|---|---|
+| $\mathfrak{so}(3)$ | $J^1, J^2, J^3$ | compact | rotations |
+| $\mathfrak{so}(2,1)$ | $J^3, K^1, K^2$ | split | one rotation + two boosts in the transverse plane |
+| $\mathfrak{e}(2)$ | $J^1,\;J^2 - K^3,\;J^3 + K^2$ | parabolic | rotation + two commuting "null rotations" |
+
+The first two are the **little groups** of timelike and spacelike unit
+vectors in $\mathbb{R}^{3,1}$ respectively; the third is the little group
+of a null (lightlike) vector — familiar from particle physics as the
+Wigner little group for massless particles.
+
+#### Case 1: $\mathfrak{h} = \mathfrak{so}(3)$ — compact stabilizer
+
+Complement $\mathfrak{m} = \langle K^1, K^2, K^3 \rangle$. Bracket check:
+
+- $[\mathfrak{h}, \mathfrak{m}]$: $[J^i, K^j] = \epsilon^{ijk} K^k \in \mathfrak{m}$. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}]$: $[K^i, K^j] = -\epsilon^{ijk} J^k \in \mathfrak{h}$. **Symmetric pair.** ✓
+
+Imposing Leibniz invariance with $\mathfrak{so}(3)$ acting on $\mathfrak{m}$
+by the standard rotation representation forces $\eta^{ij} = \alpha\,\delta^{ij}$:
+
+$$
+\boxed{\;\eta_{\mathfrak{so}(3)} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
+$$
+
+**Signature $(+,+,+)$** — Riemannian. The sign of the $[\mathfrak{m},
+\mathfrak{m}] \to \mathfrak{h}$ bracket is $-\epsilon^{ijk}$, which gives
+*negative* sectional curvature. The resulting space is the **3-dimensional
+hyperbolic space**
+
+$$
+\mathbb{H}^3 \;=\; SO(3,1)\,/\,SO(3),
+$$
+
+i.e., the upper sheet of the unit timelike hyperboloid in $\mathbb{R}^{3,1}$,
+with its negative-curvature Riemannian metric.
+
+#### Case 2: $\mathfrak{h} = \mathfrak{so}(2,1)$ — non-compact stabilizer
+
+Complement $\mathfrak{m} = \langle J^1, J^2, K^3 \rangle$. Bracket check
+(verified by the SymPy enumeration):
+
+- $[\mathfrak{h}, \mathfrak{m}]$ closes inside $\mathfrak{m}$. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}] = [J^1, J^2] = J^3$, $[J^1, K^3] = -K^2$,
+  $[J^2, K^3] = K^1$, all in $\mathfrak{h}$. **Symmetric pair.** ✓
+
+Solving the Leibniz equations (three invariance equations, one per
+generator of $\mathfrak{h}$) for a generic symmetric $\eta$ on $\mathfrak{m}$
+yields
+
+$$
+\boxed{\;\eta_{\mathfrak{so}(2,1)} \;=\; \alpha\,\mathrm{diag}(-1, -1, 1).\;}
+$$
+
+**Signature $(-,-,+)$**, or equivalently after overall sign $(+,+,-)$ —
+**Lorentzian**. Why the indefinite signature? Because $\mathfrak{so}(2,1)$
+acts on $\mathfrak{m}$ by mixing the *compact* rotation generators $J^1, J^2$
+with the *non-compact* boost $K^3$ via the boost generators $K^1, K^2 \in
+\mathfrak{h}$; the only invariant quadratic form distinguishes "compact-type"
+(directions $J^1, J^2$) from "non-compact-type" (direction $K^3$) with
+opposite signs.
+
+The resulting space is the **3-dimensional de Sitter space**
+
+$$
+dS_3 \;=\; SO(3,1)\,/\,SO(2,1),
+$$
+
+i.e., the unit spacelike hyperboloid in $\mathbb{R}^{3,1}$, with its
+constant-positive-curvature Lorentzian metric.
+
+#### Case 3: $\mathfrak{h} = \mathfrak{e}(2)$ — parabolic stabilizer
+
+This is the **little group of a null vector**. Take the standard null vector
+$p = (1, 1, 0, 0)$ in $\mathbb{R}^{3,1}$; one finds (and SymPy verifies) the
+stabilizer is the 3-dim algebra
+
+$$
+\mathfrak{h} \;=\; \langle\, J^1,\; J^2 - K^3,\; J^3 + K^2 \,\rangle,
+$$
+
+with structure
+
+$$
+[J^1, J^2 - K^3] = J^3 + K^2, \quad
+[J^1, J^3 + K^2] = -(J^2 - K^3), \quad
+[J^2 - K^3, J^3 + K^2] = 0.
+$$
+
+That is, $\mathfrak{h} \cong \mathfrak{e}(2)$ — a "rotation" $J^1$ together
+with two commuting "null rotations" $J^2 - K^3$ and $J^3 + K^2$. **Crucially,
+this Klein pair is non-reductive**: by the same argument we made for
+$\mathfrak{e}(3)$, any complement $\mathfrak{m}$ to $\mathfrak{h}$ ends up
+mixing with $\mathfrak{h}$ via the null-rotation generators. The Leibniz
+equations admit no non-degenerate invariant metric on $\mathfrak{m}$.
+
+Geometrically, $SO(3,1)/\mathfrak{e}(2)$ is the **future null cone minus
+the origin** in $\mathbb{R}^{3,1}$ — a 3-dim cone of null vectors that
+inherits only a degenerate "Carrollian" structure (a vector-line is
+distinguished at each point, but no full metric). This is the same
+degenerate situation we saw with $E(3)/\mathfrak{e}(2)$, where the would-be
+"space of oriented planes" had a degenerate metric.
+
+(Projectivizing the null cone — that is, enlarging $\mathfrak{h}$ to the
+4-dim parabolic subalgebra $\mathfrak{h} \oplus \langle K^1\rangle$ — gives
+the **celestial sphere** $S^2 = SO(3,1)/P$, the asymptotic boundary of
+Minkowski space. This is a 2-dim space, important for asymptotic symmetries
+and the holographic / BMS / AdS/CFT story, but it is not a *3-dim* space of
+points so we set it aside here.)
+
+#### Summary table
+
+The complete enumeration of point-stabilizing Klein geometries for
+$\mathfrak{so}(3,1)$:
+
+| $\mathfrak{h}$ | $G/H$ | $\dim$ | metric signature | curvature | character |
+|---|---|---|---|---|---|
+| $\mathfrak{so}(3)$ | $\mathbb{H}^3$ | 3 | $(+,+,+)$ | $K = -1$ | Riemannian space |
+| $\mathfrak{so}(2,1)$ | $dS_3$ | 3 | $(+,+,-)$ | $K = +1$ | Lorentzian spacetime |
+| $\mathfrak{e}(2)$ | null cone | 3 | degenerate | — | Carrollian (no metric) |
+
+So $\mathfrak{so}(3,1)$ has **two reductive point-stabilizers** giving
+non-degenerate metrics: one Riemannian, one Lorentzian. (Plus a parabolic
+"null" stabilizer giving a degenerate-metric space, which is the
+non-reductive analogue of the $\mathfrak{e}(3)/\mathfrak{e}(2)$ situation.)
+
+The picture is exactly the lower-dimensional $\mathfrak{so}(2,1)$ story
+amplified by one dimension. Compact stabilizer → Riemannian; non-compact
+stabilizer → Lorentzian. The Lie algebra itself is "agnostic" about which
+geometry it is the symmetry algebra of.
+
+#### Where $\mathfrak{so}(3,1)$ actually appears in physics
+
+In ordinary special relativity, $\mathfrak{so}(3,1)$ does *not* act on
+Minkowski space $\mathbb{R}^{3,1}$ as a homogeneous group — the
+homogeneous group of $\mathbb{R}^{3,1}$ is the Poincaré algebra
+$\mathfrak{so}(3,1) \ltimes \mathbb{R}^{3,1}$, of which $\mathfrak{so}(3,1)$
+is the *point-stabilizer* (the rotation/boost subalgebra fixing the
+origin). So $\mathfrak{so}(3,1)$ plays the role of $\mathfrak{h}$, not of
+$\mathfrak{g}$, in the standard relativistic setting.
+
+But $\mathfrak{so}(3,1)$ also plays the role of *the symmetry algebra* in
+two further physically important situations:
+
+- **$\mathbb{H}^3$ as spatial slice of an open FRW universe**: in cosmology,
+  a spatially-hyperbolic Friedmann–Lemaître–Robertson–Walker universe has
+  $\mathbb{H}^3$ as its constant-time spatial slice, and $\mathfrak{so}(3,1)$
+  is the isometry algebra of that slice (acting through case 1 above).
+- **$dS_3$ as a 3-dim de Sitter spacetime**: in lower-dim quantum-gravity
+  models, the 3-dim de Sitter universe is a Lorentzian spacetime of
+  positive cosmological constant; its isometry algebra is $\mathfrak{so}(3,1)$
+  acting through case 2 above.
+
+The *same* abstract algebra plays three roles in physics — Lorentz
+stabilizer of Minkowski, isometry of hyperbolic 3-space, isometry of 3-dim
+de Sitter — distinguished by what we want $\mathfrak{g}$ to be and what we
+want $\mathfrak{h}$ to be in the Klein pair. The choice of point-stabilizer
+$\mathfrak{h}$ within $\mathfrak{so}(3,1)$ is what selects between the
+Riemannian and Lorentzian geometries.
+
+#### Compare with $\mathfrak{so}(p, q)$ in general
+
+The pattern continues for all real forms of $\mathfrak{so}$:
+
+- $\mathfrak{so}(4)$ has one reductive point-stabilizer ($\mathfrak{so}(3)$)
+  → only $S^3$, Riemannian, $K = +1$. (The only other 3-dim subalgebra
+  is $\mathfrak{su}(2)_L$ in the left factor of $\mathfrak{so}(4) \cong
+  \mathfrak{su}(2) \oplus \mathfrak{su}(2)$, which gives the *bi-invariant*
+  3-sphere $SO(4)/SU(2)_L \cong SU(2)_R \cong S^3$ as a group manifold —
+  topologically the same, but with a slightly different geometric
+  interpretation.) The point: a *compact* simple Lie algebra has only
+  *compact* subalgebras, so only Riemannian quotients are available.
+- $\mathfrak{so}(3,1)$: two reductive point-stabilizers as above
+  ($\mathbb{H}^3$, $dS_3$).
+- $\mathfrak{so}(2,2) \cong \mathfrak{sl}(2,\mathbb{R}) \oplus
+  \mathfrak{sl}(2,\mathbb{R})$: at least two reductive point-stabilizers
+  yielding $\mathbb{H}^3$ (Riemannian, $K = -1$, with $\mathfrak{h} \cong
+  \mathfrak{so}(2,1)_{\mathrm{diag}}$) and $AdS_3$ (Lorentzian, $K = -1$,
+  with a different embedding).
+- $\mathfrak{so}(5)$ → $S^4$ only.
+- $\mathfrak{so}(4,1)$ → $\mathbb{H}^4$ (Riemannian) and $dS_4$ (Lorentzian).
+- $\mathfrak{so}(3,2)$ → $AdS_4$ (Lorentzian, $K = -1$) and a Riemannian
+  geometry of signature $(+,+,+,+)$.
+
+The general rule: for $\mathfrak{so}(p, q)$ with $p + q = n + 1$, the
+reductive point-stabilizers are conjugate to $\mathfrak{so}(p', q')$ with
+$p' + q' = n$, $0 \leq p' \leq p$, $0 \leq q' \leq q$, $|p - p'| + |q - q'| = 1$
+— giving exactly the constant-curvature pseudo-Riemannian geometries of
+dimension $n$ accessible from that Lie algebra.
+
+So $\mathfrak{so}(3,1)$ having two point-stabilizers (giving $\mathbb{H}^3$
+and $dS_3$) is exactly the next step up from $\mathfrak{so}(2,1)$ having
+two point-stabilizers (giving $\mathbb{H}^2$ and $AdS_2$). Both
+illustrate the general phenomenon: **simple Lie algebras of indefinite
+signature admit multiple inequivalent "spaces of points" as Klein quotients,
+distinguished by the compactness or non-compactness of the stabilizer**.
+
+### Worked example: point-stabilizers of $\mathfrak{so}(4)$ (compact case)
+
+For contrast with the indefinite-signature $\mathfrak{so}(2,1)$ and
+$\mathfrak{so}(3,1)$, let's examine the **compact** algebra
+$\mathfrak{so}(4)$. Its action is the symmetry of the round 3-sphere $S^3$.
+How many inequivalent point-stabilizers does it admit?
+
+#### Set-up: $\mathfrak{so}(4) \cong \mathfrak{su}(2) \oplus \mathfrak{su}(2)$
+
+The Lie algebra $\mathfrak{so}(4)$ is dim 6 and famously **not simple**: it
+splits as a direct sum of two commuting copies of $\mathfrak{su}(2)$,
+
+$$
+\mathfrak{so}(4) \;\cong\; \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R.
+$$
+
+Concretely, writing generators of $\mathfrak{so}(4)$ as antisymmetric
+4×4 matrices $M^{ij}$ ($i < j$), one can form two commuting triples
+$J^L_i = \frac{1}{2}(M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$ and
+$J^R_i = \frac{1}{2}(-M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$, satisfying
+
+$$
+[J^L_i, J^L_j] = \epsilon^{ijk} J^L_k, \qquad
+[J^R_i, J^R_j] = \epsilon^{ijk} J^R_k, \qquad
+[J^L_i, J^R_j] = 0.
+$$
+
+This decomposition is the compact analogue of $\mathfrak{so}(2,2) =
+\mathfrak{sl}(2,\mathbb{R}) \oplus \mathfrak{sl}(2,\mathbb{R})$ and is
+*not* present for $\mathfrak{so}(3,1)$ (which is simple as a real Lie
+algebra, even though $\mathfrak{so}(3,1)_\mathbb{C} \cong
+\mathfrak{sl}(2,\mathbb{C}) \oplus \mathfrak{sl}(2,\mathbb{C})$ over the
+complexification).
+
+#### The 3-dim subalgebras up to $SO(4)$-conjugacy
+
+For a 3-dim Klein quotient ($G/H$ of dim 3, hence "$S^3$-like") we need
+$\dim \mathfrak{h} = 3$. Up to $SO(4)$-conjugacy, the only 3-dim
+subalgebras are isomorphic to $\mathfrak{so}(3) \cong \mathfrak{su}(2)$
+(this is the only compact simple 3-dim Lie algebra). Their embeddings in
+$\mathfrak{so}(4) = \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R$ are
+parameterized by Lie-algebra homomorphisms $\mathfrak{su}(2) \to
+\mathfrak{su}(2) \oplus \mathfrak{su}(2)$. Up to conjugacy these are:
+
+| label | embedding $X \mapsto \mathfrak{su}(2) \oplus \mathfrak{su}(2)$ | properties |
+|---|---|---|
+| left factor | $X \mapsto (X, 0)$ | $\mathfrak{su}(2)_L$, an **ideal** of $\mathfrak{so}(4)$ |
+| right factor | $X \mapsto (0, X)$ | $\mathfrak{su}(2)_R$, an **ideal** of $\mathfrak{so}(4)$ |
+| diagonal | $X \mapsto (X, X)$ | $\mathfrak{su}(2)_{\mathrm{diag}}$, **not** an ideal |
+
+Under the outer automorphism of $\mathfrak{so}(4)$ (swapping the two
+factors), the left and right embeddings are equivalent. So there are
+two conjugacy classes: **factor** (ideal) and **diagonal**
+(non-ideal symmetric pair).
+
+#### Case 1: $\mathfrak{h} = \mathfrak{su}(2)_{\mathrm{diag}}$ — the round $S^3$
+
+Use the change of basis $X_i = J^L_i + J^R_i$ (diagonal) and $Y_i = J^L_i -
+J^R_i$ (anti-diagonal). One computes
+
+$$
+[X_i, X_j] = \epsilon^{ijk} X_k, \qquad
+[Y_i, Y_j] = \epsilon^{ijk} X_k, \qquad
+[X_i, Y_j] = \epsilon^{ijk} Y_k.
+$$
+
+So with $\mathfrak{h} = \langle X_1, X_2, X_3\rangle = \mathfrak{su}(2)_{\mathrm{diag}}$
+and $\mathfrak{m} = \langle Y_1, Y_2, Y_3\rangle$:
+
+- $[\mathfrak{h}, \mathfrak{m}]$: $\mathrm{ad}_{X_i}$ acts on $\mathfrak{m}$ as
+  the standard 3-dim rotation. **Reductive.** ✓
+- $[\mathfrak{m}, \mathfrak{m}] = X \subset \mathfrak{h}$. **Symmetric pair.** ✓
+
+Leibniz invariance with $\mathfrak{h}$ acting on $\mathfrak{m}$ as standard
+$\mathfrak{so}(3)$ rotation forces $\eta = \alpha\,\delta^{ij}$.
+
+$$
+\boxed{\;\eta_{\mathrm{diag}} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
+$$
+
+**Signature $(+,+,+)$** — Riemannian. The bracket $[\mathfrak{m},\mathfrak{m}]
+= +X$ (positive sign) gives **positive sectional curvature**. The result
+is the round 3-sphere:
+
+$$
+S^3 \;=\; SO(4) \,/\, SO(3)_{\mathrm{diag}}.
+$$
+
+#### Case 2: $\mathfrak{h} = \mathfrak{su}(2)_L$ — non-effective!
+
+Here $\mathfrak{h} = \mathfrak{su}(2)_L$ is one of the *two ideals* of
+$\mathfrak{so}(4)$. With $\mathfrak{m} = \mathfrak{su}(2)_R$:
+
+- $[\mathfrak{h}, \mathfrak{m}] = 0$ (the factors commute). Reductive,
+  yes; but the isotropy action is **trivial**.
+- $[\mathfrak{m}, \mathfrak{m}] = \mathfrak{su}(2)_R = \mathfrak{m}$. NOT a
+  symmetric pair (the bracket lands in $\mathfrak{m}$, not $\mathfrak{h}$).
+
+The Leibniz invariance condition is *vacuous* — any symmetric $\eta$ on
+$\mathfrak{m}$ is automatically $\mathfrak{h}$-invariant. SymPy confirms:
+a 6-parameter family of metrics.
+
+But there's a catch — **this Klein pair is not effective**. Because
+$\mathfrak{h} = \mathfrak{su}(2)_L$ is a non-trivial ideal of $\mathfrak{g}
+= \mathfrak{so}(4)$, the action of $G = SO(4)$ on $G/H$ has a non-trivial
+kernel: the $SO(3)_L$ factor of $SO(4)$ acts *trivially* on every coset.
+Effectively, only the $SO(3)_R$ factor acts, and it does so simply-
+transitively (= as left translation on the group manifold $SO(3)_R \cong
+S^3$).
+
+So the "Klein geometry" $(SO(4), SO(3)_L)$ is really just the group
+manifold $SO(3)_R \cong S^3 = SU(2)$ with the half-redundant $SO(4)$-
+labelling: the left $SO(3)_L$ part doesn't do anything. The 6-parameter
+family of allowed metrics is the family of **left-invariant metrics on the
+group manifold $SU(2) = S^3$** — including the round metric (the
+bi-invariant one, when both factors are scaled equally) but also the
+*Berger spheres* (anisotropic left-invariant metrics).
+
+In the standard Klein-geometry framework one requires Klein pairs to be
+*effective* — i.e., $\mathfrak{h}$ contains no non-trivial ideal of
+$\mathfrak{g}$. Excluding the two factor embeddings on this basis leaves
+**only $\mathfrak{su}(2)_{\mathrm{diag}}$ as a legitimate point-
+stabilizer**, giving the unique round $S^3$.
+
+#### Summary table for $\mathfrak{so}(4)$
+
+| $\mathfrak{h}$ | dim | effective? | $G/H$ | metric |
+|---|---|---|---|---|
+| $\mathfrak{su}(2)_{\mathrm{diag}}$ | 3 | yes (symmetric pair) | $S^3$ | round, unique up to scale ★ |
+| $\mathfrak{su}(2)_L$ (or $R$) | 3 | **no** (ideal) | $SO(3)_R \cong S^3$ as group | 6-param family of left-invariant metrics |
+| $\mathfrak{so}(2)\oplus\mathfrak{so}(2)$ | 2 | yes | $SO(4)/T^2 =$ oriented 2-Grassmannian of $\mathbb{R}^4$ | 4-dim symmetric space |
+| $\mathfrak{so}(2)$ | 1 | yes | 5-dim Stiefel-like space | various |
+| $\{0\}$ | 0 | yes | $SO(4)$ frame bundle | 6-dim, left-invariant |
+
+Among effective 3-dim Klein pairs there is **exactly one** point-
+stabilizer for $\mathfrak{so}(4)$, giving the unique round 3-sphere. The
+non-effective factor-embedding case is more naturally viewed as the group
+manifold $SU(2)$, which is the same topological $S^3$ but is no longer a
+symmetric space.
+
+#### Why only one (vs. two for $\mathfrak{so}(3,1)$)?
+
+The key contrast:
+
+> *$\mathfrak{so}(4)$ is compact — all its subalgebras are compact — so
+> all its invariant metrics are positive-definite. There is no analogue of
+> "the boost subalgebra" that could yield a Lorentzian quotient.*
+
+Whereas $\mathfrak{so}(3,1)$, being **of indefinite signature**, contains
+both a compact $\mathfrak{so}(3)$ subalgebra and a non-compact
+$\mathfrak{so}(2,1)$ subalgebra, giving Riemannian $\mathbb{H}^3$ and
+Lorentzian $dS_3$ respectively. The same dimensions, but compact $G$
+yields one Riemannian space; indefinite $G$ yields a Riemannian +
+Lorentzian pair.
+
+The general pattern, then, for the orthogonal real forms:
+
+| $\mathfrak{g}$ | type | # of effective point-stabilizers giving non-degen 3-dim quotient | spaces |
+|---|---|---|---|
+| $\mathfrak{so}(4)$ | compact | 1 | $S^3$ (Riemannian, $K = +1$) |
+| $\mathfrak{so}(3,1)$ | indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
+| $\mathfrak{so}(2,2)$ | indefinite | 2 | $\mathbb{H}^3$, $AdS_3$ |
+| $\mathfrak{so}(1,3)$ | $= \mathfrak{so}(3,1)$ | same | same |
+
+### Same algebra-to-metric machinery, different curvature
+
+Comparing the four cases $\mathbb{R}^2$, $\mathbb{R}^3$, $S^2$, $S^3$
+side by side, the picture is now uniform. In every case the metric on
+$\mathfrak{m}$ comes out as
+
+$$
+\eta^{ij} \;\propto\; \delta^{ij},
+$$
+
+and the only input to this derivation is the bracket $[\mathfrak{h},
+\mathfrak{m}]$ — which has the same structure ($\mathfrak{so}(n)$ acting
+on its defining $n$-dim representation) in all four cases. What
+changes from one space to another is *not* the metric formula but the
+bracket $[\mathfrak{m}, \mathfrak{m}]$:
+
+| Space | Algebra $\mathfrak{g}$ | $\mathfrak{h}$ | $\mathfrak{m}$ | $[\mathfrak{m}, \mathfrak{m}]$ | Curvature |
+|---|---|---|---|---|---|
+| $\mathbb{R}^2$ | $\mathfrak{e}(2)$ | $\{J\}$ | $\{P^1, P^2\}$ | $0$ | $0$ (flat) |
+| $\mathbb{R}^3$ | $\mathfrak{e}(3)$ | $\{J^i\}$ | $\{P^i\}$ | $0$ | $0$ (flat) |
+| $S^2$ | $\mathfrak{so}(3)$ | $\{J^3\}$ | $\{J^1, J^2\}$ | $\subset \mathfrak{h}$ | $+1/R^2$ |
+| $S^3$ | $\mathfrak{so}(4)$ | $\{J^i\}$ | $\{K^i\}$ | $\subset \mathfrak{h}$ | $+1/R^2$ |
+
+The hyperbolic space $H^n$ would appear with $\mathfrak{g} =
+\mathfrak{so}(n, 1)$ and $[\mathfrak{m}, \mathfrak{m}] \subset
+\mathfrak{h}$ with the *opposite* sign, giving constant negative
+curvature $-1/R^2$ — and Minkowski space sits in the same family with
+$\mathfrak{m}$ an abelian ideal but $\mathfrak{h} = \mathfrak{so}(3, 1)$
+instead of $\mathfrak{so}(4)$, producing the signature flip $\delta^{ij}
+\to \operatorname{diag}(-1, 1, 1, 1)$.
+
+The single algebraic distinction "$[\mathfrak{m}, \mathfrak{m}] = 0$ vs.
+$\subset \mathfrak{h}$" thus separates the *flat* model spaces
+(Minkowski, Galilean, Euclidean) from the *curved* constant-curvature
+ones (spheres, hyperbolic, de Sitter, anti-de Sitter). The metric on
+$\mathfrak{m}$, in every case, is fixed by the same Leibniz invariance
+condition.
+
+### Universal pattern across all examples
+
+In **one** algebraic principle — that $\eta$ be invariant under the
+adjoint action of $\{J_i, K_i\}$ —
+
+$$
+g([X, P^\mu], P^\nu) + g(P^\mu, [X, P^\nu]) = 0,
+$$
+
+the spacetime metric is completely determined by the commutation relations:
+
+| Algebra | $\mathfrak{h}$ | $\mathfrak{m}$ | $[\mathfrak{m}, \mathfrak{m}]$ | Invariants on $\mathfrak{m}$ | Curvature |
+|---|---|---|---|---|---|
+| Poincaré | $\{J_i, K_i\}$ | $\{H, P^i\}$ | $0$ | $\eta^{\mu\nu} = \operatorname{diag}(-1, 1, 1, 1)$ (Minkowski) | $0$ |
+| Galilei (bare) | $\{J_i, K_i\}$ | $\{H, P^i\}$ | $0$ | $\eta = \operatorname{diag}(1, 0, 0, 0)$, $\xi = \operatorname{diag}(0, 1, 1, 1)$ (degenerate pair) | $0$ |
+| $\mathfrak{e}(2)$ | $\{J\}$ | $\{P^i\}$ | $0$ | $\eta^{ij} = \delta^{ij}$ (Euclidean) | $0$ |
+| $\mathfrak{e}(3)$ | $\{J^i\}$ | $\{P^i\}$ | $0$ | $\eta^{ij} = \delta^{ij}$ (Euclidean) | $0$ |
+| $\mathfrak{so}(3)$ | $\{J^3\}$ | $\{J^1, J^2\}$ | $\subset \mathfrak{h}$ | $\eta^{ab} = \delta^{ab}$ | $+1/R^2$ |
+| $\mathfrak{so}(4)$ | $\{J^i\}$ | $\{K^i\}$ | $\subset \mathfrak{h}$ | $\eta^{ij} = \delta^{ij}$ | $+1/R^2$ |
+
+The pattern is uniform across all rows: the Leibniz invariance condition
+on $\mathfrak{m}$, given the action $[\mathfrak{h}, \mathfrak{m}]$, fixes
+the metric uniquely (up to overall scale). The Poincaré/Galilei split
+comes from the bracket $[K, P]$ (yielding $H$ versus $0$), which controls
+the *signature* / non-degeneracy of the metric. The flat/curved split
+comes from the bracket $[\mathfrak{m}, \mathfrak{m}]$ (vanishing versus
+landing in $\mathfrak{h}$), which controls the *curvature* of the
+homogeneous space.
+
+---
+
+## The stabilizer story
+
+The previous chapters used the Klein pair $(\mathfrak{g},
+\mathfrak{h})$ as a black box: pick $\mathfrak{h}$, run the algorithm,
+get a metric. But the *choice* of $\mathfrak{h}$ is itself a piece of
+geometry — it is what fixes "what kind of object the points of $G/H$
+are". This chapter unpacks the stabilizer side of the construction:
+the precise definition via orbit–stabilizer, the geometric reading of
+each candidate $\mathfrak{h}$ in $\mathfrak{e}(3)$, the principled
+reason for selecting $\mathfrak{h} = \mathfrak{so}(3)$ for "the
+space of points", and the genuinely richer situation in simple
+algebras where the same Lie algebra admits several point-stabilizing
+Klein pairs.
+
+### The stabilizer: what it is, and what each candidate $\mathfrak{h}$ fixes
+
+So far $\mathfrak{h}$ has been treated as a piece of algebra. Each $\mathfrak{h}$
+has a vivid geometric meaning, however: it is the **stabilizer** of some
+configuration in $\mathbb{R}^3$, and the homogeneous space $G/H$ is *the
+space of all configurations of that type*. Once we make this precise we can
+compute, for each candidate above, what $H$ is "fixing", and then argue
+unambiguously why $\mathfrak{h} = \mathfrak{so}(3)$ is the physically
+correct choice.
+
+#### Definition of the stabilizer
+
+Suppose a Lie group $G$ acts on a set $X$ (whose elements we call
+*configurations* — they could be points, lines, planes, frames, ...). For
+any $\xi \in X$, the **stabilizer subgroup** of $\xi$ is
+
+$$
+H_\xi \;:=\; \{\, g \in G : g \cdot \xi = \xi \,\},
+$$
+
+i.e., all group elements that leave $\xi$ untouched. It is automatically a
+closed subgroup of $G$. Differentiating at the identity gives the
+**stabilizer subalgebra**
+
+$$
+\mathfrak{h}_\xi \;:=\; \{\, X \in \mathfrak{g} : X \cdot \xi = 0 \,\},
+$$
+
+i.e., all infinitesimal generators whose flow leaves $\xi$ fixed
+instantaneously.
+
+#### The orbit–stabilizer correspondence
+
+If the $G$-action is transitive on the orbit of $\xi$, the smooth bijection
+
+$$
+G / H_\xi \;\xrightarrow{\ \sim\ }\; G \cdot \xi, \qquad
+g H_\xi \ \mapsto\ g \cdot \xi
+$$
+
+makes $G/H_\xi$ into "the space of all configurations of type $\xi$":
+- if $\xi$ is a *point*, then $G/H_\xi$ is the space of all points;
+- if $\xi$ is an *oriented line*, then $G/H_\xi$ is the space of oriented lines;
+- if $\xi$ is an *oriented plane*, $G/H_\xi$ is the space of oriented planes;
+- if $\xi$ is a *frame* (point + 3 orthonormal vectors), $G/H_\xi$ is the
+  space of frames.
+
+So **choosing a Klein pair $(\mathfrak{g}, \mathfrak{h})$ is equivalent to
+choosing what geometric object the homogeneous space is made of**. The
+different reductive subalgebras $\mathfrak{h}$ of $\mathfrak{e}(3)$ are not
+"competing answers to one question"; they answer different questions about
+$\mathbb{R}^3$.
+
+#### How to read the stabilizer from the algebra
+
+For $E(3)$ acting on $\mathbb{R}^3$, the standard infinitesimal generators
+act on a point $\vec x \in \mathbb{R}^3$ by
+
+$$
+P^j \cdot \vec x \;=\; \hat e_j
+\qquad\text{(uniform translation in direction } \hat e_j\text{)},
+$$
+$$
+J^i \cdot \vec x \;=\; \hat e_i \times \vec x
+\qquad\text{(rotation around axis } \hat e_i \text{ through the origin)}.
+$$
+
+For a general element $X = a^j P^j + b^i J^i \in \mathfrak{e}(3)$, the
+infinitesimal motion of $\vec x$ is
+
+$$
+X \cdot \vec x \;=\; \vec a + \vec b \times \vec x.
+$$
+
+Whether $X$ fixes a given configuration $\xi$ is then a linear check:
+
+- *fixes a point $\vec p$* iff $\vec a + \vec b \times \vec p = 0$;
+- *fixes a line* $\{\vec p + t \hat n : t \in \mathbb{R}\}$ as a set iff
+  $\vec a + \vec b \times \vec p \parallel \hat n$ and $\vec b \times \hat n
+  = 0$ (translation along, rotation about);
+- *fixes a plane* $\{\vec x : (\vec x - \vec p) \cdot \hat n = 0\}$ as a set
+  iff translations lie in the plane and rotations are about $\hat n$;
+- *fixes a direction $\hat n$* (an "unattached arrow") iff $\vec b \times
+  \hat n = 0$, i.e., $\vec b \parallel \hat n$;
+- *fixes a frame* (point + 3 orthonormal vectors at it) iff $\vec a = 0$
+  and $\vec b = 0$, i.e., $X = 0$.
+
+Using the conjugation freedom (orient the distinguished axis along
+$\hat z$, place rotation centers at the origin) we can read off the
+maximal $\xi$ fixed by each candidate $\mathfrak{h}$ at a glance.
+
+### All Klein-pair candidates for $\mathfrak{e}(3)$
 
 The four candidates listed above are illustrative, not exhaustive. Here we
 enumerate the *complete* classification of proper subalgebras
@@ -1391,98 +2474,7 @@ $\mathfrak{m}$. The translation block dies. So:
 This narrows the candidates to $\{0\}$, $\langle J^3 \rangle$, and
 $\mathfrak{so}(3)$.
 
-#### The stabilizer: what it is, and what each candidate $\mathfrak{h}$ fixes
-
-So far $\mathfrak{h}$ has been treated as a piece of algebra. Each $\mathfrak{h}$
-has a vivid geometric meaning, however: it is the **stabilizer** of some
-configuration in $\mathbb{R}^3$, and the homogeneous space $G/H$ is *the
-space of all configurations of that type*. Once we make this precise we can
-compute, for each candidate above, what $H$ is "fixing", and then argue
-unambiguously why $\mathfrak{h} = \mathfrak{so}(3)$ is the physically
-correct choice.
-
-##### Definition of the stabilizer
-
-Suppose a Lie group $G$ acts on a set $X$ (whose elements we call
-*configurations* — they could be points, lines, planes, frames, ...). For
-any $\xi \in X$, the **stabilizer subgroup** of $\xi$ is
-
-$$
-H_\xi \;:=\; \{\, g \in G : g \cdot \xi = \xi \,\},
-$$
-
-i.e., all group elements that leave $\xi$ untouched. It is automatically a
-closed subgroup of $G$. Differentiating at the identity gives the
-**stabilizer subalgebra**
-
-$$
-\mathfrak{h}_\xi \;:=\; \{\, X \in \mathfrak{g} : X \cdot \xi = 0 \,\},
-$$
-
-i.e., all infinitesimal generators whose flow leaves $\xi$ fixed
-instantaneously.
-
-##### The orbit–stabilizer correspondence
-
-If the $G$-action is transitive on the orbit of $\xi$, the smooth bijection
-
-$$
-G / H_\xi \;\xrightarrow{\ \sim\ }\; G \cdot \xi, \qquad
-g H_\xi \ \mapsto\ g \cdot \xi
-$$
-
-makes $G/H_\xi$ into "the space of all configurations of type $\xi$":
-- if $\xi$ is a *point*, then $G/H_\xi$ is the space of all points;
-- if $\xi$ is an *oriented line*, then $G/H_\xi$ is the space of oriented lines;
-- if $\xi$ is an *oriented plane*, $G/H_\xi$ is the space of oriented planes;
-- if $\xi$ is a *frame* (point + 3 orthonormal vectors), $G/H_\xi$ is the
-  space of frames.
-
-So **choosing a Klein pair $(\mathfrak{g}, \mathfrak{h})$ is equivalent to
-choosing what geometric object the homogeneous space is made of**. The
-different reductive subalgebras $\mathfrak{h}$ of $\mathfrak{e}(3)$ are not
-"competing answers to one question"; they answer different questions about
-$\mathbb{R}^3$.
-
-##### How to read the stabilizer from the algebra
-
-For $E(3)$ acting on $\mathbb{R}^3$, the standard infinitesimal generators
-act on a point $\vec x \in \mathbb{R}^3$ by
-
-$$
-P^j \cdot \vec x \;=\; \hat e_j
-\qquad\text{(uniform translation in direction } \hat e_j\text{)},
-$$
-$$
-J^i \cdot \vec x \;=\; \hat e_i \times \vec x
-\qquad\text{(rotation around axis } \hat e_i \text{ through the origin)}.
-$$
-
-For a general element $X = a^j P^j + b^i J^i \in \mathfrak{e}(3)$, the
-infinitesimal motion of $\vec x$ is
-
-$$
-X \cdot \vec x \;=\; \vec a + \vec b \times \vec x.
-$$
-
-Whether $X$ fixes a given configuration $\xi$ is then a linear check:
-
-- *fixes a point $\vec p$* iff $\vec a + \vec b \times \vec p = 0$;
-- *fixes a line* $\{\vec p + t \hat n : t \in \mathbb{R}\}$ as a set iff
-  $\vec a + \vec b \times \vec p \parallel \hat n$ and $\vec b \times \hat n
-  = 0$ (translation along, rotation about);
-- *fixes a plane* $\{\vec x : (\vec x - \vec p) \cdot \hat n = 0\}$ as a set
-  iff translations lie in the plane and rotations are about $\hat n$;
-- *fixes a direction $\hat n$* (an "unattached arrow") iff $\vec b \times
-  \hat n = 0$, i.e., $\vec b \parallel \hat n$;
-- *fixes a frame* (point + 3 orthonormal vectors at it) iff $\vec a = 0$
-  and $\vec b = 0$, i.e., $X = 0$.
-
-Using the conjugation freedom (orient the distinguished axis along
-$\hat z$, place rotation centers at the origin) we can read off the
-maximal $\xi$ fixed by each candidate $\mathfrak{h}$ at a glance.
-
-##### Stabilizer of each candidate
+#### Stabilizer of each candidate
 
 For each Klein-pair candidate we list the *richest* (highest-content)
 configuration $\xi$ such that every $X \in \mathfrak{h}$ fixes $\xi$. The
@@ -1523,7 +2515,7 @@ A few rows deserve a sanity check:
   resulting space $G/H = E(3)/T^3 \cong SO(3)$ is a space of *rotations*,
   not a space "inside $\mathbb{R}^3$".)
 
-##### Why we want $\mathfrak{h} = \mathfrak{so}(3)$: stabilizing a point
+### Why we want $\mathfrak{h} = \mathfrak{so}(3)$: stabilizing a point
 
 Every row of the table above defines a perfectly self-consistent Klein
 geometry. They differ in *what kind of object* the homogeneous space is
@@ -1799,7 +2791,7 @@ representation, the invariant form is positive-definite Euclidean; with
 $\mathfrak{h} = \mathfrak{so}(3,1)$ acting on $\mathfrak{m}$ by its
 defining representation, the invariant form is Minkowski.
 
-#### Can a single Lie algebra have more than one "point-stabilizing" Klein geometry?
+### Can a single Lie algebra have more than one "point-stabilizing" Klein geometry?
 
 In the $\mathfrak{e}(3)$ case above the answer was particularly clean:
 exactly one reductive subalgebra ($\mathfrak{so}(3)$) fixes a single point
@@ -1816,7 +2808,7 @@ that is still a "space of points". They differ not in *what kind of object*
 the space is made of (all are spaces of points) but in the *signature of
 the resulting metric*.
 
-##### Smallest example: $\mathfrak{so}(2, 1) \cong \mathfrak{sl}(2, \mathbb{R})$
+#### Smallest example: $\mathfrak{so}(2, 1) \cong \mathfrak{sl}(2, \mathbb{R})$
 
 This is the lowest-dimensional simple Lie algebra where the phenomenon
 appears. Take generators $\{J, K_1, K_2\}$ with brackets
@@ -1906,7 +2898,7 @@ spacetime of constant negative curvature.
 (Both calculations are verified by a one-line SymPy script analogous to
 those for $\mathbb{R}^3$ and $S^2$.)
 
-##### What just happened, physically
+#### What just happened, physically
 
 The *same* abstract Lie algebra $\mathfrak{so}(2,1)$, with two different
 choices of "what stabilizes a point", gave two genuinely different physical
@@ -1941,7 +2933,7 @@ So *which* one-parameter subgroup we call "the rotations of space" is what
 distinguishes a *space* from a *spacetime*. The Lie algebra alone does not
 know.
 
-##### Higher-dimensional examples
+#### Higher-dimensional examples
 
 The same phenomenon happens for every higher-rank $\mathfrak{so}(p, q)$,
 producing the standard zoo of constant-curvature pseudo-Riemannian
@@ -1968,7 +2960,7 @@ point-stabilizers:
 Two completely different physical spaces, both stabilizing a single point,
 both built from the same Lorentz algebra.
 
-##### Physical meaning of multiple point-stabilizers
+#### Physical meaning of multiple point-stabilizers
 
 This phenomenon is the **signature ambiguity** of Klein geometry. The Lie
 algebra encodes only the *abstract algebraic structure* of the symmetries;
@@ -2001,7 +2993,7 @@ Three concrete ways this matters in physics:
    etc.) make sense precisely because the underlying Lie-algebraic
    structure has both as Klein quotients of the same complex algebra.
 
-##### When is the point-stabilizing geometry unique?
+#### When is the point-stabilizing geometry unique?
 
 Putting all of the above together:
 
@@ -2032,1052 +3024,22 @@ different metric signature. The choice of point-stabilizer is then a
 genuine extra physical input (Riemannian space? Lorentzian spacetime? what
 cosmological constant?) — not a mathematical accident.
 
-#### Worked example: point-stabilizers of $\mathfrak{so}(3,1)$ (the Lorentz algebra)
-
-As a concrete and physically important illustration, let's enumerate all
-point-stabilizing Klein geometries arising from $\mathfrak{so}(3,1)$ — the
-homogeneous Lorentz algebra in 3+1 dimensions. This is the same algebra
-that appears in special relativity as the rotation/boost subalgebra of the
-Poincaré algebra, and we'll find that it is *simultaneously* the isometry
-algebra of three distinct 3-dimensional homogeneous spaces.
-
-##### Set-up
-
-The six generators are rotations $J^1, J^2, J^3$ and boosts $K^1, K^2,
-K^3$, with brackets
-
-$$
-[J^i, J^j] = \epsilon^{ijk} J^k, \qquad
-[J^i, K^j] = \epsilon^{ijk} K^k, \qquad
-[K^i, K^j] = -\epsilon^{ijk} J^k.
-$$
-
-To get a 3-dim Klein quotient $G/H$ we need $\dim\mathfrak{h} = 3$. Up to
-$SO(3,1)$-conjugacy, the relevant 3-dim Lie subalgebras of $\mathfrak{so}(3,1)$
-are:
-
-| $\mathfrak{h}$ | basis | type | as a Lie algebra |
-|---|---|---|---|
-| $\mathfrak{so}(3)$ | $J^1, J^2, J^3$ | compact | rotations |
-| $\mathfrak{so}(2,1)$ | $J^3, K^1, K^2$ | split | one rotation + two boosts in the transverse plane |
-| $\mathfrak{e}(2)$ | $J^1,\;J^2 - K^3,\;J^3 + K^2$ | parabolic | rotation + two commuting "null rotations" |
-
-The first two are the **little groups** of timelike and spacelike unit
-vectors in $\mathbb{R}^{3,1}$ respectively; the third is the little group
-of a null (lightlike) vector — familiar from particle physics as the
-Wigner little group for massless particles.
-
-##### Case 1: $\mathfrak{h} = \mathfrak{so}(3)$ — compact stabilizer
-
-Complement $\mathfrak{m} = \langle K^1, K^2, K^3 \rangle$. Bracket check:
-
-- $[\mathfrak{h}, \mathfrak{m}]$: $[J^i, K^j] = \epsilon^{ijk} K^k \in \mathfrak{m}$. **Reductive.** ✓
-- $[\mathfrak{m}, \mathfrak{m}]$: $[K^i, K^j] = -\epsilon^{ijk} J^k \in \mathfrak{h}$. **Symmetric pair.** ✓
-
-Imposing Leibniz invariance with $\mathfrak{so}(3)$ acting on $\mathfrak{m}$
-by the standard rotation representation forces $\eta^{ij} = \alpha\,\delta^{ij}$:
-
-$$
-\boxed{\;\eta_{\mathfrak{so}(3)} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
-$$
-
-**Signature $(+,+,+)$** — Riemannian. The sign of the $[\mathfrak{m},
-\mathfrak{m}] \to \mathfrak{h}$ bracket is $-\epsilon^{ijk}$, which gives
-*negative* sectional curvature. The resulting space is the **3-dimensional
-hyperbolic space**
-
-$$
-\mathbb{H}^3 \;=\; SO(3,1)\,/\,SO(3),
-$$
-
-i.e., the upper sheet of the unit timelike hyperboloid in $\mathbb{R}^{3,1}$,
-with its negative-curvature Riemannian metric.
-
-##### Case 2: $\mathfrak{h} = \mathfrak{so}(2,1)$ — non-compact stabilizer
-
-Complement $\mathfrak{m} = \langle J^1, J^2, K^3 \rangle$. Bracket check
-(verified by the SymPy enumeration):
-
-- $[\mathfrak{h}, \mathfrak{m}]$ closes inside $\mathfrak{m}$. **Reductive.** ✓
-- $[\mathfrak{m}, \mathfrak{m}] = [J^1, J^2] = J^3$, $[J^1, K^3] = -K^2$,
-  $[J^2, K^3] = K^1$, all in $\mathfrak{h}$. **Symmetric pair.** ✓
-
-Solving the Leibniz equations (three invariance equations, one per
-generator of $\mathfrak{h}$) for a generic symmetric $\eta$ on $\mathfrak{m}$
-yields
-
-$$
-\boxed{\;\eta_{\mathfrak{so}(2,1)} \;=\; \alpha\,\mathrm{diag}(-1, -1, 1).\;}
-$$
-
-**Signature $(-,-,+)$**, or equivalently after overall sign $(+,+,-)$ —
-**Lorentzian**. Why the indefinite signature? Because $\mathfrak{so}(2,1)$
-acts on $\mathfrak{m}$ by mixing the *compact* rotation generators $J^1, J^2$
-with the *non-compact* boost $K^3$ via the boost generators $K^1, K^2 \in
-\mathfrak{h}$; the only invariant quadratic form distinguishes "compact-type"
-(directions $J^1, J^2$) from "non-compact-type" (direction $K^3$) with
-opposite signs.
-
-The resulting space is the **3-dimensional de Sitter space**
-
-$$
-dS_3 \;=\; SO(3,1)\,/\,SO(2,1),
-$$
-
-i.e., the unit spacelike hyperboloid in $\mathbb{R}^{3,1}$, with its
-constant-positive-curvature Lorentzian metric.
-
-##### Case 3: $\mathfrak{h} = \mathfrak{e}(2)$ — parabolic stabilizer
-
-This is the **little group of a null vector**. Take the standard null vector
-$p = (1, 1, 0, 0)$ in $\mathbb{R}^{3,1}$; one finds (and SymPy verifies) the
-stabilizer is the 3-dim algebra
-
-$$
-\mathfrak{h} \;=\; \langle\, J^1,\; J^2 - K^3,\; J^3 + K^2 \,\rangle,
-$$
-
-with structure
-
-$$
-[J^1, J^2 - K^3] = J^3 + K^2, \quad
-[J^1, J^3 + K^2] = -(J^2 - K^3), \quad
-[J^2 - K^3, J^3 + K^2] = 0.
-$$
-
-That is, $\mathfrak{h} \cong \mathfrak{e}(2)$ — a "rotation" $J^1$ together
-with two commuting "null rotations" $J^2 - K^3$ and $J^3 + K^2$. **Crucially,
-this Klein pair is non-reductive**: by the same argument we made for
-$\mathfrak{e}(3)$, any complement $\mathfrak{m}$ to $\mathfrak{h}$ ends up
-mixing with $\mathfrak{h}$ via the null-rotation generators. The Leibniz
-equations admit no non-degenerate invariant metric on $\mathfrak{m}$.
-
-Geometrically, $SO(3,1)/\mathfrak{e}(2)$ is the **future null cone minus
-the origin** in $\mathbb{R}^{3,1}$ — a 3-dim cone of null vectors that
-inherits only a degenerate "Carrollian" structure (a vector-line is
-distinguished at each point, but no full metric). This is the same
-degenerate situation we saw with $E(3)/\mathfrak{e}(2)$, where the would-be
-"space of oriented planes" had a degenerate metric.
-
-(Projectivizing the null cone — that is, enlarging $\mathfrak{h}$ to the
-4-dim parabolic subalgebra $\mathfrak{h} \oplus \langle K^1\rangle$ — gives
-the **celestial sphere** $S^2 = SO(3,1)/P$, the asymptotic boundary of
-Minkowski space. This is a 2-dim space, important for asymptotic symmetries
-and the holographic / BMS / AdS/CFT story, but it is not a *3-dim* space of
-points so we set it aside here.)
-
-##### Summary table
-
-The complete enumeration of point-stabilizing Klein geometries for
-$\mathfrak{so}(3,1)$:
-
-| $\mathfrak{h}$ | $G/H$ | $\dim$ | metric signature | curvature | character |
-|---|---|---|---|---|---|
-| $\mathfrak{so}(3)$ | $\mathbb{H}^3$ | 3 | $(+,+,+)$ | $K = -1$ | Riemannian space |
-| $\mathfrak{so}(2,1)$ | $dS_3$ | 3 | $(+,+,-)$ | $K = +1$ | Lorentzian spacetime |
-| $\mathfrak{e}(2)$ | null cone | 3 | degenerate | — | Carrollian (no metric) |
-
-So $\mathfrak{so}(3,1)$ has **two reductive point-stabilizers** giving
-non-degenerate metrics: one Riemannian, one Lorentzian. (Plus a parabolic
-"null" stabilizer giving a degenerate-metric space, which is the
-non-reductive analogue of the $\mathfrak{e}(3)/\mathfrak{e}(2)$ situation.)
-
-The picture is exactly the lower-dimensional $\mathfrak{so}(2,1)$ story
-amplified by one dimension. Compact stabilizer → Riemannian; non-compact
-stabilizer → Lorentzian. The Lie algebra itself is "agnostic" about which
-geometry it is the symmetry algebra of.
-
-##### Where $\mathfrak{so}(3,1)$ actually appears in physics
-
-In ordinary special relativity, $\mathfrak{so}(3,1)$ does *not* act on
-Minkowski space $\mathbb{R}^{3,1}$ as a homogeneous group — the
-homogeneous group of $\mathbb{R}^{3,1}$ is the Poincaré algebra
-$\mathfrak{so}(3,1) \ltimes \mathbb{R}^{3,1}$, of which $\mathfrak{so}(3,1)$
-is the *point-stabilizer* (the rotation/boost subalgebra fixing the
-origin). So $\mathfrak{so}(3,1)$ plays the role of $\mathfrak{h}$, not of
-$\mathfrak{g}$, in the standard relativistic setting.
-
-But $\mathfrak{so}(3,1)$ also plays the role of *the symmetry algebra* in
-two further physically important situations:
-
-- **$\mathbb{H}^3$ as spatial slice of an open FRW universe**: in cosmology,
-  a spatially-hyperbolic Friedmann–Lemaître–Robertson–Walker universe has
-  $\mathbb{H}^3$ as its constant-time spatial slice, and $\mathfrak{so}(3,1)$
-  is the isometry algebra of that slice (acting through case 1 above).
-- **$dS_3$ as a 3-dim de Sitter spacetime**: in lower-dim quantum-gravity
-  models, the 3-dim de Sitter universe is a Lorentzian spacetime of
-  positive cosmological constant; its isometry algebra is $\mathfrak{so}(3,1)$
-  acting through case 2 above.
-
-The *same* abstract algebra plays three roles in physics — Lorentz
-stabilizer of Minkowski, isometry of hyperbolic 3-space, isometry of 3-dim
-de Sitter — distinguished by what we want $\mathfrak{g}$ to be and what we
-want $\mathfrak{h}$ to be in the Klein pair. The choice of point-stabilizer
-$\mathfrak{h}$ within $\mathfrak{so}(3,1)$ is what selects between the
-Riemannian and Lorentzian geometries.
-
-##### Compare with $\mathfrak{so}(p, q)$ in general
-
-The pattern continues for all real forms of $\mathfrak{so}$:
-
-- $\mathfrak{so}(4)$ has one reductive point-stabilizer ($\mathfrak{so}(3)$)
-  → only $S^3$, Riemannian, $K = +1$. (The only other 3-dim subalgebra
-  is $\mathfrak{su}(2)_L$ in the left factor of $\mathfrak{so}(4) \cong
-  \mathfrak{su}(2) \oplus \mathfrak{su}(2)$, which gives the *bi-invariant*
-  3-sphere $SO(4)/SU(2)_L \cong SU(2)_R \cong S^3$ as a group manifold —
-  topologically the same, but with a slightly different geometric
-  interpretation.) The point: a *compact* simple Lie algebra has only
-  *compact* subalgebras, so only Riemannian quotients are available.
-- $\mathfrak{so}(3,1)$: two reductive point-stabilizers as above
-  ($\mathbb{H}^3$, $dS_3$).
-- $\mathfrak{so}(2,2) \cong \mathfrak{sl}(2,\mathbb{R}) \oplus
-  \mathfrak{sl}(2,\mathbb{R})$: at least two reductive point-stabilizers
-  yielding $\mathbb{H}^3$ (Riemannian, $K = -1$, with $\mathfrak{h} \cong
-  \mathfrak{so}(2,1)_{\mathrm{diag}}$) and $AdS_3$ (Lorentzian, $K = -1$,
-  with a different embedding).
-- $\mathfrak{so}(5)$ → $S^4$ only.
-- $\mathfrak{so}(4,1)$ → $\mathbb{H}^4$ (Riemannian) and $dS_4$ (Lorentzian).
-- $\mathfrak{so}(3,2)$ → $AdS_4$ (Lorentzian, $K = -1$) and a Riemannian
-  geometry of signature $(+,+,+,+)$.
-
-The general rule: for $\mathfrak{so}(p, q)$ with $p + q = n + 1$, the
-reductive point-stabilizers are conjugate to $\mathfrak{so}(p', q')$ with
-$p' + q' = n$, $0 \leq p' \leq p$, $0 \leq q' \leq q$, $|p - p'| + |q - q'| = 1$
-— giving exactly the constant-curvature pseudo-Riemannian geometries of
-dimension $n$ accessible from that Lie algebra.
-
-So $\mathfrak{so}(3,1)$ having two point-stabilizers (giving $\mathbb{H}^3$
-and $dS_3$) is exactly the next step up from $\mathfrak{so}(2,1)$ having
-two point-stabilizers (giving $\mathbb{H}^2$ and $AdS_2$). Both
-illustrate the general phenomenon: **simple Lie algebras of indefinite
-signature admit multiple inequivalent "spaces of points" as Klein quotients,
-distinguished by the compactness or non-compactness of the stabilizer**.
-
-#### Worked example: point-stabilizers of the Poincaré algebra
-
-What happens when we *put translations back in* and ask the analogous
-question for the full Poincaré algebra $\mathfrak{iso}(3,1) =
-\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ (dim 10)? Now the natural
-"space of points" should be 4-dim **Minkowski spacetime** $\mathbb{R}^{3,1}$,
-just as $\mathbb{R}^3$ was for $\mathfrak{e}(3)$. The question is whether the
-point-stabilizer giving this Minkowski geometry is unique, or whether (like
-$\mathfrak{so}(3,1)$ taken alone) Poincaré admits several inequivalent
-"point-stabilizing" Klein geometries.
-
-The answer turns out to be exactly the same as for $\mathfrak{e}(3)$: the
-semidirect-product structure forces uniqueness. Minkowski is the unique
-non-degenerate 4-dim point-space. The reason is the same non-degeneracy
-filter we derived earlier.
-
-##### The non-degeneracy filter applies, unchanged
-
-The Poincaré brackets relevant for the argument are
-
-$$
-[J^i, J^j] = \epsilon^{ijk} J^k, \quad
-[J^i, K^j] = \epsilon^{ijk} K^k, \quad
-[K^i, K^j] = -\epsilon^{ijk} J^k,
-$$
-$$
-[J^i, P^j] = \epsilon^{ijk} P^k, \quad
-[J^i, P^0] = 0, \quad
-[K^i, P^0] = P^i, \quad
-[K^i, P^j] = \delta^{ij} P^0, \quad
-[P^\mu, P^\nu] = 0.
-$$
-
-Suppose $\mathfrak{h}$ contains some translation $P \in \mathfrak{t}_{3,1}$
-and the complement $\mathfrak{m}$ contains some Lorentz generator $L$ (a
-rotation or boost). Acting on $\mathfrak{m}$, the Leibniz invariance under
-$P$ reads
-
-$$
-\eta([P, L], P') + \eta(L, \underbrace{[P, P']}_{= 0}) \;=\; 0
-\qquad\Longrightarrow\qquad
-\eta\bigl([P, L], P'\bigr) = 0.
-$$
-
-But $[P, L]$ for $P \in \mathfrak{t}_{3,1}$ and $L \in \mathfrak{so}(3,1)$
-is again a non-zero translation in $\mathfrak{m}$ (the boost $L$ rotates
-$P$ into another translation direction, etc.). So as $L$ ranges over the
-Lorentz part of $\mathfrak{m}$, $[P, L]$ sweeps out the translation block
-of $\mathfrak{m}$, forcing $\eta(P^*, P') = 0$ for *all* translations $P'
-\in \mathfrak{m}$. The translation block dies — exactly as it did for
-$\mathfrak{e}(3)$.
-
-> *A non-degenerate $\mathrm{ISO}(3,1)$-invariant metric on $G/H$ requires
-> that $\mathfrak{h}$ contain no translations:* $\mathfrak{h} \subset
-> \mathfrak{so}(3,1)$.
-
-This is verified directly by SymPy: e.g., taking $\mathfrak{h} =
-\mathfrak{so}(3) \oplus \langle P^0\rangle$ (rotations + time translation,
-dim 4) and complement $\mathfrak{m} = \langle K^i, P^i \rangle$ (dim 6),
-the Leibniz equations give a degenerate $\eta$ in block form
-
-$$
-\eta \;=\; \begin{pmatrix} \alpha\,\delta_{ij} & 0 \\ 0 & 0 \end{pmatrix},
-$$
-
-i.e., the boost block has $\alpha\delta^{ij}$ but the entire spatial-
-translation block is zero. The metric on $G/H$ has rank 3, not 6.
-
-##### Among Lorentz subalgebras, only $\mathfrak{so}(3,1)$ itself has dimension 6
-
-For a 4-dim $G/H$ we need $\dim \mathfrak{h} = 6$. The non-degeneracy filter
-restricts $\mathfrak{h} \subset \mathfrak{so}(3,1)$, which is itself 6-dim.
-So $\mathfrak{h} = \mathfrak{so}(3,1)$ is the **unique** point-stabilizer
-giving a non-degenerate 4-dim spacetime:
-
-$$
-\boxed{\;\mathbb{R}^{3,1} \;\equiv\; \mathrm{Minkowski} \;=\; \mathrm{ISO}(3,1) \,/\, SO(3,1).\;}
-$$
-
-Verifying the invariance with SymPy: the Leibniz system $\eta\,\mathrm{ad}_X
-+ (\mathrm{ad}_X)^T \eta = 0$ for all six $X \in \mathfrak{so}(3,1)$ acting
-on $\mathfrak{m} = \mathfrak{t}_{3,1}$ has the unique (up to scale)
-solution
-
-$$
-\eta \;=\; \alpha\,\mathrm{diag}(-1,\,+1,\,+1,\,+1),
-$$
-
-with translation block index ordering $(P^0, P^1, P^2, P^3)$. **Minkowski
-signature $(-,+,+,+)$**, exactly as expected.
-
-##### Orbit–stabilizer interpretation
-
-Concretely, fix the spacetime origin $O = (0, 0, 0, 0) \in \mathbb{R}^{3,1}$.
-The Poincaré action $(\Lambda, a) \cdot x = \Lambda x + a$ takes
-$O \mapsto a$, so the orbit of $O$ is all of $\mathbb{R}^{3,1}$ (transitive).
-The stabilizer of $O$ is
-
-$$
-\mathrm{Stab}(O) \;=\; \{(\Lambda, a) : \Lambda \cdot 0 + a = 0\}
-\;=\; \{(\Lambda, 0) : \Lambda \in SO(3,1)\}
-\;=\; SO(3,1).
-$$
-
-At the Lie algebra level: Lorentz transformations through the origin fix
-$O$ (any $J^i, K^j \in \mathfrak{so}(3,1)$ satisfies $X \cdot O = 0$), while
-translations move $O$ to $\hat e_\mu$. So $\mathfrak{h}_O = \mathfrak{so}(3,1)$
-exactly. This is the relativistic analogue of "rotations fix the origin
-of $\mathbb{R}^3$" — except now "rotations" means *Lorentz
-transformations*, which include both compact rotations and non-compact
-boosts.
-
-##### Other Klein quotients of Poincaré (lower-dim stabilizers, higher-dim spaces)
-
-Although $\mathfrak{h} = \mathfrak{so}(3,1)$ is the unique
-*point*-stabilizer, the Poincaré algebra admits many other Klein
-quotients $G/H$ corresponding to spaces of (event + extra structure). The
-key recurring fact: such an $\mathfrak{h}$ is a subalgebra of
-$\mathfrak{so}(3,1)$, hence corresponds to one of the cases we already
-enumerated for $\mathfrak{so}(3,1)$:
-
-| $\mathfrak{h} \subset \mathfrak{so}(3,1)$ | $\dim\mathfrak{h}$ | $\dim G/H$ | What is fixed in Minkowski | $G/H$ as a fiber bundle over $\mathbb{R}^{3,1}$ |
-|---|---|---|---|---|
-| $\mathfrak{so}(3,1)$ | 6 | 4 | a single event (origin) | base only: Minkowski $\mathbb{R}^{3,1}$ ★ |
-| $\mathfrak{so}(3)$ | 3 | 7 | event + future-pointing 4-velocity | $\mathbb{R}^{3,1} \times \mathbb{H}^3$ — unit timelike tangent bundle |
-| $\mathfrak{so}(2,1)$ | 3 | 7 | event + unit spacelike direction | $\mathbb{R}^{3,1} \times dS_3$ — unit spacelike tangent bundle |
-| $\mathfrak{e}(2)$ (parabolic) | 3 | 7 | event + null direction | $\mathbb{R}^{3,1} \times S^2$ — projective null-cone bundle |
-| $\langle J^3\rangle$ | 1 | 9 | event + 4-velocity + spatial axis | (point, time-axis, spatial-axis) — almost a frame |
-| $\{0\}$ | 0 | 10 | full Lorentz frame (point + 4 orthonormal vectors) | the entire Poincaré group as a frame bundle |
-
-Each row reuses one of the $\mathfrak{so}(3,1)$ point-stabilizers from the
-previous subsection — but now translated up by adding 4 translation
-directions to $\mathfrak{m}$. So Poincaré "inherits" the multiplicity from
-its Lorentz subalgebra: choosing different sub-stabilizers of $\mathfrak{so}(3,1)$
-gives different "tower" Klein geometries over Minkowski with different
-fibre geometries ($\mathbb{H}^3$, $dS_3$, $S^2$, frames). These are
-familiar from physics:
-
-- $\mathbb{R}^{3,1} \times \mathbb{H}^3$ is the **mass shell** times spacetime
-  — the phase space of a single massive particle in special relativity.
-- $\mathbb{R}^{3,1} \times S^2$ is the **bundle of light rays**; its
-  projectivization (modding out the affine null direction) is the space of
-  unoriented light rays through Minkowski, basic in optics and twistor theory.
-- $\mathbb{R}^{3,1} \times dS_3$ is the bundle of unit-spacelike vectors —
-  the configuration space of a "tachyonic" mode if one wanted such a
-  thing.
-
-So Poincaré has a *unique* "space of events" Klein quotient, but a *family*
-of richer Klein quotients indexed by what extra structure one attaches to
-each event.
-
-##### Higher-dim stabilizers (containing translations) give degenerate quotients
-
-For completeness: if $\mathfrak{h}$ contains some translations, the
-non-degeneracy filter fails. The two physically most natural examples:
-
-- $\mathfrak{h} = \langle J^i, P^i \rangle = \mathfrak{e}(3)$ (rotations +
-  spatial translations, dim 6). This is the *little group of a future-
-  pointing timelike vector* in the affine action. The Klein quotient $G/H$
-  is 4-dim, parameterized by $(K^i, P^0)$ — three boost rapidities and one
-  time offset. Geometrically, this is the space of **inertial worldlines**
-  starting at the origin, or equivalently the **Galilean limit** boundary
-  of Minkowski as $c \to \infty$. The Leibniz equations admit only a
-  degenerate metric (Galilei has *two* invariants, the temporal and spatial
-  metrics, as derived earlier in Part II).
-
-- $\mathfrak{h} = \langle J^i, K^i, P^0 \rangle$ is *not* a subalgebra
-  because $[K^i, P^0] = P^i \notin \mathfrak{h}$. There is no "stabilize a
-  spatial hyperplane $t = 0$" subalgebra of $\mathfrak{iso}(3,1)$ — boosts
-  necessarily mix time-translations with space-translations. To stabilize
-  a hyperplane one must drop the boosts, recovering Galilei.
-
-The non-existence of a "spacelike hyperplane" Klein quotient of Poincaré is
-the algebraic content of the relativity of simultaneity: there is no
-Poincaré-invariant notion of "the space at time $t$".
-
-##### Structural comparison
-
-The whole story so far is captured by a single table:
-
-| algebra $\mathfrak{g}$ | structure | # of reductive "point-stabilizers" | resulting spaces |
-|---|---|---|---|
-| $\mathfrak{e}(3)$ | semidirect: $\mathfrak{so}(3) \ltimes \mathfrak{t}_3$ | **unique**: $\mathfrak{so}(3)$ | $\mathbb{R}^3$ Euclidean only |
-| $\mathfrak{iso}(3,1)$ | semidirect: $\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ | **unique**: $\mathfrak{so}(3,1)$ | Minkowski $\mathbb{R}^{3,1}$ only |
-| $\mathfrak{so}(2,1)$ | simple | **two**: $\mathfrak{so}(2)$, $\mathfrak{so}(1,1)$ | $\mathbb{H}^2$ Riemannian, $AdS_2$ Lorentzian |
-| $\mathfrak{so}(3,1)$ | simple | **two**: $\mathfrak{so}(3)$, $\mathfrak{so}(2,1)$ | $\mathbb{H}^3$ Riemannian, $dS_3$ Lorentzian |
-| $\mathfrak{so}(4,2)$ (conformal) | simple | **several** | compactified Minkowski, $\mathbb{R} \times S^3$, $AdS_5$, $dS_4 \times S^1$, ... |
-
-The structural punchline:
-
-> *Semidirect-product (kinematical) algebras have a **unique** point-
-> stabilizing Klein geometry — the metric is forced. Simple Lie algebras
-> have a **family** of point-stabilizing geometries — Riemannian and
-> pseudo-Riemannian constant-curvature variants of various signatures.*
-
-Physically, this matches the role of these algebras in physics:
-
-- Newtonian / Euclidean physics uses $\mathfrak{e}(3)$, which produces
-  $\mathbb{R}^3$ uniquely. No metric ambiguity.
-- Special relativity uses $\mathfrak{iso}(3,1)$, which produces Minkowski
-  uniquely. No metric ambiguity.
-- Cosmology / quantum gravity / AdS-CFT, when working with constant-
-  curvature spacetimes, use $\mathfrak{so}(p,q)$. These come in pairs
-  (Riemannian and Lorentzian for each curvature sign), and the choice of
-  point-stabilizer is part of the model.
-
-In particular, the *uniqueness* of Minkowski as the Klein quotient of the
-Poincaré algebra explains why "special relativity is special": the algebra
-has only one geometric interpretation, and the metric signature $(-,+,+,+)$
-is forced — not assumed — by the algebraic structure alone.
-
-#### Worked example: point-stabilizers of the full 10-parameter Galilei algebra
-
-Continuing the parallel with Poincaré, we now examine the **full
-10-parameter Galilei algebra** $\mathfrak{gal} = \mathfrak{h}_0 \ltimes
-\mathfrak{t}_{1,3}$, with $\mathfrak{h}_0 = \mathfrak{so}(3) \ltimes
-\mathbb{R}^3_{\mathrm{boost}}$ the *homogeneous* Galilei algebra
-(rotations + Galilean boosts) and $\mathfrak{t}_{1,3}$ the 4-dim
-abelian ideal of time + spatial translations.
-
-##### Generators and brackets
-
-Ten generators: $J^i$ (3 rotations), $K^i$ (3 Galilean boosts, generators of
-$x' = x + vt$), $H$ (time translation), $P^i$ (3 spatial translations). The
-brackets of the **bare** Galilei algebra (no Bargmann central extension) are
-
-$$
-[J^i, J^j] = \epsilon^{ijk} J^k, \quad
-[J^i, K^j] = \epsilon^{ijk} K^k, \quad
-[J^i, P^j] = \epsilon^{ijk} P^k, \quad
-[J^i, H] = 0,
-$$
-$$
-[K^i, K^j] = 0, \quad
-[K^i, P^j] = 0, \quad
-[K^i, H] = -P^i, \quad
-[P^i, P^j] = 0, \quad
-[P^i, H] = 0.
-$$
-
-The key qualitative differences from Poincaré:
-
-- Galilean boosts **commute** with each other: $[K^i, K^j] = 0$, not the
-  $-\epsilon^{ijk}J^k$ of Lorentz. This is the algebraic signature of
-  $c = \infty$.
-- Boosts commute with spatial translations: $[K^i, P^j] = 0$, where
-  Poincaré had $\delta^{ij} P^0$. (Reinstating the central extension $M$
-  would give $[K^i, P^j] = M \delta^{ij}$, the *Bargmann algebra* of
-  non-relativistic quantum mechanics.)
-- Boosts produce spatial translations from time: $[K^i, H] = -P^i$. (This
-  is the algebraic backbone of "moving frames pick up a position offset
-  $vt$".)
-
-##### Non-degeneracy filter (still applies)
-
-The exact same Leibniz argument as for $\mathfrak{e}(3)$ and Poincaré
-shows: any $\mathfrak{h}$ containing a translation kills the corresponding
-block of the metric on $\mathfrak{m}$. So a non-degenerate $G$-invariant
-metric (if it existed) would force $\mathfrak{h} \subset \mathfrak{h}_0 =
-\langle J^i, K^i \rangle$.
-
-For a 4-dim $G/H$ (the natural "Galilean spacetime") we need $\dim
-\mathfrak{h} = 6$, and $\mathfrak{h}_0$ is exactly 6-dim. So
-**$\mathfrak{h} = \mathfrak{h}_0$ is the unique candidate**, just as for
-Poincaré.
-
-##### What the metric looks like
-
-Take $\mathfrak{h} = \mathfrak{h}_0$ and $\mathfrak{m} = \langle H, P^1,
-P^2, P^3 \rangle$. The bracket check:
-
-- $[J^i, H] = 0$, $[J^i, P^j] = \epsilon^{ijk} P^k \in \mathfrak{m}$ ✓
-- $[K^i, H] = -P^i \in \mathfrak{m}$, $[K^i, P^j] = 0 \in \mathfrak{m}$ ✓
-
-So **reductive**. Solving the Leibniz invariance with SymPy (or by hand —
-rotations give standard so(3) constraints, the boost $K^1$ gives $\eta
-\cdot \mathrm{ad}_{K^1} + \mathrm{ad}_{K^1}^T \cdot \eta = 0$ with
-$\mathrm{ad}_{K^1}$ taking $H \mapsto -P^1$ and the spatial $P^j \mapsto
-0$) yields
-
-$$
-\boxed{\;\eta_{\mathrm{Galilei}} \;=\; \alpha\,
-\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}.\;}
-$$
-
-This is **rank 1**: only the temporal block survives, and the entire
-$3 \times 3$ spatial block is *forced to zero* by boost-invariance. There
-is **no non-degenerate Galilei-invariant metric** on $\mathfrak{m}$.
-
-##### What the degenerate metric means physically
-
-The Galilei algebra forbids a single non-degenerate 4-dim metric. Instead
-it admits **two compatible invariant tensors**, derived in Part II of this
-document:
-
-- A **temporal 1-form** $\tau = dt$ (the rank-1 covariant tensor above),
-  measuring time intervals between events.
-- A **spatial inverse metric** $h^{ij} = \delta^{ij}$ on the cotangent
-  bundle, restricted to spatial covectors (those annihilating $\tau$),
-  measuring spatial distances within a simultaneity slice.
-
-Together $(\tau, h^{ij})$ form the **Newton–Cartan structure** on
-Galilean spacetime. The reason both must exist independently is precisely
-that boost-invariance forces the spatial-covariant block to vanish: boosts
-"tilt" simultaneity slices into each other's, so no Galilei-invariant 4-dim
-metric on the tangent bundle can distinguish "simultaneous" from
-"non-simultaneous" pairs of points.
-
-##### Point-stabilizer uniqueness for Galilei
-
-Despite the metric being degenerate, the **point-stabilizer remains unique**
-by exactly the same semidirect-product argument:
-
-| Quantity | Galilei value |
-|---|---|
-| Algebra | $\mathfrak{gal} = (\mathfrak{so}(3) \ltimes \mathbb{R}^3_{\mathrm{boost}}) \ltimes (\mathbb{R} \oplus \mathbb{R}^3_{\mathrm{trans}})$ |
-| Total dim | 10 |
-| Translation ideal | 4-dim ($H, P^i$) |
-| Homogeneous part | 6-dim ($J^i, K^i$) |
-| Unique point-stabilizer | $\mathfrak{h}_0 = \langle J^i, K^i \rangle$, dim 6 |
-| Quotient | Galilean spacetime $\mathbb{R} \times \mathbb{R}^3$ (4-dim) |
-| Invariant metric | **degenerate** rank-1 temporal $\tau$ + spatial inverse $h$ |
-
-Galilean spacetime is therefore *unique* as a Klein quotient of the
-Galilei algebra — exactly as Minkowski is unique for Poincaré and
-$\mathbb{R}^3$ is unique for $\mathfrak{e}(3)$. The semidirect-product
-structure with abelian translation ideal forces the answer in all three
-cases. What distinguishes Galilei from Poincaré is not the choice of
-$\mathfrak{h}$ — it's the **bracket** $[\mathfrak{h}, \mathfrak{m}]$
-between the stabilizer and translations:
-
-- **Poincaré**: $[K^i, H] = P^i$ AND $[K^i, P^j] = \delta^{ij} H$
-  (boosts couple time and space symmetrically) → non-degenerate $\eta$ of
-  signature $(-,+,+,+)$.
-- **Galilei**: $[K^i, H] = -P^i$ but $[K^i, P^j] = 0$ (boosts couple time
-  to space, but not back) → degenerate $\eta$ with rank 1.
-
-The "missing bracket" $[K^i, P^j]$ in Galilei is the algebraic content of
-the $c \to \infty$ limit, and it is *exactly* what makes the resulting
-spacetime metric degenerate.
-
-##### Other Klein quotients of Galilei
-
-As with Poincaré, Galilei admits many other Klein quotients of higher
-dimension corresponding to attaching extra structure to each event:
-
-| $\mathfrak{h}$ | $\dim\mathfrak{h}$ | $\dim G/H$ | Geometric interpretation |
-|---|---|---|---|
-| $\mathfrak{h}_0 = \langle J^i, K^i\rangle$ | 6 | 4 | Galilean spacetime ★ |
-| $\mathfrak{so}(3) = \langle J^i\rangle$ | 3 | 7 | event + 3-velocity (Galilean phase space) |
-| $\langle K^i\rangle$ (abelian) | 3 | 7 | event + spatial axis-orientation |
-| $\langle J^3, K^3\rangle$ | 2 | 8 | event + axis direction (rotational + boost about $\hat z$) |
-| $\{0\}$ | 0 | 10 | bare Galilei group as frame bundle |
-| $\langle J^i, P^i\rangle = \mathfrak{e}(3)$ | 6 | 4 | (non-reductive — has translations) |
-
-The first row is the standard Galilean spacetime. The second row, with
-$\mathfrak{h} = \mathfrak{so}(3)$, gives 4-dim base + 3-dim Galilean
-boosts as fibre — the **Galilean phase space** $\mathbb{R}^{1+3} \times
-\mathbb{R}^3_v$, the configuration space of a single non-relativistic
-particle (event + 3-velocity).
-
-#### Worked example: point-stabilizers of $\mathfrak{so}(4)$ (compact case)
-
-For contrast with the indefinite-signature $\mathfrak{so}(2,1)$ and
-$\mathfrak{so}(3,1)$, let's examine the **compact** algebra
-$\mathfrak{so}(4)$. Its action is the symmetry of the round 3-sphere $S^3$.
-How many inequivalent point-stabilizers does it admit?
-
-##### Set-up: $\mathfrak{so}(4) \cong \mathfrak{su}(2) \oplus \mathfrak{su}(2)$
-
-The Lie algebra $\mathfrak{so}(4)$ is dim 6 and famously **not simple**: it
-splits as a direct sum of two commuting copies of $\mathfrak{su}(2)$,
-
-$$
-\mathfrak{so}(4) \;\cong\; \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R.
-$$
-
-Concretely, writing generators of $\mathfrak{so}(4)$ as antisymmetric
-4×4 matrices $M^{ij}$ ($i < j$), one can form two commuting triples
-$J^L_i = \frac{1}{2}(M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$ and
-$J^R_i = \frac{1}{2}(-M^{0i} + \frac{1}{2}\epsilon^{ijk}M^{jk})$, satisfying
-
-$$
-[J^L_i, J^L_j] = \epsilon^{ijk} J^L_k, \qquad
-[J^R_i, J^R_j] = \epsilon^{ijk} J^R_k, \qquad
-[J^L_i, J^R_j] = 0.
-$$
-
-This decomposition is the compact analogue of $\mathfrak{so}(2,2) =
-\mathfrak{sl}(2,\mathbb{R}) \oplus \mathfrak{sl}(2,\mathbb{R})$ and is
-*not* present for $\mathfrak{so}(3,1)$ (which is simple as a real Lie
-algebra, even though $\mathfrak{so}(3,1)_\mathbb{C} \cong
-\mathfrak{sl}(2,\mathbb{C}) \oplus \mathfrak{sl}(2,\mathbb{C})$ over the
-complexification).
-
-##### The 3-dim subalgebras up to $SO(4)$-conjugacy
-
-For a 3-dim Klein quotient ($G/H$ of dim 3, hence "$S^3$-like") we need
-$\dim \mathfrak{h} = 3$. Up to $SO(4)$-conjugacy, the only 3-dim
-subalgebras are isomorphic to $\mathfrak{so}(3) \cong \mathfrak{su}(2)$
-(this is the only compact simple 3-dim Lie algebra). Their embeddings in
-$\mathfrak{so}(4) = \mathfrak{su}(2)_L \oplus \mathfrak{su}(2)_R$ are
-parameterized by Lie-algebra homomorphisms $\mathfrak{su}(2) \to
-\mathfrak{su}(2) \oplus \mathfrak{su}(2)$. Up to conjugacy these are:
-
-| label | embedding $X \mapsto \mathfrak{su}(2) \oplus \mathfrak{su}(2)$ | properties |
-|---|---|---|
-| left factor | $X \mapsto (X, 0)$ | $\mathfrak{su}(2)_L$, an **ideal** of $\mathfrak{so}(4)$ |
-| right factor | $X \mapsto (0, X)$ | $\mathfrak{su}(2)_R$, an **ideal** of $\mathfrak{so}(4)$ |
-| diagonal | $X \mapsto (X, X)$ | $\mathfrak{su}(2)_{\mathrm{diag}}$, **not** an ideal |
-
-Under the outer automorphism of $\mathfrak{so}(4)$ (swapping the two
-factors), the left and right embeddings are equivalent. So there are
-two conjugacy classes: **factor** (ideal) and **diagonal**
-(non-ideal symmetric pair).
-
-##### Case 1: $\mathfrak{h} = \mathfrak{su}(2)_{\mathrm{diag}}$ — the round $S^3$
-
-Use the change of basis $X_i = J^L_i + J^R_i$ (diagonal) and $Y_i = J^L_i -
-J^R_i$ (anti-diagonal). One computes
-
-$$
-[X_i, X_j] = \epsilon^{ijk} X_k, \qquad
-[Y_i, Y_j] = \epsilon^{ijk} X_k, \qquad
-[X_i, Y_j] = \epsilon^{ijk} Y_k.
-$$
-
-So with $\mathfrak{h} = \langle X_1, X_2, X_3\rangle = \mathfrak{su}(2)_{\mathrm{diag}}$
-and $\mathfrak{m} = \langle Y_1, Y_2, Y_3\rangle$:
-
-- $[\mathfrak{h}, \mathfrak{m}]$: $\mathrm{ad}_{X_i}$ acts on $\mathfrak{m}$ as
-  the standard 3-dim rotation. **Reductive.** ✓
-- $[\mathfrak{m}, \mathfrak{m}] = X \subset \mathfrak{h}$. **Symmetric pair.** ✓
-
-Leibniz invariance with $\mathfrak{h}$ acting on $\mathfrak{m}$ as standard
-$\mathfrak{so}(3)$ rotation forces $\eta = \alpha\,\delta^{ij}$.
-
-$$
-\boxed{\;\eta_{\mathrm{diag}} \;=\; \alpha\,\mathrm{diag}(1, 1, 1).\;}
-$$
-
-**Signature $(+,+,+)$** — Riemannian. The bracket $[\mathfrak{m},\mathfrak{m}]
-= +X$ (positive sign) gives **positive sectional curvature**. The result
-is the round 3-sphere:
-
-$$
-S^3 \;=\; SO(4) \,/\, SO(3)_{\mathrm{diag}}.
-$$
-
-##### Case 2: $\mathfrak{h} = \mathfrak{su}(2)_L$ — non-effective!
-
-Here $\mathfrak{h} = \mathfrak{su}(2)_L$ is one of the *two ideals* of
-$\mathfrak{so}(4)$. With $\mathfrak{m} = \mathfrak{su}(2)_R$:
-
-- $[\mathfrak{h}, \mathfrak{m}] = 0$ (the factors commute). Reductive,
-  yes; but the isotropy action is **trivial**.
-- $[\mathfrak{m}, \mathfrak{m}] = \mathfrak{su}(2)_R = \mathfrak{m}$. NOT a
-  symmetric pair (the bracket lands in $\mathfrak{m}$, not $\mathfrak{h}$).
-
-The Leibniz invariance condition is *vacuous* — any symmetric $\eta$ on
-$\mathfrak{m}$ is automatically $\mathfrak{h}$-invariant. SymPy confirms:
-a 6-parameter family of metrics.
-
-But there's a catch — **this Klein pair is not effective**. Because
-$\mathfrak{h} = \mathfrak{su}(2)_L$ is a non-trivial ideal of $\mathfrak{g}
-= \mathfrak{so}(4)$, the action of $G = SO(4)$ on $G/H$ has a non-trivial
-kernel: the $SO(3)_L$ factor of $SO(4)$ acts *trivially* on every coset.
-Effectively, only the $SO(3)_R$ factor acts, and it does so simply-
-transitively (= as left translation on the group manifold $SO(3)_R \cong
-S^3$).
-
-So the "Klein geometry" $(SO(4), SO(3)_L)$ is really just the group
-manifold $SO(3)_R \cong S^3 = SU(2)$ with the half-redundant $SO(4)$-
-labelling: the left $SO(3)_L$ part doesn't do anything. The 6-parameter
-family of allowed metrics is the family of **left-invariant metrics on the
-group manifold $SU(2) = S^3$** — including the round metric (the
-bi-invariant one, when both factors are scaled equally) but also the
-*Berger spheres* (anisotropic left-invariant metrics).
-
-In the standard Klein-geometry framework one requires Klein pairs to be
-*effective* — i.e., $\mathfrak{h}$ contains no non-trivial ideal of
-$\mathfrak{g}$. Excluding the two factor embeddings on this basis leaves
-**only $\mathfrak{su}(2)_{\mathrm{diag}}$ as a legitimate point-
-stabilizer**, giving the unique round $S^3$.
-
-##### Summary table for $\mathfrak{so}(4)$
-
-| $\mathfrak{h}$ | dim | effective? | $G/H$ | metric |
-|---|---|---|---|---|
-| $\mathfrak{su}(2)_{\mathrm{diag}}$ | 3 | yes (symmetric pair) | $S^3$ | round, unique up to scale ★ |
-| $\mathfrak{su}(2)_L$ (or $R$) | 3 | **no** (ideal) | $SO(3)_R \cong S^3$ as group | 6-param family of left-invariant metrics |
-| $\mathfrak{so}(2)\oplus\mathfrak{so}(2)$ | 2 | yes | $SO(4)/T^2 =$ oriented 2-Grassmannian of $\mathbb{R}^4$ | 4-dim symmetric space |
-| $\mathfrak{so}(2)$ | 1 | yes | 5-dim Stiefel-like space | various |
-| $\{0\}$ | 0 | yes | $SO(4)$ frame bundle | 6-dim, left-invariant |
-
-Among effective 3-dim Klein pairs there is **exactly one** point-
-stabilizer for $\mathfrak{so}(4)$, giving the unique round 3-sphere. The
-non-effective factor-embedding case is more naturally viewed as the group
-manifold $SU(2)$, which is the same topological $S^3$ but is no longer a
-symmetric space.
-
-##### Why only one (vs. two for $\mathfrak{so}(3,1)$)?
-
-The key contrast:
-
-> *$\mathfrak{so}(4)$ is compact — all its subalgebras are compact — so
-> all its invariant metrics are positive-definite. There is no analogue of
-> "the boost subalgebra" that could yield a Lorentzian quotient.*
-
-Whereas $\mathfrak{so}(3,1)$, being **of indefinite signature**, contains
-both a compact $\mathfrak{so}(3)$ subalgebra and a non-compact
-$\mathfrak{so}(2,1)$ subalgebra, giving Riemannian $\mathbb{H}^3$ and
-Lorentzian $dS_3$ respectively. The same dimensions, but compact $G$
-yields one Riemannian space; indefinite $G$ yields a Riemannian +
-Lorentzian pair.
-
-The general pattern, then, for the orthogonal real forms:
-
-| $\mathfrak{g}$ | type | # of effective point-stabilizers giving non-degen 3-dim quotient | spaces |
-|---|---|---|---|
-| $\mathfrak{so}(4)$ | compact | 1 | $S^3$ (Riemannian, $K = +1$) |
-| $\mathfrak{so}(3,1)$ | indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
-| $\mathfrak{so}(2,2)$ | indefinite | 2 | $\mathbb{H}^3$, $AdS_3$ |
-| $\mathfrak{so}(1,3)$ | $= \mathfrak{so}(3,1)$ | same | same |
-
-#### Worked example: the Euclidean "Poincaré" algebra $\mathfrak{iso}(4) = \mathfrak{so}(4) \ltimes \mathbb{R}^4$
-
-We now combine the previous two examples: take $\mathfrak{so}(4)$ as the
-homogeneous algebra and adjoin 4 translation generators with the standard
-Poincaré-like commutation relations. The result is the **Euclidean
-Poincaré algebra**
-
-$$
-\mathfrak{iso}(4) \;=\; \mathfrak{so}(4) \,\ltimes\, \mathbb{R}^4.
-$$
-
-This is a perfectly well-defined 10-parameter kinematical algebra — the
-same dimension as $\mathfrak{iso}(3,1)$ (Poincaré) and the Galilei
-algebra. The question is: what spacetime geometry does it produce, and why
-isn't it the physically realized one?
-
-##### Brackets
-
-Write the 10 generators as $J^i$ (3 spatial rotations), $K^i$
-(3 "Euclidean boosts", i.e., rotations in the $(t, x^i)$ planes), $H = P^0$
-(time translation), $P^i$ (3 spatial translations), with $J^i =
-\tfrac{1}{2}\epsilon^{ijk}J^{jk}$ and $K^i = J^{i0}$. From
-$[J^{\mu\nu}, J^{\rho\sigma}] = \delta^{\mu\rho}J^{\nu\sigma} - \cdots$
-and $[J^{\mu\nu}, P^\rho] = \delta^{\mu\rho}P^\nu - \delta^{\nu\rho}P^\mu$
-with Euclidean $\delta_{\mu\nu} = \mathrm{diag}(+,+,+,+)$, the brackets
-are
-
-$$
-\begin{aligned}
-{}[J^i, J^j] &= \epsilon^{ijk} J^k, \\
-[J^i, K^j] &= \epsilon^{ijk} K^k, \\
-[K^i, K^j] &= \boxed{+\epsilon^{ijk} J^k}, \\
-[J^i, H] &= 0, \qquad [J^i, P^j] = \epsilon^{ijk} P^k, \\
-[K^i, H] &= -P^i, \qquad [K^i, P^j] = \boxed{+\delta^{ij} H}, \\
-[H, P^i] &= 0, \qquad [P^i, P^j] = 0.
-\end{aligned}
-$$
-
-The two boxed signs are the **algebraic difference** between the three
-10-parameter kinematical algebras:
-
-| algebra | $[K^i, K^j]$ | $[K^i, P^j]$ |
-|---|---|---|
-| Lorentz (Poincaré) | $-\epsilon^{ijk} J^k$ (non-compact boosts) | $+\delta^{ij} H$ |
-| Galilei | $0$ (commuting boosts) | $0$ (decoupled) |
-| **Euclidean** | $+\epsilon^{ijk} J^k$ (**compact** boosts!) | $+\delta^{ij} H$ |
-
-The Euclidean version differs from Lorentz by a single sign in $[K^i,
-K^j]$ — exactly the Wick-rotation flip $t \to it$.
-
-##### Point-stabilizer and metric
-
-The non-degeneracy filter forces $\mathfrak{h} \subset \langle J^i, K^i
-\rangle$. We need $\dim\mathfrak{h} = 6$, and $\mathfrak{so}(4) =
-\langle J^i, K^i \rangle$ is exactly 6-dim. So just as in Poincaré and
-Galilei,
-
-$$
-\mathfrak{h} \;=\; \mathfrak{so}(4) \quad\text{is the unique candidate.}
-$$
-
-Solving Leibniz invariance for the symmetric metric $\eta$ on $\mathfrak{m}
-= \langle H, P^1, P^2, P^3\rangle$ (SymPy verified) gives
-
-$$
-\boxed{\;\eta_{\mathrm{Eucl}} \;=\; \alpha\,
-\mathrm{diag}(+1, +1, +1, +1).\;}
-$$
-
-Signature $(+,+,+,+)$ — **fully Riemannian 4-space**. The Klein quotient
-is
-
-$$
-\mathbb{R}^4_{\mathrm{Eucl}} \;=\; ISO(4) \,/\, SO(4),
-$$
-
-i.e., flat 4-dim Euclidean space with the round metric $dt^2 + dx^2 +
-dy^2 + dz^2$. This is the **Wick-rotated Minkowski space** of Euclidean
-QFT.
-
-##### Physical problem #1: velocity addition can give zero or negative velocity
-
-In Lorentz, a boost $K^1$ acts on $(t, x)$ as
-the Lorentz "rotation" $\sinh\phi$, $\cosh\phi$ with rapidity $\phi$. In
-the **Euclidean** case it acts as a literal **circular rotation**:
-
-$$
-\begin{pmatrix} t' \\ x' \end{pmatrix}
-\;=\;
-\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}
-\begin{pmatrix} t \\ x \end{pmatrix}.
-$$
-
-For a particle worldline $x = vt$, the boosted worldline has velocity
-
-$$
-v' \;=\; \frac{x'}{t'} \;=\; \frac{v\cos\theta + \sin\theta}{\cos\theta - v\sin\theta}
-\;=\; \frac{v + \tan\theta}{1 - v\tan\theta}.
-$$
-
-Identifying the *frame velocity* of the boost as $u = \tan\theta$, the
-**Euclidean velocity addition law** is
-
-$$
-\boxed{\;v_1 \oplus v_2 \;=\; \frac{v_1 + v_2}{1 - v_1 v_2}.\;}
-$$
-
-Compare:
-
-| group | addition law | comments |
-|---|---|---|
-| Galilei | $v_1 \oplus v_2 = v_1 + v_2$ | linear, unbounded |
-| Lorentz | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 + v_1 v_2}$ | $\|v\| < 1$ stays in $(-1,1)$ |
-| Euclidean | $v_1 \oplus v_2 = \dfrac{v_1 + v_2}{1 - v_1 v_2}$ | **singularities and sign flips** |
-
-The Euclidean law has three pathologies:
-
-1. **Pole at $v_1 v_2 = 1$**: adding two velocities of magnitude $1$ gives
-   *infinite* velocity. There's a vertical-asymptote in the addition
-   law.
-2. **Sign reversal for $v_1 v_2 > 1$**: adding two positive velocities
-   $v_1, v_2 > 1$ gives a **negative** result. Example: $v_1 = v_2 = 2$
-   gives $v_1 \oplus v_2 = 4 / (1 - 4) = -4/3 < 0$.
-3. **Periodic return to rest**: repeated boosting cycles through
-   $0 \to \infty \to -\infty \to 0$. The boost subgroup is $SO(2)$, which
-   is **compact**: a "boost by angle $\pi$" returns the velocity to zero.
-
-The geometric picture is clean: $v = \tan\theta$ where $\theta \in S^1$ is
-the rotation angle in the $(t,x)$ plane. As $\theta$ runs around the circle:
-
-| $\theta$ | $v = \tan\theta$ | description |
-|---|---|---|
-| $0$ | $0$ | rest |
-| $\pi/4$ | $1$ | "diagonal" worldline |
-| $\pi/2^-$ | $+\infty$ | worldline becomes horizontal in $(t,x)$ |
-| $\pi/2^+$ | $-\infty$ | crosses over: velocity flips sign |
-| $3\pi/4$ | $-1$ | |
-| $\pi$ | $0$ | back to rest! |
-
-Two boosts add their angles: $\theta_1 + \theta_2$. So composing a boost
-of $\theta_1 = \pi/3$ with another of $\theta_2 = 2\pi/3$ gives
-$\theta = \pi$, i.e., $v = 0$ — the moving frame is at rest with respect
-to the original. **Two non-zero boosts compose to no boost.**
-
-##### Physical problem #2: no causal structure
-
-The "boost" rotation by $\theta = \pi/2$ exactly **swaps time and space
-axes**:
-
-$$
-(t, x) \;\xrightarrow{\theta = \pi/2}\; (-x, t).
-$$
-
-So time and space are *interchangeable* by a symmetry of the algebra.
-There is:
-
-- No invariant notion of "future" vs. "past": no light cones, no causal
-  ordering.
-- No distinction between "particle" worldlines and "spatial" curves: any
-  smooth curve can be rotated into any other.
-- No fixed mass shell $\eta(p,p) = -m^2$ — only $\delta(p,p) = m^2$
-  with $m \in \mathbb{R}$, which is a 3-sphere $S^3$ in momentum space
-  (compact!), and the "energy" $p^0$ is bounded ($\|p^0\| \le m$) rather
-  than the unbounded Lorentzian hyperboloid.
-
-This is incompatible with what we actually observe: the universe has a
-preferred causal structure (events have unambiguous past/future
-relations, signals do not propagate faster than $c$, energy is bounded
-below but not above).
-
-##### Why it "works for small speeds"
-
-Expand the Euclidean addition law for small $v_1, v_2$:
-
-$$
-v_1 \oplus_{\mathrm{Eucl}} v_2 \;=\; (v_1 + v_2)(1 + v_1 v_2 + \cdots)
-\;\approx\; v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots
-$$
-
-Compare with the other two:
-
-$$
-\begin{aligned}
-v_1 \oplus_{\mathrm{Gal}} v_2 &= v_1 + v_2, \\
-v_1 \oplus_{\mathrm{Lor}} v_2 &= v_1 + v_2 - v_1 v_2 (v_1 + v_2) + \cdots, \\
-v_1 \oplus_{\mathrm{Eucl}} v_2 &= v_1 + v_2 + v_1 v_2 (v_1 + v_2) + \cdots.
-\end{aligned}
-$$
-
-To **first order in $v$**, all three agree with Galilei: $v_1 \oplus v_2
-\approx v_1 + v_2$. The differences appear only at $O(v^3)$:
-
-- Lorentz: correction has **negative** sign → velocities saturate at $c =
-  1$.
-- Euclidean: correction has **positive** sign → velocities accelerate
-  past any bound, eventually overflow into the pole, and reverse.
-- Galilei: no correction at all → strict additivity.
-
-This is why all three kinematical algebras agree with everyday
-experience. To distinguish them experimentally one must reach speeds
-where the cubic correction is detectable. The Michelson–Morley experiment
-and many later observations rule in favor of Lorentz (negative sign,
-$|v| < c$). The Euclidean version has never been observed because the
-cubic correction would have to *enhance* velocity addition rather than
-suppressing it.
-
-##### Connection to Wick rotation and Euclidean QFT
-
-Although $\mathfrak{iso}(4)$ is not the kinematical algebra of physical
-spacetime, it plays a crucial role in quantum field theory. The **Wick
-rotation** $t \to -i\tau$ analytically continues Lorentzian quantities to
-Euclidean ones, replacing $\mathfrak{iso}(3,1)$ with $\mathfrak{iso}(4)$
-and converting
-
-$$
-e^{iS_{\mathrm{Lor}}[\phi]} \;\longrightarrow\; e^{-S_{\mathrm{Eucl}}[\phi]},
-$$
-
-turning the oscillatory path integral into a well-defined statistical-
-mechanics partition function. The two algebras share the same
-*complexification*
-
-$$
-\mathfrak{iso}(3,1)_\mathbb{C} \;\cong\; \mathfrak{iso}(4)_\mathbb{C},
-$$
-
-so analytic continuation is meaningful and many calculations are easier
-to perform in the Euclidean version. But the **physical** algebra is the
-Lorentzian one, recovered by rotating back.
-
-##### Summary
-
-| Property | $\mathfrak{iso}(4)$ |
-|---|---|
-| Algebra | $\mathfrak{so}(4) \ltimes \mathbb{R}^4$, dim 10, semidirect |
-| Point-stabilizer | $\mathfrak{so}(4)$, unique (semidirect rigidity) |
-| Klein quotient | $\mathbb{R}^4_{\mathrm{Eucl}}$ with metric $\delta_{\mu\nu}$, signature $(+,+,+,+)$ |
-| Boost subgroup | $SO(2) \subset SO(4)$, **compact** |
-| Velocity addition | $(v_1 + v_2)/(1 - v_1 v_2)$ — pathological |
-| Causal structure | **none** (time and space interchangeable) |
-| Small-velocity limit | matches Galilei and Lorentz to first order in $v$ |
-| Physical role | Wick rotation in QFT; not a physical kinematical group |
-
-So $\mathfrak{iso}(4)$ joins our table as a fifth 10-parameter
-kinematical algebra with a *unique* point-stabilizer, giving Euclidean
-$\mathbb{R}^4$. The semidirect-product rigidity holds — but the metric it
-forces, while non-degenerate and a perfectly good Riemannian metric, has
-the wrong signature to describe spacetime. The signature of the metric is
-not a free choice: it is dictated by the bracket $[K^i, K^j]$, and
-Lorentz $(\!-\!)$ vs. Euclidean $(\!+\!)$ vs. Galilei $(0)$ are the three
-algebraically distinct options.
-
-#### Updated structural table
-
-Combining all examples done in this document so far:
-
-| algebra | structure | # eff. pt-stabilizers | resulting "spaces of points" |
-|---|---|---|---|
-| $\mathfrak{e}(2)$ | semidirect, abelian translations | 1 | $\mathbb{R}^2$ (Euclidean) |
-| $\mathfrak{e}(3)$ | semidirect, abelian translations | 1 | $\mathbb{R}^3$ (Euclidean) |
-| $\mathfrak{gal}$ | semidirect, abelian translations | 1 | Galilean spacetime $\mathbb{R}\times\mathbb{R}^3$ (degenerate metric) |
-| $\mathfrak{iso}(3,1)$ | semidirect, abelian translations | 1 | Minkowski $\mathbb{R}^{3,1}$, signature $(-,+,+,+)$ |
-| $\mathfrak{iso}(4)$ | semidirect, abelian translations | 1 | Euclidean $\mathbb{R}^4$, signature $(+,+,+,+)$ — pathological as kinematical |
-| $\mathfrak{so}(2,1)$ | simple, indefinite | 2 | $\mathbb{H}^2$, $AdS_2$ |
-| $\mathfrak{so}(3)$ | simple, compact | 1 | $S^2$ |
-| $\mathfrak{so}(4)$ | semisimple (= sum of two ideals), compact | 1 (effective) | $S^3$ |
-| $\mathfrak{so}(3,1)$ | simple, indefinite | 2 | $\mathbb{H}^3$, $dS_3$ |
-| $\mathfrak{so}(4,2)$ (conformal) | simple, indefinite | several | comp. Minkowski, $AdS_5$, $\mathbb{R}\times S^3$, ... |
-
-Three rules emerging:
-
-1. **Semidirect-product algebras** $\mathfrak{g} = \mathfrak{h}_0 \ltimes
-   \mathfrak{t}$ with abelian translation ideal $\mathfrak{t}$ always have a
-   **unique** point-stabilizer, namely $\mathfrak{h}_0$ itself. The metric
-   on $G/H \cong \mathfrak{t}$ is determined by the action of $\mathfrak{h}_0$
-   on $\mathfrak{t}$ — and may be Lorentzian (Poincaré), Riemannian
-   (Euclidean $\mathfrak{iso}(4)$, Galilei spatial part), or degenerate
-   (Galilei full metric). Uniqueness of the *quotient* does not mean
-   uniqueness of the *physical interpretation*: $\mathfrak{iso}(4)$ is
-   mathematically fine but physically wrong; the signature of the metric
-   alone selects which kinematical algebra is realized.
-2. **Simple compact algebras** $\mathfrak{so}(n+1)$, $\mathfrak{su}(n)$,
-   etc. have a **unique** effective point-stabilizer, yielding the
-   corresponding sphere or other compact Riemannian symmetric space.
-3. **Simple indefinite-signature algebras** $\mathfrak{so}(p,q)$ with
-   $p, q > 0$ have **multiple** point-stabilizers, yielding Riemannian /
-   Lorentzian pairs (or larger families) of constant-curvature pseudo-
-   Riemannian symmetric spaces.
-
-The semidirect-product cases are the "kinematical" algebras of physics
-(Galilei, Newton–Hooke, Carroll, Poincaré, $\mathfrak{iso}(4)$, de Sitter,
-Bargmann), each yielding a unique spacetime geometry. Of these, only
-**Poincaré**, **Galilei**, and (with caveats) **Carroll / Newton–Hooke**
-describe physically realized regimes; **$\mathfrak{iso}(4)$ is ruled out
-empirically** by the velocity-addition pathologies derived above. The
-simple indefinite cases are typically the **conformal extensions** or the
-**cosmological-constant modifications** of these, where multiple
-geometric interpretations coexist.
-
-#### The converse question: which algebras give $\mathbb{R}^3$ as a quotient?
+---
+
+## The same space, different algebras
+
+The previous chapters fixed an algebra and asked what space it produces.
+The opposite question is also interesting: given a fixed space — say
+$\mathbb{R}^3$ — what algebras have it as a Klein quotient, and how
+do their geometries differ? This is Klein's *Erlanger Programm* in
+action: the same point-set can be the underlying manifold of several
+inequivalent geometries, each presented as a quotient by a different
+symmetry group. We end with a complementary observation: the same
+algebra can also produce *different* spaces with different choices of
+Klein pair — illustrated by why $\mathfrak{so}(3)$ alone produces
+$S^2$ but never $\mathbb{R}^3$.
+
+### The converse question: which algebras give $\mathbb{R}^3$ as a quotient?
 
 The point-stabilizer enumerations above answered a question of the form
 *"given an algebra $\mathfrak{g}$, what spaces are its Klein quotients?"*
@@ -3090,7 +3052,7 @@ of preserved structure, no — there is in fact a **hierarchy** of Klein
 realizations of (the underlying space) $\mathbb{R}^3$, with $E(3)/SO(3)$
 sitting in the middle.
 
-##### The hierarchy
+#### The hierarchy
 
 Order the realizations by what they preserve:
 
@@ -3128,7 +3090,7 @@ Each row higher up is "more general" — a bigger symmetry group means
 *fewer* invariants and a *coarser* notion of geometry. Each row lower
 down is "more rigid" — smaller symmetry means more allowed metrics.
 
-##### Klein's *Erlanger Programm* on a single space
+#### Klein's *Erlanger Programm* on a single space
 
 This is precisely Felix Klein's 1872 *Erlanger Programm* in action: a
 geometry is determined by its symmetry group, not just by its underlying
@@ -3150,7 +3112,7 @@ $\mathfrak{e}(3)/\mathfrak{so}(3)$ realization is singled out as the
 *minimal* algebra preserving the Euclidean metric — i.e., the unique
 isometry algebra of flat Euclidean 3-space.
 
-##### Same topology, different geometry: Heisenberg and friends
+#### Same topology, different geometry: Heisenberg and friends
 
 The bottom row of the table above is the "trivial" stabilizer $H = \{0\}$
 with $G = \mathbb{R}^3$ acting on itself by translation. But we could
@@ -3174,7 +3136,7 @@ So "$\mathbb{R}^3$" is ambiguous unless one specifies the geometric
 structure. The Klein-pair $(E(3), SO(3))$ disambiguates it as flat
 Euclidean 3-space.
 
-##### Flat limits: $\mathbb{R}^3$ as a contraction of $S^3$ and $\mathbb{H}^3$
+#### Flat limits: $\mathbb{R}^3$ as a contraction of $S^3$ and $\mathbb{H}^3$
 
 A different and important sense in which other algebras "give
 $\mathbb{R}^3$" is by **Inönü–Wigner contraction**. The simple compact
@@ -3208,7 +3170,7 @@ member of the family ($S^3, \mathbb{R}^3, \mathbb{H}^3$) is a distinct
 Klein quotient, but they are connected by smooth deformation of the Lie
 bracket.
 
-##### $\mathbb{R}^3$ as a *subspace* of higher-dim Klein quotients
+#### $\mathbb{R}^3$ as a *subspace* of higher-dim Klein quotients
 
 A final, distinct way in which $\mathbb{R}^3$ shows up: as a subspace of
 4-dim spacetime quotients.
@@ -3234,7 +3196,7 @@ translation block). So one cannot directly write $\mathbb{R}^3 =
 subalgebra. The spatial $\mathbb{R}^3$ appears only as a *foliation
 leaf*, not a Klein quotient of the full kinematical group.
 
-##### Summary
+#### Summary
 
 For "$\mathbb{R}^3$ as a 3-dim manifold with full rotational and
 translational symmetry", the answer is **unique**:
@@ -3263,127 +3225,715 @@ both the algebra and the metric uniquely. The Klein program's deeper
 message is that the *pair* $(G, H)$, not the underlying set, is what
 defines the geometry.
 
+### Why $\mathbb{R}^3$ is not a Klein quotient of $\mathfrak{so}(3)$, even though $S^2 \subset \mathbb{R}^3$
+
+A natural question arises from comparing the $\mathfrak{so}(3)$
+classification above with the Euclidean algebra $\mathfrak{e}(3) =
+\mathfrak{so}(3) \ltimes \mathbb{R}^3$ from chapter 'Spaces of constant curvature'. The rotation
+generators are *literally the same* — $\mathfrak{so}(3) \subset
+\mathfrak{e}(3)$ as a subalgebra — and the resulting space $S^2$ sits
+inside $\mathbb{R}^3$ as a unit sphere. So why doesn't $\mathfrak{so}(3)$
+alone produce $\mathbb{R}^3$? The Lie algebra is a *subset* of the
+bigger one; why aren't the spaces?
+
+The short answer is that the Klein construction outputs the space whose
+*symmetries* the algebra encodes. Rotations alone are not enough
+symmetry to move every point of $\mathbb{R}^3$ to every other point —
+they only move points around *within* spheres of constant radius. The
+translations $P^i$ in $\mathfrak{e}(3)$ are exactly what allows us to
+jump from one sphere to another.
+
+Let us spell this out from three perspectives.
+
+#### 1. Group action: rotations alone are not transitive
+
+A homogeneous space is one on which the group acts *transitively*: any
+point can be moved to any other point by some group element. $SO(3)$
+acts on $\mathbb{R}^3$ by rotations centered at the origin, and these
+preserve the radial coordinate $|\vec r|$. So:
+
+- The orbit of a point $\vec r$ under $SO(3)$ is the sphere
+  $\{|\vec r'| = |\vec r|\}$ of the same radius.
+- Two points with different radii cannot be related by any rotation.
+- $SO(3)$ acts transitively on each sphere $S^2_r$ separately,
+  but *not* on $\mathbb{R}^3$ as a whole.
+
+So $\mathbb{R}^3$ is not a homogeneous space of $SO(3)$. It is
+*foliated* by $SO(3)$-orbits — spheres of varying radii (plus the
+fixed origin) — and each leaf is an $S^2$. To make $\mathbb{R}^3$
+itself homogeneous, we must enlarge the group by adding
+transformations that *move between* the orbits. The minimal such
+enlargement is to add translations: any two points are connected by a
+unique translation. The result is the Euclidean group $E(3)$, with Lie
+algebra $\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathbb{R}^3$.
+
+#### 2. Dimension count: what Klein quotients of $\mathfrak{so}(3)$ are available
+
+The Klein construction outputs spaces of dimension $\dim G - \dim H$,
+where $H$ runs over the proper subalgebras of $\mathfrak{g}$. For
+$\mathfrak{so}(3)$ (dimension 3) the options are exactly:
+
+| $\dim \mathfrak{h}$ | $\dim G/H$ | Space |
+|---|---|---|
+| 0 | 3 | Group manifold $SO(3) = \mathbb{RP}^3$ (or $S^3 = SU(2)$) |
+| 1 | 2 | $S^2$ |
+| 2 | — | (no 2-dim subalgebra exists) |
+| 3 | 0 | Point |
+
+The 3-dimensional output is the group manifold — and the group
+manifold of $\mathfrak{so}(3)$ is *compact* ($\mathbb{RP}^3$ or
+$S^3$, both finite volume). It cannot be $\mathbb{R}^3$. The
+compactness is an *algebraic* feature, visible already on the Killing
+form: $K(J^i, J^j) = -2\, \delta^{ij}$ is **negative definite**, which
+by Cartan's criterion is the signature of a compact semisimple Lie
+algebra. There is no way to integrate $\mathfrak{so}(3)$ to a
+non-compact Lie group.
+
+By contrast, $\mathfrak{e}(3)$ has dimension 6, the right amount to
+fit $\mathbb{R}^3 = E(3)/SO(3)$ as $\dim = 6 - 3 = 3$. The translation
+subalgebra $\mathfrak{t}^3 \subset \mathfrak{e}(3)$ is itself a *non-
+compact* abelian Lie algebra (the additive group $\mathbb{R}^3$), and
+this non-compactness is what gives $\mathbb{R}^3$ its non-compact
+character.
+
+#### 3. The "stacking $S^2$'s" picture is exactly right
+
+The intuition — $\mathbb{R}^3$ is foliated by $S^2$'s of all radii —
+captures the geometric content precisely. Three statements make this
+rigorous:
+
+**(a) Foliation by $SO(3)$-orbits.** $\mathbb{R}^3 \setminus \{0\}$
+is fibered by $SO(3)$-orbits via
+
+$$
+\mathbb{R}^3 \setminus \{0\} \;\cong\; S^2 \times \mathbb{R}_{>0},
+\qquad \vec r \mapsto (\hat r, |\vec r|),
+$$
+
+and the origin is the unique $SO(3)$-fixed point. Each fiber is a
+copy of $S^2 = SO(3)/SO(2)$. So $\mathbb{R}^3$ is (topologically) a
+cone over $S^2$: the trivial bundle $S^2 \times [0, \infty)$ with the
+$S^2$-fiber at zero collapsed to a point.
+
+**(b) $\mathfrak{e}(3)$ knows about both layers, $\mathfrak{so}(3)$
+about only one.** Inside $\mathfrak{e}(3) = \mathfrak{so}(3) \oplus
+\mathfrak{t}^3$ (as a vector space), rotations move points within a
+sphere and translations move them across spheres. The semidirect
+bracket $[J^i, P^j] = \epsilon^{ijk} P^k$ encodes that the $P^j$'s
+transform as a vector under rotations — precisely what is needed to
+make the foliation above $SO(3)$-equivariant.
+
+**(c) Algebraic inclusion vs. space inclusion go in opposite
+directions.** This is the part that can feel counterintuitive.
+Embedding $\mathfrak{so}(3) \hookrightarrow \mathfrak{e}(3)$ gives
+*fewer* symmetries, not more, and produces a *smaller* (lower-
+dimensional) space:
+
+- $\mathfrak{so}(3)$ sees only the angular directions $\hat r$ — its
+  homogeneous quotient is $S^2$, two-dimensional.
+- $\mathfrak{e}(3) \supset \mathfrak{so}(3)$ adds the radial direction
+  via translations — its homogeneous quotient is $\mathbb{R}^3$,
+  three-dimensional.
+
+The geometric inclusion $S^2 \hookrightarrow \mathbb{R}^3$ corresponds
+to the *pair* of algebra inclusions $\mathfrak{so}(3) \subset
+\mathfrak{e}(3)$ *and* $\mathfrak{u}(1) \subset \mathfrak{so}(3)$
+(stabilizer of a point on $S^2$ as subgroup of the rotation
+stabilizer of the origin in $\mathbb{R}^3$). Together these make the
+embedding $SO(3)$-equivariant.
+
+#### 4. The slogan
+
+The general lesson is that *the same algebra can describe the
+symmetries of geometrically different objects*, and *different
+algebras can produce the same object via different routes*:
+
+- $\mathfrak{so}(3)$ produces both $S^2$ and $\mathbb{RP}^3$ — same
+  algebra, different Klein pairs, different manifolds.
+- $S^3$ arises both as $SU(2)$ (= group manifold of $\mathfrak{so}(3)$
+  with $\mathfrak{h} = 0$) and as $SO(4)/SO(3)$ (a different algebra,
+  a different $\mathfrak{h}$). Same manifold, different algebraic
+  routes.
+
+The Klein *pair* $(\mathfrak{g}, \mathfrak{h})$, not the algebra
+alone, is what determines the space. So the right comparison between
+$\mathfrak{so}(3)$ and $\mathfrak{e}(3)$ is not "same algebra,
+different spaces" — it's *different Klein pairs* whose spaces are
+geometrically nested:
+
+| Klein pair | Space | Role of $\mathfrak{so}(3)$ |
+|---|---|---|
+| $(\mathfrak{e}(3), \mathfrak{so}(3))$ | $\mathbb{R}^3$ | The stabilizer of the origin |
+| $(\mathfrak{so}(3), \mathfrak{u}(1))$ | $S^2$ | The full symmetry group |
+
+Climbing from the lower row to the upper row corresponds to embedding
+the unit sphere into Euclidean space: $S^2 \hookrightarrow
+\mathbb{R}^3$. The same generators $J^i$ play different roles —
+*symmetries* of the smaller space (on $S^2$) become *stabilizers* of
+a basepoint in the bigger space (in $\mathbb{R}^3$). This is the
+algebraic signature of "thinking of $S^2$ as the unit sphere of
+$\mathbb{R}^3$".
+
 ---
 
-## Part IV: Spheres — $S^2$ and $S^3$
+## Worked detail: from Maurer–Cartan to coordinates
 
-The Euclidean cases above are *flat* because the translation generators
-satisfy $[\mathfrak{m}, \mathfrak{m}] = 0$. Replacing the Euclidean
-algebra by $\mathfrak{so}(n+1)$ changes exactly this bracket: now
-$[\mathfrak{m}, \mathfrak{m}] \subset \mathfrak{h}$, the homogeneous space
-acquires constant positive curvature, and one obtains the round sphere
-$S^n$. The metric on $\mathfrak{m}$ is computed by the same Leibniz
-condition, and turns out to have the same form $\delta^{ij}$; the
-curvature lives in the bracket $[\mathfrak{m}, \mathfrak{m}]$, not in the
-metric formula itself. This is the canonical example of how the
-Klein/Cartan framework separates the *shape* of the metric (controlled
-by $[\mathfrak{h}, \mathfrak{m}]$) from the *curvature* of the space
-(controlled by $[\mathfrak{m}, \mathfrak{m}]$).
+The abstract derivations in chapters 3 and 4 produced bilinear forms
+on $\mathfrak{m}$. This chapter does the second half of the
+construction: turn that form into an explicit coordinate metric by
+running the Maurer–Cartan algorithm. We work this out in detail for
+several charts on $\mathbb{R}^2$, $S^2$, and $SO(3)$, and close with
+a discussion of how much freedom there is in choosing the section.
 
-One subtlety should be flagged in advance, because the spherical case
-makes it impossible to ignore: the metric the Leibniz condition produces
-on $\mathfrak{m}$ is the metric in an **orthonormal frame** — equivalently,
-the metric at the basepoint in the basis given by the Lie-algebra
-generators. It is *not* the metric in some chosen coordinate chart.
-For the flat cases above, the two agree, because $\mathfrak{m}$ is an
-abelian ideal and exponentiation gives global Cartesian coordinates in
-which the orthonormal frame coincides with the coordinate basis. For
-$S^n$, this is no longer true: no single coordinate chart is orthonormal
-everywhere, so the coordinate form of the metric differs from $\delta_{ab}$.
-We treat this carefully in $S^2$ below.
+### $\mathbb{R}^2$ in polar coordinates
 
-### The 2-sphere $S^2$
+Continuing the derivation begun in §"Flat: $\mathbb{R}^2$ and
+$\mathbb{R}^3$ as $\mathfrak{e}(n)/\mathfrak{so}(n)$" above (chapter
+"Spaces of constant curvature"): the abstract metric $\eta^{ij} =
+\delta^{ij}$ on $\mathfrak{m}$ now needs to be expressed in
+coordinates. Polar coordinates make a sharper version of the same
+point that is unavoidable on $S^2$: the *coordinate* form of the
+metric depends on the chart, while the underlying bilinear form does
+not. We run the five-step Maurer–Cartan procedure used for $S^2$
+later in this chapter, now on $\mathfrak{e}(2)$ instead of
+$\mathfrak{so}(3)$.
 
-The algebra $\mathfrak{so}(3)$ has three generators $\{J^1, J^2, J^3\}$
-with
+*Step 1: Coordinate-defining section.* Pick the basepoint at the origin
+and define polar coordinates $(r, \phi)$ algebraically by the section
 
 $$
-[J^i, J^j] = \epsilon^{ijk} J^k.
+\sigma(r, \phi) \;=\; e^{\phi J}\, e^{r P^1}.
 $$
 
-**Klein-pair candidates.** The proper subalgebras of $\mathfrak{so}(3)$
-are:
+$P^1$ translates the basepoint by $r$ along the 1-direction (giving
+point $(r, 0)$); $J$ then rotates by $\phi$ around the origin (giving
+$(r\cos\phi, r\sin\phi)$). These are standard polar coordinates by
+construction. The section is regular on $r > 0$; at $r = 0$ the
+$\phi$-coordinate is ill-defined, exactly as for the polar chart on
+$\mathbb{R}^2$.
 
-- $\{0\}$: $G/H = G$ is 3-dimensional (the group manifold
-  $SO(3) \cong \mathbb{RP}^3$, or $SU(2) \cong S^3$ for the double cover).
-- Any 1-dim subspace $\{n^i J^i\}$ for a unit vector $n^i$ — all such are
-  conjugate under $SO(3)$. Gives $\dim G/H = 2$.
-- No 2-dim subalgebras exist (any pair $X, Y \in \mathfrak{so}(3)$ has
-  $[X, Y]$ generically outside $\operatorname{span}\{X, Y\}$).
+*Step 2: Maurer–Cartan form.* Compute
+$\sigma^{-1}\, d\sigma = \omega_r\, dr + \omega_\phi\, d\phi$.
 
-So the only nontrivial 2-dimensional Klein geometry of $\mathfrak{so}(3)$
-is $G/\{n^i J^i\}$ for some axis $n$, and by conjugacy all choices are
-equivalent. Picking $n = \hat z$ to fix a "north pole," we take
-
-$$
-\mathfrak{h} = \{J^3\}, \qquad \mathfrak{m} = \{J^1, J^2\}, \qquad
-S^2 = SO(3)/SO(2).
-$$
-
-**Operational interpretation.** $J^3$ generates rotations around the
-$z$-axis. A point at the north pole is fixed by these rotations and
-moved by the other two generators $J^1, J^2$ (which tilt the pole toward
-the $x$- or $y$-axis). So "the points of the sphere" form the
-homogeneous space $G/H$ with this stabilizer.
-
-**Reductive check.** We need $[\mathfrak{h}, \mathfrak{m}] \subset
-\mathfrak{m}$, so that the Leibniz condition makes sense as a condition
-on $\mathfrak{m}$. Compute:
+$\partial_r \sigma = e^{\phi J} P^1 e^{r P^1}$ gives, after multiplying
+on the left by $\sigma^{-1}$,
 
 $$
-[J^3, J^1] = J^2 \in \mathfrak{m}, \qquad
-[J^3, J^2] = -J^1 \in \mathfrak{m}. \;\;\checkmark
+\omega_r \;=\; e^{-r P^1} P^1 e^{r P^1} \;=\; P^1
 $$
 
-What about $[\mathfrak{m}, \mathfrak{m}]$? Compute $[J^1, J^2] = J^3 \in
-\mathfrak{h}$. So $[\mathfrak{m}, \mathfrak{m}] \subset \mathfrak{h}$:
-this is the hallmark of a **symmetric space** — and it is what produces
-the curvature, as discussed below.
-
-**Metric derivation.** Set $g(J^a, J^b) = \eta^{ab}$ for $a, b \in \{1,
-2\}$, three unknowns. The Leibniz condition with $X = J^3$:
+(since $[P^1, P^1] = 0$). Next, $\partial_\phi \sigma = J\, \sigma$
+gives
 
 $$
-g([J^3, J^a], J^b) + g(J^a, [J^3, J^b]) = 0.
+\omega_\phi \;=\; \sigma^{-1} J\, \sigma
+\;=\; e^{-r P^1}\, J\, e^{r P^1}
+\;=\; \mathrm{Ad}_{e^{-r P^1}}\, J.
 $$
 
-- $a = b = 1$: $g(J^2, J^1) + g(J^1, J^2) = 2\eta^{12} = 0$
-  $\Rightarrow \eta^{12} = 0$.
-- $a = 1, b = 2$: $g(J^2, J^2) + g(J^1, -J^1) = \eta^{22} - \eta^{11} = 0$
-  $\Rightarrow \eta^{11} = \eta^{22}$.
+The Lie-algebra calculation:
+$[-rP^1,\, J] = r\,[J, P^1] = r P^2$; the next bracket
+$[-rP^1,\, r P^2] = -r^2 [P^1, P^2] = 0$ closes the series. Hence
 
-So $\eta^{ab} = \lambda\, \delta^{ab}$ on $\mathfrak{m}$, exactly as for
-the 2D plane. This result needs careful unpacking, because read naively it
-appears to say that the metric on $S^2$ is flat — which is wrong.
+$$
+\omega_\phi \;=\; J + r\, P^2.
+$$
 
-**What this answer is, and what it is not.** The Lie-algebra basis
-$\{J^1, J^2\}$ for $\mathfrak{m}$ is a basis of *one tangent space* —
-namely $T_N S^2$, the tangent space at the basepoint (north pole). The
-derivation gives the components of the metric in that basis on that one
-tangent space. By $G$-equivariance, the same components reappear at every
-other point if we use the basis obtained by transporting $\{J^1, J^2\}$
-around $S^2$ via the group action: that is an **orthonormal frame**
-$\{e_1, e_2\}$, in which the metric is $\delta_{ab}$ *globally*.
+*Step 3: Read off the vielbein.* With $\mathfrak{m} = \{P^1, P^2\}$ and
+$\mathfrak{h} = \{J\}$, split $\omega = e + \omega_{\mathfrak{h}}$:
 
-This does not contradict $S^2$ being curved. By a standard theorem, every
-Riemannian manifold admits an orthonormal frame at every point; in that
-frame the metric components are always $\delta_{ab}$. The curvature does
-not live in the *values* of the metric in such a frame — it lives in how
-the frame must twist as one moves from point to point, encoded in the
-connection 1-form $\omega^a{}_b$. This is the same fact that underlies
-the equivalence principle in general relativity: at any point one can
-choose coordinates in which $g_{\mu\nu}(p) = \eta_{\mu\nu}$ and
-$\partial_\rho g_{\mu\nu}(p) = 0$, even on a strongly curved spacetime.
+$$
+\begin{aligned}
+e_r &= P^1,        & e_\phi &= r\, P^2, \\
+\omega_{\mathfrak{h},\, r} &= 0,  & \omega_{\mathfrak{h},\, \phi} &= J.
+\end{aligned}
+$$
 
-**Translating to spherical coordinates.** To recover the familiar form
-$R^2(d\theta^2 + \sin^2\theta\, d\phi^2)$ we must express the
-$G$-invariant metric in the *coordinate* basis $\{\partial_\theta,
-\partial_\phi\}$ rather than the Lie-algebra-derived frame
-$\{e_1, e_2\}$. The bridge is the **vielbein** (here a *zweibein*)
-$e^a{}_\mu$ — a soldering form that gives the components of the coframe
-$\{e^1, e^2\}$ in coordinates. Crucially, the entire bridge can be
-obtained from the abstract Lie algebra alone, without any embedding of
-$S^2$ in $\mathbb{R}^3$. We carry that derivation out now.
+Reading off vielbein components $e_\mu = e^a{}_\mu\, P_a$:
+
+$$
+e^1{}_r = 1, \quad e^2{}_r = 0, \qquad
+e^1{}_\phi = 0, \quad e^2{}_\phi = r,
+$$
+
+equivalently the coframe
+
+$$
+e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.
+$$
+
+*Step 4: Killing vector fields.* Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
+[\mathrm{Ad}_{\sigma^{-1}}\xi]^a$, i.e. $\dot r =$ ($P^1$-coefficient of
+$\sigma^{-1} \xi\, \sigma$) and $\dot\phi =$ ($P^2$-coefficient) $/\, r$:
+
+- $\xi = J$: $\sigma^{-1} J\, \sigma = J + r P^2$ (computed above), so
+  $\dot r = 0$, $\dot\phi = 1$, giving $J = \partial_\phi$ as expected.
+- $\xi = P^1$: $\sigma^{-1} P^1 \sigma = \mathrm{Ad}_{e^{-\phi J}}\, P^1
+  = \cos\phi\, P^1 - \sin\phi\, P^2$ (rotation by $-\phi$ in the
+  $(P^1, P^2)$-plane, since $\mathrm{ad}_J$ acts on $\{P^1, P^2\}$ as a
+  90° rotation), giving
+
+  $$
+  P^1 \;=\; \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi.
+  $$
+
+- $\xi = P^2$: similarly $\sigma^{-1} P^2 \sigma = \sin\phi\, P^1 +
+  \cos\phi\, P^2$, giving
+
+  $$
+  P^2 \;=\; \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
+  $$
+
+These are the standard polar-coordinate expressions for the Cartesian
+translation Killing fields $\partial_x, \partial_y$.
+
+*Step 5: The metric in coordinates.* The bridge from form on $\mathfrak{m}$
+to tensor field on $\mathbb{R}^2$ is identical to Step 5a of the $S^2$
+case: $g = \lambda\, \delta_{ab}\, e^a \otimes e^b$. Expanding,
+
+$$
+g \;=\; \lambda\bigl[(e^1)^2 + (e^2)^2\bigr]
+\;=\; \lambda\bigl[(dr)^2 + (r\, d\phi)^2\bigr]
+\;=\; \lambda\,\bigl(dr^2 + r^2\, d\phi^2\bigr).
+$$
+
+Choosing the conventional unit $\lambda = 1$:
+
+$$
+\boxed{\;ds^2 \;=\; dr^2 + r^2\, d\phi^2.\;}
+$$
+
+This is the **flat Euclidean metric** of $\mathbb{R}^2$, written in polar
+coordinates. The coordinate components $g_{\mu\nu} = \operatorname{diag}(1, r^2)$
+*do* depend on $r$, even though the space is flat — the $r^2$ is the
+squared length of $\partial_\phi$ at radius $r$, in exact analogy with
+the $\sin^2\theta$ of $S^2$.
+
+**Why this is flat — verified at the algebra level.** The Cartan
+curvature 2-form of the connection $\omega_{\mathfrak{h}}$ on the model
+space is
+
+$$
+\Omega \;=\; d\omega_{\mathfrak{h}} + \tfrac{1}{2}[\omega_{\mathfrak{h}},\, \omega_{\mathfrak{h}}].
+$$
+
+Here $\omega_{\mathfrak{h}} = J\, d\phi$, so $d\omega_{\mathfrak{h}} =
+dJ \wedge d\phi = 0$ (since $J$ is a constant element of the algebra),
+and $[\omega_{\mathfrak{h}}, \omega_{\mathfrak{h}}] = [J, J]\, d\phi
+\wedge d\phi = 0$ trivially. Hence
+
+$$
+\Omega \;=\; 0,
+$$
+
+i.e., zero sectional curvature everywhere. By contrast, on $S^2$ one
+gets $\omega_{\mathfrak{h}} = \cos\theta\, J^3\, d\phi$, whose exterior
+derivative $-\sin\theta\, J^3\, d\theta \wedge d\phi$ is non-zero —
+precisely the constant positive curvature $1/R^2$.
+
+So the polar-coordinate $\mathbb{R}^2$ exhibits the moral lesson
+sharply: the coordinate components of the metric vary, but the
+*curvature* (read off the connection 1-form, an algebraic Lie-algebra
+object) vanishes. The bracket-level distinction $[\mathfrak{m},
+\mathfrak{m}] = 0$ is doing exactly the work that makes flat space flat.
+
+### Cartesian derivation: $\sigma = \exp(x P^1 + y P^2)$
+
+The derivation above was the *traditional* one — it used a section
+$\sigma = e^{\phi J}\, e^{r P^1}$ with the rotation generator $J$
+inside (as a "fiber direction") and a translation generator radially.
+The same machinery accepts another natural choice: skip the rotation
+entirely and use only the translations,
+
+$$
+\sigma(x, y) \;=\; \exp(x\, P^1 + y\, P^2).
+$$
+
+Geometrically, this is a *single* translation by the vector
+$(x, y)$ from the basepoint. Because $[P^1, P^2] = 0$, this is the
+same as $e^{xP^1}\, e^{yP^2}$ in either order — the two translations
+commute, so no Baker–Campbell–Hausdorff correction arises. Let us run
+the four-step algorithm with this section.
+
+#### Step 1 — structure constants
+
+The Klein pair is unchanged: $\mathfrak{h} = \mathrm{span}(J)$,
+$\mathfrak{m} = \mathrm{span}(P^1, P^2)$. The non-zero brackets are
+
+$$
+[J, P^1] = P^2, \qquad [J, P^2] = -P^1.
+$$
+
+The crucial novelty is the $\mathfrak{m}$–$\mathfrak{m}$ bracket:
+$[P^1, P^2] = 0$. We will see exactly what this triviality does to the
+algorithm.
+
+#### Step 2 — Maurer–Cartan form
+
+We need $\omega = \sigma^{-1}\, d\sigma$. Use the standard
+$3 \times 3$ affine representation of $\mathfrak{e}(2)$:
+
+$$
+P^1 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}, \quad
+P^2 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad
+J = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}.
+$$
+
+The Lie-algebra element $V := x P^1 + y P^2$ has $V^2 = 0$ in this
+representation (both translation matrices are strictly upper-triangular
+and their product vanishes). So the exponential series terminates
+after one term:
+
+$$
+\sigma(x, y) \;=\; \exp(V) \;=\; I + V \;=\;
+\begin{pmatrix} 1 & 0 & x \\ 0 & 1 & y \\ 0 & 0 & 1 \end{pmatrix}.
+$$
+
+This is just the affine matrix for translation by $(x, y)$ — as
+expected. The inverse:
+
+$$
+\sigma^{-1} \;=\;
+\begin{pmatrix} 1 & 0 & -x \\ 0 & 1 & -y \\ 0 & 0 & 1 \end{pmatrix},
+\qquad
+d\sigma \;=\;
+\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}.
+$$
+
+The bottom row of $d\sigma$ is zero, so the matrix product
+$\sigma^{-1}\, d\sigma$ leaves the upper-right column $(dx, dy)^T$
+untouched:
+
+$$
+\boxed{\;
+\omega \;=\; \sigma^{-1}\, d\sigma \;=\;
+\begin{pmatrix} 0 & 0 & dx \\ 0 & 0 & dy \\ 0 & 0 & 0 \end{pmatrix}
+\;=\; P^1\, dx + P^2\, dy.
+\;}
+$$
+
+Decomposed into the $\mathfrak{m}$- and $\mathfrak{h}$-parts
+$\omega = e^a X_a + \omega_{\mathfrak{h}}$:
+
+$$
+e^1 \;=\; dx, \qquad e^2 \;=\; dy, \qquad
+\omega_{\mathfrak{h}} \;=\; 0.
+$$
+
+The **vielbein is the identity matrix**: $e^a{}_\mu = \delta^a_\mu$.
+The **spin connection vanishes identically**. Both consequences trace
+back to $[P^1, P^2] = 0$ — the BCH formula contributes no nonlinear
+correction, and the rotation generator $J$ never appears in $\omega$.
+
+#### Step 3 — invariance equation
+
+The invariance equation is the *same one we solved in the polar
+derivation*. With $\mathrm{ad}_J|_{\mathfrak{m}}$ a $90°$ rotation in
+the $(P^1, P^2)$-plane, the symmetric matrix $\eta$ satisfying $\eta\,
+\mathrm{ad}_J + (\mathrm{ad}_J)^T\, \eta = 0$ is
+
+$$
+\eta \;=\; \lambda\, I_{2 \times 2}, \qquad \lambda > 0.
+$$
+
+A single positive scale parameter — the same answer as before. The
+invariance condition is a property of the $(\mathfrak{g},
+\mathfrak{h})$ Klein pair and does not depend on which section was
+chosen.
+
+#### Step 4 — assemble the metric
+
+$g = \eta_{ab}\, e^a \otimes e^b = \lambda\, ((e^1)^2 + (e^2)^2)$ with
+$e^1 = dx$, $e^2 = dy$:
+
+$$
+\boxed{\;ds^2 \;=\; \lambda\, (dx^2 + dy^2).\;}
+$$
+
+Setting $\lambda = 1$ for the standard normalization, we recover the
+Cartesian metric of $\mathbb{R}^2$ in the most direct possible way.
+The intrinsic geometry is identical to the polar result
+$ds^2 = dr^2 + r^2\, d\phi^2$ — it is the same flat metric in
+different coordinates — but the coordinate components are now
+*constants* instead of being $r$-dependent.
+
+#### Why this works globally
+
+Three structural features make Cartesian coordinates better-behaved
+than polar in this example:
+
+- **Single-step exponential.** $\sigma(x, y) = \exp(xP^1 + yP^2)$ is
+  well-defined for all $(x, y) \in \mathbb{R}^2$, with no coordinate
+  singularity (compare polar: $r = 0$ is a singularity).
+- **Identity vielbein.** $\det e^a{}_\mu = 1 \neq 0$ everywhere. No
+  point is excluded from the chart.
+- **Vanishing spin connection.** $\omega_{\mathfrak{h}} \equiv 0$
+  globally on the chart, so no curvature term is even present.
+
+All three are consequences of one algebraic fact: $[\mathfrak{m},
+\mathfrak{m}] = 0$. The translations commute, so the BCH formula
+reduces to the linear sum, no $\mathfrak{h}$-generator can appear in
+$\sigma^{-1} d\sigma$, and the exponential map $\mathbb{R}^2 \to G/H$
+is a global diffeomorphism. This is the algebraic signature of
+*flatness with a globally trivial chart*. We will see in the next
+subsection that the same condition $[\mathfrak{m}, \mathfrak{m}] = 0$
+is also what makes the **position vector** globally well-defined on
+$\mathbb{R}^2$.
+
+#### Killing vector fields
+
+The three Killing fields generated by $\xi \in \{P^1, P^2, J\}$ acting
+on the section. Using $Y_\xi^\mu = (e^{-1})^\mu{}_a\,
+(\mathrm{Ad}_{\sigma^{-1}} \xi)^a|_{\mathfrak{m}}$ with vielbein the
+identity:
+
+- $\xi = P^1$ produces $\partial_x$.
+- $\xi = P^2$ produces $\partial_y$.
+- $\xi = J$ produces $-y\, \partial_x + x\, \partial_y$.
+
+These are exactly the three Killing fields familiar from elementary
+geometry — two translations and a rotation around the origin.
+
+### Christoffel symbols, frame vectors, and the position vector
+
+Once the metric $ds^2 = dr^2 + r^2\, d\phi^2$ is in hand, everything
+familiar from elementary vector calculus in polar coordinates can be
+read off it. We give the short version here for completeness, then
+turn to the harder question of how to compute the **position vector**
+without going through Cartesian coordinates — a question for which the
+Klein-geometry section $\sigma$ does exactly the right thing.
+
+#### Curvilinear basis vectors
+
+The coordinate basis vectors are $\partial_r$ and $\partial_\phi$.
+Their lengths and inner products come straight from the metric:
+
+$$
+|\partial_r|^2 = g_{rr} = 1, \qquad
+|\partial_\phi|^2 = g_{\phi\phi} = r^2, \qquad
+\langle \partial_r, \partial_\phi \rangle = g_{r\phi} = 0.
+$$
+
+So $\partial_r$ is already a unit vector, while $\partial_\phi$ has
+length $r$. The **unit (orthonormal) frame vectors** are obtained by
+normalizing:
+
+$$
+\hat r \;=\; \partial_r, \qquad \hat\phi \;=\; \frac{1}{r}\,\partial_\phi.
+$$
+
+This is exactly the orthonormal frame $\vec e_1, \vec e_2$ produced by
+the Klein construction: the dual of the coframe $\{e^1 = dr,\; e^2 = r\, d\phi\}$
+satisfies $e^a(\vec e_b) = \delta^a_b$, giving
+
+$$
+\vec e_1 \;=\; \partial_r \;=\; \hat r, \qquad
+\vec e_2 \;=\; \frac{1}{r}\, \partial_\phi \;=\; \hat\phi.
+$$
+
+#### How $e^1, e^2$ came from the Maurer–Cartan form
+
+Briefly recapping the polar derivation above so the rest of this
+section is self-contained. We chose the section
+$\sigma(r, \phi) = e^{\phi J}\, e^{r P^1}$, computed
+
+$$
+\omega = \sigma^{-1}\, d\sigma
+= P^1\, dr + (J + r\, P^2)\, d\phi,
+$$
+
+and split it via $\mathfrak{m} = \mathrm{span}(P^1, P^2)$,
+$\mathfrak{h} = \mathrm{span}(J)$. The $\mathfrak{m}$-coefficients are
+the vielbein components $e^a{}_\mu$ — i.e., the coefficient of $P^a$
+in $\omega_\mu$:
+
+$$
+e^1{}_r = 1,\quad e^1{}_\phi = 0,\qquad
+e^2{}_r = 0,\quad e^2{}_\phi = r.
+$$
+
+Writing $e^a = e^a{}_\mu\, dx^\mu$,
+
+$$
+\boxed{\;e^1 \;=\; dr, \qquad e^2 \;=\; r\, d\phi.\;}
+$$
+
+#### Christoffel symbols
+
+For $g_{rr} = 1$, $g_{\phi\phi} = r^2$ (others zero), with inverse
+$g^{rr} = 1$, $g^{\phi\phi} = 1/r^2$, the formula
+
+$$
+\Gamma^\rho_{\mu\nu}
+= \tfrac{1}{2}\, g^{\rho\sigma}\bigl(
+\partial_\mu g_{\sigma\nu} + \partial_\nu g_{\sigma\mu}
+- \partial_\sigma g_{\mu\nu}\bigr)
+$$
+
+has only one non-zero metric derivative, $\partial_r g_{\phi\phi} = 2r$.
+Direct substitution gives two non-zero connection coefficients:
+
+$$
+\boxed{\;
+\Gamma^r{}_{\phi\phi} = -r, \qquad
+\Gamma^\phi{}_{r\phi} = \Gamma^\phi{}_{\phi r} = \frac{1}{r}.
+\;}
+$$
+
+All others vanish. (Check: $\Gamma^r{}_{\phi\phi} = -\tfrac{1}{2}\,\partial_r g_{\phi\phi}
+= -r$; $\Gamma^\phi{}_{r\phi} = \tfrac{1}{2}\, g^{\phi\phi}\, \partial_r g_{\phi\phi}
+= \tfrac{1}{2}\cdot \tfrac{1}{r^2}\cdot 2r = 1/r$.) These reproduce the
+familiar coordinate derivatives of polar unit vectors:
+
+$$
+\nabla_{\partial_r} \hat\phi = \frac{1}{r}\, \hat\phi, \qquad
+\nabla_{\partial_\phi} \hat r = \hat\phi, \qquad
+\nabla_{\partial_\phi} \hat\phi = -r\, \hat r,
+$$
+
+and the Riemann tensor is identically zero (since $\partial g$ has
+only one non-zero term and the second-derivative combinations cancel),
+consistent with the algebraic flatness $\Omega = 0$ computed earlier.
+
+#### The position vector — derived without Cartesian coordinates
+
+Now the structural question: in flat space, there is a distinguished
+object — the **position vector** $\vec r$ — that points from the
+origin to the current point. Its existence depends on the flatness
+of the space (translations form an abelian Lie algebra
+$\mathfrak{m}$, and the exponential map $\mathfrak{m} \to G/H$ is a
+global diffeomorphism). One can also see this from coordinates: in
+$\mathbb{R}^2$ the position vector is naturally
+$\vec r = x\, \hat x + y\, \hat y$, which uses the *global* Cartesian
+chart. The challenge is to compute $\vec r$ at a given polar
+coordinate point $(r, \phi)$ from the algebra alone, without
+parametrizing through Cartesian.
+
+The Klein-geometry section $\sigma$ gives the answer directly. The
+key step is to rewrite $\sigma$ as a translation times a rotation:
+
+$$
+\sigma(r, \phi) \;=\; e^{T}\, h,
+$$
+
+where $T \in \mathfrak{m}$ is a Lie-algebra translation and $h \in H$
+is the residual rotation at the destination point. Once we have $T$,
+the position vector is just $T$ identified with a vector in
+$\mathfrak{m} \cong T_o(\mathbb{R}^2)$: it is the translation that
+moves the origin to the current point.
+
+*The decomposition.* Start from our section
+$\sigma = e^{\phi J}\, e^{r P^1}$ and insert the identity factor
+$e^{-\phi J}\, e^{\phi J}$ between the two exponentials:
+
+$$
+\sigma
+\;=\; e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\, e^{\phi J}
+\;=\; \bigl(e^{\phi J}\, e^{r P^1}\, e^{-\phi J}\bigr)\, e^{\phi J}
+\;=\; e^{r\, \mathrm{Ad}_{e^{\phi J}}(P^1)}\, e^{\phi J},
+$$
+
+using the identity $e^{\phi J}\, e^{r P^1}\, e^{-\phi J} =
+\exp\bigl(r\, \mathrm{Ad}_{e^{\phi J}}(P^1)\bigr)$ (conjugation acts
+on the exponent by the adjoint). The bracket structure on
+$\mathfrak{m}$ — $[J, P^1] = P^2$, $[J, P^2] = -P^1$ — gives, by the
+same series we used in Step 4 of the polar derivation,
+
+$$
+\mathrm{Ad}_{e^{\phi J}}(P^1) \;=\; \cos\phi\, P^1 + \sin\phi\, P^2.
+$$
+
+Therefore the section factorizes as
+
+$$
+\sigma(r, \phi)
+\;=\; e^{\,r\cos\phi\, P^1 \,+\, r\sin\phi\, P^2}\, e^{\phi J},
+$$
+
+and we read off
+
+$$
+\boxed{\;T(r, \phi) \;=\; (r\cos\phi)\, P^1 \;+\; (r\sin\phi)\, P^2 \;\in\; \mathfrak{m},\;}
+\qquad h(r, \phi) = e^{\phi J}.
+$$
+
+The vector $T$ *is* the position vector — its components in the
+algebraic basis $\{P^1, P^2\}$ of $\mathfrak{m}$ are exactly $(x, y) =
+(r\cos\phi, r\sin\phi)$. So Cartesian coordinates have re-emerged as a
+purely algebraic byproduct: they are the **components of the position
+vector in the algebra basis** of $\mathfrak{m}$. We never had to
+invoke an independent Cartesian chart; the Klein structure delivers it
+automatically when $\mathfrak{m}$ is abelian.
+
+*Expressing $\vec r$ at the current point.* The above $T$ lives in
+$\mathfrak{m}$, naturally an algebra element. To view it as a tangent
+vector field on $\mathbb{R}^2$ — as an arrow attached to the current
+point $(r, \phi)$ — push it through the translation Killing fields,
+whose polar-coordinate expressions we have from Step 4 of the polar
+derivation:
+
+$$
+\vec{P^1} = \cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi, \qquad
+\vec{P^2} = \sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi.
+$$
+
+Substituting:
+
+$$
+\begin{aligned}
+\vec r
+&\;=\; (r\cos\phi)\, \vec{P^1} \;+\; (r\sin\phi)\, \vec{P^2} \\
+&\;=\; r\cos\phi\, \Bigl(\cos\phi\, \partial_r - \frac{\sin\phi}{r}\, \partial_\phi\Bigr)
+ \;+\; r\sin\phi\, \Bigl(\sin\phi\, \partial_r + \frac{\cos\phi}{r}\, \partial_\phi\Bigr) \\
+&\;=\; r\,(\cos^2\phi + \sin^2\phi)\, \partial_r
+ \;+\; (-\sin\phi\cos\phi + \sin\phi\cos\phi)\, \partial_\phi \\
+&\;=\; r\, \partial_r.
+\end{aligned}
+$$
+
+The $\partial_\phi$ component cancels exactly by the Pythagorean
+identity. So in polar coordinates,
+
+$$
+\boxed{\;\vec r \;=\; r\, \partial_r \;=\; r\, \vec e_1 \;=\; r\, \hat r.\;}
+$$
+
+The familiar elementary result is recovered, but the derivation used
+only the algebra (the bracket relations and the section), not
+Cartesian coordinates. Two observations close the section:
+
+- **Why polar coordinates make the position vector look so simple.**
+  In the local orthonormal frame $\vec e_1 = \hat r$, $\vec e_2 = \hat\phi$
+  at the point $(r, \phi)$, the position vector has frame components
+  $(r, 0)$ — one non-zero entry. This is because the section
+  $\sigma = e^{\phi J}\, e^{r P^1}$ first translates along $P^1$ and
+  then rotates: the rotation aligns $\hat e_1$ with the radial
+  direction by construction, so the entire displacement $r P^1$ shows
+  up in the $\vec e_1$ slot.
+- **Why the position vector exists only in flat space.** The
+  decomposition $\sigma = e^T h$ relied on the fact that, in
+  $\mathfrak{m}$, the translation $e^{r P^1}$ stays a single
+  translation under conjugation by the rotation — there is no
+  "tilting term" added. Equivalently, $\mathrm{Ad}_h$ sends
+  $\mathfrak{m}$ to itself as an honest linear map without picking up
+  $\mathfrak{h}$-pieces, *and* $[\mathfrak{m}, \mathfrak{m}] = 0$ so
+  the exponential map $\mathfrak{m} \to G/H$ is a diffeomorphism. On
+  $S^2$ the second condition fails: $[\mathfrak{m}, \mathfrak{m}] =
+  \mathfrak{h}$, so $e^T$ does not exhaust the group, the exponential
+  map is only local, and there is no globally well-defined "position
+  vector to the basepoint." The position vector is the algebraic
+  signature of flatness.
+
+### $S^2$ in spherical coordinates
+
+Continuing the derivation in §"Positive curvature: $S^2$ and $S^3$ as
+$\mathfrak{so}(n+1)/\mathfrak{so}(n)$" (chapter "Spaces of constant
+curvature"): the abstract metric $\eta^{ab} = \delta^{ab}$ on
+$\mathfrak{m}$ must be expressed in coordinates. The bridge is the
+**vielbein** (here a *zweibein*) $e^a{}_\mu$ — a soldering form that
+gives the components of the coframe $\{e^1, e^2\}$ in coordinates.
+The entire bridge is obtained from the abstract Lie algebra alone,
+without any embedding of $S^2$ in $\mathbb{R}^3$.
 
 *Step 1: Define coordinates by a coset section.* A point of $S^2 = G/H$
 is an equivalence class $g H$. To turn this into a coordinate chart we
@@ -4031,7 +4581,7 @@ out using only the tools of GR. The same four steps applied to any
 other reductive Klein pair $(\mathfrak{g}, \mathfrak{h})$ with section
 $\sigma$ yield the corresponding metric.
 
-#### Cartesian-like derivation: $\sigma = \exp(a J^1 + b J^2)$
+### Cartesian-like derivation: $\sigma = \exp(a J^1 + b J^2)$
 
 The streamlined derivation above used a *product* section,
 $\sigma = e^{\phi J^3}\, e^{\theta J^2}$, in which an
@@ -4055,7 +4605,7 @@ This is precisely the $\mathbb{R}^2$ recipe of the previous section
 transplanted onto $S^2$. Let us run the four-step algorithm and see
 what comes out — and exactly where the chart breaks down.
 
-##### Step 1 — structure constants
+#### Step 1 — structure constants
 
 Unchanged from the polar derivation: $[J^i, J^j] = \epsilon^{ijk} J^k$,
 with Klein pair $\mathfrak{h} = \mathrm{span}(J^3)$, $\mathfrak{m} =
@@ -4066,7 +4616,7 @@ zero. Already at this stage we can predict — by comparison with the
 $\mathbb{R}^2$ Cartesian case — that the BCH formula will not collapse
 and that the spin connection will not vanish.
 
-##### Step 2 — Maurer–Cartan form
+#### Step 2 — Maurer–Cartan form
 
 The exponential $\sigma = \exp(V)$ with $V = aJ^1 + bJ^2$ no longer
 truncates after one term. In the standard $3 \times 3$ representation
@@ -4145,14 +4695,14 @@ $(a, b) \leftrightarrow (\rho, \psi)$, the usual artifact of polar
 coordinates at the origin. The remaining zero at $\rho = \pi$ is the
 genuine failure of the section.
 
-##### Step 3 — invariance equation
+#### Step 3 — invariance equation
 
 Unchanged: $\mathrm{ad}_{J^3}|_{\mathfrak{m}}$ is a $90°$ rotation in
 the $(J^1, J^2)$-plane, and the invariance equation gives $\eta =
 \lambda\, I_{2 \times 2}$ with $\lambda > 0$. Set $\lambda = R^2$ to
 match the standard convention.
 
-##### Step 4 — assemble the metric
+#### Step 4 — assemble the metric
 
 $g = \eta_{ab}\, e^a \otimes e^b = R^2\, ((e^1)^2 + (e^2)^2)$ in
 geodesic-polar coordinates:
@@ -4179,7 +4729,7 @@ unit sphere, colatitude *is* the geodesic distance from the pole), and
 $\phi = \psi$ (longitude *is* the angle around the pole). The two
 sections produce identical metrics up to this relabelling.
 
-##### What "fails" — and what it teaches us
+#### What "fails" — and what it teaches us
 
 The Cartesian-like section on $S^2$ does *not* fail algebraically.
 The four-step algorithm runs to completion and produces the correct,
@@ -4235,7 +4785,7 @@ where the metric components are immediately recognizable from
 elementary spherical geometry. Both sections describe the same
 Riemannian manifold; only the coordinate dress is different.
 
-#### The other Klein pair: $G/\{0\}$ as a 3-manifold
+### The other Klein pair: $G/\{0\}$ as a 3-manifold
 
 The enumeration of proper subalgebras of $\mathfrak{so}(3)$ at the
 start of this section listed two non-trivial Klein-pair choices:
@@ -4266,11 +4816,11 @@ group does. Below we work with $G = SO(3)$ (the adjoint representation
 we have used throughout); $SU(2)$ would yield exactly the same local
 formulas with a doubled $r$-range.
 
-##### Step 1 — structure constants
+#### Step 1 — structure constants
 
 Unchanged: $[J^i, J^j] = \epsilon^{ijk}\, J^k$.
 
-##### Step 2 — Maurer–Cartan form
+#### Step 2 — Maurer–Cartan form
 
 Take the geodesic-normal section
 
@@ -4319,7 +4869,7 @@ and whose orthogonal columns combine $\sin r$ and $1 - \cos r$
 factors. The remaining entries are not crucial; what matters is the
 resulting metric, computed below.
 
-##### Step 3 — invariance equation
+#### Step 3 — invariance equation
 
 Here is the new twist. The invariance equation must hold for every
 $Z \in \mathfrak{h}$, but $\mathfrak{h} = \{0\}$ has no non-zero
@@ -4349,7 +4899,7 @@ Taking $\eta_{ab} = \lambda\, \delta_{ab}$ with $\lambda > 0$ for a
 Riemannian (positive-definite) metric makes the resulting geometry
 the standard bi-invariant metric on the group.
 
-##### Step 4 — assemble the metric
+#### Step 4 — assemble the metric
 
 With $\eta_{ab} = \delta_{ab}$, computing
 $g = \delta_{ab}\, e^a \otimes e^b$ in $(r, \theta, \phi)$ coordinates:
@@ -4383,7 +4933,7 @@ the identity rotation) and recovers the full unit $S^3$. The
 intrinsic Riemannian geometry — constant positive sectional curvature
 — is the same throughout this family of normalizations.
 
-##### Connection to the later $S^3 = SO(4)/SO(3)$ derivation
+#### Connection to the later $S^3 = SO(4)/SO(3)$ derivation
 
 The 3-sphere also appears later in this document as a different Klein
 quotient: $S^3 = SO(4)/SO(3)$, built from the algebra $\mathfrak{so}(4)$.
@@ -4396,491 +4946,6 @@ and the diagonal $\mathfrak{so}(3)$-action realizes $S^3$ as a coset.
 We do not pursue this isomorphism here, but it is the algebraic reason
 the two constructions agree on the geometry while differing on
 group-theoretic ancillary data.
-
-#### Why $\mathbb{R}^3$ is not a Klein quotient of $\mathfrak{so}(3)$, even though $S^2 \subset \mathbb{R}^3$
-
-A natural question arises from comparing the $\mathfrak{so}(3)$
-classification above with the Euclidean algebra $\mathfrak{e}(3) =
-\mathfrak{so}(3) \ltimes \mathbb{R}^3$ of Part III. The rotation
-generators are *literally the same* — $\mathfrak{so}(3) \subset
-\mathfrak{e}(3)$ as a subalgebra — and the resulting space $S^2$ sits
-inside $\mathbb{R}^3$ as a unit sphere. So why doesn't $\mathfrak{so}(3)$
-alone produce $\mathbb{R}^3$? The Lie algebra is a *subset* of the
-bigger one; why aren't the spaces?
-
-The short answer is that the Klein construction outputs the space whose
-*symmetries* the algebra encodes. Rotations alone are not enough
-symmetry to move every point of $\mathbb{R}^3$ to every other point —
-they only move points around *within* spheres of constant radius. The
-translations $P^i$ in $\mathfrak{e}(3)$ are exactly what allows us to
-jump from one sphere to another.
-
-Let us spell this out from three perspectives.
-
-##### 1. Group action: rotations alone are not transitive
-
-A homogeneous space is one on which the group acts *transitively*: any
-point can be moved to any other point by some group element. $SO(3)$
-acts on $\mathbb{R}^3$ by rotations centered at the origin, and these
-preserve the radial coordinate $|\vec r|$. So:
-
-- The orbit of a point $\vec r$ under $SO(3)$ is the sphere
-  $\{|\vec r'| = |\vec r|\}$ of the same radius.
-- Two points with different radii cannot be related by any rotation.
-- $SO(3)$ acts transitively on each sphere $S^2_r$ separately,
-  but *not* on $\mathbb{R}^3$ as a whole.
-
-So $\mathbb{R}^3$ is not a homogeneous space of $SO(3)$. It is
-*foliated* by $SO(3)$-orbits — spheres of varying radii (plus the
-fixed origin) — and each leaf is an $S^2$. To make $\mathbb{R}^3$
-itself homogeneous, we must enlarge the group by adding
-transformations that *move between* the orbits. The minimal such
-enlargement is to add translations: any two points are connected by a
-unique translation. The result is the Euclidean group $E(3)$, with Lie
-algebra $\mathfrak{e}(3) = \mathfrak{so}(3) \ltimes \mathbb{R}^3$.
-
-##### 2. Dimension count: what Klein quotients of $\mathfrak{so}(3)$ are available
-
-The Klein construction outputs spaces of dimension $\dim G - \dim H$,
-where $H$ runs over the proper subalgebras of $\mathfrak{g}$. For
-$\mathfrak{so}(3)$ (dimension 3) the options are exactly:
-
-| $\dim \mathfrak{h}$ | $\dim G/H$ | Space |
-|---|---|---|
-| 0 | 3 | Group manifold $SO(3) = \mathbb{RP}^3$ (or $S^3 = SU(2)$) |
-| 1 | 2 | $S^2$ |
-| 2 | — | (no 2-dim subalgebra exists) |
-| 3 | 0 | Point |
-
-The 3-dimensional output is the group manifold — and the group
-manifold of $\mathfrak{so}(3)$ is *compact* ($\mathbb{RP}^3$ or
-$S^3$, both finite volume). It cannot be $\mathbb{R}^3$. The
-compactness is an *algebraic* feature, visible already on the Killing
-form: $K(J^i, J^j) = -2\, \delta^{ij}$ is **negative definite**, which
-by Cartan's criterion is the signature of a compact semisimple Lie
-algebra. There is no way to integrate $\mathfrak{so}(3)$ to a
-non-compact Lie group.
-
-By contrast, $\mathfrak{e}(3)$ has dimension 6, the right amount to
-fit $\mathbb{R}^3 = E(3)/SO(3)$ as $\dim = 6 - 3 = 3$. The translation
-subalgebra $\mathfrak{t}^3 \subset \mathfrak{e}(3)$ is itself a *non-
-compact* abelian Lie algebra (the additive group $\mathbb{R}^3$), and
-this non-compactness is what gives $\mathbb{R}^3$ its non-compact
-character.
-
-##### 3. The "stacking $S^2$'s" picture is exactly right
-
-The intuition — $\mathbb{R}^3$ is foliated by $S^2$'s of all radii —
-captures the geometric content precisely. Three statements make this
-rigorous:
-
-**(a) Foliation by $SO(3)$-orbits.** $\mathbb{R}^3 \setminus \{0\}$
-is fibered by $SO(3)$-orbits via
-
-$$
-\mathbb{R}^3 \setminus \{0\} \;\cong\; S^2 \times \mathbb{R}_{>0},
-\qquad \vec r \mapsto (\hat r, |\vec r|),
-$$
-
-and the origin is the unique $SO(3)$-fixed point. Each fiber is a
-copy of $S^2 = SO(3)/SO(2)$. So $\mathbb{R}^3$ is (topologically) a
-cone over $S^2$: the trivial bundle $S^2 \times [0, \infty)$ with the
-$S^2$-fiber at zero collapsed to a point.
-
-**(b) $\mathfrak{e}(3)$ knows about both layers, $\mathfrak{so}(3)$
-about only one.** Inside $\mathfrak{e}(3) = \mathfrak{so}(3) \oplus
-\mathfrak{t}^3$ (as a vector space), rotations move points within a
-sphere and translations move them across spheres. The semidirect
-bracket $[J^i, P^j] = \epsilon^{ijk} P^k$ encodes that the $P^j$'s
-transform as a vector under rotations — precisely what is needed to
-make the foliation above $SO(3)$-equivariant.
-
-**(c) Algebraic inclusion vs. space inclusion go in opposite
-directions.** This is the part that can feel counterintuitive.
-Embedding $\mathfrak{so}(3) \hookrightarrow \mathfrak{e}(3)$ gives
-*fewer* symmetries, not more, and produces a *smaller* (lower-
-dimensional) space:
-
-- $\mathfrak{so}(3)$ sees only the angular directions $\hat r$ — its
-  homogeneous quotient is $S^2$, two-dimensional.
-- $\mathfrak{e}(3) \supset \mathfrak{so}(3)$ adds the radial direction
-  via translations — its homogeneous quotient is $\mathbb{R}^3$,
-  three-dimensional.
-
-The geometric inclusion $S^2 \hookrightarrow \mathbb{R}^3$ corresponds
-to the *pair* of algebra inclusions $\mathfrak{so}(3) \subset
-\mathfrak{e}(3)$ *and* $\mathfrak{u}(1) \subset \mathfrak{so}(3)$
-(stabilizer of a point on $S^2$ as subgroup of the rotation
-stabilizer of the origin in $\mathbb{R}^3$). Together these make the
-embedding $SO(3)$-equivariant.
-
-##### 4. The slogan
-
-The general lesson is that *the same algebra can describe the
-symmetries of geometrically different objects*, and *different
-algebras can produce the same object via different routes*:
-
-- $\mathfrak{so}(3)$ produces both $S^2$ and $\mathbb{RP}^3$ — same
-  algebra, different Klein pairs, different manifolds.
-- $S^3$ arises both as $SU(2)$ (= group manifold of $\mathfrak{so}(3)$
-  with $\mathfrak{h} = 0$) and as $SO(4)/SO(3)$ (a different algebra,
-  a different $\mathfrak{h}$). Same manifold, different algebraic
-  routes.
-
-The Klein *pair* $(\mathfrak{g}, \mathfrak{h})$, not the algebra
-alone, is what determines the space. So the right comparison between
-$\mathfrak{so}(3)$ and $\mathfrak{e}(3)$ is not "same algebra,
-different spaces" — it's *different Klein pairs* whose spaces are
-geometrically nested:
-
-| Klein pair | Space | Role of $\mathfrak{so}(3)$ |
-|---|---|---|
-| $(\mathfrak{e}(3), \mathfrak{so}(3))$ | $\mathbb{R}^3$ | The stabilizer of the origin |
-| $(\mathfrak{so}(3), \mathfrak{u}(1))$ | $S^2$ | The full symmetry group |
-
-Climbing from the lower row to the upper row corresponds to embedding
-the unit sphere into Euclidean space: $S^2 \hookrightarrow
-\mathbb{R}^3$. The same generators $J^i$ play different roles —
-*symmetries* of the smaller space (on $S^2$) become *stabilizers* of
-a basepoint in the bigger space (in $\mathbb{R}^3$). This is the
-algebraic signature of "thinking of $S^2$ as the unit sphere of
-$\mathbb{R}^3$".
-
-### The 3-sphere $S^3$
-
-The algebra $\mathfrak{so}(4)$ has six generators. Writing them as
-$\{J^i, K^i\}$ ($i = 1, 2, 3$) — three "spatial" rotations and three
-"tilts" of the fourth axis toward each spatial axis — the brackets are
-
-$$
-[J^i, J^j] = \epsilon^{ijk} J^k, \qquad
-[J^i, K^j] = \epsilon^{ijk} K^k, \qquad
-[K^i, K^j] = \epsilon^{ijk} J^k.
-$$
-
-These match Poincaré except for the sign of $[K, K]$, which here is
-$+\epsilon J$ instead of $-\epsilon J$ — a positive sign, since the
-fourth axis enters with Euclidean (not Lorentzian) signature.
-
-**Klein-pair candidates.** $\mathfrak{so}(4) \cong \mathfrak{so}(3)
-\oplus \mathfrak{so}(3)$ via $L^i = \tfrac{1}{2}(J^i + K^i)$, $R^i =
-\tfrac{1}{2}(J^i - K^i)$, with $[L^i, R^j] = 0$. The natural
-subalgebras include:
-
-- $\{0\}$: $G/H$ is $SO(4)$ itself, six-dimensional.
-- The "diagonal" $\mathfrak{so}(3) = \{J^i\}$: gives $\dim G/H = 3$. This
-  is our choice — $S^3 = SO(4)/SO(3)$.
-- $\mathfrak{so}(3)_L = \{L^i\}$ or $\mathfrak{so}(3)_R = \{R^i\}$: each
-  also has $\dim G/H = 3$. These exhibit $S^3$ as the group manifold of
-  $SU(2)$ with its bi-invariant metric — the same Riemannian manifold,
-  realised via the group-manifold construction.
-- 1-dim subalgebras (e.g. a single $J^i$ or $K^i$): give 5-dim
-  homogeneous spaces, related to the Hopf fibration.
-
-For "the standard 3-sphere of points" the diagonal choice $\mathfrak{h} =
-\{J^i\}$ is the one that matches the orbit–stabilizer analysis:
-rotations among the three spatial axes fix the north pole on the
-fourth axis, while $K^1, K^2, K^3$ tilt the pole tangentially in three
-independent directions. So
-$\mathfrak{m} = \{K^1, K^2, K^3\}$ and
-
-$$
-S^3 = SO(4)/SO(3).
-$$
-
-**Reductive check.** $[\mathfrak{h}, \mathfrak{m}] = [J^i, K^j] =
-\epsilon^{ijk} K^k \in \mathfrak{m}$ ✓. And $[\mathfrak{m},
-\mathfrak{m}] = [K^i, K^j] = \epsilon^{ijk} J^k \in \mathfrak{h}$, so
-again $S^3$ is a symmetric space.
-
-**Metric derivation.** Set $g(K^i, K^j) = \eta^{ij}$, symmetric $3
-\times 3$. The Leibniz condition with $X = J^k$ is
-
-$$
-g(\epsilon^{kil} K^l, K^j) + g(K^i, \epsilon^{kjl} K^l) = 0
-\quad\Longleftrightarrow\quad
-\epsilon^{kil} \eta^{lj} + \epsilon^{kjl} \eta^{il} = 0,
-$$
-
-which is *exactly* the same equation as for $\mathbb{R}^3$ (with $K$
-playing the role of $P$). The unique solution up to scale is
-
-$$
-\boxed{\;\eta^{ij} = \delta^{ij} = \operatorname{diag}(1, 1, 1)\;}
-$$
-
-and the resulting $G$-invariant metric on $S^3$ is the round metric of
-radius $R$ (with $R^2$ proportional to $\lambda$). As in the $S^2$ case,
-this $\delta^{ij}$ is the metric in the orthonormal frame $\{K^1, K^2,
-K^3\}$ at the basepoint (and globally, by $G$-equivariance). In
-hyperspherical coordinates $(\chi, \theta, \phi)$ the same metric reads
-
-$$
-ds^2 = R^2\bigl(d\chi^2 + \sin^2\chi\,(d\theta^2 + \sin^2\theta\, d\phi^2)\bigr),
-$$
-
-with the coordinate-dependent factors $\sin^2\chi$ and $\sin^2\theta$
-arising — exactly as for $S^2$ — from the coordinate basis vectors having
-varying length, not from any change in the underlying bilinear form. The
-soldering form is $e^1 = R\,d\chi$, $e^2 = R\sin\chi\,d\theta$,
-$e^3 = R\sin\chi\sin\theta\,d\phi$, and $g = \delta_{ab}\, e^a \otimes e^b$.
-
-The bracket $[K^i, K^j] = \epsilon^{ijk} J^k$ — the one that distinguishes
-$\mathfrak{so}(4)$ from $\mathfrak{e}(3)$ — does *not* enter the metric
-derivation at all, because the right-hand side lies in $\mathfrak{h}$,
-not in $\mathfrak{m}$. It determines instead the **curvature** of the
-space: constant positive sectional curvature $1/R^2$.
-
-### Same algebra-to-metric machinery, different curvature
-
-Comparing the four cases $\mathbb{R}^2$, $\mathbb{R}^3$, $S^2$, $S^3$
-side by side, the picture is now uniform. In every case the metric on
-$\mathfrak{m}$ comes out as
-
-$$
-\eta^{ij} \;\propto\; \delta^{ij},
-$$
-
-and the only input to this derivation is the bracket $[\mathfrak{h},
-\mathfrak{m}]$ — which has the same structure ($\mathfrak{so}(n)$ acting
-on its defining $n$-dim representation) in all four cases. What
-changes from one space to another is *not* the metric formula but the
-bracket $[\mathfrak{m}, \mathfrak{m}]$:
-
-| Space | Algebra $\mathfrak{g}$ | $\mathfrak{h}$ | $\mathfrak{m}$ | $[\mathfrak{m}, \mathfrak{m}]$ | Curvature |
-|---|---|---|---|---|---|
-| $\mathbb{R}^2$ | $\mathfrak{e}(2)$ | $\{J\}$ | $\{P^1, P^2\}$ | $0$ | $0$ (flat) |
-| $\mathbb{R}^3$ | $\mathfrak{e}(3)$ | $\{J^i\}$ | $\{P^i\}$ | $0$ | $0$ (flat) |
-| $S^2$ | $\mathfrak{so}(3)$ | $\{J^3\}$ | $\{J^1, J^2\}$ | $\subset \mathfrak{h}$ | $+1/R^2$ |
-| $S^3$ | $\mathfrak{so}(4)$ | $\{J^i\}$ | $\{K^i\}$ | $\subset \mathfrak{h}$ | $+1/R^2$ |
-
-The hyperbolic space $H^n$ would appear with $\mathfrak{g} =
-\mathfrak{so}(n, 1)$ and $[\mathfrak{m}, \mathfrak{m}] \subset
-\mathfrak{h}$ with the *opposite* sign, giving constant negative
-curvature $-1/R^2$ — and Minkowski space sits in the same family with
-$\mathfrak{m}$ an abelian ideal but $\mathfrak{h} = \mathfrak{so}(3, 1)$
-instead of $\mathfrak{so}(4)$, producing the signature flip $\delta^{ij}
-\to \operatorname{diag}(-1, 1, 1, 1)$.
-
-The single algebraic distinction "$[\mathfrak{m}, \mathfrak{m}] = 0$ vs.
-$\subset \mathfrak{h}$" thus separates the *flat* model spaces
-(Minkowski, Galilean, Euclidean) from the *curved* constant-curvature
-ones (spheres, hyperbolic, de Sitter, anti-de Sitter). The metric on
-$\mathfrak{m}$, in every case, is fixed by the same Leibniz invariance
-condition.
-
----
-
-## Summary
-
-In **one** algebraic principle — that $\eta$ be invariant under the
-adjoint action of $\{J_i, K_i\}$ —
-
-$$
-g([X, P^\mu], P^\nu) + g(P^\mu, [X, P^\nu]) = 0,
-$$
-
-the spacetime metric is completely determined by the commutation relations:
-
-| Algebra | $\mathfrak{h}$ | $\mathfrak{m}$ | $[\mathfrak{m}, \mathfrak{m}]$ | Invariants on $\mathfrak{m}$ | Curvature |
-|---|---|---|---|---|---|
-| Poincaré | $\{J_i, K_i\}$ | $\{H, P^i\}$ | $0$ | $\eta^{\mu\nu} = \operatorname{diag}(-1, 1, 1, 1)$ (Minkowski) | $0$ |
-| Galilei (bare) | $\{J_i, K_i\}$ | $\{H, P^i\}$ | $0$ | $\eta = \operatorname{diag}(1, 0, 0, 0)$, $\xi = \operatorname{diag}(0, 1, 1, 1)$ (degenerate pair) | $0$ |
-| $\mathfrak{e}(2)$ | $\{J\}$ | $\{P^i\}$ | $0$ | $\eta^{ij} = \delta^{ij}$ (Euclidean) | $0$ |
-| $\mathfrak{e}(3)$ | $\{J^i\}$ | $\{P^i\}$ | $0$ | $\eta^{ij} = \delta^{ij}$ (Euclidean) | $0$ |
-| $\mathfrak{so}(3)$ | $\{J^3\}$ | $\{J^1, J^2\}$ | $\subset \mathfrak{h}$ | $\eta^{ab} = \delta^{ab}$ | $+1/R^2$ |
-| $\mathfrak{so}(4)$ | $\{J^i\}$ | $\{K^i\}$ | $\subset \mathfrak{h}$ | $\eta^{ij} = \delta^{ij}$ | $+1/R^2$ |
-
-The pattern is uniform across all rows: the Leibniz invariance condition
-on $\mathfrak{m}$, given the action $[\mathfrak{h}, \mathfrak{m}]$, fixes
-the metric uniquely (up to overall scale). The Poincaré/Galilei split
-comes from the bracket $[K, P]$ (yielding $H$ versus $0$), which controls
-the *signature* / non-degeneracy of the metric. The flat/curved split
-comes from the bracket $[\mathfrak{m}, \mathfrak{m}]$ (vanishing versus
-landing in $\mathfrak{h}$), which controls the *curvature* of the
-homogeneous space.
-
-## What the algebra determines (and what it doesn't)
-
-Looking back across the six examples, the Leibniz condition is doing
-something quite specific — and worth stating in its sharpest form.
-
-For an isotropy representation $\rho: \mathfrak{h} \to
-\mathfrak{gl}(\mathfrak{m})$, the Leibniz condition is the statement
-"find the $\rho$-invariant symmetric bilinear forms on $\mathfrak{m}$."
-This is a Schur's-lemma exercise, and the structure of the answer is
-dictated entirely by the decomposition of $\mathfrak{m}$ under $\rho$.
-
-**When $\rho$ is irreducible** — Poincaré, all $\mathfrak{e}(n)$,
-all $\mathfrak{so}(n+1)$, all $\mathfrak{so}(n, 1)$, de Sitter,
-anti-de Sitter — Schur's lemma forces the real vector space of invariant
-symmetric forms to be one-dimensional. The answer is then:
-
-- a **discrete** invariant — the *signature* of the form, fixed by which
-  real form of the isotropy algebra ($\mathfrak{so}(p, q)$ for some
-  $p + q = \dim\mathfrak{m}$) is acting;
-- plus **one** continuous degree of freedom — an overall positive scalar
-  (the unit of length squared).
-
-So in this case the entire derivation produces *the signature plus one
-scale*. The signature is forced by the algebra; the scale is free.
-
-**When $\rho$ is reducible** — Galilei, Carrollian, and other limiting
-algebras — the invariant forms decompose summand by summand. Each
-irreducible piece contributes its own independent scale, and isomorphic
-pieces can contribute additional off-diagonal mixing parameters. For
-Galilei, $\mathfrak{m}$ splits as $\mathbb{R}_H \oplus \mathbb{R}^3$
-under $SO(3)$, the two summands are non-isomorphic, and we get exactly
-the two independent forms — the temporal $\tau$ and the spatial $h$ —
-each with its own scale (the unit of time and the unit of length are
-algebraically independent in non-relativistic physics).
-
-**What is *not* derived.** The numerical values of the scales. The
-algebra cannot know whether the unit is meters or light-years; in the
-irreducible case there is nothing else free, and in the reducible case
-the freedom is exactly one positive number per irreducible summand
-(plus any off-diagonal mixing among isomorphic summands).
-
-**Scale ratios are fixed by the algebra.** In curved cases like $S^2$,
-the bracket $[J^1, J^2] = J^3$ has a definite normalisation. Once we
-pick the metric scale $\eta^{ab} = \lambda\, \delta^{ab}$, the Cartan
-structure equation forces the sectional curvature to be $1/\lambda$:
-metric and curvature scales are *not* independent. The algebra fixes
-the **ratio** of (length scale)² to (curvature scale)⁻¹; only the
-absolute scale is free.
-
-The same applies on the Lorentzian side. Poincaré has a single scale,
-so the speed of light $c$ is the *only* dimensionful constant relating
-space and time, and the algebra lets us set $c = 1$ without loss. Galilei
-has two independent scales, so $c$ has no algebraic meaning — it is
-undefined, not merely unset.
-
-**The clean statement.** The algebra determines:
-
-1. the **signature** of the metric (a discrete invariant, fixed by the
-   real form of the isotropy algebra);
-2. the **dimensional structure** — how many independent scales appear,
-   i.e., how many irreducible pieces $\mathfrak{m}$ has under $\rho$;
-3. all **relations** among metric scales and curvature scale.
-
-It does *not* determine the absolute numerical value of any scale. This
-is exactly what one would want from a derivation that starts only with
-abstract commutation relations: the algebra cannot know about units,
-but it determines everything invariant under the choice of units.
-
-## Mechanizing the algorithm
-
-By this point the same steps have been performed by hand for six
-examples: Minkowski, Galilean, $\mathbb{R}^2$, $\mathbb{R}^3$, $S^2$,
-$S^3$. The procedure is mechanical. Given a faithful matrix
-representation of $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ and
-a section $\sigma$, every step reduces to symbolic linear algebra. We
-collect the algorithm in one place here, then describe a companion
-SymPy script that runs it end-to-end.
-
-### The algorithm
-
-**Inputs.**
-
-1. A faithful matrix representation $\rho \colon \mathfrak{g} \to
-   \mathfrak{gl}(N, \mathbb{R})$ — i.e., a list of matrices $X_a$,
-   $a = 1, \dots, \dim\mathfrak{g}$, forming a basis of $\mathfrak{g}$.
-2. A partition of the basis indices into "stabilizer" indices
-   $\mathcal{H} \subset \{1, \dots, \dim\mathfrak{g}\}$ and "complement"
-   indices $\mathcal{M}$ — corresponding to the splitting
-   $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ that defines the
-   Klein pair.
-3. A coordinate chart $(x^\mu)$ on $G/H$ and a section
-   $\sigma(x^\mu) \in G$ realizing it.
-
-**Crank.**
-
-*Step 1 — Structure constants.* Compute the commutators
-$[X_a, X_b]$ in the matrix algebra, and decompose them on the basis:
-
-$$
-[X_a, X_b] = \sum_c f^c{}_{ab}\, X_c.
-$$
-
-Each decomposition is one linear system in $\dim\mathfrak{g}$ unknowns
-(the coefficients $f^c{}_{ab}$).
-
-*Step 2 — Maurer–Cartan form.* For each coordinate $x^\mu$, compute
-
-$$
-\omega_\mu \;\equiv\; \sigma^{-1}\, \partial_\mu\, \sigma
-\;=\; \sum_a \omega^a{}_\mu\, X_a,
-$$
-
-and split into $\mathfrak{m}$- and $\mathfrak{h}$-parts: the vielbein
-1-form components are $e^a{}_\mu = \omega^a{}_\mu$ for $a \in \mathcal{M}$,
-and the spin-connection components are $\omega_{\mathfrak{h}}^A{}_\mu =
-\omega^A{}_\mu$ for $A \in \mathcal{H}$.
-
-*Step 3 — Invariance equations.* For each $A \in \mathcal{H}$, build the
-$\dim\mathfrak{m} \times \dim\mathfrak{m}$ matrix
-$\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}$ from the structure constants
-(its $(a, b)$ entry, with $a, b \in \mathcal{M}$, is $f^a{}_{Ab}$).
-Solve the linear system
-
-$$
-\eta\, \mathrm{ad}_{X_A}\big|_{\mathfrak{m}}
-+ \bigl(\mathrm{ad}_{X_A}\big|_{\mathfrak{m}}\bigr)^T\, \eta \;=\; 0
-\qquad (A \in \mathcal{H})
-$$
-
-for the symmetric matrix $\eta = (\eta_{ab})_{a, b \in \mathcal{M}}$.
-The solution space is finite-dimensional (an irreducible
-$\mathfrak{h}$-rep on $\mathfrak{m}$ gives a 1-d family; reducible
-$\mathfrak{m}$ gives one scale per irreducible piece).
-
-*Step 4 — Metric in coordinates.* For any choice of $\eta$ in the
-invariant family,
-
-$$
-g_{\mu\nu}(x) \;=\; \sum_{a, b \in \mathcal{M}} \eta_{ab}\, e^a{}_\mu(x)\, e^b{}_\nu(x).
-$$
-
-*Step 5 (optional) — Curvature.* Compute the Cartan curvature 2-form
-
-$$
-\Omega^A{}_{\mu\nu}
-\;=\; \partial_\mu \omega_{\mathfrak{h}}^A{}_\nu
-- \partial_\nu \omega_{\mathfrak{h}}^A{}_\mu
-+ \sum_{B, C \in \mathcal{H}} f^A{}_{BC}\, \omega_{\mathfrak{h}}^B{}_\mu\, \omega_{\mathfrak{h}}^C{}_\nu.
-$$
-
-It vanishes iff the model space is flat (e.g. $\mathbb{R}^n$,
-Minkowski, Galilean); on $S^n$ it is proportional to the volume form
-with coefficient $1/R^2$.
-
-*Step 6 (optional) — Killing vector fields.* For $\xi = \sum_a c_a X_a
-\in \mathfrak{g}$ regarded as an infinitesimal generator on $G/H$, the
-induced vector field is
-
-$$
-Y_\xi^\mu(x) \;=\; (e^{-1})^\mu{}_a(x)\, \bigl[\mathrm{Ad}_{\sigma(x)^{-1}}\, \xi\bigr]^a_{\mathfrak{m}},
-$$
-
-where $(e^{-1})^\mu{}_a$ is the inverse vielbein and the subscript
-$\mathfrak{m}$ projects onto the $\mathcal{M}$-indices.
-
-### Inputs that must be supplied
-
-Three pieces cannot be deduced from the bare Lie algebra:
-
-- **Subalgebra $\mathfrak{h}$.** Different stabilizer choices give
-  different homogeneous spaces (Galilean spacetime vs. phase space, for
-  instance; cf. Part II).
-- **Section $\sigma$.** This selects coordinates. Different sections
-  give different charts (Cartesian vs. polar vs. spherical) — the
-  intrinsic geometry is unchanged.
-- **Scale parameters in $\eta$.** Step 3 produces a family; physical
-  units fix the numerical values.
-
-Everything else — the vielbein, the connection, the curvature, the
-Killing fields, the relations among scales — is determined by Steps
-1–6 above.
 
 ### How much freedom is there in choosing the section?
 
@@ -5057,6 +5122,35 @@ the algebra tells us in advance whether a global chart exists. The
 algorithm itself is indifferent: it produces the metric in whichever
 coordinates the section delivers.
 
+---
+
+## Mechanizing the algorithm
+
+By this point the same steps have been performed by hand for six
+examples: Minkowski, Galilean, $\mathbb{R}^2$, $\mathbb{R}^3$, $S^2$,
+$S^3$. The procedure is mechanical. Given a faithful matrix
+representation of $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$ and
+a section $\sigma$, every step reduces to symbolic linear algebra. We
+collect the algorithm in one place here, then describe a companion
+SymPy script that runs it end-to-end.
+
+### Inputs that must be supplied
+
+Three pieces cannot be deduced from the bare Lie algebra:
+
+- **Subalgebra $\mathfrak{h}$.** Different stabilizer choices give
+  different homogeneous spaces (Galilean spacetime vs. phase space, for
+  instance; cf. §'Galilei → degenerate metrics').
+- **Section $\sigma$.** This selects coordinates. Different sections
+  give different charts (Cartesian vs. polar vs. spherical) — the
+  intrinsic geometry is unchanged.
+- **Scale parameters in $\eta$.** Step 3 produces a family; physical
+  units fix the numerical values.
+
+Everything else — the vielbein, the connection, the curvature, the
+Killing fields, the relations among scales — is determined by Steps
+1–6 above.
+
 ### The SymPy implementation
 
 The script [`klein_geometry.py`](klein_geometry.py) in this repository
@@ -5118,14 +5212,6 @@ Maurer–Cartan crank, the metric falls out" — really is an algorithm.
 The Lie algebra is the input; the metric, connection, curvature, and
 isometry generators are the output. The script is a small worked
 proof that the construction mechanizes.
-
-## Comparison with [03-lie-groups.md](03-lie-groups.md)
-
-The companion document postulates the boost generators as explicit $4 \times
-4$ matrices acting on $(t, \vec x)$ and then solves $K^T B + B K = 0$ for the
-invariant metric. The present derivation does not need any matrix
-representation: the Leibniz invariance condition is applied directly to the
-commutators of the abstract algebra. The final metrics agree.
 
 ---
 
@@ -5492,6 +5578,7 @@ foundation of *spacetime itself*, on which the rest of physics is built.
 The same Cartan construction applied to the Galilei algebra yields
 **Newton–Cartan geometry**, the geometric formulation of Newtonian
 gravity, in which the degenerate temporal and spatial metrics derived in
-Part II play the role of the two background tensors. A standard reference
+§'Galilei → degenerate metrics' play the role of the two background tensors. A standard reference
 is Sharpe, *Differential Geometry: Cartan's Generalization of Klein's
 Erlangen Program*.
+
