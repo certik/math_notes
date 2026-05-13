@@ -2253,6 +2253,217 @@ illustrate the general phenomenon: **simple Lie algebras of indefinite
 signature admit multiple inequivalent "spaces of points" as Klein quotients,
 distinguished by the compactness or non-compactness of the stabilizer**.
 
+#### Worked example: point-stabilizers of the Poincaré algebra
+
+What happens when we *put translations back in* and ask the analogous
+question for the full Poincaré algebra $\mathfrak{iso}(3,1) =
+\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ (dim 10)? Now the natural
+"space of points" should be 4-dim **Minkowski spacetime** $\mathbb{R}^{3,1}$,
+just as $\mathbb{R}^3$ was for $\mathfrak{e}(3)$. The question is whether the
+point-stabilizer giving this Minkowski geometry is unique, or whether (like
+$\mathfrak{so}(3,1)$ taken alone) Poincaré admits several inequivalent
+"point-stabilizing" Klein geometries.
+
+The answer turns out to be exactly the same as for $\mathfrak{e}(3)$: the
+semidirect-product structure forces uniqueness. Minkowski is the unique
+non-degenerate 4-dim point-space. The reason is the same non-degeneracy
+filter we derived earlier.
+
+##### The non-degeneracy filter applies, unchanged
+
+The Poincaré brackets relevant for the argument are
+
+$$
+[J^i, J^j] = \epsilon^{ijk} J^k, \quad
+[J^i, K^j] = \epsilon^{ijk} K^k, \quad
+[K^i, K^j] = -\epsilon^{ijk} J^k,
+$$
+$$
+[J^i, P^j] = \epsilon^{ijk} P^k, \quad
+[J^i, P^0] = 0, \quad
+[K^i, P^0] = P^i, \quad
+[K^i, P^j] = \delta^{ij} P^0, \quad
+[P^\mu, P^\nu] = 0.
+$$
+
+Suppose $\mathfrak{h}$ contains some translation $P \in \mathfrak{t}_{3,1}$
+and the complement $\mathfrak{m}$ contains some Lorentz generator $L$ (a
+rotation or boost). Acting on $\mathfrak{m}$, the Leibniz invariance under
+$P$ reads
+
+$$
+\eta([P, L], P') + \eta(L, \underbrace{[P, P']}_{= 0}) \;=\; 0
+\qquad\Longrightarrow\qquad
+\eta\bigl([P, L], P'\bigr) = 0.
+$$
+
+But $[P, L]$ for $P \in \mathfrak{t}_{3,1}$ and $L \in \mathfrak{so}(3,1)$
+is again a non-zero translation in $\mathfrak{m}$ (the boost $L$ rotates
+$P$ into another translation direction, etc.). So as $L$ ranges over the
+Lorentz part of $\mathfrak{m}$, $[P, L]$ sweeps out the translation block
+of $\mathfrak{m}$, forcing $\eta(P^*, P') = 0$ for *all* translations $P'
+\in \mathfrak{m}$. The translation block dies — exactly as it did for
+$\mathfrak{e}(3)$.
+
+> *A non-degenerate $\mathrm{ISO}(3,1)$-invariant metric on $G/H$ requires
+> that $\mathfrak{h}$ contain no translations:* $\mathfrak{h} \subset
+> \mathfrak{so}(3,1)$.
+
+This is verified directly by SymPy: e.g., taking $\mathfrak{h} =
+\mathfrak{so}(3) \oplus \langle P^0\rangle$ (rotations + time translation,
+dim 4) and complement $\mathfrak{m} = \langle K^i, P^i \rangle$ (dim 6),
+the Leibniz equations give a degenerate $\eta$ in block form
+
+$$
+\eta \;=\; \begin{pmatrix} \alpha\,\delta_{ij} & 0 \\ 0 & 0 \end{pmatrix},
+$$
+
+i.e., the boost block has $\alpha\delta^{ij}$ but the entire spatial-
+translation block is zero. The metric on $G/H$ has rank 3, not 6.
+
+##### Among Lorentz subalgebras, only $\mathfrak{so}(3,1)$ itself has dimension 6
+
+For a 4-dim $G/H$ we need $\dim \mathfrak{h} = 6$. The non-degeneracy filter
+restricts $\mathfrak{h} \subset \mathfrak{so}(3,1)$, which is itself 6-dim.
+So $\mathfrak{h} = \mathfrak{so}(3,1)$ is the **unique** point-stabilizer
+giving a non-degenerate 4-dim spacetime:
+
+$$
+\boxed{\;\mathbb{R}^{3,1} \;\equiv\; \mathrm{Minkowski} \;=\; \mathrm{ISO}(3,1) \,/\, SO(3,1).\;}
+$$
+
+Verifying the invariance with SymPy: the Leibniz system $\eta\,\mathrm{ad}_X
++ (\mathrm{ad}_X)^T \eta = 0$ for all six $X \in \mathfrak{so}(3,1)$ acting
+on $\mathfrak{m} = \mathfrak{t}_{3,1}$ has the unique (up to scale)
+solution
+
+$$
+\eta \;=\; \alpha\,\mathrm{diag}(-1,\,+1,\,+1,\,+1),
+$$
+
+with translation block index ordering $(P^0, P^1, P^2, P^3)$. **Minkowski
+signature $(-,+,+,+)$**, exactly as expected.
+
+##### Orbit–stabilizer interpretation
+
+Concretely, fix the spacetime origin $O = (0, 0, 0, 0) \in \mathbb{R}^{3,1}$.
+The Poincaré action $(\Lambda, a) \cdot x = \Lambda x + a$ takes
+$O \mapsto a$, so the orbit of $O$ is all of $\mathbb{R}^{3,1}$ (transitive).
+The stabilizer of $O$ is
+
+$$
+\mathrm{Stab}(O) \;=\; \{(\Lambda, a) : \Lambda \cdot 0 + a = 0\}
+\;=\; \{(\Lambda, 0) : \Lambda \in SO(3,1)\}
+\;=\; SO(3,1).
+$$
+
+At the Lie algebra level: Lorentz transformations through the origin fix
+$O$ (any $J^i, K^j \in \mathfrak{so}(3,1)$ satisfies $X \cdot O = 0$), while
+translations move $O$ to $\hat e_\mu$. So $\mathfrak{h}_O = \mathfrak{so}(3,1)$
+exactly. This is the relativistic analogue of "rotations fix the origin
+of $\mathbb{R}^3$" — except now "rotations" means *Lorentz
+transformations*, which include both compact rotations and non-compact
+boosts.
+
+##### Other Klein quotients of Poincaré (lower-dim stabilizers, higher-dim spaces)
+
+Although $\mathfrak{h} = \mathfrak{so}(3,1)$ is the unique
+*point*-stabilizer, the Poincaré algebra admits many other Klein
+quotients $G/H$ corresponding to spaces of (event + extra structure). The
+key recurring fact: such an $\mathfrak{h}$ is a subalgebra of
+$\mathfrak{so}(3,1)$, hence corresponds to one of the cases we already
+enumerated for $\mathfrak{so}(3,1)$:
+
+| $\mathfrak{h} \subset \mathfrak{so}(3,1)$ | $\dim\mathfrak{h}$ | $\dim G/H$ | What is fixed in Minkowski | $G/H$ as a fiber bundle over $\mathbb{R}^{3,1}$ |
+|---|---|---|---|---|
+| $\mathfrak{so}(3,1)$ | 6 | 4 | a single event (origin) | base only: Minkowski $\mathbb{R}^{3,1}$ ★ |
+| $\mathfrak{so}(3)$ | 3 | 7 | event + future-pointing 4-velocity | $\mathbb{R}^{3,1} \times \mathbb{H}^3$ — unit timelike tangent bundle |
+| $\mathfrak{so}(2,1)$ | 3 | 7 | event + unit spacelike direction | $\mathbb{R}^{3,1} \times dS_3$ — unit spacelike tangent bundle |
+| $\mathfrak{e}(2)$ (parabolic) | 3 | 7 | event + null direction | $\mathbb{R}^{3,1} \times S^2$ — projective null-cone bundle |
+| $\langle J^3\rangle$ | 1 | 9 | event + 4-velocity + spatial axis | (point, time-axis, spatial-axis) — almost a frame |
+| $\{0\}$ | 0 | 10 | full Lorentz frame (point + 4 orthonormal vectors) | the entire Poincaré group as a frame bundle |
+
+Each row reuses one of the $\mathfrak{so}(3,1)$ point-stabilizers from the
+previous subsection — but now translated up by adding 4 translation
+directions to $\mathfrak{m}$. So Poincaré "inherits" the multiplicity from
+its Lorentz subalgebra: choosing different sub-stabilizers of $\mathfrak{so}(3,1)$
+gives different "tower" Klein geometries over Minkowski with different
+fibre geometries ($\mathbb{H}^3$, $dS_3$, $S^2$, frames). These are
+familiar from physics:
+
+- $\mathbb{R}^{3,1} \times \mathbb{H}^3$ is the **mass shell** times spacetime
+  — the phase space of a single massive particle in special relativity.
+- $\mathbb{R}^{3,1} \times S^2$ is the **bundle of light rays**; its
+  projectivization (modding out the affine null direction) is the space of
+  unoriented light rays through Minkowski, basic in optics and twistor theory.
+- $\mathbb{R}^{3,1} \times dS_3$ is the bundle of unit-spacelike vectors —
+  the configuration space of a "tachyonic" mode if one wanted such a
+  thing.
+
+So Poincaré has a *unique* "space of events" Klein quotient, but a *family*
+of richer Klein quotients indexed by what extra structure one attaches to
+each event.
+
+##### Higher-dim stabilizers (containing translations) give degenerate quotients
+
+For completeness: if $\mathfrak{h}$ contains some translations, the
+non-degeneracy filter fails. The two physically most natural examples:
+
+- $\mathfrak{h} = \langle J^i, P^i \rangle = \mathfrak{e}(3)$ (rotations +
+  spatial translations, dim 6). This is the *little group of a future-
+  pointing timelike vector* in the affine action. The Klein quotient $G/H$
+  is 4-dim, parameterized by $(K^i, P^0)$ — three boost rapidities and one
+  time offset. Geometrically, this is the space of **inertial worldlines**
+  starting at the origin, or equivalently the **Galilean limit** boundary
+  of Minkowski as $c \to \infty$. The Leibniz equations admit only a
+  degenerate metric (Galilei has *two* invariants, the temporal and spatial
+  metrics, as derived earlier in Part II).
+
+- $\mathfrak{h} = \langle J^i, K^i, P^0 \rangle$ is *not* a subalgebra
+  because $[K^i, P^0] = P^i \notin \mathfrak{h}$. There is no "stabilize a
+  spatial hyperplane $t = 0$" subalgebra of $\mathfrak{iso}(3,1)$ — boosts
+  necessarily mix time-translations with space-translations. To stabilize
+  a hyperplane one must drop the boosts, recovering Galilei.
+
+The non-existence of a "spacelike hyperplane" Klein quotient of Poincaré is
+the algebraic content of the relativity of simultaneity: there is no
+Poincaré-invariant notion of "the space at time $t$".
+
+##### Structural comparison
+
+The whole story so far is captured by a single table:
+
+| algebra $\mathfrak{g}$ | structure | # of reductive "point-stabilizers" | resulting spaces |
+|---|---|---|---|
+| $\mathfrak{e}(3)$ | semidirect: $\mathfrak{so}(3) \ltimes \mathfrak{t}_3$ | **unique**: $\mathfrak{so}(3)$ | $\mathbb{R}^3$ Euclidean only |
+| $\mathfrak{iso}(3,1)$ | semidirect: $\mathfrak{so}(3,1) \ltimes \mathfrak{t}_{3,1}$ | **unique**: $\mathfrak{so}(3,1)$ | Minkowski $\mathbb{R}^{3,1}$ only |
+| $\mathfrak{so}(2,1)$ | simple | **two**: $\mathfrak{so}(2)$, $\mathfrak{so}(1,1)$ | $\mathbb{H}^2$ Riemannian, $AdS_2$ Lorentzian |
+| $\mathfrak{so}(3,1)$ | simple | **two**: $\mathfrak{so}(3)$, $\mathfrak{so}(2,1)$ | $\mathbb{H}^3$ Riemannian, $dS_3$ Lorentzian |
+| $\mathfrak{so}(4,2)$ (conformal) | simple | **several** | compactified Minkowski, $\mathbb{R} \times S^3$, $AdS_5$, $dS_4 \times S^1$, ... |
+
+The structural punchline:
+
+> *Semidirect-product (kinematical) algebras have a **unique** point-
+> stabilizing Klein geometry — the metric is forced. Simple Lie algebras
+> have a **family** of point-stabilizing geometries — Riemannian and
+> pseudo-Riemannian constant-curvature variants of various signatures.*
+
+Physically, this matches the role of these algebras in physics:
+
+- Newtonian / Euclidean physics uses $\mathfrak{e}(3)$, which produces
+  $\mathbb{R}^3$ uniquely. No metric ambiguity.
+- Special relativity uses $\mathfrak{iso}(3,1)$, which produces Minkowski
+  uniquely. No metric ambiguity.
+- Cosmology / quantum gravity / AdS-CFT, when working with constant-
+  curvature spacetimes, use $\mathfrak{so}(p,q)$. These come in pairs
+  (Riemannian and Lorentzian for each curvature sign), and the choice of
+  point-stabilizer is part of the model.
+
+In particular, the *uniqueness* of Minkowski as the Klein quotient of the
+Poincaré algebra explains why "special relativity is special": the algebra
+has only one geometric interpretation, and the metric signature $(-,+,+,+)$
+is forced — not assumed — by the algebraic structure alone.
+
 ---
 
 ## Part IV: Spheres — $S^2$ and $S^3$
