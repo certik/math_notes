@@ -2860,7 +2860,7 @@ QFT.
 
 ##### Physical problem #1: velocity addition can give zero or negative velocity
 
-The user-flagged pathology. In Lorentz, a boost $K^1$ acts on $(t, x)$ as
+In Lorentz, a boost $K^1$ acts on $(t, x)$ as
 the Lorentz "rotation" $\sinh\phi$, $\cosh\phi$ with rapidity $\phi$. In
 the **Euclidean** case it acts as a literal **circular rotation**:
 
@@ -3717,9 +3717,9 @@ $$
 $$
 
 This is the same construction, with $t$ replacing $x^\mu$ and one
-parameter instead of $\dim(G/H)$. The angular velocity tells you "how
+parameter instead of $\dim(G/H)$. The angular velocity tells us "how
 the body is rotating at time $t$" expressed as an element of the
-rotation algebra. Likewise $\omega(x)$ tells you "how the section is
+rotation algebra. Likewise $\omega(x)$ tells us "how the section is
 varying at point $x$" expressed as a Lie-algebra element.
 
 ###### Why we need this for the metric
@@ -4009,7 +4009,7 @@ GR vielbein formalism:
   group elements rather than coordinates only. Selecting a section is
   literally choosing a parametrization.
 - **Maurer–Cartan form $\omega = \sigma^{-1} d\sigma$.** An
-  $\mathfrak{so}(3)$-valued 1-form. By construction it tells you which
+  $\mathfrak{so}(3)$-valued 1-form. By construction it tells us which
   infinitesimal rotation takes $\sigma(x)$ to $\sigma(x + dx)$.
   Splitting it via $\mathfrak{g} = \mathfrak{h} \oplus \mathfrak{m}$
   produces the vielbein $e^a$ and the spin connection
@@ -4214,7 +4214,7 @@ they are the algebra honestly reporting the geometry of the sphere:
 - Beyond $\rho = \pi$ the exponential map is no longer injective at
   all; tangent vectors of length $\rho + 2\pi$ produce the same group
   element as those of length $\rho$. The Cartesian-like chart cannot
-  be extended to all of $S^2$ no matter how cleverly you stitch it.
+  be extended to all of $S^2$ no matter how cleverly it is stitched.
 
 So no algebraic failure. The *only* failure is **topological**: $S^2$
 is compact and cannot be covered by a single $\mathbb{R}^2$-valued
@@ -4412,7 +4412,7 @@ The short answer is that the Klein construction outputs the space whose
 *symmetries* the algebra encodes. Rotations alone are not enough
 symmetry to move every point of $\mathbb{R}^3$ to every other point —
 they only move points around *within* spheres of constant radius. The
-translations $P^i$ in $\mathfrak{e}(3)$ are exactly what allows you to
+translations $P^i$ in $\mathfrak{e}(3)$ are exactly what allows us to
 jump from one sphere to another.
 
 Let us spell this out from three perspectives.
@@ -4433,7 +4433,7 @@ preserve the radial coordinate $|\vec r|$. So:
 So $\mathbb{R}^3$ is not a homogeneous space of $SO(3)$. It is
 *foliated* by $SO(3)$-orbits — spheres of varying radii (plus the
 fixed origin) — and each leaf is an $S^2$. To make $\mathbb{R}^3$
-itself homogeneous, you must enlarge the group by adding
+itself homogeneous, we must enlarge the group by adding
 transformations that *move between* the orbits. The minimal such
 enlargement is to add translations: any two points are connected by a
 unique translation. The result is the Euclidean group $E(3)$, with Lie
@@ -4736,7 +4736,7 @@ each with its own scale (the unit of time and the unit of length are
 algebraically independent in non-relativistic physics).
 
 **What is *not* derived.** The numerical values of the scales. The
-algebra cannot know whether you mean meters or light-years; in the
+algebra cannot know whether the unit is meters or light-years; in the
 irreducible case there is nothing else free, and in the reducible case
 the freedom is exactly one positive number per irreducible summand
 (plus any off-diagonal mixing among isomorphic summands).
@@ -4865,7 +4865,7 @@ $$
 where $(e^{-1})^\mu{}_a$ is the inverse vielbein and the subscript
 $\mathfrak{m}$ projects onto the $\mathcal{M}$-indices.
 
-### Inputs the user has to supply
+### Inputs that must be supplied
 
 Three pieces cannot be deduced from the bare Lie algebra:
 
@@ -4884,10 +4884,10 @@ Killing fields, the relations among scales — is determined by Steps
 
 ### How much freedom is there in choosing the section?
 
-Of the three user-supplied inputs above, the section is the one that
-is purely a matter of coordinates — what *parametrization* you use,
-not what *space* you describe. So in practice the natural follow-up
-question is: how much freedom do you have? Is there always a
+Of the three supplied inputs above, the section is the one that
+is purely a matter of coordinates — what *parametrization* is used,
+not what *space* is described. So in practice the natural follow-up
+question is: how much freedom is there? Is there always a
 Cartesian-like choice that covers the whole space, like in the polar
 $\mathbb{R}^2$ section above? For $S^2$, the spherical coordinates
 worked, but did we get lucky — or could we have predicted in advance
@@ -4895,7 +4895,7 @@ which choices would and would not give a global chart?
 
 The freedom is large, the obstructions are well-understood, and "luck"
 plays no role: the bracket $[\mathfrak{m}, \mathfrak{m}]$ in the algebra
-tells you in advance whether a global Cartesian-style section exists.
+tells us in advance whether a global Cartesian-style section exists.
 
 #### What counts as a section
 
@@ -4918,7 +4918,7 @@ In practice, two natural families show up:
   some chosen generator from either $\mathfrak{m}$ or $\mathfrak{h}$.
   Each factor exponentiates a single generator.
 
-The product form is more general: you can include $\mathfrak{h}$
+The product form is more general: we can include $\mathfrak{h}$
 -generators in the section (as we did with $J^3$ for spherical, $J$ for
 polar). This is fine — the action of an $\mathfrak{h}$-generator on
 the basepoint produces a non-trivial point in $G/H$ whenever it does
@@ -5044,16 +5044,16 @@ them.
   vanishes, and the metric in the resulting coordinates is the flat
   $\eta$-metric — exactly Cartesian. Cf. Example A.
 - If $\mathfrak{m}$ is non-abelian, use whichever local section makes
-  the symmetries of your problem manifest. The product section, with
+  the symmetries of the problem manifest. The product section, with
   $\mathfrak{h}$-generators handling angular directions, is the
   standard recipe — and it is what produces polar / spherical
   coordinates throughout this document.
-- Whatever section you choose, check $\det(e^a{}_\mu)$. Where it
+- Whatever section is chosen, check $\det(e^a{}_\mu)$. Where it
   vanishes is a coordinate singularity, not an obstruction to the
   algorithm — just switch charts there.
 
 In short, the section is a coordinate chart in the usual sense, and
-the algebra tells you in advance whether a global chart exists. The
+the algebra tells us in advance whether a global chart exists. The
 algorithm itself is indifferent: it produces the metric in whichever
 coordinates the section delivers.
 
@@ -5110,7 +5110,7 @@ A few caveats worth noting:
 - **Only (0,2)-tensors** are enumerated. The Galilean cometric
   $h^{ij} \partial_i \otimes \partial_j$, a (2,0)-tensor, is a
   separate invariant the routine does not look for.
-- **Local chart only.** The section $\sigma$ is the user's choice of
+- **Local chart only.** The section $\sigma$ is a choice of
   coordinates; output is local to the chart's domain.
 
 So the abstract narrative — "from commutators alone, by turning the
