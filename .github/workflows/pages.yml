@@ -44,6 +44,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.86.0"
           command: pages deploy _build/html --project-name=math-notes --branch=${{ steps.branch.outputs.name }}
 
       - name: Comment preview URL on PR
