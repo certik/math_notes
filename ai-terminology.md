@@ -49,8 +49,12 @@ involve a mix of them rather than a single cause:
    weights. The collision is with physics, where *quantization*
    means something entirely different.
 4. **Branding / aspiration.** Some terms (e.g. *neural network*,
-   *attention*, *intelligence*, *hallucination*) were chosen for their
-   evocative or aspirational tone, not their technical precision.
+   *intelligence*, *hallucination*) were chosen for their evocative or
+   aspirational tone, not their technical precision. Anthropomorphic
+   borrowings are not automatically bad — *attention* is a defensible
+   one, because the metaphor carries genuine explanatory content (see
+   below). The problem is anthropomorphism used purely for flavor,
+   without a corresponding operational meaning.
 
 The cost is borne by readers from adjacent fields who must
 continuously translate.
@@ -66,7 +70,7 @@ continuously translate.
 | convolution (CNN) | sliding dot product, *no* kernel flip | $(f * g)(t) = \int f(\tau)\, g(t-\tau)\, d\tau$ — *with* flip | cross-correlation | replace |
 | inference | running the trained model forward on an input | (statistics) drawing conclusions from data, usually with uncertainty quantification | evaluation, forward pass, prediction | replace |
 | neural network | layered parameterized nonlinear function | (biology) network of actual neurons | parameterized function, differentiable circuit | replace |
-| attention | softmax-weighted average of value vectors | (cognitive science) selective focus | softmax mixing, gated averaging | replace |
+| attention | softmax-weighted average of value vectors, with weights interpretable as where the model is "looking" | (cognitive science) selective focus | — | keep |
 | learning / training | numerical fitting of parameters by gradient descent | (cognitive) acquiring knowledge or skill | parameter fitting, optimization, regression | replace |
 | hallucination | model emits fluent but false content | (medicine) false perceptual experience | false generation, fabrication | replace |
 | embedding | dense vector representation of a discrete object | (algebra) injective homomorphism; (topology) injective map that is a homeomorphism onto its image | — | keep |
@@ -322,19 +326,52 @@ writing convention, use one of these in prose, with *neural network*
 parenthesized on first use. The biological framing should not be
 taken literally.
 
-### Attention → softmax-weighted average  (verdict: *replace*)
+### Attention  (verdict: *keep*)
 
 In a transformer, "attention" is
 
 $$\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V$$
 
-where $d_k$ is the key (and query) dimension; in multi-head attention
-this is generally smaller than the model dimension $d_{\text{model}}$,
-so the distinction matters. The operation is a softmax-weighted
-average of value vectors, with weights computed from a similarity
-score. The cognitive metaphor of focused attention is loose. Neutral
-descriptions: **softmax mixing**, **content-based gating**, **kernel
-smoothing with a learned kernel**.
+where $Q$, $K$, $V$ are the query, key, and value arrays and $d_k$ is
+the key (and query) dimension; in multi-head attention $d_k$ is
+generally smaller than the model dimension $d_{\text{model}}$, so the
+distinction matters. Mechanically, the operation is a
+softmax-weighted average of value vectors, with weights computed
+from a similarity score $Q K^\top$ between each query and each key.
+
+The cognitive metaphor is, for once, operationally meaningful rather
+than purely decorative. The softmax produces a probability
+distribution over keys (tokens) that typically concentrates most of
+its mass on a small number of them and suppresses the rest. For each
+query, this distribution literally is "how much weight each token
+gets" in the output — equivalent in this context to *which tokens
+the model is looking at when computing this position's update*. The
+term was introduced in Bahdanau et al. (2014) for neural machine
+translation, where the weights showed which source word the decoder
+was aligning with each target word it produced; the alignment
+behavior is what motivated the name. In multi-head attention,
+different heads learn to focus on different structural relations
+(local syntactic dependencies, long-range coreference, etc.), which
+is again well captured by the metaphor.
+
+Unlike *tensor* or *quantization*, "attention" also does not collide
+with a precise technical meaning in another field — cognitive
+"attention" is itself a loose concept, so the borrowing imports
+intuition without overwriting a sharper definition.
+
+Caveat for the physics/math reader: the model is not consciously
+focusing on anything. "Attention" here is shorthand for the
+softmax-weighted averaging operation above, and the "where it is
+looking" interpretation is a useful way to read the weights, not a
+claim about cognition. Equivalent neutral descriptions are
+**softmax mixing**, **content-based gating**, and **kernel smoothing
+with a learned kernel**; these are sometimes useful when the
+operational view is what matters.
+
+This entry illustrates the general principle: anthropomorphic
+borrowings are acceptable when the metaphor carries genuine
+operational content. They are objectionable when used purely for
+flavor (cf. *hallucination*, *intelligence*).
 
 ### Learning / training → parameter fitting  (verdict: *replace*)
 
