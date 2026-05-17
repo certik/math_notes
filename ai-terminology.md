@@ -353,11 +353,13 @@ follow. After the first use, the neutral term stands alone.
 
 Example:
 
-> # Reduced Precision (Quantization) Details
->
-> The arrays (tensors) in the MoE attention have reduced precision
-> (quantization) to mxfp4. But all other arrays have the full
-> precision bf16.
+```
+# Reduced Precision (Quantization) Details
+
+The arrays (tensors) in the MoE attention have reduced precision
+(quantization) to mxfp4. But all other arrays have the full
+precision bf16.
+```
 
 Notice that on first use both *reduced precision (quantization)* and
 *arrays (tensors)* are flagged, and from then on the neutral terms
