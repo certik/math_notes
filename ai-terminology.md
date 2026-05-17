@@ -59,6 +59,32 @@ involve a mix of them rather than a single cause:
 The cost is borne by readers from adjacent fields who must
 continuously translate.
 
+## Guiding principle
+
+The verdicts in this glossary follow one rule:
+
+1. **If an existing neutral term in mathematics, physics, statistics,
+   or signal processing exactly fits the AI concept, use that term.**
+   This covers *array* (vs. *tensor*), *reduced precision* (vs.
+   *quantization*), *cross-correlation* (vs. *convolution* in CNNs),
+   *student–teacher training* (vs. *distillation*), and others. The AI
+   vocabulary in these cases is needless reinvention; the established
+   term is clearer and respects prior work in adjacent fields.
+
+2. **If no existing term cleanly covers the scope, bending a term —
+   including an anthropomorphic one — is acceptable, provided the bend
+   is small and the term carries genuine operational content.** This
+   covers *attention*, *training*, *learning*, and *inference*. None
+   of these has a clean neutral synonym that captures the full
+   operational scope; each carries enough operational meaning to be a
+   useful descriptor; the anthropomorphism, where present, is in
+   service of communication rather than flavor.
+
+The exception is anthropomorphic borrowings that carry *no*
+operational content and are used purely for evocative effect —
+*hallucination*, *intelligence*. These remain on the *replace* list
+because the borrowing buys nothing.
+
 ## Summary table
 
 | AI term | What it means in AI | Established / physics-math meaning | Suggested neutral term | Verdict |
@@ -68,7 +94,7 @@ continuously translate.
 | quantization | reducing weight/activation precision (e.g. FP32 → INT8) | (physics) replacing classical observables with operators on Hilbert space | precision reduction, low-precision conversion, weight discretization | replace |
 | distillation | training a small "student" model to mimic a large "teacher" | (chemistry) purification by selective evaporation | student–teacher training, mimicry training | replace |
 | convolution (CNN) | sliding dot product, *no* kernel flip | $(f * g)(t) = \int f(\tau)\, g(t-\tau)\, d\tau$ — *with* flip | cross-correlation | replace |
-| inference | running the trained model forward on an input to produce a prediction | (statistics) drawing conclusions from data, **with uncertainty quantification** (posteriors, intervals, hypothesis tests) | prediction, forward pass, evaluation | replace |
+| inference | using the trained model in forward mode to produce an output from an input (a conclusion drawn from evidence, in Webster's broad sense) | (statistics) drawing conclusions from data **with calibrated uncertainty** (posteriors, intervals, hypothesis tests) | prediction, generation, forward pass — each narrower than the umbrella | keep (with caveat) |
 | learning | (loosely) the process by which a model's parameters improve with data; in practice synonymous with *training* | (cognitive) acquiring knowledge or skill | training (preferred when both work) | keep (with caveat) |
 | training | iterative fitting of model parameters from data, typically by stochastic gradient descent | (statistics / ML) same — long-established usage | — | keep |
 | neural network | layered parameterized nonlinear function | (biology) network of actual neurons | parameterized function, differentiable circuit | replace |
@@ -289,67 +315,71 @@ writing convention above, call the operation cross-correlation in
 prose, with *convolution* parenthesized on first use if the audience
 is used to the AI term.
 
-### Inference → prediction / forward pass  (verdict: *replace*)
+### Inference  (verdict: *keep with caveat*)
 
-This is one of the cleanest collisions in the glossary. In
-statistics, **inference** is the whole game: drawing conclusions
-from data, almost always with explicit uncertainty quantification
-— confidence intervals, posterior distributions, hypothesis tests,
-predictive distributions. It is not a synonym for "computing an
-output."
+Webster gives two relevant senses of *inference*:
 
-In AI, "inference" has been narrowed to mean *running the trained
-model forward on a new input* and reading off a point prediction.
-There is typically no uncertainty quantification at all. A
-statistician reading "we ran inference on 10,000 examples"
-reasonably expects posteriors or intervals and instead gets a batch
-of argmaxes.
+1. "Something inferred — a conclusion or opinion that is formed
+   because of known facts or evidence."
+2. (Statistics) "The act of passing from statistical sample data to
+   generalizations, usually with calculated degrees of certainty."
 
-A natural defense of the AI usage is that LLMs do produce
-probability distributions: each forward pass yields
-$p(\text{next token} \mid \text{context})$, and sampling at
-temperature $\tau > 0$ gives stochastic output with calculable
-probabilities. Doesn't that match Webster's "calculated degrees of
-certainty"?
+AI usage fits sense 1 broadly. The model takes an input (evidence)
+and produces an output (a conclusion drawn from that evidence). An
+image classifier infers a class from a picture; an LLM infers an
+answer from a prompt; a speech recognizer infers a transcript from
+audio. For frontier reasoning LLMs the fit is closer still — the
+model passes from premises through intermediate steps to a
+conclusion, matching Webster's sense 2a as well. Whether the model
+is *really* reasoning in the cognitive sense is contested, but as a
+descriptive shorthand for "producing a well-formed output from an
+input," the term is apt. This is the same principle that justifies
+*attention* and *training*: anthropomorphic borrowing is fine when
+the metaphor fits operationally.
 
-Two reasons it doesn't. **First**, the distribution is over
-*outputs* (which token to emit), not over *unknowns* (parameters,
-latent variables, hypotheses). Statistical inference produces
-$p(\theta \mid \text{data})$ — a posterior over an unknown.
-The LLM forward pass produces $p(y \mid x, \theta)$ with $\theta$
-fixed — a predictive likelihood. These are structurally different
-objects; the LLM has no posterior over anything. **Second**, the
-same term is used for $\tau = 0$ greedy decoding, which is a fully
-deterministic function of the input, indistinguishable in nature
-from a CNN classifier's argmax. A genuinely probabilistic-prediction
-term would have to exclude this case; "inference" doesn't, because
-in practice it just means *run the model forward*.
+The caveat is the collision with sense 2b. Statistical inference
+specifically means computing posteriors or interval estimates *with
+calibrated uncertainty*. AI "inference" does not, in general, do
+this. A forward pass through a feedforward classifier is
+deterministic; greedy LLM decoding ($\tau = 0$) is deterministic;
+even temperature-sampled LLM output gives a distribution over
+*outputs* ($p(y \mid x, \theta)$), not over *unknowns*
+($p(\theta \mid \text{data})$). A statistician reading "we ran
+inference on 10,000 examples" will reach for posteriors and
+intervals and find a batch of argmaxes. When writing for a
+statistical audience, or any context where the distinction matters,
+qualify the term or use a more specific one — **prediction** for
+classification/regression output, **generation** for LLMs and
+diffusion, **forward pass** for the computational step,
+**evaluation** for the deployment phase.
 
-There is a smaller historical wrinkle worth noting: the term was
-originally used correctly in two earlier ML lineages. In symbolic
-AI / expert systems, the *inference engine* of a rule-based system
-genuinely did Webster's sense 2a — applying inference rules to
-derive new propositions from a knowledge base. In probabilistic /
-Bayesian ML, *variational inference*, *MCMC inference*, and
-*posterior inference* in graphical models, HMMs, and VAEs all
-correctly compute $p(\text{latents} \mid \text{observations})$ with
-full uncertainty quantification. The modern AI usage is a
-degenerate generalization of the Bayesian one: the deep learning
-community extended "inference" from "computing a posterior" to
-"running any forward pass," stripping out the very thing that made
-the original usage correct.
+**Why this is *keep* rather than *replace*.** None of the
+case-specific alternatives covers the full scope of the AI usage.
+*Forward pass* is an implementation detail. *Prediction* breaks down
+for generative models (you don't "predict" a poem or a translation).
+*Generation* doesn't cover discriminative tasks. *Evaluation* is
+overloaded with "test-set evaluation." The AI usage organizes the
+model lifecycle cleanly into *training* (parameters change) vs.
+*inference* (parameters fixed, model is used), and no neutral
+umbrella term has caught on. Industry has already standardized on it
+— "inference cost," "inference latency," "inference server" — and
+there is nothing to gain by replacing it with a phrase. Following
+the guiding principle: when no existing term exactly fits, bending
+one a little is acceptable.
 
-The neutral alternatives here lose nothing and gain precision:
-
-- **prediction** — what the operation actually produces.
-- **forward pass** — what it actually computes.
-- **evaluation** — when it happens (at deployment, or on a test
-  set).
-
-Unlike *training* (where the neutral synonym *parameter fitting*
-loses some procedural flavor), nothing is lost by switching. Use
-one of these in prose, with *inference* parenthesized on first use
-if the audience expects the AI term.
+There is also a historical wrinkle worth noting. The term has two
+legitimate AI ancestries. In symbolic AI / expert systems, the
+*inference engine* of a rule-based system did Webster's sense 2a —
+applying inference rules to derive new propositions from a knowledge
+base. In probabilistic / Bayesian ML, *variational inference*,
+*MCMC inference*, and *posterior inference* in graphical models,
+HMMs, and VAEs correctly compute $p(\text{latents} \mid
+\text{observations})$ with full uncertainty quantification. The
+modern deep-learning usage is a generalization of the Bayesian one,
+broadened from "computing a posterior" to "running any forward
+pass." The generalization is loose, and a statistician should know
+the modern usage drops the uncertainty quantification — but the
+broader Webster-sense-1 reading carries the term comfortably.
 
 ### Hallucination → false generation / fabrication  (verdict: *replace*)
 
@@ -498,8 +528,8 @@ When writing strictly for an audience that already shares the
 established (physics / math / statistics / medicine) meanings —
 for example, a physics paper that happens to touch on ML — the
 parenthetical AI term can be dropped entirely. Reserve *tensor*,
-*quantization*, *inference*, *convolution*, and *hallucination*
-for their original meanings in those contexts.
+*quantization*, *convolution*, and *hallucination* for their
+original meanings in those contexts.
 
 ## Open questions / things still to refine
 
