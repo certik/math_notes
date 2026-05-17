@@ -1,10 +1,17 @@
-# Build html
+# Math Notes
+
+Temporary notes in mystmd that will eventually go into
+[TPR](https://theoretical-physics.com).
+
+Web version: https://math-notes-e2r.pages.dev/
+
+## Build and serve html
 
 ```
 pixi r start
 ```
 
-# Build pdf
+## Build pdf
 
 Using TeX:
 ```
