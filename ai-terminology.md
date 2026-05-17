@@ -305,17 +305,51 @@ statistician reading "we ran inference on 10,000 examples"
 reasonably expects posteriors or intervals and instead gets a batch
 of argmaxes.
 
-Unlike *training* (where the neutral synonym *parameter fitting*
-loses some procedural flavor), the neutral alternatives here lose
-nothing and gain precision:
+A natural defense of the AI usage is that LLMs do produce
+probability distributions: each forward pass yields
+$p(\text{next token} \mid \text{context})$, and sampling at
+temperature $\tau > 0$ gives stochastic output with calculable
+probabilities. Doesn't that match Webster's "calculated degrees of
+certainty"?
+
+Two reasons it doesn't. **First**, the distribution is over
+*outputs* (which token to emit), not over *unknowns* (parameters,
+latent variables, hypotheses). Statistical inference produces
+$p(\theta \mid \text{data})$ — a posterior over an unknown.
+The LLM forward pass produces $p(y \mid x, \theta)$ with $\theta$
+fixed — a predictive likelihood. These are structurally different
+objects; the LLM has no posterior over anything. **Second**, the
+same term is used for $\tau = 0$ greedy decoding, which is a fully
+deterministic function of the input, indistinguishable in nature
+from a CNN classifier's argmax. A genuinely probabilistic-prediction
+term would have to exclude this case; "inference" doesn't, because
+in practice it just means *run the model forward*.
+
+There is a smaller historical wrinkle worth noting: the term was
+originally used correctly in two earlier ML lineages. In symbolic
+AI / expert systems, the *inference engine* of a rule-based system
+genuinely did Webster's sense 2a — applying inference rules to
+derive new propositions from a knowledge base. In probabilistic /
+Bayesian ML, *variational inference*, *MCMC inference*, and
+*posterior inference* in graphical models, HMMs, and VAEs all
+correctly compute $p(\text{latents} \mid \text{observations})$ with
+full uncertainty quantification. The modern AI usage is a
+degenerate generalization of the Bayesian one: the deep learning
+community extended "inference" from "computing a posterior" to
+"running any forward pass," stripping out the very thing that made
+the original usage correct.
+
+The neutral alternatives here lose nothing and gain precision:
 
 - **prediction** — what the operation actually produces.
 - **forward pass** — what it actually computes.
 - **evaluation** — when it happens (at deployment, or on a test
   set).
 
-Use one of these in prose, with *inference* parenthesized on first
-use if the audience expects the AI term.
+Unlike *training* (where the neutral synonym *parameter fitting*
+loses some procedural flavor), nothing is lost by switching. Use
+one of these in prose, with *inference* parenthesized on first use
+if the audience expects the AI term.
 
 ### Hallucination → false generation / fabrication  (verdict: *replace*)
 
