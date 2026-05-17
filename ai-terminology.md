@@ -63,7 +63,7 @@ continuously translate.
 | tensor product, tensor contraction (the operations) | operations on tensors that preserve the tensor property; also applicable to plain arrays | same | — (correctly named) | keep |
 | quantization | reducing weight/activation precision (e.g. FP32 → INT8) | (physics) replacing classical observables with operators on Hilbert space | precision reduction, low-precision conversion, weight discretization | replace |
 | distillation | training a small "student" model to mimic a large "teacher" | (chemistry) purification by selective evaporation | student–teacher training, mimicry training | replace |
-| convolution (CNN) | sliding dot product, *no* kernel flip | (f ∗ g)(t) = ∫ f(τ) g(t−τ) dτ — *with* flip | cross-correlation | replace |
+| convolution (CNN) | sliding dot product, *no* kernel flip | $(f * g)(t) = \int f(\tau)\, g(t-\tau)\, d\tau$ — *with* flip | cross-correlation | replace |
 | inference | running the trained model forward on an input | (statistics) drawing conclusions from data, usually with uncertainty quantification | evaluation, forward pass, prediction | replace |
 | neural network | layered parameterized nonlinear function | (biology) network of actual neurons | parameterized function, differentiable circuit | replace |
 | attention | softmax-weighted average of value vectors | (cognitive science) selective focus | softmax mixing, gated averaging | replace |
@@ -71,7 +71,7 @@ continuously translate.
 | hallucination | model emits fluent but false content | (medicine) false perceptual experience | false generation, fabrication | replace |
 | embedding | dense vector representation of a discrete object | (algebra) injective homomorphism; (topology) injective map that is a homeomorphism onto its image | — | keep |
 | regularization | adding penalty terms to discourage overfitting | (inverse problems) adding terms to stabilize ill-posed problems | — | keep |
-| gradient descent | iterative update along −∇L | same | — | keep |
+| gradient descent | iterative update along $-\nabla L$ | same | — | keep |
 | backpropagation | reverse-mode automatic differentiation through the model | reverse-mode AD | — | keep |
 
 ## Notable entries
@@ -93,56 +93,58 @@ inherited and entrenched the convention rather than introducing it.
 A **tensor** is a single, basis-independent object. In general it is
 an element of a tensor product space
 
-  W₁ ⊗ ⋯ ⊗ Wₙ
+$$W_1 \otimes \cdots \otimes W_n$$
 
-where each Wᵢ is a vector space or its dual. Equivalently (in finite
-dimensions), it is a multilinear map on the duals of the Wᵢ. In the
-common physics setting where all factors are taken from a single
-vector space V, with p copies of V and q copies of V*, this is
-called a **(p, q)-tensor** on V:
+where each $W_i$ is a vector space or its dual. Equivalently (in
+finite dimensions), it is a multilinear map on the duals of the
+$W_i$. In the common physics setting where all factors are taken from
+a single vector space $V$, with $p$ copies of $V$ and $q$ copies of
+$V^*$, this is called a **$(p, q)$-tensor** on $V$:
 
-  V ⊗ ⋯ ⊗ V ⊗ V* ⊗ ⋯ ⊗ V*    (p copies of V, q copies of V*).
+$$V \otimes \cdots \otimes V \otimes V^* \otimes \cdots \otimes V^* \qquad (p \text{ copies of } V,\ q \text{ copies of } V^*).$$
 
 The "components with transformation law" view used in physics is the
 same object presented in a chosen basis — not a separate definition.
 
-Concretely: once a basis is chosen for V (and the corresponding dual
-basis for V*), a (p, q)-tensor
+Concretely: once a basis is chosen for $V$ (and the corresponding
+dual basis for $V^*$), a $(p, q)$-tensor
 
-  T = Σ T^{i₁…i_p}_{j₁…j_q} (e_{i₁} ⊗ ⋯ ⊗ e_{i_p} ⊗ e^{j₁} ⊗ ⋯ ⊗ e^{j_q})
+$$T = \sum T^{i_1 \cdots i_p}{}_{j_1 \cdots j_q}\, e_{i_1} \otimes \cdots \otimes e_{i_p} \otimes e^{j_1} \otimes \cdots \otimes e^{j_q}$$
 
-is represented by the array of components T^{i₁…i_p}_{j₁…j_q}. Change
-the basis, and the same tensor is represented by a different array,
-related to the first by the transformation law. The tensor is the
-basis-independent object; the array is its coordinate representation.
+is represented by the array of components
+$T^{i_1 \cdots i_p}{}_{j_1 \cdots j_q}$. Change the basis, and the
+same tensor is represented by a different array, related to the
+first by the transformation law. The tensor is the basis-independent
+object; the array is its coordinate representation.
 
 #### Tensor fields and manifolds
 
 In physics, the word "tensor" almost always refers to a **tensor
 field**: a tensor attached to each point of a manifold (e.g. the
-metric gₘᵥ(x) on spacetime, the stress tensor σᵢⱼ(x) in continuum
-mechanics). Change of basis in this setting is induced by change of
-coordinates on the manifold.
+metric $g_{\mu\nu}(x)$ on spacetime, the stress tensor
+$\sigma_{ij}(x)$ in continuum mechanics). Change of basis in this
+setting is induced by change of coordinates on the manifold.
 
 A tensor *field* requires a manifold; a *tensor* by itself does not.
 A single vector space supports tensors and change of basis without
 any manifold structure. For example, the inertia tensor of a rigid
-body is most naturally a single (0, 2)-tensor on ℝ³ — a symmetric
-bilinear form on the angular-velocity space, with rotational kinetic
-energy ½ I(ω, ω) — and transforms under SO(3) without need for any
-manifold beyond the underlying vector space. In Euclidean ℝ³ with the
-standard metric one routinely identifies V with V* and so views I
-equivalently as a (1, 1)-tensor (a linear map V → V), under which it
-sends the angular-velocity vector ω to the angular-momentum vector
-L = I ω. In physics practice the manifold is almost always present
-anyway, so for a physicist "tensor" and "tensor field" are nearly
-synonymous.
+body is most naturally a single $(0, 2)$-tensor on $\mathbb{R}^3$ —
+a symmetric bilinear form on the angular-velocity space, with
+rotational kinetic energy $\tfrac{1}{2}\, I(\omega, \omega)$ — and
+transforms under $\mathrm{SO}(3)$ without need for any manifold
+beyond the underlying vector space. In Euclidean $\mathbb{R}^3$ with
+the standard metric one routinely identifies $V$ with $V^*$ and so
+views $I$ equivalently as a $(1, 1)$-tensor (a linear map $V \to V$),
+under which it sends the angular-velocity vector $\omega$ to the
+angular-momentum vector $L = I \omega$. In physics practice the
+manifold is almost always present anyway, so for a physicist
+"tensor" and "tensor field" are nearly synonymous.
 
 #### Why AI "tensors" are not tensors
 
 Calling AI arrays "tensors" fails on every part of the definition:
 
-- **No tensor product space.** There is no V₁ ⊗ ⋯ ⊗ Vₙ behind the
+- **No tensor product space.** There is no $V_1 \otimes \cdots \otimes V_n$ behind the
   array. The axes are labels (token, channel, head), not factors of
   a tensor product.
 - **No change of basis.** No other basis is ever considered, so no
@@ -162,10 +164,10 @@ honest name is **array** (or **n-d array** / **ndarray**, as NumPy
 calls it).
 
 A small exception: in **equivariant neural networks** and
-**geometric deep learning** (SO(3)/SE(3)-equivariant models, gauge-
-equivariant lattice models, etc.), genuine tensor structure is
-explicit and transformation laws under group actions are central.
-In those areas the word *tensor* is used correctly.
+**geometric deep learning** ($\mathrm{SO}(3)$/$\mathrm{SE}(3)$-equivariant
+models, gauge-equivariant lattice models, etc.), genuine tensor
+structure is explicit and transformation laws under group actions
+are central. In those areas the word *tensor* is used correctly.
 
 #### A note on tensor *operations*
 
@@ -181,25 +183,25 @@ are correctly named.
   makes them tensor operations.
 - The same operations can also be applied to plain arrays. The outer
   (tensor) product of arrays preserves their full multi-index
-  structure: combining shapes (m, n) and (p, q) gives an array of
-  shape (m, n, p, q) — in NumPy this is `np.tensordot(a, b, axes=0)`
+  structure: combining shapes $(m, n)$ and $(p, q)$ gives an array of
+  shape $(m, n, p, q)$ — in NumPy this is `np.tensordot(a, b, axes=0)`
   or `np.einsum('ij,kl->ijkl', a, b)`. This is *not* the same as the
   **Kronecker product** `np.kron`, which is a related but distinct
-  operation that flattens the result to shape (m·p, n·q); the
-  Kronecker product is one way to *represent* a tensor product as a
+  operation that flattens the result to shape $(m \cdot p,\ n \cdot q)$;
+  the Kronecker product is one way to *represent* a tensor product as a
   matrix, not the tensor product itself. Likewise, **contraction**
   over a chosen pair of indices is a specific operation that, in a
-  (p, q)-tensor, pairs one upper index against one lower index to
-  yield a (p−1, q−1)-tensor; it is conveniently *written* using the
+  $(p, q)$-tensor, pairs one upper index against one lower index to
+  yield a $(p-1, q-1)$-tensor; it is conveniently *written* using the
   Einstein summation **convention** (the notational shorthand in
   which repeated upper/lower indices are implicitly summed), but it
   is not identical to that convention — the broader index notation in
   which Einstein summation lives also expresses operations like
-  **outer products** (a^i b^j = T^{ij}) and **index permutations**
-  (T^{ij} ↦ T^{ji}), which involve no repeated index and hence no
-  contraction. (Conversely, traces and matrix multiplications *are*
-  contractions, written using Einstein summation on the repeated
-  index.)
+  **outer products** ($a^i b^j = T^{ij}$) and **index permutations**
+  ($T^{ij} \mapsto T^{ji}$), which involve no repeated index and
+  hence no contraction. (Conversely, traces and matrix multiplications
+  *are* contractions, written using Einstein summation on the
+  repeated index.)
   When the inputs are not tensors, the outputs of these operations
   are just arrays, with no transformation guarantee. The *operation*
   is still the tensor operation; what is lost is only the tensor
@@ -215,10 +217,11 @@ the *objects*. The misuse is at the level of the noun, not the verbs.
 In physics, **quantization** is the construction of a quantum theory
 from a classical one — for example, replacing Poisson brackets with
 commutators (canonical quantization), or computing the functional
-integral ∫ 𝒟φ exp(iS[φ]/ℏ) over field configurations (path-integral
-quantization; "sum over histories" is Feynman's heuristic phrasing
-for what is technically a continuous functional integral, not a
-sum). This is a deep conceptual change of mathematical framework.
+integral $\int \mathcal{D}\varphi\, \exp(i S[\varphi]/\hbar)$ over
+field configurations (path-integral quantization; "sum over
+histories" is Feynman's heuristic phrasing for what is technically a
+continuous functional integral, not a sum). This is a deep
+conceptual change of mathematical framework.
 
 In AI, "quantization" means converting weights and/or activations from
 FP32 to a lower-precision format (FP16, BF16, INT8, INT4, …).
@@ -263,22 +266,23 @@ the result, not the procedure.
 
 The operation in a convolutional layer is
 
-    y[i] = Σ_k  x[i + k] · w[k]
+$$y[i] = \sum_k x[i + k]\, w[k]$$
 
 with **no** flip of the kernel. The mathematical convolution is
 
-    (x ∗ w)[i] = Σ_k  x[i − k] · w[k]
+$$(x * w)[i] = \sum_k x[i - k]\, w[k]$$
 
 with the flip. The two coincide only when the kernel is symmetric.
 
 The CNN operation is a form of **cross-correlation**: the
-signal-processing definition is (x ⋆ w)[i] = Σ_k x[k] · w[k + i]
-(with a complex conjugate on x in the complex case), which differs
-from the CNN formula only by which operand is shifted and by the
-sign of the lag. The substantive point is the same — no kernel
-flip — so following the writing convention above, call the operation
-cross-correlation in prose, with *convolution* parenthesized on first
-use if the audience is used to the AI term.
+signal-processing definition is
+$(x \star w)[i] = \sum_k x[k]\, w[k + i]$ (with a complex conjugate
+on $x$ in the complex case), which differs from the CNN formula only
+by which operand is shifted and by the sign of the lag. The
+substantive point is the same — no kernel flip — so following the
+writing convention above, call the operation cross-correlation in
+prose, with *convolution* parenthesized on first use if the audience
+is used to the AI term.
 
 ### Inference → evaluation / forward pass  (verdict: *replace*)
 
@@ -322,13 +326,13 @@ taken literally.
 
 In a transformer, "attention" is
 
-    Attention(Q, K, V) = softmax(QKᵀ / √d_k) · V
+$$\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V$$
 
-where d_k is the key (and query) dimension; in multi-head attention
-this is generally smaller than the model dimension d_model, so the
-distinction matters. The operation is a softmax-weighted average of
-value vectors, with weights computed from a similarity score. The
-cognitive metaphor of focused attention is loose. Neutral
+where $d_k$ is the key (and query) dimension; in multi-head attention
+this is generally smaller than the model dimension $d_{\text{model}}$,
+so the distinction matters. The operation is a softmax-weighted
+average of value vectors, with weights computed from a similarity
+score. The cognitive metaphor of focused attention is loose. Neutral
 descriptions: **softmax mixing**, **content-based gating**, **kernel
 smoothing with a learned kernel**.
 
