@@ -68,10 +68,11 @@ continuously translate.
 | quantization | reducing weight/activation precision (e.g. FP32 → INT8) | (physics) replacing classical observables with operators on Hilbert space | precision reduction, low-precision conversion, weight discretization | replace |
 | distillation | training a small "student" model to mimic a large "teacher" | (chemistry) purification by selective evaporation | student–teacher training, mimicry training | replace |
 | convolution (CNN) | sliding dot product, *no* kernel flip | $(f * g)(t) = \int f(\tau)\, g(t-\tau)\, d\tau$ — *with* flip | cross-correlation | replace |
-| inference | running the trained model forward on an input | (statistics) drawing conclusions from data, usually with uncertainty quantification | evaluation, forward pass, prediction | replace |
+| inference | running the trained model forward on an input to produce a prediction | (statistics) drawing conclusions from data, **with uncertainty quantification** (posteriors, intervals, hypothesis tests) | prediction, forward pass, evaluation | replace |
+| learning | (loosely) the process by which a model's parameters improve with data; in practice synonymous with *training* | (cognitive) acquiring knowledge or skill | training (preferred when both work) | keep (with caveat) |
+| training | iterative fitting of model parameters from data, typically by stochastic gradient descent | (statistics / ML) same — long-established usage | — | keep |
 | neural network | layered parameterized nonlinear function | (biology) network of actual neurons | parameterized function, differentiable circuit | replace |
 | attention | softmax-weighted average of value vectors, with weights interpretable as where the model is "looking" | (cognitive science) selective focus | — | keep |
-| learning / training | numerical fitting of parameters by gradient descent | (cognitive) acquiring knowledge or skill | parameter fitting, optimization, regression | replace |
 | hallucination | model emits fluent but false content | (medicine) false perceptual experience | false generation, fabrication | replace |
 | embedding | dense vector representation of a discrete object | (algebra) injective homomorphism; (topology) injective map that is a homeomorphism onto its image | — | keep |
 | regularization | adding penalty terms to discourage overfitting | (inverse problems) adding terms to stabilize ill-posed problems | — | keep |
@@ -288,15 +289,33 @@ writing convention above, call the operation cross-correlation in
 prose, with *convolution* parenthesized on first use if the audience
 is used to the AI term.
 
-### Inference → evaluation / forward pass  (verdict: *replace*)
+### Inference → prediction / forward pass  (verdict: *replace*)
 
-In statistics, **inference** means drawing conclusions from data —
-usually with uncertainty quantification (confidence intervals,
-posterior distributions, hypothesis tests). In AI, "inference" just
-means running the trained model forward on a new input.
+This is one of the cleanest collisions in the glossary. In
+statistics, **inference** is the whole game: drawing conclusions
+from data, almost always with explicit uncertainty quantification
+— confidence intervals, posterior distributions, hypothesis tests,
+predictive distributions. It is not a synonym for "computing an
+output."
 
-The neutral terms are **evaluation**, **forward pass**, or
-**prediction**.
+In AI, "inference" has been narrowed to mean *running the trained
+model forward on a new input* and reading off a point prediction.
+There is typically no uncertainty quantification at all. A
+statistician reading "we ran inference on 10,000 examples"
+reasonably expects posteriors or intervals and instead gets a batch
+of argmaxes.
+
+Unlike *training* (where the neutral synonym *parameter fitting*
+loses some procedural flavor), the neutral alternatives here lose
+nothing and gain precision:
+
+- **prediction** — what the operation actually produces.
+- **forward pass** — what it actually computes.
+- **evaluation** — when it happens (at deployment, or on a test
+  set).
+
+Use one of these in prose, with *inference* parenthesized on first
+use if the audience expects the AI term.
 
 ### Hallucination → false generation / fabrication  (verdict: *replace*)
 
@@ -373,13 +392,41 @@ borrowings are acceptable when the metaphor carries genuine
 operational content. They are objectionable when used purely for
 flavor (cf. *hallucination*, *intelligence*).
 
-### Learning / training → parameter fitting  (verdict: *replace*)
+### Training and learning  (verdict: *keep* / *keep with caveat*)
 
-Training a model is numerical fitting of parameters by minimization
-of a loss function, usually via stochastic gradient descent. It is a
-form of **nonlinear regression** / **parameter estimation**. The word
-"learning" imports unwarranted cognitive content; "training" is more
-mechanical and is the better of the two AI terms.
+**Training** is the iterative procedure that fits a model's
+parameters to data, typically by stochastic gradient descent on a
+loss function. The term predates deep learning by decades in
+statistics and classical ML: *training set*, *training error*,
+*supervised training* were all standard usage well before backprop.
+There is no collision with another field's precise meaning — a
+statistician will read "train the model" exactly as intended.
+*Training* also carries operational content that pure synonyms like
+*parameter fitting* lose: the iteration, the data dependence, the
+notion of a training loop with a held-out test set. Use it freely.
+
+**Learning** is more anthropomorphic but, like *attention*, has an
+operational core: the parameters change in response to data in a way
+that reduces loss, which fits Mitchell's classical definition
+(improvement in performance on a task with experience). Compound
+terms — *machine learning*, *supervised/unsupervised learning*,
+*learning rate*, *learning curve*, *deep learning* — are entrenched
+technical vocabulary and should be used as-is; trying to replace
+*machine learning* with *machine parameter fitting* is a non-starter.
+
+Caveats for *learning*:
+
+- It imports more cognitive flavor than *training*. The model is not
+  acquiring knowledge in any cognitive sense; it is fitting
+  parameters.
+- When *training* and *learning* are both available as a verb
+  ("the model was trained" vs. "the model learned"), prefer
+  *trained* — it is the more mechanical and accurate description.
+
+In short: *training* is fine, *learning* is fine in established
+compounds, and **nonlinear regression** / **parameter estimation**
+remain useful framings for a physics/math audience that wants the
+underlying operation made explicit.
 
 ## How to use this in writing
 
@@ -417,8 +464,8 @@ When writing strictly for an audience that already shares the
 established (physics / math / statistics / medicine) meanings —
 for example, a physics paper that happens to touch on ML — the
 parenthetical AI term can be dropped entirely. Reserve *tensor*,
-*quantization*, *inference*, *convolution*, *hallucination*, and
-*learning* for their original meanings in those contexts.
+*quantization*, *inference*, *convolution*, and *hallucination*
+for their original meanings in those contexts.
 
 ## Open questions / things still to refine
 
