@@ -161,7 +161,7 @@ At the same time, by homogeneity $f(\lambda D) = \lambda^{n} f(D)$. Since $f(D) 
 $$g(\lambda)^{n} = \lambda^{n}.$$
 
 - For **odd** $n$, the map $x \mapsto x^n$ is injective on $R$, so $g(\lambda) = \lambda$.
-- For **even** $n$, this gives $g(\lambda) = \pm\lambda$ pointwise. Writing $g(\lambda) = \lambda\,s(\lambda)$ with $s(\lambda) = \pm 1$, the homomorphism property forces $s(\lambda\mu) = s(\lambda)s(\mu)$, i.e. $s$ is a (regular) homomorphism $R^* \to \{\pm 1\}$. The only such homomorphisms are $s \equiv 1$ and $s = \operatorname{sign}$, giving $g(\lambda) = \lambda$ or $g(\lambda) = |\lambda|$.
+- For **even** $n$, this gives $g(\lambda) = \pm\lambda$ pointwise. Writing $g(\lambda) = \lambda\,s(\lambda)$ with $s(\lambda) = \pm 1$, the homomorphism property forces $s(\lambda\mu) = s(\lambda)s(\mu)$, i.e. $s$ is a homomorphism $R^* \to \{\pm 1\}$. There are exactly two of these — $s \equiv 1$ and $s = \operatorname{sign}$ — and *no regularity hypothesis is needed* to see this: $R_{>0}$ is divisible (every positive real is a square), so any homomorphism $R_{>0} \to \{\pm 1\}$ is trivial; hence $s$ is determined by $s(-1) \in \{\pm 1\}$. This gives $g(\lambda) = \lambda$ or $g(\lambda) = |\lambda|$.
 
 Hence $f(D) = \prod_i d_i$ or $f(D) = |\prod_i d_i|$.
 
@@ -242,7 +242,9 @@ If one additionally requires $g$ to be **holomorphic**, then $c = k$ and $g(z) =
 
 *Proof.* By (iii) (or, elementarily, by (i) together with Theorem 2), $f = g \circ \det$ for some homomorphism $g : C^* \rightarrow C^*$. Homogeneity gives $g(\lambda^n) = g(\det(\lambda I)) = f(\lambda I) = \lambda^n$ for all $\lambda \in C^*$. Since $\lambda \mapsto \lambda^n$ is surjective onto $C^*$, every $w \in C^*$ is of the form $\lambda^n$, so $g(w) = w$ for all $w$, i.e. $g = \mathrm{id}$ and $f = \det$. No reflection normalization is needed.
 
-Note this argument is purely algebraic: it uses neither the classification (ii) nor any regularity (continuity / measurability) hypothesis on $g$. Over $C$ the determinant is thus the unique homogeneous homomorphism even among *abstract* group homomorphisms — a sharper contrast with the real case, where regularity is still required (Theorem 1) and the even-$n$ ambiguity persists. $\qquad\Box$
+Note this argument is purely algebraic: it uses neither the classification (ii) nor any regularity (continuity / measurability) hypothesis on $g$. The same is in fact true over $R$ — the *homogeneous* characterization never needs regularity, because homogeneity already pins $g$ to the identity on the $n$-th powers $(K^*)^n$: for any $w$ admitting an $n$-th root $\lambda = w^{1/n}$ one has $g(w) = g(\lambda^n) = \lambda^n = w$, with no appeal to regularity. (Regularity enters only in Theorem 1, which classifies the *non*-homogeneous homomorphisms, where $g$ on $R_{>0}$ would otherwise range over a wild Hamel-basis family.)
+
+The genuine $C$-versus-$R$ difference is therefore **not** regularity but whether $\lambda \mapsto \lambda^n$ is surjective, i.e. whether $K^*/(K^*)^n$ is trivial. Over $C$ every $w$ — including $-1 = i^2$ — has an $n$-th root, so $g(w) = w$ is forced **everywhere** and the determinant is unique even among abstract homomorphisms. Over $R$ with even $n$, the value $-1$ has no real $n$-th root, so $g(-1) = \pm 1$ escapes the homogeneity constraint; that single escaped sign is exactly the $\det$-versus-$|\det|$ ambiguity, removed by the reflection condition of Section 5. $\qquad\Box$
 
 ---
 
