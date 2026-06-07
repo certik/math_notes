@@ -202,9 +202,72 @@ where $D$ is any diagonal form obtained in (AD).
 
 ---
 
-## Open questions
+## 6. Passing from $R^*$ to $C^*$
 
-It still remains to check that $R^*$ can be replaced by $C^*$, and then (by some continuity argument?) to extend the definition to singular matrices as well.
+We now redo the construction with complex matrices $GL(n,C)$ and codomain $C^*$. The pleasant surprise is that the theory becomes **simpler**: the even/odd dichotomy and the reflection condition of Section 5 both disappear, and the determinant becomes the *unique* homogeneous homomorphism for every $n$.
+
+### Why the even/odd split disappears
+
+It is tempting to attribute this to "complex continuity being a stronger assumption", but that is **not** the reason. The regularity hypothesis (continuity / measurability) plays exactly the same role over $C$ as it does over $R$ in Theorem 1: it only serves to exclude the pathological Hamel-basis homomorphisms. What really changes is the **algebra and topology of the group $K^*$ itself** ($K = R$ or $C$).
+
+Recall where the ambiguity came from (Theorem 4.2): homogeneity forces, for the underlying homomorphism $g : K^* \to K^*$,
+$$g(\lambda)^{n} = \lambda^{n}.$$
+If $g_1, g_2$ are two solutions, their ratio $\chi = g_1/g_2$ satisfies $\chi(\lambda)^n = 1$, i.e. $\chi$ is a homomorphism into the group $\mu_n(K)$ of $n$-th roots of unity in $K$. Hence the set of homogeneous-compatible $g$ is a torsor under
+$$\operatorname{Hom}(K^*,\, \mu_n(K)),$$
+and the determinant is unique **iff this group is trivial**. Two equivalent ways to see what it is:
+
+- **Algebraically**: $g(\lambda)^n = \lambda^n$ only constrains $g$ on the subgroup $(K^*)^n$ of $n$-th powers, and leaves it free on $K^*/(K^*)^n$.
+  - $K = R$: $(R^*)^n = R^*$ for odd $n$ (odd powers are surjective), but $(R^*)^n = R_{>0}$ for even $n$ — a **proper** subgroup. So $R^*/(R^*)^n$ is trivial for odd $n$ and $\cong \{\pm 1\}$ for even $n$. The leftover freedom is precisely the sign character, i.e. the choice $g(\lambda)=\lambda$ vs. $g(\lambda)=|\lambda|$, equivalently $\det$ vs. $|\det|$.
+  - $K = C$: every nonzero complex number has an $n$-th root, so $(C^*)^n = C^*$ and $C^*/(C^*)^n$ is **trivial for every $n$**. No freedom remains.
+
+- **Topologically**: $\operatorname{Hom}_{\mathrm{cont}}(K^*, \mu_n)$ consists of continuous maps from $K^*$ into a *discrete* finite group $\mu_n$, which must be constant on connected components. So it is nontrivial only when $K^*$ is **disconnected**.
+  - $R^*$ has **two** connected components ($\pm$), and the nontrivial character is exactly $\operatorname{sign}$ — present only when $\mu_n \ni -1$, i.e. for even $n$.
+  - $C^*$ is **connected**, so the only such character is trivial, for all $n$.
+
+In one sentence: **the even/odd ambiguity is the sign character of the disconnected group $R^*$; over the connected group $C^*$ there is no sign to choose, so it vanishes.** This is a statement about $-1$ being a square in $C$ but not in $R$, not about the strength of the continuity assumption.
+
+### The construction over $C$
+
+**(i) Diagonalization now works directly.** Over $C$, the polar decomposition $A = H\,U$ has $H = (A A^{*})^{1/2}$ **Hermitian** positive definite and $U = H^{-1}A$ **unitary**. Both are *normal*, hence **unitarily diagonalizable over $C$**:
+$$H = Q\,D_H\,Q^{*}, \qquad U = W\,D_U\,W^{*}, \qquad D_H, D_U \in GD(n,C).$$
+So the diagonalization proof of Theorem 3 goes through verbatim — the very step that failed over $R$ (a real orthogonal matrix need not be $R$-diagonalizable) is fine over $C$. This is exactly what was meant by "checking that $R^*$ can be replaced by $C^*$"; it is an independent alternative to the Cartan–Dieudonné fix used in Section 3.
+
+**(ii) Classification of homomorphisms $C^* \rightarrow C^*$** (analog of Theorem 1). Writing $z = |z|\,e^{i\theta}$, the continuous homomorphisms are exactly
+$$g(z) = |z|^{c}\left(\tfrac{z}{|z|}\right)^{k}, \qquad c \in C,\; k \in \mathbb{Z}.$$
+If one additionally requires $g$ to be **holomorphic**, then $c = k$ and $g(z) = z^{k}$, $k \in \mathbb{Z}$.
+
+**(iii) Conceptual shortcut.** For any infinite field $K$ one has $[GL(n,K), GL(n,K)] = SL(n,K)$, so the determinant induces an isomorphism $GL(n,K)^{\mathrm{ab}} \cong K^*$. Consequently **every** homomorphism $f : GL(n,K) \rightarrow K^*$ factors uniquely as $f = g \circ \det$ with $g : K^* \rightarrow K^*$. The elementary "restrict to $GD(n)$, classify, extend" program of Sections 2–3 simply rebuilds this factorization with the regularity needed to write down $g$ explicitly.
+
+**Theorem 6.** Over $C$ the determinant is the **unique** homogeneous homomorphism $GL(n,C) \rightarrow C^*$, for **every** $n$.
+
+*Proof.* By (i)/(iii), $f = g \circ \det$ for some homomorphism $g : C^* \rightarrow C^*$. Homogeneity gives $f(\lambda I) = g(\lambda^n) = \lambda^n$ for all $\lambda \in C^*$. Since $\lambda \mapsto \lambda^n$ is surjective onto $C^*$, we get $g(w) = w$ for all $w \in C^*$, i.e. $g = \mathrm{id}$ and $f = \det$. Concretely, for $g(z) = |z|^{c}(z/|z|)^{k}$ this forces $c = 1$ and $k = 1$. No reflection normalization is needed. $\qquad\Box$
+
+---
+
+## 7. Extension to singular matrices
+
+**The obstruction.** The homomorphism framework cannot, by itself, reach singular matrices: the codomain is the *group* $R^*$ (or $C^*$), and a group homomorphism never takes the value $0 \notin R^*$. To include singular matrices we must change the setting — either algebraically (enlarge to a monoid) or topologically (use density). Both routes agree, and both single out the genuine polynomial determinant.
+
+### (A) Algebraic route: the multiplicative monoid $M_n$
+
+Drop invertibility and ask for $f(AB) = f(A)\,f(B)$ for **all** $A, B \in M_n$ (the full multiplicative monoid of $n \times n$ matrices). The standard determinant satisfies this, since $\det(AB) = \det(A)\det(B)$ holds for all square matrices.
+
+**Theorem 7.** Let $f : M_n \rightarrow R$ be multiplicative on all of $M_n$, restricting on $GL(n)$ to a homomorphism that is non-constant on the diagonal matrices (e.g. any homogeneous determinant). Then $f$ vanishes on every singular matrix, and this extension is unique.
+
+*Proof.* Any matrix of rank $r$ has the normal form $A = P\,E_r\,Q$ with $P, Q \in GL(n)$ and $E_r = \operatorname{diag}(1, \dots, 1, 0, \dots, 0)$ ($r$ ones), so $f(A) = f(P)\,f(E_r)\,f(Q)$; thus $f$ on singular matrices is determined by the idempotents $E_r$, $r < n$. Each $E_r$ is idempotent, $E_r^2 = E_r$, so $f(E_r)^2 = f(E_r)$ and $f(E_r) \in \{0, 1\}$. Finally, from $E_{n-1}\,\operatorname{diag}(1, \dots, 1, t) = E_{n-1}$ we get
+$$f(E_{n-1})\,\big(1 - f(\operatorname{diag}(1, \dots, 1, t))\big) = 0 \quad \text{for all } t \in R^*.$$
+As $f$ is non-constant on these diagonals (e.g. $f(\operatorname{diag}(1,\dots,1,t)) = t \neq 1$ for the determinant), this forces $f(E_{n-1}) = 0$, and then $f(E_r) = f(E_r)\,f(E_{n-1}) = 0$ for every $r < n$. Hence $f \equiv 0$ on all singular matrices. $\qquad\Box$
+
+So for the determinant the value $0$ on singular matrices is **forced** — no continuity argument is even required.
+
+### (B) Topological route: density of $GL(n)$
+
+The set of singular matrices is the zero set of the polynomial $\det$, a closed subset of measure zero; for any $A$, the matrix $A + \varepsilon I$ is invertible for all but finitely many $\varepsilon$. Hence $GL(n)$ is **dense** in $M_n$. The genuine determinant is a **polynomial**, therefore the unique *continuous* extension of $\det\restriction_{GL(n)}$ to $M_n$, and it equals $0$ on singular matrices. This is the "continuity argument", and it agrees with the algebraic one.
+
+### Remarks
+
+- **Only the genuine determinant extends polynomially.** Among the homomorphisms $|\det A|^{\alpha}$ ($\alpha \ne 1$) some extend continuously to $0$ (those with $\alpha > 0$) and some blow up ($\alpha < 0$); the trivial $g \equiv 1$ even admits *two* monoid extensions (the constant $1$, or the indicator of $GL(n)$). Only $\alpha = 1$, $k = 1$ — the genuine, sign-preserving determinant — extends as a polynomial. This singles it out canonically.
+- **Cleanest picture (combining Sections 6 and 7).** Over $C$, the determinant is the unique homogeneous multiplicative map $M_n(C) \rightarrow (C, \cdot)$ that vanishes on singular matrices, for all $n$ — no even/odd split, no reflection normalization, no separate continuity hypothesis needed.
 
 ---
 
