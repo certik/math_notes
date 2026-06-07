@@ -91,7 +91,7 @@ Fix all rows of an invertible matrix except row $i$; call the others $r_1,\dots,
 - By Step 2, adding any multiple of another row $r_k$ ($k\neq i$) to $r_i$ leaves $f$ unchanged. Hence $f$ depends on $r_i$ **only through its class modulo** $V:=\operatorname{span}\{r_k:k\neq i\}$. Because the other rows are independent, $\dim V=n-1$, so the quotient $C^n/V$ is **one-dimensional**, and the matrix is invertible exactly when the class of $r_i$ is nonzero.
 - By (7), $f$ is homogeneous of degree $1$ in $r_i$: replacing $r_i$ by $\lambda r_i$ multiplies $f$ by $\lambda$.
 
-A function on the one-dimensional space $C^n/V$ that is homogeneous of degree $1$ is **linear**: choosing a nonzero class $z_0$, every class is $t\,z_0$ and the function takes the value $t\cdot(\text{its value at }z_0)$. Pulling back, $f$ is an additive (indeed linear) function of $r_i$:
+A function on the one-dimensional space $C^n/V$ that is homogeneous of degree $1$ is **linear**. Concretely, fix a nonzero class $z_0$ and let $c$ be the value of $f$ there. Every nonzero class is $t\,z_0$ for a unique scalar $t\in C^*$, and degree-$1$ homogeneity forces the value to be exactly $t\,c$. This rule $t\,z_0\mapsto t\,c$ is linear by the field arithmetic of $C$ (no Hamel-basis pathologies can arise in dimension one). Pulling back, $f$ is an additive (indeed linear) function of $r_i$:
 $$f(\dots,\,u+v\,,\dots)=f(\dots,u,\dots)+f(\dots,v,\dots),\qquad f(\dots,\lambda u,\dots)=\lambda\,f(\dots,u,\dots).$$
 Since $i$ was arbitrary, **$f$ is multilinear in the rows.** $\tag{8}$
 
@@ -99,9 +99,9 @@ Since $i$ was arbitrary, **$f$ is multilinear in the rows.** $\tag{8}$
 
 ## Step 6 — Swapping two rows changes the sign
 
-Work in the plane of coordinates $i,j$ (everything else is left fixed). A direct check — the same identity as for $2\times2$ — gives the factorization
-$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\cdot T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1),$$
-where $S_{ij}$ is the permutation matrix swapping coordinates $i$ and $j$. By (H1), (2) and (5$'$)/(6),
+Work in the plane of coordinates $i,j$ (everything else is left fixed). The factorization
+$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\cdot T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
+holds (it reduces to the $2\times2$ identity verified in the Appendix), where $S_{ij}$ is the permutation matrix swapping coordinates $i$ and $j$. By (H1), (2) and (5$'$)/(6),
 $$f(S_{ij})=g(-1)\cdot 1=-1. \tag{9}$$
 Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: **swapping two rows multiplies $f$ by $-1$.** Combined with multilinearity (8), if two rows are equal then swapping them both fixes the matrix and negates $f$, so
 $$f=0\ \text{whenever two rows coincide (alternating).} \tag{10}$$
@@ -121,6 +121,8 @@ $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{
 
 This is the **Leibniz formula** — derived, not assumed.
 
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a repeated index correspond to *singular* matrices, where $f$ was not originally defined. This causes no trouble: by Step 5, $f$ is multilinear in the rows on $GL(n,C)$, so it extends **uniquely** to a multilinear function $F$ on all of $M_n(C)$, and the alternating property (10) pins down its basis values ($0$ on repeats, $\operatorname{sgn}(\sigma)$ on permutations). Both $F$ and the Leibniz polynomial are polynomial in the entries and agree on the boxed formula above; since they coincide on the (Zariski-dense) set $GL(n,C)$, they coincide everywhere. So the expansion is fully rigorous.
+
 ---
 
 ## Conclusion
@@ -131,3 +133,16 @@ Two remarks:
 
 - **No regularity, no spectral theory.** We never assumed $f$ continuous or measurable, and never used eigenvalues, the polar decomposition, or the determinant itself. Everything came from (H1), (H2), and one use of (R).
 - **Where $C$ was essential.** The single step that needed $C$ rather than $R$ is Step 4: every $w\in C^*$ — in particular $-1=i^2$ — has an $n$-th root, which forces $g=\mathrm{id}$ and hence $g(-1)=-1$, the sign in Step 6. Over $R$ with even $n$ the value $-1$ has no real $n$-th root, $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ yields a second, sign-blind solution (the permanent-like $|\det|$). Over $C$ that ambiguity cannot occur.
+
+---
+
+## Appendix — The swap factorization for $2\times2$
+
+The identity used in Step 6 reduces to the $2\times2$ case (all other coordinates are untouched). Write $T_{12}(c)=\begin{pmatrix}1&c\\0&1\end{pmatrix}$, $T_{21}(c)=\begin{pmatrix}1&0\\c&1\end{pmatrix}$. Then
+$$T_{12}(1)\,T_{21}(-1)\,T_{12}(1)
+=\begin{pmatrix}1&1\\0&1\end{pmatrix}\begin{pmatrix}1&0\\-1&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}
+=\begin{pmatrix}0&1\\-1&0\end{pmatrix},$$
+and multiplying on the left by $\operatorname{diag}(1,-1)$ gives
+$$\begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}0&1\\-1&0\end{pmatrix}
+=\begin{pmatrix}0&1\\1&0\end{pmatrix}=S_{12},$$
+as claimed. All three transvection factors have $f=1$ by (2), so $f(S_{12})=f(\operatorname{diag}(1,-1))=g(-1)=-1$.
