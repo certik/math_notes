@@ -146,3 +146,98 @@ and multiplying on the left by $\operatorname{diag}(1,-1)$ gives
 $$\begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}0&1\\-1&0\end{pmatrix}
 =\begin{pmatrix}0&1\\1&0\end{pmatrix}=S_{12},$$
 as claimed. All three transvection factors have $f=1$ by (2), so $f(S_{12})=f(\operatorname{diag}(1,-1))=g(-1)=-1$.
+
+---
+
+## Chapter — The Lie-theoretic picture behind $e_{ij}$ and $T_{ij}$
+
+Everything in the derivation has a clean interpretation in the language of Lie groups and Lie algebras. This chapter is independent of the main argument — it does not feed back into the proof — but it explains *why* the elementary steps work, and where they come from. We work over $C$ throughout, so $G=GL(n,C)$ is a complex Lie group of dimension $n^2$, and its Lie algebra is
+$$\mathfrak{g}=\mathfrak{gl}(n,C)=M_n(C),\qquad [X,Y]=XY-YX.$$
+
+### 1. The matrix units $e_{ij}$ are a basis of the Lie algebra
+
+The $n^2$ matrix units $\{e_{ij}\}_{1\le i,j\le n}$ form a basis of $\mathfrak{gl}(n,C)$. Their bracket is computed from $e_{ij}e_{kl}=\delta_{jk}\,e_{il}$:
+$$[e_{ij},e_{kl}]=\delta_{jk}\,e_{il}-\delta_{li}\,e_{kj}. \tag{L1}$$
+
+This single rule encodes the entire structure we used.
+
+- The **diagonal** units $h_i:=e_{ii}$ commute with each other ($[h_i,h_j]=0$) and span the **Cartan subalgebra** $\mathfrak{h}$ — the diagonal matrices. This is the "torus direction."
+- The **off-diagonal** units $e_{ij}$ ($i\neq j$) are the **root vectors**. From (L1),
+$$[h_k,e_{ij}]=(\delta_{ki}-\delta_{kj})\,e_{ij},$$
+so $e_{ij}$ is a simultaneous eigenvector for the adjoint action of all diagonal $h_k$. Writing $\varepsilon_i\in\mathfrak{h}^*$ for the functional "read off the $i$-th diagonal entry," the eigenvalue is the **root**
+$$\alpha_{ij}=\varepsilon_i-\varepsilon_j,\qquad [H,e_{ij}]=\alpha_{ij}(H)\,e_{ij}\ \ \text{for diagonal }H. \tag{L2}$$
+
+**Example ($n=2$).** Here $\mathfrak{sl}(2,C)$ has the textbook basis
+$$h=e_{11}-e_{22}=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad e=e_{12}=\begin{pmatrix}0&1\\0&0\end{pmatrix},\quad f_-=e_{21}=\begin{pmatrix}0&0\\1&0\end{pmatrix},$$
+with the famous relations $[h,e]=2e$, $[h,f_-]=-2f_-$, $[e,f_-]=h$. The root of $e_{12}$ is $\varepsilon_1-\varepsilon_2$, evaluating to $+2$ on $h$; the root of $e_{21}$ is $\varepsilon_2-\varepsilon_1$, evaluating to $-2$. These are exactly the entries you see in the brackets.
+
+### 2. The transvections $T_{ij}(c)$ are the exponentials of the root vectors
+
+For $i\neq j$ the matrix unit is **nilpotent**: $e_{ij}^2=0$. Hence the exponential series stops after one term,
+$$\exp(c\,e_{ij})=I+c\,e_{ij}=T_{ij}(c). \tag{L3}$$
+So a transvection is literally $\exp$ of a root vector. The map
+$$c\longmapsto T_{ij}(c)=\exp(c\,e_{ij})$$
+is a **one-parameter subgroup**: a Lie-group homomorphism from the additive group $(C,+)$ into $G$. The defining identity used in Step 2,
+$$T_{ij}(c)\,T_{ij}(c')=T_{ij}(c+c'),$$
+is exactly the statement $\exp(c\,e_{ij})\exp(c'e_{ij})=\exp((c+c')e_{ij})$, valid because the two exponents commute (they are multiples of the same nilpotent). The image $U_{ij}:=\{T_{ij}(c):c\in C\}\cong(C,+)$ is the **root subgroup** attached to $\alpha_{ij}$, a unipotent one-dimensional subgroup.
+
+**Example.** $T_{12}(c)=\exp\!\begin{pmatrix}0&c\\0&0\end{pmatrix}=\begin{pmatrix}1&c\\0&1\end{pmatrix}$, and indeed $\begin{pmatrix}1&c\\0&1\end{pmatrix}\begin{pmatrix}1&c'\\0&1\end{pmatrix}=\begin{pmatrix}1&c+c'\\0&1\end{pmatrix}$.
+
+### 3. Conjugation by the torus is the adjoint action — and the roots reappear
+
+In Step 2 we conjugated a transvection by a diagonal matrix $D=\operatorname{diag}(d_1,\dots,d_n)$ and found
+$$D\,T_{ij}(c)\,D^{-1}=T_{ij}\!\Big(c\,\tfrac{d_i}{d_j}\Big). \tag{L4}$$
+This is the **adjoint action** $\mathrm{Ad}(D)$ of the group on the subgroup, and at the Lie-algebra level it is $\mathrm{Ad}(D)e_{ij}=\tfrac{d_i}{d_j}\,e_{ij}$. The eigenvalue $d_i/d_j$ is the root $\alpha_{ij}=\varepsilon_i-\varepsilon_j$ **exponentiated**: if $D=\exp(H)$ with $H=\operatorname{diag}(t_1,\dots,t_n)$, then $d_i/d_j=e^{t_i-t_j}=e^{\alpha_{ij}(H)}$, matching the infinitesimal version (L2) via $\mathrm{Ad}(\exp H)=\exp(\operatorname{ad} H)$. So the fact that "all nonzero-$c$ transvections are conjugate" is the geometric statement that the torus acts on the root line $C\,e_{ij}$ by the nonzero scalars $d_i/d_j$, which sweep out all of $C^*$.
+
+**Example ($n=2$).** With $D=\operatorname{diag}(d_1,d_2)$,
+$$D\begin{pmatrix}1&c\\0&1\end{pmatrix}D^{-1}=\begin{pmatrix}1&c\,d_1/d_2\\0&1\end{pmatrix},$$
+and choosing $d_1/d_2$ freely rescales $c$ to anything nonzero.
+
+### 4. Why $f$ must be trivial on the transvections: the derived subgroup
+
+Here is the structural punchline. Brackets of root vectors *produce more root vectors*. From (L1), for instance,
+$$[e_{ik},e_{kj}]=e_{ij}\qquad(i,k,j\ \text{distinct}),$$
+which exponentiates (via the commutator of group elements) to the statement that transvections are **commutators** in $G$. Concretely, the group commutator of two root subgroups gives a third:
+$$[\,T_{ik}(a),\,T_{kj}(b)\,]:=T_{ik}(a)T_{kj}(b)T_{ik}(a)^{-1}T_{kj}(b)^{-1}=T_{ij}(ab)\qquad(i,k,j\ \text{distinct}). \tag{L5}$$
+
+Now recall any homomorphism $f:G\to C^*$ lands in an **abelian** group. Abelian targets cannot see commutators: $f([X,Y])=f(X)f(Y)f(X)^{-1}f(Y)^{-1}=1$. Applying this to (L5),
+$$f\big(T_{ij}(ab)\big)=f\big([T_{ik}(a),T_{kj}(b)]\big)=1\qquad(n\ge 3). \tag{L6}$$
+That is the **real reason** Step 2 forces $f\equiv1$ on transvections: they live in the commutator subgroup. (For $n\ge3$ the identity (L5) gives this in one line; the $n=2$ case has no third index, which is exactly why the note's Step 2 instead used the additive/idempotent argument $t=t^2$. Both routes reach $f=1$.)
+
+This connects to the global structure:
+$$[GL(n,C),\,GL(n,C)]=SL(n,C),\qquad\text{and the transvections generate } SL(n,C).$$
+So $f$ trivial on transvections $\iff$ $f$ trivial on $SL(n,C)$ $\iff$ $f$ factors through the abelianization
+$$GL(n,C)\big/SL(n,C)\;\xrightarrow{\ \det\ }\;C^*.$$
+The whole note is an elementary, from-scratch proof that this quotient is $C^*$ and that the isomorphism is $\det$ — with **homogeneity (H2)** supplying the one extra normalization that selects $\det$ itself (not a power $\det^m$ or the sign-blind branch).
+
+**Example ($n=2$, the $SL_2$ commutator at work).** Even though (L5) needs three indices, one can still exhibit a transvection as a commutator in $GL_2$ using the torus:
+$$\begin{pmatrix}d&0\\0&d^{-1}\end{pmatrix}\begin{pmatrix}1&c\\0&1\end{pmatrix}\begin{pmatrix}d&0\\0&d^{-1}\end{pmatrix}^{-1}\begin{pmatrix}1&c\\0&1\end{pmatrix}^{-1}=\begin{pmatrix}1&(d^2-1)c\\0&1\end{pmatrix},$$
+a transvection, written as a group commutator $[D,T_{12}(c)]$. Any homomorphism to an abelian group sends the left side to $1$, so $f(T_{12}((d^2-1)c))=1$ for all $d\neq0,\pm1$ — recovering Step 2 once more, now visibly as "transvections are commutators."
+
+### 5. The torus, homogeneity, and where the answer comes from
+
+Strip away the unipotent part and only the **maximal torus** $T=\{\operatorname{diag}(d_1,\dots,d_n)\}\cong (C^*)^n$ remains. A homomorphism $T\to C^*$ is a **character**, and the characters of $(C^*)^n$ are exactly the monomials
+$$\operatorname{diag}(d_1,\dots,d_n)\longmapsto \prod_i d_i^{\,m_i},\qquad (m_1,\dots,m_n)\in\mathbb{Z}^n.$$
+The Weyl group of $GL(n,C)$ is the symmetric group $S_n$, permuting the $d_i$ (this is the permutation-matrix conjugation of Step 3). A character that is **Weyl-invariant** must have all $m_i$ equal, $m_i=m$, i.e. it is $(\prod_i d_i)^m=(\det|_T)^m$. Homogeneity (H2), $f(\lambda I)=\lambda^n$, evaluates this at $d_i=\lambda$: $(\lambda^n)^m=\lambda^{nm}\overset{!}{=}\lambda^n$, forcing $m=1$. So:
+
+- **Weyl-invariance** $\Rightarrow$ $f|_T=(\det|_T)^m$ — this is Step 3 ("position doesn't matter, $f(\operatorname{diag})=g(\prod d_i)$").
+- **Homogeneity** $\Rightarrow$ $m=1$ — this is Step 4 ("$g=\mathrm{id}$").
+
+The note proves Weyl-invariance from scratch (permutation conjugation) and gets $m=1$ from the root property (every $w$ is an $n$-th power). The $C$-vs-$R$ subtlety lives entirely in this last point: over $C$ the only Weyl-invariant character matching (H2) is $\det$; over $R$ with even $n$ there is a second character of the disconnected torus $(R^*)^n$ — the sign-blind $\prod|d_i|$ — because $R^*$ is not divisible.
+
+### Summary table
+
+| Note's object | Lie-theoretic meaning |
+|---|---|
+| matrix unit $e_{ij}$ ($i\neq j$) | root vector for root $\alpha_{ij}=\varepsilon_i-\varepsilon_j$ in $\mathfrak{gl}(n,C)$ |
+| diagonal $e_{ii}$ | basis of the Cartan subalgebra $\mathfrak{h}$ |
+| transvection $T_{ij}(c)=I+c\,e_{ij}$ | $\exp(c\,e_{ij})$; element of the unipotent root subgroup $U_{ij}$ |
+| $T_{ij}(c)T_{ij}(c')=T_{ij}(c+c')$ | one-parameter subgroup $C\to G$ |
+| $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ | adjoint action of the torus; eigenvalue $=$ exponentiated root |
+| $f\equiv1$ on transvections (Step 2) | $f$ is trivial on $[G,G]=SL(n,C)$ (commutators) |
+| permutation conjugation (Step 3) | Weyl group $S_n$ acting on the torus |
+| $f(\operatorname{diag})=g(\prod d_i)$ | $f|_T$ is a Weyl-invariant character of $(C^*)^n$ |
+| homogeneity fixes $g=\mathrm{id}$ (Step 4) | normalization selecting the character $\det$ (exponent $m=1$) |
+| swap sign $f(S_{ij})=-1$ (Step 6) | longest Weyl element acts by $\operatorname{sgn}$; needs $-1\in(C^*)^n$-image |
+
+In one sentence: **the determinant is the unique Weyl-invariant character of the maximal torus that is trivial on the unipotent root subgroups and normalized by homogeneity** — and the elementary note is precisely this statement with all the Lie theory unwound into bare-hands matrix computations.
