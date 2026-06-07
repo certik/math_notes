@@ -246,6 +246,18 @@ Note this argument is purely algebraic: it uses neither the classification (ii) 
 
 The genuine $C$-versus-$R$ difference is therefore **not** regularity but whether $\lambda \mapsto \lambda^n$ is surjective, i.e. whether $K^*/(K^*)^n$ is trivial. Over $C$ every $w$ — including $-1 = i^2$ — has an $n$-th root, so $g(w) = w$ is forced **everywhere** and the determinant is unique even among abstract homomorphisms. Over $R$ with even $n$, the value $-1$ has no real $n$-th root, so $g(-1) = \pm 1$ escapes the homogeneity constraint; that single escaped sign is exactly the $\det$-versus-$|\det|$ ambiguity, removed by the reflection condition of Section 5. $\qquad\Box$
 
+**Example ($n = 2$).** Take a homogeneous homomorphism $f$ of degree $2$, so $f(\lambda I) = \lambda^2$, and write $f = g \circ \det$.
+
+- *Positive values are forced (over $R$ and $C$ alike).* For $w > 0$, choosing $\lambda = \sqrt{w}$ gives $g(w) = g(\lambda^2) = \lambda^2 = w$. So $g$ is the identity on $R_{>0}$ no matter what.
+- *Over $R$ the value at $-1$ is free.* No real $\lambda$ satisfies $\lambda^2 = -1$, so homogeneity says nothing about $g(-1)$; the homomorphism law only gives $g(-1)^2 = g(1) = 1$, hence $g(-1) = \pm 1$. **Both choices are genuine homogeneous homomorphisms:**
+  - $g(-1) = +1 \Rightarrow g = |\cdot| \Rightarrow f = |\det|$, and indeed $f(\lambda I) = |\lambda^2| = \lambda^2$; $\checkmark$
+  - $g(-1) = -1 \Rightarrow g = \mathrm{id} \Rightarrow f = \det$, and $f(\lambda I) = \lambda^2$. $\checkmark$
+
+  A reflection (e.g. $\operatorname{diag}(1,-1)$) has $\det = -1$ but $|\det| = +1$, so the reflection condition $f = -1$ picks out $f = \det$.
+- *Over $C$ the value at $-1$ is forced.* Now $\lambda = i$ satisfies $\lambda^2 = -1$, so
+$$g(-1) = g(i^2) = i^2 = -1$$
+is no longer a free choice — the existence of $\sqrt{-1}$ collapses the two real options into one. Hence $f = \det$ is the unique degree-$2$ homogeneous homomorphism over $C$, with no extra condition.
+
 ---
 
 ## 7. Extension to singular matrices
