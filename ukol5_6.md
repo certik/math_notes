@@ -240,7 +240,9 @@ If one additionally requires $g$ to be **holomorphic**, then $c = k$ and $g(z) =
 
 **Theorem 6.** Over $C$ the determinant is the **unique** homogeneous homomorphism $GL(n,C) \rightarrow C^*$, for **every** $n$.
 
-*Proof.* By (i)/(iii), $f = g \circ \det$ for some homomorphism $g : C^* \rightarrow C^*$. Homogeneity gives $f(\lambda I) = g(\lambda^n) = \lambda^n$ for all $\lambda \in C^*$. Since $\lambda \mapsto \lambda^n$ is surjective onto $C^*$, we get $g(w) = w$ for all $w \in C^*$, i.e. $g = \mathrm{id}$ and $f = \det$. Concretely, for $g(z) = |z|^{c}(z/|z|)^{k}$ this forces $c = 1$ and $k = 1$. No reflection normalization is needed. $\qquad\Box$
+*Proof.* By (iii) (or, elementarily, by (i) together with Theorem 2), $f = g \circ \det$ for some homomorphism $g : C^* \rightarrow C^*$. Homogeneity gives $g(\lambda^n) = g(\det(\lambda I)) = f(\lambda I) = \lambda^n$ for all $\lambda \in C^*$. Since $\lambda \mapsto \lambda^n$ is surjective onto $C^*$, every $w \in C^*$ is of the form $\lambda^n$, so $g(w) = w$ for all $w$, i.e. $g = \mathrm{id}$ and $f = \det$. No reflection normalization is needed.
+
+Note this argument is purely algebraic: it uses neither the classification (ii) nor any regularity (continuity / measurability) hypothesis on $g$. Over $C$ the determinant is thus the unique homogeneous homomorphism even among *abstract* group homomorphisms — a sharper contrast with the real case, where regularity is still required (Theorem 1) and the even-$n$ ambiguity persists. $\qquad\Box$
 
 ---
 
