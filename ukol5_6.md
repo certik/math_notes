@@ -271,7 +271,45 @@ The set of singular matrices is the zero set of the polynomial $\det$, a closed 
 
 ---
 
-## Appendix
+## 8. Classical derivation of Theorem 6
+
+The conceptual shortcut (iii) of Section 6 is entirely classical: Theorem 6 is a one-line corollary of the structure theory of the general linear group, namely the computation of its commutator subgroup and abelianization. We spell this out and give references. Throughout, $K$ is an infinite field (in particular $K = R$ or $C$) and $n \ge 2$.
+
+### Step 1 — Transvections generate $SL(n,K)$
+
+An *elementary transvection* is $E_{ij}(\lambda) = I + \lambda\,e_{ij}$ with $i \ne j$, where $e_{ij}$ is the matrix unit. Gaussian elimination (row/column reduction) shows that every matrix of determinant $1$ is a product of transvections; equivalently, the transvections generate $SL(n,K)$. This is standard — see E. Artin, *Geometric Algebra* (1957), Ch. IV, or Hahn–O'Meara, *The Classical Groups and K-Theory* (1989), §2.1.
+
+### Step 2 — Every transvection is a commutator in $GL(n,K)$
+
+Conjugating a transvection by a diagonal matrix $D = \operatorname{diag}(d_1, \dots, d_n)$ gives
+$$D\,E_{ij}(\lambda)\,D^{-1} = E_{ij}\!\left(\lambda\,\tfrac{d_i}{d_j}\right),$$
+hence the multiplicative commutator
+$$\big[D,\, E_{ij}(\lambda)\big] = D\,E_{ij}(\lambda)\,D^{-1}\,E_{ij}(\lambda)^{-1} = E_{ij}\!\left(\lambda\big(\tfrac{d_i}{d_j} - 1\big)\right).$$
+Since $K$ is infinite (it suffices that $|K| \ge 4$) we may pick $D$ with $d_i/d_j \ne 1$, so $d_i/d_j - 1$ is a unit; letting $\lambda$ range over $K$, the right-hand side runs over **all** transvections $E_{ij}(\mu)$. Thus every transvection is a commutator, so by Step 1
+$$SL(n,K) \subseteq \big[GL(n,K),\, GL(n,K)\big].$$
+The reverse inclusion is immediate, since $\det$ is abelian-valued and so $\det[A,B] = 1$, i.e. every commutator lies in $SL(n,K)$. Therefore
+$$\big[GL(n,K),\, GL(n,K)\big] = SL(n,K).$$
+(For finite fields the only exceptions are $SL(2,\mathbb F_2)$ and $SL(2,\mathbb F_3)$; over $R$ and $C$ there are none. See Artin, *Geometric Algebra*, Ch. IV; Dieudonné, *La géométrie des groupes classiques* (1955); Rotman, *An Introduction to the Theory of Groups* (4th ed., 1995), Thm. 8.9; for the stable/$K$-theoretic version, Whitehead's Lemma in Milnor, *Introduction to Algebraic K-theory* (1971), §3.)
+
+### Step 3 — Abelianization and the universal property of $\det$
+
+The determinant is a surjection $\det : GL(n,K) \twoheadrightarrow K^*$ with kernel $SL(n,K)$. By Step 2 this kernel is exactly the commutator subgroup, so $\det$ realizes the abelianization:
+$$GL(n,K)^{\mathrm{ab}} = GL(n,K)\big/\big[GL(n,K),GL(n,K)\big] = GL(n,K)/SL(n,K) \;\xrightarrow{\ \cong\ }\; K^*.$$
+Consequently $\det$ has the following universal property: for **every** abelian group $B$ and every homomorphism $f : GL(n,K) \to B$, the map $f$ kills all commutators, hence factors **uniquely** through the determinant,
+$$f = g \circ \det, \qquad g : K^* \to B \text{ a homomorphism.} \tag{$\ast$}$$
+
+### Step 4 — Specialization to Theorem 6
+
+Take $B = C^*$ and $K = C$. By $(\ast)$, every homomorphism $f : GL(n,C) \to C^*$ is $f = g \circ \det$ for a unique homomorphism $g : C^* \to C^*$. If $f$ is moreover *homogeneous*, then for all $\lambda \in C^*$
+$$g(\lambda^n) = g(\det(\lambda I)) = f(\lambda I) = \lambda^n.$$
+Because $\lambda \mapsto \lambda^n$ is surjective onto $C^*$, this gives $g = \mathrm{id}_{C^*}$, whence $f = \det$. This is exactly **Theorem 6**. $\qquad\Box$
+
+**Remark (recovering the real case).** Applying $(\ast)$ with $K = B = R$ recovers the entire structure of Sections 2–5 without diagonalization: every homomorphism $GL(n,R) \to R^*$ is $g \circ \det$, and the regularity of $g$ (Theorem 1) yields the explicit forms $|\det A|^\alpha$ and $\operatorname{sign}(\det A)|\det A|^\alpha$. The even/odd dichotomy reappears precisely as $\operatorname{Hom}(R^*, \mu_n) = \operatorname{Hom}(R^*, \{\pm1\})$ being nontrivial for even $n$, in agreement with Section 6.
+
+> Theorem 6 is therefore not new: it is folklore, an immediate corollary of the classical identification $[GL(n,K),GL(n,K)] = SL(n,K)$ and $GL(n,K)^{\mathrm{ab}} \cong K^*$. The contribution of these notes is the elementary, diagonalization-based route to the same facts and the $R$-versus-$C$ comparison via $K^*/(K^*)^n$.
+
+---
+
 
 **Proposition.** The composition $f \circ g$ of two homomorphisms $f$ and $g$ is a homomorphism.
 
