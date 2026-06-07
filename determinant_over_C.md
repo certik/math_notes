@@ -241,3 +241,103 @@ The note proves Weyl-invariance from scratch (permutation conjugation) and gets 
 | swap sign $f(S_{ij})=-1$ (Step 6) | longest Weyl element acts by $\operatorname{sgn}$; needs $-1\in(C^*)^n$-image |
 
 In one sentence: **the determinant is the unique Weyl-invariant character of the maximal torus that is trivial on the unipotent root subgroups and normalized by homogeneity** — and the elementary note is precisely this statement with all the Lie theory unwound into bare-hands matrix computations.
+
+---
+
+## Part III — The same result, derived purely by Lie theory
+
+The elementary derivation (Part I) and its dictionary (the previous chapter) suggest a second, completely different proof: differentiate $f$ once, recognize its differential as the **trace**, and integrate back. This is the Lie-theoretic route. It reaches the *same* endpoint — the Leibniz formula — but trades the hands-on row manipulations for the machinery of Lie groups, Lie algebras, and the exponential map. We work over $C$, where $G=GL(n,C)$ is a **connected** complex Lie group (its Lie algebra is $\mathfrak{g}=\mathfrak{gl}(n,C)=M_n(C)$), and the target $C^*$ is an abelian Lie group with Lie algebra $\operatorname{Lie}(C^*)=C$ (the bracket is zero). We assume $n\ge 2$ (for $n=1$, $GL(1,C)=C^*$ and $f=\mathrm{id}$ is immediate from (H2)).
+
+### Assumptions for this part
+
+We keep (H1) multiplicativity and (H2) homogeneity, and add one regularity hypothesis:
+
+**(H3) Continuity.** $f:GL(n,C)\to C^*$ is continuous.
+
+This is the analogue of "every $w$ has an $n$-th root": some extra input beyond the bare algebra is needed to bring analysis into play. Continuity is very mild and can be weakened (Lebesgue-measurable already suffices, by automatic-continuity theorems), but assuming it outright keeps the exposition clean. Note the *elementary* Part I assumed **no** regularity at all — that is its selling point; the Lie route deliberately trades a little regularity for conceptual transparency.
+
+### Step 1 — Continuity upgrades to smoothness
+
+> **Cartan–von Neumann automatic-smoothness theorem.** Every continuous homomorphism between Lie groups is real-analytic (in particular $C^\infty$).
+
+Applied to $f$, hypothesis (H3) gives that $f$ is smooth. We may therefore differentiate it. (We do **not** assume $f$ is holomorphic; it is only smooth as a map of real manifolds. The footprint of this — a possible complex-conjugate term — appears in Step 3 and is removed by homogeneity in Step 4, exactly mirroring how the root property removed the $R$-vs-$C$ ambiguity in Part I.)
+
+### Step 2 — The differential is a character of the Lie algebra
+
+Let
+$$\phi:=df_I:\mathfrak{gl}(n,C)\longrightarrow C=\operatorname{Lie}(C^*)$$
+be the differential of $f$ at the identity. Two standard facts:
+
+1. **$\phi$ is a Lie-algebra homomorphism**: $\phi([X,Y])=[\phi(X),\phi(Y)]$. Because the target $C$ is abelian, the right-hand side is $0$, so
+$$\phi([X,Y])=0\qquad\text{for all }X,Y. \tag{Λ1}$$
+2. **$f$ intertwines the exponentials**: $f(\exp X)=\exp(\phi(X))$ for all $X\in\mathfrak{gl}(n,C)$, where on the left $\exp$ is the matrix exponential and on the right it is $C\to C^*,\ z\mapsto e^{z}$. $\tag{Λ2}$
+
+Here $\phi$ is only $\mathbb{R}$-linear (we did not assume holomorphy), a point that matters in Step 3.
+
+This is the precise Lie-theoretic shadow of Step 1–2 of Part I: conjugation-invariance and the transvection computation are the *group-level* expression of (Λ1) — that $\phi$ annihilates commutators.
+
+### Step 3 — $\phi$ vanishes on $\mathfrak{sl}(n,C)$, hence is a multiple of the trace
+
+By (Λ1), $\phi$ vanishes on the **derived subalgebra** $[\mathfrak{g},\mathfrak{g}]$. For $\mathfrak{gl}(n,C)$ this derived subalgebra is exactly the traceless matrices:
+$$[\mathfrak{gl}(n,C),\mathfrak{gl}(n,C)]=\mathfrak{sl}(n,C). \tag{Λ3}$$
+Indeed $\operatorname{tr}[X,Y]=0$ gives "$\subseteq$", while $e_{ij}=[e_{ii},e_{ij}]$ ($i\neq j$) and $e_{ii}-e_{jj}=[e_{ij},e_{ji}]$ produce a full basis of $\mathfrak{sl}(n,C)$, giving "$\supseteq$" (and incidentally that $\mathfrak{sl}(n,C)$ is **perfect** for $n\ge2$). So $\phi$ factors through the one-complex-dimensional quotient
+$$\mathfrak{gl}(n,C)/\mathfrak{sl}(n,C)\;\xrightarrow{\ \sim\ }\;C,\qquad X\longmapsto \operatorname{tr}X.$$
+An $\mathbb{R}$-linear functional on this quotient is an $\mathbb{R}$-linear functional of $\operatorname{tr}X\in C$, i.e. there are constants $a,b\in C$ with
+$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}. \tag{Λ4}$$
+The conjugate term is present precisely because $\phi$ is only real-linear; it is the infinitesimal trace of the second, "anti-holomorphic" solution $A\mapsto\overline{\det A}$.
+
+**Example ($n=2$).** $\mathfrak{sl}(2,C)=\operatorname{span}\{h,e,f_-\}$ is spanned by the three commutators $[e,f_-]=h,\ [h,e]=2e,\ [h,f_-]=-2f_-$, so any commutator-annihilating $\phi$ already vanishes on all of it; only the trace direction $I=e_{11}+e_{22}$ survives.
+
+### Step 4 — Homogeneity forces $\phi=\operatorname{tr}$
+
+Write $\lambda=e^{z}$ ($z\in C$; the exponential $C\to C^*$ is onto). Then $\lambda I=\exp(zI)$, and by (Λ2) and (Λ4),
+$$f(\lambda I)=\exp\!\big(\phi(zI)\big)=\exp\!\big(a\,\operatorname{tr}(zI)+b\,\overline{\operatorname{tr}(zI)}\big)=\exp\!\big(a\,nz+b\,n\bar z\big).$$
+Homogeneity (H2) says $f(\lambda I)=\lambda^{n}=e^{nz}$. Hence
+$$\exp\!\big(a\,nz+b\,n\bar z\big)=\exp(nz)\qquad\text{for all }z\in C.$$
+The function $z\mapsto a n z+b n\bar z-nz$ is continuous, takes values in $2\pi i\,\mathbb{Z}$, and vanishes at $z=0$; by connectedness of $C$ it is identically $0$. Thus $a z+b\bar z=z$ for all $z\in C$, and since $z$ and $\bar z$ are $\mathbb{R}$-independent,
+$$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{Λ5}$$
+
+This is the exact counterpart of Step 4 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
+
+### Step 5 — Integrate: $f$ is the product of the eigenvalues
+
+Combining (Λ2) and (Λ5),
+$$f(\exp X)=\exp(\operatorname{tr}X)\qquad\text{for all }X\in\mathfrak{gl}(n,C). \tag{Λ6}$$
+Because $G=GL(n,C)$ is **connected**, a continuous homomorphism is determined by its differential, so (Λ6) determines $f$ on all of $G$. We make it fully explicit. Over $C$ the matrix exponential $\exp:\mathfrak{gl}(n,C)\to GL(n,C)$ is **surjective**, so every invertible $A$ equals $\exp X$ for some $X$. If $X$ has eigenvalues $\mu_1,\dots,\mu_n$ (with multiplicity), then $A=\exp X$ has eigenvalues $\lambda_i=e^{\mu_i}$, and $\operatorname{tr}X=\sum_i\mu_i$, so (Λ6) gives
+$$f(A)=\exp\!\Big(\sum_i\mu_i\Big)=\prod_i e^{\mu_i}=\prod_{i=1}^n\lambda_i(A). \tag{Λ7}$$
+Thus **$f$ is the product of the eigenvalues** of $A$, counted with algebraic multiplicity — independent of the chosen $X$. (Surjectivity of $\exp$ over $C$ is the precise place the proof uses the complex field, just as the $n$-th-root property was in Part I; over $R$ it fails — e.g. $\operatorname{diag}(-1,-2)$ is not a real exponential — which is the analytic shadow of the missing real $n$-th roots.)
+
+**Example ($n=2$).** For $A=\begin{pmatrix}2&1\\0&3\end{pmatrix}$, eigenvalues $2,3$, so $f(A)=6$. For a rotation-scaling $A=r\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}=\exp\!\begin{pmatrix}\log r&-\theta\\\theta&\log r\end{pmatrix}$, $\operatorname{tr}=2\log r$, so $f(A)=e^{2\log r}=r^2$, matching $\lambda_1\lambda_2=(re^{i\theta})(re^{-i\theta})=r^2$.
+
+### Step 6 — The top exterior power gives the Leibniz formula
+
+It remains to write $\prod_i\lambda_i$ in coordinates. This is the natural job of the **top exterior power** $\Lambda^n(C^n)$, a one-dimensional space with basis $e_1\wedge\cdots\wedge e_n$. Any linear map $A$ induces a linear map $\Lambda^n A$ on this line, i.e. multiplication by a scalar $\delta(A)$:
+$$(Ae_1)\wedge(Ae_2)\wedge\cdots\wedge(Ae_n)=\delta(A)\;e_1\wedge\cdots\wedge e_n. \tag{Λ8}$$
+Two properties are immediate from functoriality of $\Lambda^n$: $\delta(AB)=\delta(A)\delta(B)$ (so $\delta$ is multiplicative and continuous, a polynomial in the entries), and on a diagonalizable $A$ with eigenvalues $\lambda_i$, choosing an eigenbasis, $\delta(A)=\prod_i\lambda_i$.
+
+Now expand (Λ8) in coordinates. Writing the columns $Ae_k=\sum_{j} A_{jk}\,e_j$ and using multilinearity and antisymmetry of the wedge ($e_{j_1}\wedge\cdots\wedge e_{j_n}=0$ if any index repeats, and $=\operatorname{sgn}(\sigma)\,e_1\wedge\cdots\wedge e_n$ when $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$),
+$$(Ae_1)\wedge\cdots\wedge(Ae_n)=\sum_{j_1,\dots,j_n}A_{j_1 1}\cdots A_{j_n n}\;e_{j_1}\wedge\cdots\wedge e_{j_n}
+=\Big(\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}\Big)e_1\wedge\cdots\wedge e_n.$$
+Comparing with (Λ8),
+$$\delta(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}
+=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}, \tag{Λ9}$$
+the two sums being equal by the substitution $\sigma\mapsto\sigma^{-1}$ (which preserves the sign). This is the **Leibniz formula**.
+
+Finally, $\delta$ and $f$ are both continuous and, by (Λ7) and the eigenvalue computation above, agree on the **dense** set of diagonalizable invertible matrices (both equal $\prod_i\lambda_i$ there). Two continuous functions agreeing on a dense set agree everywhere, so $f=\delta$ on all of $GL(n,C)$:
+$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,.}$$
+
+The Leibniz formula is recovered — now as the coordinate expression of the action on the top exterior power, i.e. of the one-dimensional representation $\Lambda^n$ of $GL(n,C)$.
+
+### How the two proofs correspond
+
+| Elementary (Part I) | Lie-theoretic (Part III) |
+|---|---|
+| conjugation invariance, $f$ trivial on transvections (Steps 1–2) | $\phi=df_I$ annihilates commutators (Λ1); vanishes on $[\mathfrak g,\mathfrak g]=\mathfrak{sl}_n$ (Λ3) |
+| $f(\operatorname{diag})=g(\prod d_i)$, $g$ a homomorphism (Step 3) | $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ on the quotient $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ (Λ4) |
+| homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Step 4) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
+| second branch $g(-1)=+1$ over $R$, giving $|\det|$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
+| $f$ multilinear & alternating in rows (Steps 5–6) | $f$ = action on $\Lambda^n$; antisymmetry of the wedge (Λ8) |
+| basis expansion $\Rightarrow$ Leibniz (Step 7) | wedge expansion $\Rightarrow$ Leibniz (Λ9) |
+| uses $n$-th roots in $C$ once (Step 4) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
+
+Both proofs are the same story told at two levels: *kill the commutators, read off the one remaining degree of freedom on the torus / Cartan, and let homogeneity fix it.* The elementary version pays nothing in regularity but does the bookkeeping by hand; the Lie version assumes continuity and lets the exponential map and the top exterior power do the bookkeeping automatically.
