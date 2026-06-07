@@ -258,6 +258,20 @@ The genuine $C$-versus-$R$ difference is therefore **not** regularity but whethe
 $$g(-1) = g(i^2) = i^2 = -1$$
 is no longer a free choice — the existence of $\sqrt{-1}$ collapses the two real options into one. Hence $f = \det$ is the unique degree-$2$ homogeneous homomorphism over $C$, with no extra condition.
 
+**Remark (the role of the homomorphism property — why $C$ has *fewer* solutions, not more).** A common confusion: if one merely solves the *pointwise* equation $g(\lambda)^n = \lambda^n$ for an **arbitrary function** $g$, then writing $g(\lambda) = \lambda\,\omega(\lambda)$ one needs $\omega(\lambda)^n = 1$, i.e. $\omega(\lambda)$ is *some* $n$-th root of unity — and over $C$ one may pick any of the $n$ roots **independently at each point** $\lambda$, giving an enormous (mostly discontinuous) solution set. From this angle $C$ seems to have *more* solutions than $R$ (where only $\pm1$ are available, or just $+1$ for odd $n$).
+
+The resolution is that $g$ is **not** an arbitrary function: it is a **group homomorphism**, $g(\lambda\mu) = g(\lambda)g(\mu)$. Feeding $g(\lambda) = \lambda\,\omega(\lambda)$ into this law gives
+$$\omega(\lambda\mu)\,\lambda\mu = g(\lambda\mu) = g(\lambda)g(\mu) = \omega(\lambda)\omega(\mu)\,\lambda\mu \quad\Longrightarrow\quad \omega(\lambda\mu) = \omega(\lambda)\,\omega(\mu).$$
+So $\omega$ is itself a **homomorphism** $K^* \to \mu_n$ — the per-point root-of-unity choices are forced to vary multiplicatively, not freely. The number of homogeneous homomorphisms is therefore exactly $\#\operatorname{Hom}(K^*, \mu_n)$, and this is where the divisibility of $K^*$ takes over:
+
+> **Lemma.** If $G$ is $n$-divisible (every element is an $n$-th power) and $A$ has exponent dividing $n$, then the only homomorphism $G \to A$ is trivial. *Proof:* any $g = h^n$, so $\varphi(g) = \varphi(h)^n = 1$. $\;\Box$
+
+- $C^*$ is $n$-divisible (every nonzero complex number has an $n$-th root), so $\operatorname{Hom}(C^*, \mu_n) = \{1\}$: the only $\omega$ is trivial, $g = \mathrm{id}$, **unique**.
+- $R^*$ with even $n$ is *not* $2$-divisible (negatives are not squares), so $\operatorname{Hom}(R^*, \mu_n) = \operatorname{Hom}(R^*, \{\pm1\}) = \{\text{trivial}, \operatorname{sign}\}$: two solutions, with $\omega = \operatorname{sign}$ giving $g(\lambda) = |\lambda|$ (the $|\det|$ branch).
+- $R^*$ with odd $n$ *is* $n$-divisible, so again only the trivial $\omega$, $g = \mathrm{id}$.
+
+So the apparent abundance of complex solutions is an artifact of dropping multiplicativity. With the homomorphism law reinstated, the $n$-divisibility of $C^*$ rigidifies $\omega$ to the constant $1$, and $C$ yields **exactly one** solution — fewer than $R$, not more.
+
 ---
 
 ## 7. Extension to singular matrices
