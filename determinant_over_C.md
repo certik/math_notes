@@ -146,10 +146,13 @@ $$F=0\ \text{whenever two rows coincide.} \tag{10$'$}$$
 
 **Route B — no continuity, via multiplicativity.** Continuity is in fact dispensable, but — as the basis expansion of Step 7 is precisely what needs justifying — the gap must be closed *algebraically* rather than by quietly invoking that expansion. The multiplicativity the whole note rests on already does it, without ever passing through a singular tuple:
 
-* **$f=\det$ on $GL$ with no analysis.** By (H1) $f$ is a homomorphism $GL(n,C)\to C^*$, and every invertible matrix factors into the elementary matrices on which Steps 2–6 have already evaluated $f$:
-$$A=(\text{a product of transvections})\cdot\operatorname{diag}(\det A,1,\dots,1),$$
-because transvections generate $SL(n,C)$ and the scalar $\det A$ splits off. Hence $f(A)=\prod f(\text{factors})=1\cdots 1\cdot\det A=\det A$, using (2) and (5$'$). No expansion through singular tuples, no continuity.
-* **The explicit Leibniz polynomial.** Let $D(A):=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i\sigma(i)}$, a fixed polynomial. $D$ is multiplicative (the classical $\det(AB)=\det A\det B$, an algebraic identity) and takes the same generator values $D(T_{ij}(c))=1$, $D(\operatorname{diag}(d))=\prod_i d_i$. Being multiplicative and agreeing with $f$ on a generating set, $D=f$ on all of $GL$ — so the Leibniz formula holds on $GL$ purely algebraically. If one then wants the identity $D=\det$ on singular matrices too, the polynomial identity theorem extends it across the Zariski-dense $GL$ (this last step, and only this step, is what "Zariski density" buys — and it is not a continuity argument).
+* **$f$ is determined on $GL$ with no analysis.** By (H1) $f$ is a homomorphism $GL(n,C)\to C^*$. By Gaussian elimination every invertible matrix factors as
+$$A=E\cdot\Delta,\qquad E=\text{a product of transvections},\quad \Delta=\operatorname{diag}(d_1,\dots,d_n), \tag{19}$$
+where the row operations clearing $A$ to diagonal form are transvections $T_{ij}(c)$ (a pivot swap, if ever needed, is itself $\operatorname{diag}(1,\dots,-1,\dots,1)$ times three transvections, by (9)), and $\Delta$ is whatever diagonal remains. No determinant is invoked — $\Delta$ is simply the output of elimination. Applying $f$ with (2) and (5$'$),
+$$f(A)=f(E)\,f(\Delta)=1\cdot\textstyle\prod_i d_i=\prod_i d_i. \tag{19$'$}$$
+* **Identifying $f$ with the Leibniz polynomial.** Let $D(A):=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i\sigma(i)}$, a fixed polynomial defined directly from the entries — *not* assumed to be $f$. Two facts about $D$ are pure algebra, proved without any reference to $f$: it is multiplicative, $D(XY)=D(X)D(Y)$ (the classical Cauchy expansion identity), and it takes the values $D(T_{ij}(c))=1$, $D(\operatorname{diag}(d))=\prod_i d_i$. Hence on the same factorization (19), $D(A)=D(E)\,D(\Delta)=\prod_i d_i$. Comparing with (19$'$),
+$$f(A)=\prod_i d_i=D(A)\qquad\text{for all }A\in GL(n,C),$$
+so $f$ **equals the Leibniz polynomial on all of $GL$, purely algebraically.** One then *defines* $\det:=D$; the identity $f=\det$ on $GL$ extends to the singular locus, if desired, by the polynomial identity theorem across the Zariski-dense $GL$ (this last step, and only this step, is what "Zariski density" buys — and it is not a continuity argument).
 
 So continuity (Route A) merely legitimizes the basis expansion as a *presentation*; the multiplicativity argument above reaches the Leibniz formula on $GL$ with no analytic hypothesis whatsoever.
 
