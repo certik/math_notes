@@ -40,11 +40,14 @@ So $f$ is invariant under conjugation.
 
 ---
 
-## Step 2 — $f$ is $1$ on every transvection
+## Step 2 — $f(T_{ij}(c))$ is $1$ on every transvection $T_{ij}(c)$
 
 Fix $i\neq j$. Two observations.
 
 **All nonzero $c$ give conjugate transvections.** For a diagonal $D=\operatorname{diag}(d_1,\dots,d_n)$ one computes $D\,T_{ij}(c)\,D^{-1}=T_{ij}\!\big(c\,d_i/d_j\big)$. Choosing $d_i/d_j$ freely, the factor $c\,d_i/d_j$ ranges over all of $C^*$. Hence all $T_{ij}(c)$ with $c\neq 0$ are conjugate, so by (1) the value $f(T_{ij}(c))=:t$ is the same for every $c\neq 0$.
+
+Better: all matrices $T_{ij}(c)$ for all $c\neq 0$ are mutually conjugate. From
+Step 1 it follows that $f(T_{ij}(c))=t$ is constant for all $c\neq 0$.
 
 **The values multiply additively.** Since $e_{ij}^2=0$, we have $T_{ij}(c)\,T_{ij}(c')=T_{ij}(c+c')$, so by (H1) the map $c\mapsto f(T_{ij}(c))$ turns addition into multiplication. Taking $c=c'=1$: $t=f(T_{ij}(2))=f(T_{ij}(1))^2=t^2$. As $t\in C^*$, this forces $t=1$.
 
