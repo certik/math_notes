@@ -65,8 +65,12 @@ $$g(x):=f\big(\operatorname{diag}(x,1,\dots,1)\big),\qquad x\in C^*.$$
 **$g$ is a homomorphism $C^*\to C^*$:** from $\operatorname{diag}(xy,1,\dots,1)=\operatorname{diag}(x,1,\dots,1)\operatorname{diag}(y,1,\dots,1)$ and (H1),
 $$g(xy)=g(x)g(y). \tag{3}$$
 
-**Position does not matter.** Let $P_i$ be the permutation matrix swapping coordinates $1$ and $i$ (so $P_i\in GL(n,C)$, $P_i^{-1}=P_i$). Then $\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)=P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}$, so by (1)
+**Position does not matter.** Let $P_i$ be the permutation matrix swapping coordinates $1$ and $i$ (so $P_i\in GL(n,C)$, $P_i^{-1}=P_i$). Explicitly $P_i=I-e_{11}-e_{ii}+e_{1i}+e_{i1}$: the identity with rows (and columns) $1$ and $i$ interchanged. Conjugating any diagonal matrix by a permutation matrix permutes its diagonal entries, $P_\sigma\operatorname{diag}(d_1,\dots,d_n)P_\sigma^{-1}=\operatorname{diag}(d_{\sigma^{-1}(1)},\dots,d_{\sigma^{-1}(n)})$; for the swap $(1\,i)$ this moves $x$ from slot $1$ to slot $i$. Then $\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)=P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}$, so by (1)
 $$f\big(\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)\big)=g(x). \tag{4}$$
+
+*Remark (the swap via transvections).* Since $\det P_i=-1$ while $\det T_{ij}(c)=1$, the permutation $P_i$ is not itself a product of transvections, but the **signed swap**
+$$W_{1i}:=T_{1i}(1)\,T_{i1}(-1)\,T_{1i}(1)=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)\cdot P_i$$
+is (this is the $S_{ij}$ identity of (9)/the Appendix on coordinates $\{1,i\}$, where the $2\times2$ block is $\big(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\big)$). One may use $W_{1i}$ in place of $P_i$ in (4): they differ by the diagonal matrix $D=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)$, which commutes with any diagonal matrix, so $W_{1i}\operatorname{diag}(x,1,\dots,1)W_{1i}^{-1}=D\,\big(P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}\big)D^{-1}=\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)$, the $D,D^{-1}$ cancelling because the middle factor is diagonal.
 
 **Product over the diagonal.** Writing $\operatorname{diag}(d_1,\dots,d_n)=\prod_{i=1}^n\operatorname{diag}(1,\dots,\underset{i}{d_i},\dots,1)$ and using (H1), (4), (3),
 $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\prod_{i=1}^n d_i\Big). \tag{5}$$
@@ -80,10 +84,14 @@ $$g(\lambda^n)=f(\lambda I)=\lambda^n\qquad\text{for all }\lambda\in C^*.$$
 Given any $w\in C^*$, pick an $n$-th root $\lambda$ with $\lambda^n=w$ (fact (R)); then $g(w)=g(\lambda^n)=\lambda^n=w$. Hence
 $$g=\mathrm{id}_{C^*}. \tag{6}$$
 
-Two immediate consequences, used below:
+Note: this does *not* hold for $R^*$, for example $w=-1$ has no real $\lambda$
+such that $\lambda^2 = w$.
+
+Two immediate consequences, used below: from (5) and (6) it follows
 $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i, \tag{5$'$}$$
 and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$,
 $$\textbf{scaling a single row by }\lambda\textbf{ multiplies }f\textbf{ by }\lambda. \tag{7}$$
+
 
 ---
 
