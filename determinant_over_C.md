@@ -141,27 +141,28 @@ $$A=E\,\Delta,\qquad E=\text{a product of transvections},\quad \Delta=\operatorn
 $$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
 — again transvections times a diagonal. So a product of transvections and diagonal matrices reduces $A$ to a diagonal matrix. Finally, a diagonal matrix conjugates a transvection to a transvection, $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ (Step 2), so every diagonal factor can be slid to the right past the transvections, collecting into a single $\Delta$ and leaving the form (19). $\square$
 
-**2. $f$ is uniquely determined.** Apply $f$ to (19). By (H1), $f(A)=f(E)\,f(\Delta)$; by (2), $f(E)=1$ (a product of transvections); by (5$'$), $f(\Delta)=\prod_i d_i$. Hence
-$$f(A)=\prod_{i=1}^n d_i. \tag{19$'$}$$
-This is **uniqueness made explicit**: any function obeying (H1), (2), (5$'$) is forced to take the value $\prod_i d_i$ on $A$, so two such functions agree on all of $GL$. (The product $\prod_i d_i$ is independent of the chosen factorization, because it equals the value $f(A)$ of the given function $f$.)
+**2. A concrete anchor: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
+$$D(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)},$$
+a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
 
-**3. The closed (Leibniz) form.** Formula (19$'$) already determines $f$, but expresses it through the elimination output $\Delta$ rather than the entries of $A$. To get the entrywise closed form, compare $f$ with the explicit polynomial
-$$D(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}.$$
-Here is the point that dissolves the singular-matrix difficulty of Step 6: $D$ is a *polynomial defined for every matrix by this formula*, so the following are **formal identities in the entries**, valid for all $A$ — singular included — and checked directly on the sum:
-
-* (a) $D\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
-* (b) **two equal rows $\Rightarrow$ $D=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (and uses $\operatorname{char}C=0$);
+* (a) $D(I)=1$, and more generally $D\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
+* (b) **two equal rows $\Rightarrow D=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
 * (c) $D$ is **linear in each row** — every summand is.
 
-From (b) and (c), adding a multiple of one row to another leaves $D$ unchanged: $D\big(T_{ij}(c)\,X\big)=D(X)$. Crucially, unlike the abstract $f$ of Step 6, these carry **no domain caveat** — $D$ is everywhere-defined, and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $D$, where it evaporates.
+From (b) and (c), adding a multiple of one row to another leaves $D$ unchanged, $D\big(T_{ij}(c)\,X\big)=D(X)$; taking $X=I$ and using (a) gives in particular $D(T_{ij}(c))=1$. Thus $D$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ of Step 6, with **no domain caveat**, because $D$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $D$, where it evaporates.
 
-Now peel the transvections of $E$ off one at a time using $D(T_{ij}(c)X)=D(X)$, then apply (a):
-$$D(A)=D(E\,\Delta)=D(\Delta)=\prod_i d_i.$$
-Comparing with (19$'$),
-$$\boxed{\,f(A)=\prod_i d_i=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)).\,}$$
-The **Leibniz formula is derived, not postulated**: uniqueness comes from the generating set (parts 1–2), and the entrywise form from matching against the explicit polynomial $D$, whose multilinear/alternating identities are *formal* and so sidestep the singular-matrix obstruction entirely.
+Feed $D$ a factorization (19). Peeling the transvections of $E$ off one at a time by $D(T_{ij}(c)X)=D(X)$, then applying (a),
+$$D(A)=D(E\,\Delta)=D(\Delta)=\prod_i d_i. \tag{20}$$
 
-One may now *define* $\det:=D$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). No continuity, exterior algebra, or Zariski density enters — those furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
+**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $D$ is exactly what rules this out. If a second factorization $A=E'\Delta'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $D(A)=\prod_i d_i'$ as well; but $D(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $D$ — never assuming it beforehand.)
+
+**4. Every $f$ obeying (H1),(2),(5$'$) equals $D$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–6 is one such. For any factorization (19), using only those three properties,
+$$f(A)=f(E)\,f(\Delta)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
+the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $D$ satisfies $D(A)=p(A)$ as well. Therefore $f$ and $D$ take the identical value $p(A)$ at every $A$:
+$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
+This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $D$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $D$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $D$ (part 3), and the identification $f=p=D$ is part 4. We needed neither multiplicativity of $D$, nor continuity, nor exterior algebra, nor Zariski density.
+
+One may now *define* $\det:=D$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
 
 ---
 
