@@ -123,6 +123,23 @@ $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
 ---
 
+Note: Here we need to stick to regular matrices and prove the three starting
+points:
+
+* identity
+* multilinearity
+* alternating
+
+And extend these to singular matrices using an additional continuity assumption
+on $f$. Then we can just use a standard textbook approach to derive the Leibniz
+formula.
+
+In addition, if we can somehow show the Leibniz formula on regular matrices,
+then we can extend the formula to singular matrices via
+Zariski-dense theorems, so that we do not even need to assume continuity.
+
+---
+
 ## Step 7 — Expanding in the basis: the Leibniz formula
 
 Multilinearity (8) lets us extend $f$ to **all** of $M_n(C)$: a multilinear function of $n$ rows is determined by its values on tuples of basis vectors, and the alternating property (10) fixes those values — $0$ when a basis vector repeats, and $\operatorname{sgn}(\sigma)$ on the permutation matrices by (11). Expanding each row $r_i=\sum_{j}A_{ij}\,e_j$ by multilinearity,
