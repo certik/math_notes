@@ -114,8 +114,9 @@ Work in the plane of coordinates $i,j$ (everything else is left fixed). The fact
 $$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\cdot T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
 holds (it reduces to the $2\times2$ identity verified in the Appendix), where $S_{ij}$ is the permutation matrix swapping coordinates $i$ and $j$. By (H1), (2) and (5$'$)/(6),
 $$f(S_{ij})=g(-1)\cdot 1=-1. \tag{9}$$
-Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: **swapping two rows multiplies $f$ by $-1$.** Combined with multilinearity (8), if two rows are equal then swapping them both fixes the matrix and negates $f$, so
-$$f=0\ \text{whenever two rows coincide (alternating).} \tag{10}$$
+Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: for every invertible $A$, swapping two of its rows multiplies $f$ by $-1$,
+$$f(S_{ij}A)=-f(A)\qquad(A\in GL(n,C)). \tag{10}$$
+This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** yet available on $GL$; it is recovered only once $f$ is extended off $GL$ (Interlude, Route A), and it is not needed at all by the multiplicativity ending (Route B).
 Finally, any permutation matrix $P_\sigma$ is a product of swaps, so by (9)
 $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
@@ -123,33 +124,49 @@ $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
 ---
 
-Note: Here we need to stick to regular matrices and prove the three starting
-points:
+**Interlude — from $GL(n,C)$ to all of $M_n(C)$.** Everything in Steps 1–6 takes place on $GL(n,C)$, where $f$ is genuinely defined. There we have established exactly the three textbook axioms of the determinant, restricted to invertible matrices:
 
-* identity
-* multilinearity
-* alternating
+* **Normalization** $f(I)=1$, from (5$'$) with $d_1=\dots=d_n=1$;
+* **Multilinearity** in the rows, (8);
+* **Antisymmetry** — a row swap negates $f$, (10) (whence $f(P_\sigma)=\operatorname{sgn}\sigma$, (11)).
 
-And extend these to singular matrices using an additional continuity assumption
-on $f$. Then we can just use a standard textbook approach to derive the Leibniz
-formula.
+The first two hold on $GL$ verbatim. The third axiom one really wants for Step 7 is the **alternating** property — $f=0$ on a matrix with two equal rows — but, as noted in Step 6, equal-row matrices are *singular*, so on $GL$ we have only its antisymmetric shadow (10). Getting the alternating property, and the basis expansion that uses it, is exactly what forces us off $GL$.
 
-In addition, if we can somehow show the Leibniz formula on regular matrices,
-then we can extend the formula to singular matrices via
-Zariski-dense theorems, so that we do not even need to assume continuity.
+The classical derivation of the Leibniz formula (Step 7) needs these axioms on **all** of $M_n(C)$, because the basis expansion runs each row over the standard basis and so passes through singular tuples $(e_{j_1},\dots,e_{j_n})$. Two routes close this gap.
+
+**Route A — assume continuity.** Suppose in addition that $f$ is the restriction to $GL(n,C)$ of a continuous function $F:M_n(C)\to C$ (with the Euclidean topology of $C^{n^2}\cong\mathbb{R}^{2n^2}$). The determinant is such a function, so this assumes nothing false. Note that "$f$ continuous on $GL$" *alone* is not enough — e.g. $1/\det$ is continuous on $GL$ but has no continuous extension across the singular locus; assuming a continuous $F$ is precisely the statement that $f$ stays bounded as one approaches singular matrices.
+
+Granting this, each defining relation is a **closed** condition that already holds on the dense open set $GL$, hence holds for $F$ everywhere. For additivity in row $1$, the function
+$$F(u+v,r_2,\dots,r_n)-F(u,r_2,\dots,r_n)-F(v,r_2,\dots,r_n)$$
+is continuous in $(u,v,r_2,\dots,r_n)$ and vanishes whenever the three matrices it involves are invertible. That locus is the complement of a proper algebraic set (it asks $r_2,\dots,r_n$ independent and $u,v,u+v\notin\operatorname{span}\{r_k\}$), hence is dense, so the expression vanishes identically. The same density argument upgrades homogeneity, the antisymmetry relation (10), and $F(I)=1$ from $GL$ to all of $M_n(C)$.
+
+The alternating property itself cannot be obtained on $GL$ at all — *two equal rows is always singular*, so that locus never meets $GL$ — but it now follows everywhere from the two relations we did extend: with $F$ multilinear and antisymmetric on all of $M_n(C)$, swapping the two equal rows fixes the matrix yet negates $F$, so $2F=0$ and hence
+$$F=0\ \text{whenever two rows coincide.} \tag{10$'$}$$
+(Here $\operatorname{char}C=0$.) Now $F$ is a genuine normalized, multilinear, alternating function on $M_n(C)$, and the textbook basis expansion of Step 7 applies verbatim, giving $F=\det$ and in particular $f=\det$ on $GL$.
+
+**Route B — no continuity, via multiplicativity.** Continuity is in fact dispensable, but — as the basis expansion of Step 7 is precisely what needs justifying — the gap must be closed *algebraically* rather than by quietly invoking that expansion. The multiplicativity the whole note rests on already does it, without ever passing through a singular tuple:
+
+* **$f=\det$ on $GL$ with no analysis.** By (H1) $f$ is a homomorphism $GL(n,C)\to C^*$, and every invertible matrix factors into the elementary matrices on which Steps 2–6 have already evaluated $f$:
+$$A=(\text{a product of transvections})\cdot\operatorname{diag}(\det A,1,\dots,1),$$
+because transvections generate $SL(n,C)$ and the scalar $\det A$ splits off. Hence $f(A)=\prod f(\text{factors})=1\cdots 1\cdot\det A=\det A$, using (2) and (5$'$). No expansion through singular tuples, no continuity.
+* **The explicit Leibniz polynomial.** Let $D(A):=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i\sigma(i)}$, a fixed polynomial. $D$ is multiplicative (the classical $\det(AB)=\det A\det B$, an algebraic identity) and takes the same generator values $D(T_{ij}(c))=1$, $D(\operatorname{diag}(d))=\prod_i d_i$. Being multiplicative and agreeing with $f$ on a generating set, $D=f$ on all of $GL$ — so the Leibniz formula holds on $GL$ purely algebraically. If one then wants the identity $D=\det$ on singular matrices too, the polynomial identity theorem extends it across the Zariski-dense $GL$ (this last step, and only this step, is what "Zariski density" buys — and it is not a continuity argument).
+
+So continuity (Route A) merely legitimizes the basis expansion as a *presentation*; the multiplicativity argument above reaches the Leibniz formula on $GL$ with no analytic hypothesis whatsoever.
+
+Route A is the shorter ending if one is willing to assume $f$ continuous; Route B shows the assumption is dispensable.
 
 ---
 
 ## Step 7 — Expanding in the basis: the Leibniz formula
 
-Multilinearity (8) lets us extend $f$ to **all** of $M_n(C)$: a multilinear function of $n$ rows is determined by its values on tuples of basis vectors, and the alternating property (10) fixes those values — $0$ when a basis vector repeats, and $\operatorname{sgn}(\sigma)$ on the permutation matrices by (11). Expanding each row $r_i=\sum_{j}A_{ij}\,e_j$ by multilinearity,
+Multilinearity (8) lets us extend $f$ to **all** of $M_n(C)$ (as carried out in the Interlude): a multilinear function of $n$ rows is determined by its values on tuples of basis vectors, and the alternating property (10$'$) fixes those values — $0$ when a basis vector repeats, and $\operatorname{sgn}(\sigma)$ on the permutation matrices by (11). Expanding each row $r_i=\sum_{j}A_{ij}\,e_j$ by multilinearity,
 $$f(A)=\sum_{j_1,\dots,j_n}A_{1,j_1}\cdots A_{n,j_n}\;f(e_{j_1},\dots,e_{j_n}).$$
-By (10) every term with a repeated index vanishes; the surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$ for a permutation $\sigma$, contributing $f(P_\sigma)=\operatorname{sgn}(\sigma)$ via (11). Therefore
+By (10$'$) every term with a repeated index vanishes; the surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$ for a permutation $\sigma$, contributing $f(P_\sigma)=\operatorname{sgn}(\sigma)$ via (11). Therefore
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,.}$$
 
 This is the **Leibniz formula** — derived, not assumed.
 
-A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a repeated index correspond to *singular* matrices, where $f$ was not originally defined. This causes no trouble: by Step 5, $f$ is multilinear in the rows on $GL(n,C)$, so it extends **uniquely** to a multilinear function $F$ on all of $M_n(C)$, and the alternating property (10) pins down its basis values ($0$ on repeats, $\operatorname{sgn}(\sigma)$ on permutations). Both $F$ and the Leibniz polynomial are polynomial in the entries and agree on the boxed formula above; since they coincide on the (Zariski-dense) set $GL(n,C)$, they coincide everywhere. So the expansion is fully rigorous.
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a repeated index correspond to *singular* matrices, where $f$ was not originally defined. This causes no trouble: by Step 5, $f$ is multilinear in the rows on $GL(n,C)$, so (under the continuity hypothesis of Route A) it extends **uniquely** to a multilinear function $F$ on all of $M_n(C)$, and the alternating property (10$'$) pins down its basis values ($0$ on repeats, $\operatorname{sgn}(\sigma)$ on permutations). Both $F$ and the Leibniz polynomial are polynomial in the entries and agree on the boxed formula above; since they coincide on the (Zariski-dense) set $GL(n,C)$, they coincide everywhere. (If one prefers not to assume continuity, Route B reaches the boxed formula on $GL$ directly, bypassing this expansion entirely.) So the expansion is fully rigorous.
 
 ---
 
