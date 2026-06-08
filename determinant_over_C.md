@@ -95,6 +95,54 @@ $$\textbf{scaling a single row by }\lambda\textbf{ multiplies }f\textbf{ by }\la
 
 ---
 
+## The main derivation — from $GL(n,C)$ to the Leibniz formula
+
+Everything so far (Steps 1–4) takes place on $GL(n,C)$, where $f$ is genuinely defined, and three facts about $f$ are all we shall use:
+
+* (H1) $f$ is a homomorphism $GL(n,C)\to C^*$;
+* (2) $f\big(T_{ij}(c)\big)=1$ for every transvection;
+* (5$'$) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$.
+
+We show these pin $f$ down **uniquely** and reproduce the **Leibniz formula**, working entirely inside $GL$ — never evaluating $f$ on a singular matrix, and with no appeal to continuity, exterior algebra, or Zariski density. (The optional Steps 5–7 below develop the classical multilinear/alternating viewpoint of $f$; the present derivation does **not** use them. The one ingredient missing for $f$ on $GL$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
+
+**1. Transvections and diagonal matrices generate $GL$.**
+*Lemma.* Every $A\in GL(n,C)$ factors as
+$$A=E\,\Delta,\qquad E=\text{a product of transvections},\quad \Delta=\operatorname{diag}(d_1,\dots,d_n). \tag{19}$$
+*Proof.* Row-reduce $A$ by Gaussian elimination. Adding $c$ times row $j$ to row $i$ is left multiplication by $T_{ij}(c)$. Should a pivot vanish, some entry in its column is nonzero (the columns of an invertible matrix are independent), and the row swap that brings it up is the purely algebraic identity (verified in the Appendix)
+$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
+— again transvections times a diagonal. So a product of transvections and diagonal matrices reduces $A$ to a diagonal matrix. Finally, a diagonal matrix conjugates a transvection to a transvection, $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ (Step 2), so every diagonal factor can be slid to the right past the transvections, collecting into a single $\Delta$ and leaving the form (19). $\square$
+
+**2. A concrete anchor: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
+$$D(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)},$$
+a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
+
+* (a) $D(I)=1$, and more generally $D\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
+* (b) **two equal rows $\Rightarrow D=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
+* (c) $D$ is **linear in each row** — every summand is.
+
+From (b) and (c), adding a multiple of one row to another leaves $D$ unchanged, $D\big(T_{ij}(c)\,X\big)=D(X)$; taking $X=I$ and using (a) gives in particular $D(T_{ij}(c))=1$. Thus $D$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $D$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $D$, where it evaporates.
+
+Feed $D$ a factorization (19). Peeling the transvections of $E$ off one at a time by $D(T_{ij}(c)X)=D(X)$, then applying (a),
+$$D(A)=D(E\,\Delta)=D(\Delta)=\prod_i d_i. \tag{20}$$
+
+**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $D$ is exactly what rules this out. If a second factorization $A=E'\Delta'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $D(A)=\prod_i d_i'$ as well; but $D(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $D$ — never assuming it beforehand.)
+
+**4. Every $f$ obeying (H1),(2),(5$'$) equals $D$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–4 is one such. For any factorization (19), using only those three properties,
+$$f(A)=f(E)\,f(\Delta)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
+the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $D$ satisfies $D(A)=p(A)$ as well. Therefore $f$ and $D$ take the identical value $p(A)$ at every $A$:
+$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
+This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $D$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $D$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $D$ (part 3), and the identification $f=p=D$ is part 4. We needed neither multiplicativity of $D$, nor continuity, nor exterior algebra, nor Zariski density.
+
+One may now *define* $\det:=D$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
+
+---
+
+## Optional — the multilinear and alternating viewpoint
+
+The two sections that follow (Steps 5–6) develop the classical multilinear and sign properties of $f$, and Step 7 expands them into the Leibniz formula. **None of this is used by the main derivation above** — it is the traditional textbook route, recorded for context and referenced by the Lie-theoretic correspondence in Part III. A reader after the shortest path may stop here.
+
+---
+
 ## Step 5 — $f$ is multilinear in the rows
 
 Fix all rows of an invertible matrix except row $i$; call the others $r_1,\dots,\widehat{r_i},\dots,r_n$ (they are linearly independent, since the matrix is invertible). View $f$ as a function of the single varying row $r_i$.
@@ -116,7 +164,7 @@ holds (it reduces to the $2\times2$ identity verified in the Appendix), where $S
 $$f(S_{ij})=g(-1)\cdot 1=-1. \tag{9}$$
 Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: for every invertible $A$, swapping two of its rows multiplies $f$ by $-1$,
 $$f(S_{ij}A)=-f(A)\qquad(A\in GL(n,C)). \tag{10}$$
-This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; the Interlude supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
+This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; the main derivation above supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
 Finally, any permutation matrix $P_\sigma$ is a product of swaps, so by (9)
 $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
@@ -124,59 +172,17 @@ $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
 ---
 
-**Interlude — from $GL(n,C)$ to the Leibniz formula, elementarily.**
-
-Everything in Steps 1–6 takes place on $GL(n,C)$, where $f$ is genuinely defined, and three facts about $f$ are all we shall use:
-
-* (H1) $f$ is a homomorphism $GL(n,C)\to C^*$;
-* (2) $f\big(T_{ij}(c)\big)=1$ for every transvection;
-* (5$'$) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$.
-
-We show these pin $f$ down **uniquely** and reproduce the **Leibniz formula**, working entirely inside $GL$ — never evaluating $f$ on a singular matrix, and with no appeal to continuity, exterior algebra, or Zariski density. (The earlier Steps 5–6 give multilinearity and antisymmetry on $GL$; we will not need them below, since the generating-set argument is self-contained. The one thing missing on $GL$ — the *alternating* property of Step 6 — is supplied at the end as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
-
-**1. Transvections and diagonal matrices generate $GL$.**
-*Lemma.* Every $A\in GL(n,C)$ factors as
-$$A=E\,\Delta,\qquad E=\text{a product of transvections},\quad \Delta=\operatorname{diag}(d_1,\dots,d_n). \tag{19}$$
-*Proof.* Row-reduce $A$ by Gaussian elimination. Adding $c$ times row $j$ to row $i$ is left multiplication by $T_{ij}(c)$. Should a pivot vanish, some entry in its column is nonzero (the columns of an invertible matrix are independent), and the row swap that brings it up is, by Step 6,
-$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
-— again transvections times a diagonal. So a product of transvections and diagonal matrices reduces $A$ to a diagonal matrix. Finally, a diagonal matrix conjugates a transvection to a transvection, $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ (Step 2), so every diagonal factor can be slid to the right past the transvections, collecting into a single $\Delta$ and leaving the form (19). $\square$
-
-**2. A concrete anchor: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
-$$D(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)},$$
-a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
-
-* (a) $D(I)=1$, and more generally $D\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
-* (b) **two equal rows $\Rightarrow D=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
-* (c) $D$ is **linear in each row** — every summand is.
-
-From (b) and (c), adding a multiple of one row to another leaves $D$ unchanged, $D\big(T_{ij}(c)\,X\big)=D(X)$; taking $X=I$ and using (a) gives in particular $D(T_{ij}(c))=1$. Thus $D$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ of Step 6, with **no domain caveat**, because $D$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $D$, where it evaporates.
-
-Feed $D$ a factorization (19). Peeling the transvections of $E$ off one at a time by $D(T_{ij}(c)X)=D(X)$, then applying (a),
-$$D(A)=D(E\,\Delta)=D(\Delta)=\prod_i d_i. \tag{20}$$
-
-**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $D$ is exactly what rules this out. If a second factorization $A=E'\Delta'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $D(A)=\prod_i d_i'$ as well; but $D(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $D$ — never assuming it beforehand.)
-
-**4. Every $f$ obeying (H1),(2),(5$'$) equals $D$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–6 is one such. For any factorization (19), using only those three properties,
-$$f(A)=f(E)\,f(\Delta)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
-the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $D$ satisfies $D(A)=p(A)$ as well. Therefore $f$ and $D$ take the identical value $p(A)$ at every $A$:
-$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
-This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $D$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $D$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $D$ (part 3), and the identification $f=p=D$ is part 4. We needed neither multiplicativity of $D$, nor continuity, nor exterior algebra, nor Zariski density.
-
-One may now *define* $\det:=D$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
-
----
-
 ## Step 7 — The same formula via the classical basis expansion (optional)
 
-The Interlude already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that the Interlude was designed to handle.
+The main derivation above already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that the main derivation was designed to handle.
 
 Multilinearity (8) lets one expand each row $r_i=\sum_{j}A_{ij}\,e_j$:
 $$f(A)=\sum_{j_1,\dots,j_n}A_{1,j_1}\cdots A_{n,j_n}\;f(e_{j_1},\dots,e_{j_n}).$$
 The surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$ for a permutation $\sigma$, contributing $f(P_\sigma)=\operatorname{sgn}(\sigma)$ by (11), and one recovers
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,,}$$
-the **Leibniz formula**, in agreement with the Interlude.
+the **Leibniz formula**, in agreement with the main derivation.
 
-A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the Interlude: read every term as a value of the everywhere-defined polynomial $D(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the Interlude (part 3), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the main derivation: read every term as a value of the everywhere-defined polynomial $D(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the main derivation (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
 
 ---
 
