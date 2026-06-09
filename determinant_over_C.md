@@ -26,7 +26,18 @@ We use one background fact about $C$:
 
 We also use only elementary language about rows, spans, and multilinear functions. We do **not** assume the determinant, the Leibniz formula, the polar decomposition, or the spectral theorem.
 
-Throughout, $e_1,\dots,e_n$ is the standard basis, and we view a matrix $A$ as its list of rows $r_1,\dots,r_n\in C^n$. The **matrix unit** $e_{ij}$ is the $n\times n$ matrix with a $1$ in row $i$, column $j$, and $0$ everywhere else. We write $T_{ij}(c)=I+c\,e_{ij}$ (for $i\neq j$) for the **transvection** that adds $c$ times row $j$ to row $i$ under left multiplication.
+Throughout, $e_1,\dots,e_n$ is the standard basis, and we view a matrix $A$ as its list of rows $r_1,\dots,r_n\in C^n$. The **matrix unit** $E_{ij}$ is the $n\times n$ matrix with a $1$ in row $i$, column $j$, and $0$ everywhere else. We write $T_{ij}(c)=I+c\,E_{ij}$ (for $i\neq j$) for the **transvection** that adds $c$ times row $j$ to row $i$ under left multiplication.
+
+The permutation matrix swapping indicies $i$ and $j$ can be written using
+transvections as:
+
+$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
+
+It can be shown that $S_{ij} \in GL(n, C)$ and $S^{-1}_{ij} = S_{ji}$.
+
+*Remark (the swap via transvections --- might not be needed).* Since $\det P_i=-1$ while $\det T_{ij}(c)=1$, the permutation $P_i$ is not itself a product of transvections, but the **signed swap**
+$$W_{1i}:=T_{1i}(1)\,T_{i1}(-1)\,T_{1i}(1)=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)\cdot P_i$$
+is (this is the $S_{ij}$ identity of (9)/the Appendix on coordinates $\{1,i\}$, where the $2\times2$ block is $\big(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\big)$). One may use $W_{1i}$ in place of $P_i$ in (4): they differ by the diagonal matrix $D=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)$, which commutes with any diagonal matrix, so $W_{1i}\operatorname{diag}(x,1,\dots,1)W_{1i}^{-1}=D\,\big(P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}\big)D^{-1}=\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)$, the $D,D^{-1}$ cancelling because the middle factor is diagonal.
 
 ---
 
@@ -65,12 +76,18 @@ $$g(x):=f\big(\operatorname{diag}(x,1,\dots,1)\big),\qquad x\in C^*.$$
 **$g$ is a homomorphism $C^*\to C^*$:** from $\operatorname{diag}(xy,1,\dots,1)=\operatorname{diag}(x,1,\dots,1)\operatorname{diag}(y,1,\dots,1)$ and (H1),
 $$g(xy)=g(x)g(y). \tag{3}$$
 
-**Position does not matter.** Let $P_i$ be the permutation matrix swapping coordinates $1$ and $i$ (so $P_i\in GL(n,C)$, $P_i^{-1}=P_i$). Explicitly $P_i=I-e_{11}-e_{ii}+e_{1i}+e_{i1}$: the identity with rows (and columns) $1$ and $i$ interchanged. Conjugating any diagonal matrix by a permutation matrix permutes its diagonal entries, $P_\sigma\operatorname{diag}(d_1,\dots,d_n)P_\sigma^{-1}=\operatorname{diag}(d_{\sigma^{-1}(1)},\dots,d_{\sigma^{-1}(n)})$; for the swap $(1\,i)$ this moves $x$ from slot $1$ to slot $i$. Then $\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)=P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}$, so by (1)
+**Position does not matter.** Let $P_i=S_{1i}$ be the permutation matrix swapping coordinates $1$ and $i$ (so $P_i\in GL(n,C)$, $P_i^{-1}=P_i^{T}$). Explicitly $P_i=S_{1i}=I-e_{11}-e_{ii}+e_{1i}+e_{i1}$: the identity with rows (and columns) $1$ and $i$ interchanged.
+This moves $x$ from slot $1$ to slot $i$. Then $\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)=P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}$, so by (1)
 $$f\big(\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)\big)=g(x). \tag{4}$$
 
-*Remark (the swap via transvections).* Since $\det P_i=-1$ while $\det T_{ij}(c)=1$, the permutation $P_i$ is not itself a product of transvections, but the **signed swap**
-$$W_{1i}:=T_{1i}(1)\,T_{i1}(-1)\,T_{1i}(1)=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)\cdot P_i$$
-is (this is the $S_{ij}$ identity of (9)/the Appendix on coordinates $\{1,i\}$, where the $2\times2$ block is $\big(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\big)$). One may use $W_{1i}$ in place of $P_i$ in (4): they differ by the diagonal matrix $D=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)$, which commutes with any diagonal matrix, so $W_{1i}\operatorname{diag}(x,1,\dots,1)W_{1i}^{-1}=D\,\big(P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}\big)D^{-1}=\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)$, the $D,D^{-1}$ cancelling because the middle factor is diagonal.
+Note: check if the $P^{-1}_i$ should be there or not. We assume it is, and so
+applying $f$ on the expression above cancels it. Let's make it explicit.
+
+Note:
+Conjugating any diagonal matrix by a permutation matrix permutes its diagonal entries
+(explicitly: $P_\sigma\operatorname{diag}(d_1,\dots,d_n)P_\sigma^{-1}=\operatorname{diag}(d_{\sigma^{-1}(1)},\dots,d_{\sigma^{-1}(n)})$);
+
+
 
 **Product over the diagonal.** Writing $\operatorname{diag}(d_1,\dots,d_n)=\prod_{i=1}^n\operatorname{diag}(1,\dots,\underset{i}{d_i},\dots,1)$ and using (H1), (4), (3),
 $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\prod_{i=1}^n d_i\Big). \tag{5}$$
@@ -88,9 +105,13 @@ Note: this does *not* hold for $R^*$, for example $w=-1$ has no real $\lambda$
 such that $\lambda^2 = w$.
 
 Two immediate consequences, used below: from (5) and (6) it follows
-$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i, \tag{5$'$}$$
+$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g(\prod_i d_i) = \prod_i d_i, \tag{5$'$}$$
 and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$,
-$$\textbf{scaling a single row by }\lambda\textbf{ multiplies }f\textbf{ by }\lambda. \tag{7}$$
+so scaling a single row by $\lambda$ multiplies $f$ by $\lambda$:
+$$f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)A\big)
+=f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)\big)f(A)
+=\lambda f(A)$$
+
 
 
 ---
@@ -107,33 +128,36 @@ We show these pin $f$ down **uniquely** and reproduce the **Leibniz formula**, w
 
 **1. Transvections and diagonal matrices generate $GL$.**
 *Lemma.* Every $A\in GL(n,C)$ factors as
-$$A=E\,\Delta,\qquad E=\text{a product of transvections},\quad \Delta=\operatorname{diag}(d_1,\dots,d_n). \tag{19}$$
+$$A=E\,D,\qquad E=\text{a product of transvections},\quad D=\operatorname{diag}(d_1,\dots,d_n). \tag{19}$$
 *Proof.* Row-reduce $A$ by Gaussian elimination. Adding $c$ times row $j$ to row $i$ is left multiplication by $T_{ij}(c)$. Should a pivot vanish, some entry in its column is nonzero (the columns of an invertible matrix are independent), and the row swap that brings it up is the purely algebraic identity (verified in the Appendix)
 $$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
-— again transvections times a diagonal. So a product of transvections and diagonal matrices reduces $A$ to a diagonal matrix. Finally, a diagonal matrix conjugates a transvection to a transvection, $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ (Step 2), so every diagonal factor can be slid to the right past the transvections, collecting into a single $\Delta$ and leaving the form (19). $\square$
+— again transvections times a diagonal. So a product of transvections and diagonal matrices reduces $A$ to a diagonal matrix. Finally, a diagonal matrix conjugates a transvection to a transvection, $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ (Step 2), so every diagonal factor can be slid to the right past the transvections, collecting into a single $D$ and leaving the form (19):
+$$D\,T_{ij}(c)
+=D\,T_{ij}(c) D^{-1} D
+=T_{ij}(c\,d_i/d_j) D\,.$$ $\square$
 
 **2. A concrete anchor: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
-$$D(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)},$$
+$$L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n a_{i,\sigma(i)},$$
 a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
 
-* (a) $D(I)=1$, and more generally $D\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
-* (b) **two equal rows $\Rightarrow D=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
-* (c) $D$ is **linear in each row** — every summand is.
+* (a) $L(I)=1$, and more generally $L\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
+* (b) **two equal rows $\Rightarrow L=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
+* (c) $L$ is **linear in each row** — every summand is.
 
-From (b) and (c), adding a multiple of one row to another leaves $D$ unchanged, $D\big(T_{ij}(c)\,X\big)=D(X)$; taking $X=I$ and using (a) gives in particular $D(T_{ij}(c))=1$. Thus $D$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $D$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $D$, where it evaporates.
+From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
 
-Feed $D$ a factorization (19). Peeling the transvections of $E$ off one at a time by $D(T_{ij}(c)X)=D(X)$, then applying (a),
-$$D(A)=D(E\,\Delta)=D(\Delta)=\prod_i d_i. \tag{20}$$
+Feed $L$ a factorization (19). Peeling the transvections of $E$ off one at a time by $L(T_{ij}(c)X)=L(X)$, then applying (a),
+$$L(A)=L(E\,D)=L(D)=\prod_i d_i. \tag{20}$$
 
-**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $D$ is exactly what rules this out. If a second factorization $A=E'\Delta'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $D(A)=\prod_i d_i'$ as well; but $D(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $D$ — never assuming it beforehand.)
+**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
 
-**4. Every $f$ obeying (H1),(2),(5$'$) equals $D$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–4 is one such. For any factorization (19), using only those three properties,
-$$f(A)=f(E)\,f(\Delta)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
-the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $D$ satisfies $D(A)=p(A)$ as well. Therefore $f$ and $D$ take the identical value $p(A)$ at every $A$:
+**4. Every $f$ obeying (H1),(2),(5$'$) equals $L$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–4 is one such. For any factorization (19), using only those three properties,
+$$f(A)=f(E)\,f(D)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
+the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $L$ satisfies $L(A)=p(A)$ as well. Therefore $f$ and $L$ take the identical value $p(A)$ at every $A$:
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
-This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $D$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $D$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $D$ (part 3), and the identification $f=p=D$ is part 4. We needed neither multiplicativity of $D$, nor continuity, nor exterior algebra, nor Zariski density.
+This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $L$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $L$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $L$ (part 3), and the identification $f=p=L$ is part 4. We needed neither multiplicativity of $L$, nor continuity, nor exterior algebra, nor Zariski density.
 
-One may now *define* $\det:=D$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
+One may now *define* $\det:=L$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
 
 ---
 
@@ -182,7 +206,7 @@ The surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,,}$$
 the **Leibniz formula**, in agreement with the main derivation.
 
-A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the main derivation: read every term as a value of the everywhere-defined polynomial $D(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the main derivation (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the main derivation: read every term as a value of the everywhere-defined polynomial $L(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the main derivation (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
 
 ---
 
