@@ -1,5 +1,25 @@
 # Deriving the determinant from homogeneity and multiplicativity
 
+Traditionally the determinant is defined using its action on identity and its
+multilinear and alternating properties, but the latter two are formulated in
+terms of rows of the matrix, so it is basis dependent. These properties are
+also rather arbitrary, although it can be motivated by properties of oriented
+areas spanned by the row vectors. Another common derivation is to simply
+define it using the Leibniz formula, but then the definition is completely
+arbitrary.
+
+Instead, in this note we derive it using its action on a multiplication of a
+matrix. Matrix can be multiplied by either a scalar ($\lambda A$) or by another
+matrix ($A B$). We define the determinant by its behavior in these two cases,
+as a function $f$ of a matrix into scalars, and we want this behavior to be
+distributive. The precise behavior that we assume is
+$f(A B) = f(A) f(B)$ (homomorphism) and
+$f(\lambda A) = f(\lambda I) f(A) = \lambda^n f(A)$ (homogeneity), in the
+second case we really only need to assume how it behaves on the identity matrix
+multiplied by a scalar: $f(\lambda I) = \lambda^n$. Both definitions are basis
+independent, just a very natural distributivity in the simplest possible way.
+We do not assume anything else.
+
 This note is **strictly bottom-up**. We assume *only* that a function $f$ on invertible complex matrices is
 
 - a **homomorphism**, and
