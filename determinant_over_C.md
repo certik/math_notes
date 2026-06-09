@@ -20,23 +20,24 @@ multiplied by a scalar: $f(\lambda I) = \lambda^n$. Both definitions are basis
 independent, just a very natural distributivity in the simplest possible way.
 We do not assume anything else.
 
-Note: if we assumed just $f(\lambda I) = \lambda$, then we run into
-contradictions (there is no such function $f$ for all matrices). The
-homomorphism
-property is stronger and forces it to be the $n$-th power. Specifically, in the
+Note: if we assumed just $f(\lambda I) = \lambda$, then for $n\ge2$ there is no
+such multiplicative function $f$ at all (for $n=1$ it trivially works, since
+$\lambda^n=\lambda$). The homomorphism property is stronger and forces the
+$\lambda$-dependence to factor through $\lambda^n$. Specifically, in the
 steps 1.-3. below we show that homomorphism alone implies $f(\lambda I) =
 g(\lambda^n)$, where $g(w)$ is a homomorphism $C^* \to C^*$, which can be fully
 solved with some extra regularity assumptions (continuous or measurable):
-$$g(z)=|z|^{\,s}\Big(\tfrac{z}{|z|}\Big)^{k}=z^{p}\bar z^{\,q},\qquad s\in\mathbb C,\ k\in\mathbb Z\ \ (p-q=k).$$
+$$g(w)=|w|^{\,s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\bar w^{\,q},\qquad s\in C,\ k\in\mathbb Z\ \ (p-q=k).$$
 Only now we need to make some additional choice other than the original
-homomorphism of $f$ and the extra regularity assumption. We cannot choose 0 (we
-operate on C^*), so the simplest choice is to choose identity $g(w) = w$, which
-implies $f(\lambda I) = \lambda^n$ (homogeneity) and if we assume just the
-homogeneity we do not even need to assume continuity. So in this note we simply
-assume homogeneity in this form, and derive everything else, but it is good to
-understand that the homomorphism is the strong main assumption, and it heavily
-restricts the possible forms of the homogeneity assumption, and we choose the
-simplest possible form given the restrictions, in the above sense.
+homomorphism of $f$ and the extra regularity assumption. The trivial choice
+$g\equiv1$ gives the degenerate $f\equiv1$, so the simplest nontrivial choice is
+the identity $g(w) = w$, which implies $f(\lambda I) = \lambda^n$ (homogeneity);
+and if we assume just the homogeneity we do not even need to assume continuity.
+So in this note we simply assume homogeneity in this form, and derive everything
+else, but it is good to understand that the homomorphism is the strong main
+assumption, and it heavily restricts the possible forms of the homogeneity
+assumption, and we choose the simplest possible form given the restrictions, in
+the above sense.
 
 This note is **strictly bottom-up**. We assume *only* that a function $f$ on invertible complex matrices is
 
