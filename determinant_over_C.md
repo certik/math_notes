@@ -20,6 +20,14 @@ multiplied by a scalar: $f(\lambda I) = \lambda^n$. Both definitions are basis
 independent, just a very natural distributivity in the simplest possible way.
 We do not assume anything else.
 
+Note: if we assumed just $f(\lambda I) = \lambda$, then we run into
+contradictions for $n>2$ (there is no such function $f$). The homomorphism
+property is stronger and forces it to be the $n$-th power. Specifically, in the
+steps 1.-3. below we show that homomorphism alone implies $f(\lambda I) =
+g(\lambda^n)$, where $g(w)$ is a homomorphism $C^* \to C^*$. The simplest
+choice is to choose identity $g(w) = w$, which implies
+$f(\lambda I) = \lambda^n$.
+
 This note is **strictly bottom-up**. We assume *only* that a function $f$ on invertible complex matrices is
 
 - a **homomorphism**, and
