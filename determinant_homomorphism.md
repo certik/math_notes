@@ -9,12 +9,6 @@ We are given a function $f:GL(n,C)\to C^*$ such that:
 
 **(H1) Multiplicativity.** $f(AB)=f(A)\,f(B)$ for all $A,B\in GL(n,C)$.
 
-**(H2) Homogeneity.** $f(\lambda I)=\lambda^{n}$ for all $\lambda\in C^*$.
-
-We use one background fact about $C$:
-
-**(R) Roots.** Every $w\in C^*$ has an $n$-th root: some $\lambda\in C^*$ with $\lambda^n=w$.
-
 We also use only elementary language about rows, spans, and multilinear functions. We do **not** assume the determinant, the Leibniz formula, the polar decomposition, or the spectral theorem.
 
 Throughout, $e_1,\dots,e_n$ is the standard basis, and we view a matrix $A$ as its list of rows $r_1,\dots,r_n\in C^n$. The **matrix unit** $E_{ij}$ is the $n\times n$ matrix with a $1$ in row $i$, column $j$, and $0$ everywhere else. We write $T_{ij}(c)=I+c\,E_{ij}$ (for $i\neq j$) for the **transvection** that adds $c$ times row $j$ to row $i$ under left multiplication.
@@ -26,9 +20,6 @@ $$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji
 
 It can be shown that $S_{ij} \in GL(n, C)$ and $S^{-1}_{ij} = S_{ji}$.
 
-*Remark (the swap via transvections --- might not be needed).* Since $\det P_i=-1$ while $\det T_{ij}(c)=1$, the permutation $P_i$ is not itself a product of transvections, but the **signed swap**
-$$W_{1i}:=T_{1i}(1)\,T_{i1}(-1)\,T_{1i}(1)=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)\cdot P_i$$
-is (this is the $S_{ij}$ identity of (9)/the Appendix on coordinates $\{1,i\}$, where the $2\times2$ block is $\big(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\big)$). One may use $W_{1i}$ in place of $P_i$ in (4): they differ by the diagonal matrix $D=\operatorname{diag}(1,\dots,\underset{i}{-1},\dots,1)$, which commutes with any diagonal matrix, so $W_{1i}\operatorname{diag}(x,1,\dots,1)W_{1i}^{-1}=D\,\big(P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}\big)D^{-1}=\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)$, the $D,D^{-1}$ cancelling because the middle factor is diagonal.
 
 ---
 
@@ -85,9 +76,10 @@ $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\pr
 
 ---
 
-## Layer 1 — the factorization theorem $f=g\circ\det$ (multiplicativity only)
+## The factorization theorem $f=g\circ\det$ (multiplicativity only)
 
-Everything so far (Steps 1–3) used **only** that $f$ is a homomorphism (H1); homogeneity has not yet been touched. Three facts are all we shall use:
+Everything so far (Steps 1–3) used **only** that $f$ is a homomorphism (H1);
+Three facts are all we shall use:
 
 * (H1) $f$ is a homomorphism $GL(n,C)\to C^*$;
 * (2) $f\big(T_{ij}(c)\big)=1$ for every transvection;
@@ -105,7 +97,7 @@ $$D\,T_{ij}(c)
 =D\,T_{ij}(c) D^{-1} D
 =T_{ij}(c\,d_i/d_j) D\,.$$ $\square$
 
-**2. A concrete anchor: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
+**2. Existence: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
 $$L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n a_{i,\sigma(i)},$$
 a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
 
@@ -113,17 +105,17 @@ a polynomial defined for **every** matrix by this formula — hence single-value
 * (b) **two equal rows $\Rightarrow L=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
 * (c) $L$ is **linear in each row** — every summand is.
 
-From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ satisfies $L(T_{ij}(c))=1$ and $L(\operatorname{diag}(d_1,\dots,d_n))=\prod_i d_i$ outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
+From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ satisfies $L(T_{ij}(c))=1$ and $L(\operatorname{diag}(d_1,\dots,d_n))=\prod_i d_i$ outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. 
 
 Feed $L$ a factorization (19). Peeling the transvections of $E$ off one at a time by $L(T_{ij}(c)X)=L(X)$, then applying (a),
 $$L(A)=L(E\,D)=L(D)=\prod_i d_i. \tag{20}$$
 
-**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
+**3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an function of $A$ alone, which we write $p(A):=\prod_i d_i=L(A)$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
 
-**4. Every homomorphism $f$ equals $g\circ\det$.** Define $\det:=L$, the everywhere-defined Leibniz polynomial. Let $f$ be *any* homomorphism — the given $f$ of Steps 1–3 is one such. For any factorization (19), using (H1), then (2) (so $f(E)=1$), then (5) (so $f(D)=g(\prod_i d_i)$),
-$$f(A)=f(E)\,f(D)\overset{(2)}{=}f(D)\overset{(5)}{=}g\!\Big(\prod_i d_i\Big)=g\big(p(A)\big)=g\big(\det A\big),$$
-where $p(A)=\prod_i d_i$ is unambiguous by part 3 and equals $L(A)=\det A$ by (20). This is the **factorization theorem**:
-$$\boxed{\,f(A)=g(\det A),\qquad \det A:=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)),\,}$$
-for some homomorphism $g:C^*\to C^*$ — **derived from multiplicativity alone**, with no homogeneity, continuity, measurability, or Zariski density. The grounding is fully transparent: the single-valued determinant is the explicit polynomial $L$ (part 2), well-definedness of $p(A)=\det A$ is anchored on $L$ (part 3), and the factorization $f=g\circ\det$ is part 4.
+**4. Uniqueness: every homomorphism $f$ equals $g\circ L$.**  Let $f$ be *any* homomorphism — the given $f$ of Steps 1–3 is one such. For any factorization (19), using (H1), then (2) (so $f(E)=1$), then (5) (so $f(D)=g(\prod_i d_i)$),
+$$f(A)=f(E)\,f(D)\overset{(2)}{=}f(D)\overset{(5)}{=}g\!\Big(\prod_i d_i\Big)=g\big(p(A)\big)=g\big(L(A)\big),$$
+where $p(A)=\prod_i d_i$ is unambiguous and equals $L(A)$ by (20). This is the **factorization theorem**:
+$$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)} \equiv \det A \qquad(A\in GL(n,C)),\,}$$
+for some homomorphism $g:C^*\to C^*$ — **derived from multiplicativity alone**, with no homogeneity, continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, well-definedness of $p(A)=\det A$ is anchored on $L$, and the factorization $f=g\circ\det$.
 
-Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(C^*,C^*)$ *is* a homomorphism $GL(n,C)\to C^*$, so these are **exactly** all of them: the determinant is the universal homomorphism, and every other is a "rescaling" $g$ of it. The factor $g$ is genuinely free here — continuity or measurability would narrow it to $g(w)=|w|^s(w/|w|)^k$, and homogeneity (Layer 2) pins it to the identity.
+Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(C^*,C^*)$ *is* a homomorphism $GL(n,C)\to C^*$, so these are **exactly** all of them: the determinant is the universal homomorphism, and every other is a "rescaling" $g$ of it. The factor $g$ is genuinely free here — continuity or measurability would narrow it to $g(w)=|w|^s(w/|w|)^k$, and homogeneity pins it to the identity.
