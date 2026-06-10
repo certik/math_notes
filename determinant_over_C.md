@@ -647,3 +647,26 @@ What the note adds is not a theorem but an organisation: **everything follows fr
 3. **Eigenvalues + Weyl** (Lie chapter §5): a torus character $\prod_i\lambda_i^{m_i}$ that is symmetric in the $\lambda_i$ has all $m_i$ equal, so it is $(\prod_i\lambda_i)^m=\det^m$.
 
 In one line: $\det$ is the universal multiplier because it *generates the Weyl-invariant character lattice* — it is the abelianisation of $GL$, and a relative invariant can see nothing finer than $\det S$.
+
+### 10. Beyond densities: other relative invariants
+
+The definition $F(S\!\cdot\!A)=c(S)F(A)$ is far more general than tensor densities; densities are just its "$GL(n)$ acting on one tensor" slice. Three directions show what else it captures.
+
+**Same group, richer objects.** Tensor densities exhaust the *scalar functions of one matrix-like tensor* (§1). On other $GL(n,C)$-representations the relative invariants are the staples of classical invariant theory — still with a $\det$-power multiplier, but genuinely new functions:
+
+- **Pfaffian** — the polynomial square root of the determinant that the metalinear obstruction forbade for symmetric forms (§5). On *antisymmetric* forms ($A=-A^{T}$, $n=2m$), $\det A=\operatorname{Pf}(A)^{2}$ is a perfect square, so
+$$\operatorname{Pf}(S^{T}AS)=\det(S)\,\operatorname{Pf}(A)$$
+is a *single-valued* relative invariant of weight $1$, i.e. $(p,q)=(1,0)$ — half the weight of $\det A$, yet rational, because the antisymmetric locus is exactly where the square root rationalises. (Contrast $\sqrt{\det g}$ for symmetric $g$, which is *not* a perfect square and stays multivalued — needing the modulus $\sqrt{\lvert g\rvert}$ of §5.)
+- **Discriminants and resultants** of forms: e.g. $b^{2}-4ac$ transforms by $(\det)^{2}$ under $GL_2$.
+- **Maximal minors / Plücker brackets**, and $\det(SAT)=\det S\,\det A\,\det T$ — a relative invariant of $GL\times GL$.
+- **Hyperdeterminants** (Cayley) for $A_{ijk}$ — relative invariants of $GL\times GL\times\cdots$ (cf. §7).
+
+**Other groups, other multipliers.** Relative-invariance is group-relative: the multiplier ranges over $X(G)$, the character group of $G$.
+
+- **$O(n)$:** $\det=\pm1$, so the one nontrivial character is **orientation**; weight-$1$ relative invariants are **pseudoscalars** (the cross product, the Levi-Civita tensor as an $O(n)$ object).
+- **$SL(n,C)$, $Sp(2n,C)$ (perfect groups):** $X(G)=\{1\}$, so the *only* multiplier is trivial — **every relative invariant is absolute**. No nontrivial densities exist; the symplectic volume is a genuine invariant.
+- **Torus $(C^*)^n$ and products:** characters are monomials $\prod_i d_i^{m_i}$, giving multi-weight relative invariants (weight vectors, minors).
+
+**The principle.** A relative invariant is precisely a nonzero vector spanning a **$G$-stable line** — a one-dimensional subrepresentation, classically a *semi-invariant*. Its multiplier is a character, so
+$$\boxed{\ \{\text{relative invariants}\}\ \longleftrightarrow\ \{\text{one-dimensional subreps}\}\ \longleftrightarrow\ X(G)\ \text{(characters)}.\ }$$
+For $G=GL(n,C)$ this is $X=\mathbb Z\cdot\det$ — which is *why* every multiplier is a $\det$-power and "relative invariant of $GL$" means "density." Change the group and the catalogue changes with $X(G)$. Tensor densities are the $GL(n)$ slice of this one uniform statement.
