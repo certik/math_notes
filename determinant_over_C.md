@@ -133,37 +133,15 @@ $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\pr
 
 ---
 
-## Step 4 — Homogeneity forces $g=\mathrm{id}$
+## Layer 1 — the factorization theorem $f=g\circ\det$ (multiplicativity only)
 
-Apply (5) to $\lambda I=\operatorname{diag}(\lambda,\dots,\lambda)$ and compare with (H2):
-$$g(\lambda^n)=f(\lambda I)=\lambda^n\qquad\text{for all }\lambda\in C^*.$$
-Given any $w\in C^*$, pick an $n$-th root $\lambda$ with $\lambda^n=w$ (fact (R)); then $g(w)=g(\lambda^n)=\lambda^n=w$. Hence
-$$g=\mathrm{id}_{C^*}. \tag{6}$$
-
-Note: this does *not* hold for $R^*$, for example $w=-1$ has no real $\lambda$
-such that $\lambda^2 = w$.
-
-Two immediate consequences, used below: from (5) and (6) it follows
-$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g(\prod_i d_i) = \prod_i d_i, \tag{5$'$}$$
-and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$,
-so scaling a single row by $\lambda$ multiplies $f$ by $\lambda$:
-$$f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)A\big)
-=f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)\big)f(A)
-=\lambda f(A)$$
-
-
-
----
-
-## The main derivation — from $GL(n,C)$ to the Leibniz formula
-
-Everything so far (Steps 1–4) takes place on $GL(n,C)$, where $f$ is genuinely defined, and three facts about $f$ are all we shall use:
+Everything so far (Steps 1–3) used **only** that $f$ is a homomorphism (H1); homogeneity has not yet been touched. Three facts are all we shall use:
 
 * (H1) $f$ is a homomorphism $GL(n,C)\to C^*$;
 * (2) $f\big(T_{ij}(c)\big)=1$ for every transvection;
-* (5$'$) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$.
+* (5) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g\!\big(\prod_i d_i\big)$, with $g:C^*\to C^*$ the homomorphism of Step 3.
 
-We show these pin $f$ down **uniquely** and reproduce the **Leibniz formula**, working entirely inside $GL$ — never evaluating $f$ on a singular matrix, and with no appeal to continuity, exterior algebra, or Zariski density. (The optional Steps 5–7 below develop the classical multilinear/alternating viewpoint of $f$; the present derivation does **not** use them. The one ingredient missing for $f$ on $GL$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
+We show these force $f=g\circ\det$, the determinant being supplied — single-valued — by the Leibniz polynomial. We work entirely inside $GL$, never evaluating $f$ on a singular matrix, with no appeal to homogeneity, continuity, exterior algebra, or Zariski density. (The optional Steps 5–7 below develop the classical multilinear/alternating viewpoint of $f$; the present derivation does **not** use them. The one ingredient missing for $f$ on $GL$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
 
 **1. Transvections and diagonal matrices generate $GL$.**
 *Lemma.* Every $A\in GL(n,C)$ factors as
@@ -183,26 +161,45 @@ a polynomial defined for **every** matrix by this formula — hence single-value
 * (b) **two equal rows $\Rightarrow L=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
 * (c) $L$ is **linear in each row** — every summand is.
 
-From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
+From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ satisfies $L(T_{ij}(c))=1$ and $L(\operatorname{diag}(d_1,\dots,d_n))=\prod_i d_i$ outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
 
 Feed $L$ a factorization (19). Peeling the transvections of $E$ off one at a time by $L(T_{ij}(c)X)=L(X)$, then applying (a),
 $$L(A)=L(E\,D)=L(D)=\prod_i d_i. \tag{20}$$
 
 **3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
 
-**4. Every $f$ obeying (H1),(2),(5$'$) equals $L$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–4 is one such. For any factorization (19), using only those three properties,
-$$f(A)=f(E)\,f(D)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
-the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $L$ satisfies $L(A)=p(A)$ as well. Therefore $f$ and $L$ take the identical value $p(A)$ at every $A$:
-$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
-This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $L$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $L$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $L$ (part 3), and the identification $f=p=L$ is part 4. We needed neither multiplicativity of $L$, nor continuity, nor exterior algebra, nor Zariski density.
+**4. Every homomorphism $f$ equals $g\circ\det$.** Define $\det:=L$, the everywhere-defined Leibniz polynomial. Let $f$ be *any* homomorphism — the given $f$ of Steps 1–3 is one such. For any factorization (19), using (H1), then (2) (so $f(E)=1$), then (5) (so $f(D)=g(\prod_i d_i)$),
+$$f(A)=f(E)\,f(D)\overset{(2)}{=}f(D)\overset{(5)}{=}g\!\Big(\prod_i d_i\Big)=g\big(p(A)\big)=g\big(\det A\big),$$
+where $p(A)=\prod_i d_i$ is unambiguous by part 3 and equals $L(A)=\det A$ by (20). This is the **factorization theorem**:
+$$\boxed{\,f(A)=g(\det A),\qquad \det A:=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)),\,}$$
+for some homomorphism $g:C^*\to C^*$ — **derived from multiplicativity alone**, with no homogeneity, continuity, measurability, or Zariski density. The grounding is fully transparent: the single-valued determinant is the explicit polynomial $L$ (part 2), well-definedness of $p(A)=\det A$ is anchored on $L$ (part 3), and the factorization $f=g\circ\det$ is part 4.
 
-One may now *define* $\det:=L$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
+Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(C^*,C^*)$ *is* a homomorphism $GL(n,C)\to C^*$, so these are **exactly** all of them: the determinant is the universal homomorphism, and every other is a "rescaling" $g$ of it. The factor $g$ is genuinely free here — continuity or measurability would narrow it to $g(w)=|w|^s(w/|w|)^k$, and homogeneity (Layer 2) pins it to the identity.
+
+---
+
+## Layer 2 — homogeneity selects $g=\mathrm{id}$, hence $f=\det$
+
+Layer 1 leaves exactly one degree of freedom, the homomorphism $g$; homogeneity removes it. Apply the factorization theorem to $\lambda I$, whose determinant is $\det(\lambda I)=\lambda^n$, and compare with (H2):
+$$g(\lambda^n)=f(\lambda I)=\lambda^n\qquad\text{for all }\lambda\in C^*.$$
+Given any $w\in C^*$, pick an $n$-th root $\lambda$ with $\lambda^n=w$ (fact (R)); then $g(w)=g(\lambda^n)=\lambda^n=w$. Hence
+$$g=\mathrm{id}_{C^*}, \tag{6}$$
+and the factorization theorem collapses to
+$$\boxed{\,f(A)=\det A=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)).\,}$$
+So $f$ is the determinant, and the **unique** homogeneous homomorphism.
+
+This last step is the *only* place $C$ rather than $R$ is used: it needs every $w\in C^*$ to be an $n$-th power. Over $R^*$ it fails — e.g. $w=-1$ has no real $\lambda$ with $\lambda^2=w$ — so over $R$ with even $n$ the value $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ gives a second, sign-blind solution (the permanent-like $|\det|$).
+
+Two consequences of $g=\mathrm{id}$, used in the optional sections below: from (5) and (6),
+$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i, \tag{5$'$}$$
+and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$, scaling a single row by $\lambda$ multiplies $f$ by $\lambda$:
+$$f\big(\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)A\big)=\lambda\,f(A). \tag{7}$$
 
 ---
 
 ## Optional — the multilinear and alternating viewpoint
 
-The two sections that follow (Steps 5–6) develop the classical multilinear and sign properties of $f$, and Step 7 expands them into the Leibniz formula. **None of this is used by the main derivation above** — it is the traditional textbook route, recorded for context and referenced by the Lie-theoretic correspondence in Part III. A reader after the shortest path may stop here.
+The two sections that follow (Steps 5–6) develop the classical multilinear and sign properties of $f$, and Step 7 expands them into the Leibniz formula. **None of this is used by Layers 1–2 above** — it is the traditional textbook route, recorded for context and referenced by the Lie-theoretic correspondence in Part III. A reader after the shortest path may stop here.
 
 ---
 
@@ -215,7 +212,7 @@ Fix all rows of an invertible matrix except row $i$; call the others $r_1,\dots,
 
 A function on the one-dimensional space $C^n/V$ that is homogeneous of degree $1$ is **linear**. Concretely, fix a nonzero class $z_0$ and let $c$ be the value of $f$ there. Every nonzero class is $t\,z_0$ for a unique scalar $t\in C^*$, and degree-$1$ homogeneity forces the value to be exactly $t\,c$. This rule $t\,z_0\mapsto t\,c$ is linear by the field arithmetic of $C$ (no Hamel-basis pathologies can arise in dimension one). Pulling back, $f$ is an additive (indeed linear) function of $r_i$:
 $$f(\dots,\,u+v\,,\dots)=f(\dots,u,\dots)+f(\dots,v,\dots),\qquad f(\dots,\lambda u,\dots)=\lambda\,f(\dots,u,\dots).$$
-Since $i$ was arbitrary, **$f$ is multilinear in the rows.** $\tag{8}$
+Since $i$ was arbitrary, **$f$ is multilinear in the rows.** (8)
 
 ---
 
@@ -227,36 +224,40 @@ holds (it reduces to the $2\times2$ identity verified in the Appendix), where $S
 $$f(S_{ij})=g(-1)\cdot 1=-1. \tag{9}$$
 Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: for every invertible $A$, swapping two of its rows multiplies $f$ by $-1$,
 $$f(S_{ij}A)=-f(A)\qquad(A\in GL(n,C)). \tag{10}$$
-This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; the main derivation above supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
+This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; Layer 1 above supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
 Finally, any permutation matrix $P_\sigma$ is a product of swaps, so by (9)
 $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
-(Here is the only place the choice of branch mattered: (9) used $g(-1)=-1$ from Step 4. Had $g(-1)=+1$ — the situation that survives over $R$ for even $n$ — we would get the sign-blind "permanent" instead. Homogeneity, through (6), is exactly what selects the alternating sign.)
+(Here is the only place the choice of branch mattered: (9) used $g(-1)=-1$ from Layer 2. Had $g(-1)=+1$ — the situation that survives over $R$ for even $n$ — we would get the sign-blind "permanent" instead. Homogeneity, through (6), is exactly what selects the alternating sign.)
 
 ---
 
 ## Step 7 — The same formula via the classical basis expansion (optional)
 
-The main derivation above already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that the main derivation was designed to handle.
+Layers 1–2 above already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that Layer 1 was designed to handle.
 
 Multilinearity (8) lets one expand each row $r_i=\sum_{j}A_{ij}\,e_j$:
 $$f(A)=\sum_{j_1,\dots,j_n}A_{1,j_1}\cdots A_{n,j_n}\;f(e_{j_1},\dots,e_{j_n}).$$
 The surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$ for a permutation $\sigma$, contributing $f(P_\sigma)=\operatorname{sgn}(\sigma)$ by (11), and one recovers
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,,}$$
-the **Leibniz formula**, in agreement with the main derivation.
+the **Leibniz formula**, in agreement with Layers 1–2.
 
-A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the main derivation: read every term as a value of the everywhere-defined polynomial $L(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the main derivation (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in Layer 1: read every term as a value of the everywhere-defined polynomial $L(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of Layer 1 (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
 
 ---
 
 ## Conclusion
 
-> **Theorem.** Over $C$, any homogeneous homomorphism $f:GL(n,C)\to C^*$ is given by the Leibniz formula; i.e. $f$ is the determinant, and it is the unique such function.
+The argument splits into two independent layers.
+
+> **Layer 1 — factorization (multiplicativity only).** Every homomorphism $f:GL(n,C)\to C^*$ has the form $f(A)=g(\det A)$ for some homomorphism $g:C^*\to C^*$, where $\det$ is the Leibniz polynomial. No homogeneity, continuity, or measurability is used; conversely every $g\circ\det$ is a homomorphism, so these are *all* of them.
+
+> **Layer 2 — normalization (adding homogeneity).** If in addition $f(\lambda I)=\lambda^n$, then $g=\mathrm{id}$, so $f=\det$: the determinant is the unique homogeneous homomorphism.
 
 Two remarks:
 
-- **No regularity, no spectral theory.** We never assumed $f$ continuous or measurable, and never used eigenvalues, the polar decomposition, or the determinant itself. Everything came from (H1), (H2), and one use of (R).
-- **Where $C$ was essential.** The single step that needed $C$ rather than $R$ is Step 4: every $w\in C^*$ — in particular $-1=i^2$ — has an $n$-th root, which forces $g=\mathrm{id}$ and hence $g(-1)=-1$, the sign in Step 6. Over $R$ with even $n$ the value $-1$ has no real $n$-th root, $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ yields a second, sign-blind solution (the permanent-like $|\det|$). Over $C$ that ambiguity cannot occur.
+- **No regularity, no spectral theory.** We never assumed $f$ continuous or measurable, and never used eigenvalues, the polar decomposition, or the determinant itself. Layer 1 came from (H1) alone; Layer 2 added (H2) and one use of (R).
+- **Where $C$ was essential.** Homogeneity is needed only to select $g=\mathrm{id}$, and that is the single step (Layer 2) requiring $C$ rather than $R$: every $w\in C^*$ — in particular $-1=i^2$ — has an $n$-th root, which forces $g=\mathrm{id}$ and hence $g(-1)=-1$, the sign in Step 6. Over $R$ with even $n$ the value $-1$ has no real $n$-th root, $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ yields a second, sign-blind solution (the permanent-like $|\det|$). Over $C$ that ambiguity cannot occur.
 
 ---
 
@@ -345,7 +346,7 @@ $$\operatorname{diag}(d_1,\dots,d_n)\longmapsto \prod_i d_i^{\,m_i},\qquad (m_1,
 The Weyl group of $GL(n,C)$ is the symmetric group $S_n$, permuting the $d_i$ (this is the permutation-matrix conjugation of Step 3). A character that is **Weyl-invariant** must have all $m_i$ equal, $m_i=m$, i.e. it is $(\prod_i d_i)^m=(\det|_T)^m$. Homogeneity (H2), $f(\lambda I)=\lambda^n$, evaluates this at $d_i=\lambda$: $(\lambda^n)^m=\lambda^{nm}\overset{!}{=}\lambda^n$, forcing $m=1$. So:
 
 - **Weyl-invariance** $\Rightarrow$ $f|_T=(\det|_T)^m$ — this is Step 3 ("position doesn't matter, $f(\operatorname{diag})=g(\prod d_i)$").
-- **Homogeneity** $\Rightarrow$ $m=1$ — this is Step 4 ("$g=\mathrm{id}$").
+- **Homogeneity** $\Rightarrow$ $m=1$ — this is Layer 2 ("$g=\mathrm{id}$").
 
 The note proves Weyl-invariance from scratch (permutation conjugation) and gets $m=1$ from the root property (every $w$ is an $n$-th power). The $C$-vs-$R$ subtlety lives entirely in this last point: over $C$ the only Weyl-invariant character matching (H2) is $\det$; over $R$ with even $n$ there is a second character of the disconnected torus $(R^*)^n$ — the sign-blind $\prod|d_i|$ — because $R^*$ is not divisible.
 
@@ -360,8 +361,8 @@ The note proves Weyl-invariance from scratch (permutation conjugation) and gets 
 | $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ | adjoint action of the torus; eigenvalue $=$ exponentiated root |
 | $f\equiv1$ on transvections (Step 2) | $f$ is trivial on $[G,G]=SL(n,C)$ (commutators) |
 | permutation conjugation (Step 3) | Weyl group $S_n$ acting on the torus |
-| $f(\operatorname{diag})=g(\prod d_i)$ | $f|_T$ is a Weyl-invariant character of $(C^*)^n$ |
-| homogeneity fixes $g=\mathrm{id}$ (Step 4) | normalization selecting the character $\det$ (exponent $m=1$) |
+| $f(\operatorname{diag})=g(\prod d_i)$ | $f\rvert_T$ is a Weyl-invariant character of $(C^*)^n$ |
+| homogeneity fixes $g=\mathrm{id}$ (Layer 2) | normalization selecting the character $\det$ (exponent $m=1$) |
 | swap sign $f(S_{ij})=-1$ (Step 6) | longest Weyl element acts by $\operatorname{sgn}$; needs $-1\in(C^*)^n$-image |
 
 In one sentence: **the determinant is the unique Weyl-invariant character of the maximal torus that is trivial on the unipotent root subgroups and normalized by homogeneity** — and the elementary note is precisely this statement with all the Lie theory unwound into bare-hands matrix computations.
@@ -393,8 +394,8 @@ $$\phi:=df_I:\mathfrak{gl}(n,C)\longrightarrow C=\operatorname{Lie}(C^*)$$
 be the differential of $f$ at the identity. Two standard facts:
 
 1. **$\phi$ is a Lie-algebra homomorphism**: $\phi([X,Y])=[\phi(X),\phi(Y)]$. Because the target $C$ is abelian, the right-hand side is $0$, so
-$$\phi([X,Y])=0\qquad\text{for all }X,Y. \tag{Λ1}$$
-2. **$f$ intertwines the exponentials**: $f(\exp X)=\exp(\phi(X))$ for all $X\in\mathfrak{gl}(n,C)$, where on the left $\exp$ is the matrix exponential and on the right it is $C\to C^*,\ z\mapsto e^{z}$. $\tag{Λ2}$
+$$\phi([X,Y])=0\qquad\text{for all }X,Y. \tag{$\Lambda$1}$$
+2. **$f$ intertwines the exponentials**: $f(\exp X)=\exp(\phi(X))$ for all $X\in\mathfrak{gl}(n,C)$, where on the left $\exp$ is the matrix exponential and on the right it is $C\to C^*,\ z\mapsto e^{z}$. (Λ2)
 
 Here $\phi$ is only $\mathbb{R}$-linear (we did not assume holomorphy), a point that matters in Step 3.
 
@@ -403,11 +404,11 @@ This is the precise Lie-theoretic shadow of Step 1–2 of Part I: conjugation-in
 ### Step 3 — $\phi$ vanishes on $\mathfrak{sl}(n,C)$, hence is a multiple of the trace
 
 By (Λ1), $\phi$ vanishes on the **derived subalgebra** $[\mathfrak{g},\mathfrak{g}]$. For $\mathfrak{gl}(n,C)$ this derived subalgebra is exactly the traceless matrices:
-$$[\mathfrak{gl}(n,C),\mathfrak{gl}(n,C)]=\mathfrak{sl}(n,C). \tag{Λ3}$$
+$$[\mathfrak{gl}(n,C),\mathfrak{gl}(n,C)]=\mathfrak{sl}(n,C). \tag{$\Lambda$3}$$
 Indeed $\operatorname{tr}[X,Y]=0$ gives "$\subseteq$", while $e_{ij}=[e_{ii},e_{ij}]$ ($i\neq j$) and $e_{ii}-e_{jj}=[e_{ij},e_{ji}]$ produce a full basis of $\mathfrak{sl}(n,C)$, giving "$\supseteq$" (and incidentally that $\mathfrak{sl}(n,C)$ is **perfect** for $n\ge2$). So $\phi$ factors through the one-complex-dimensional quotient
 $$\mathfrak{gl}(n,C)/\mathfrak{sl}(n,C)\;\xrightarrow{\ \sim\ }\;C,\qquad X\longmapsto \operatorname{tr}X.$$
 An $\mathbb{R}$-linear functional on this quotient is an $\mathbb{R}$-linear functional of $\operatorname{tr}X\in C$, i.e. there are constants $a,b\in C$ with
-$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}. \tag{Λ4}$$
+$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}. \tag{$\Lambda$4}$$
 The conjugate term is present precisely because $\phi$ is only real-linear; it is the infinitesimal trace of the second, "anti-holomorphic" solution $A\mapsto\overline{\det A}$.
 
 **Example ($n=2$).** $\mathfrak{sl}(2,C)=\operatorname{span}\{h,e,f_-\}$ is spanned by the three commutators $[e,f_-]=h,\ [h,e]=2e,\ [h,f_-]=-2f_-$, so any commutator-annihilating $\phi$ already vanishes on all of it; only the trace direction $I=e_{11}+e_{22}$ survives.
@@ -419,16 +420,16 @@ $$f(\lambda I)=\exp\!\big(\phi(zI)\big)=\exp\!\big(a\,\operatorname{tr}(zI)+b\,\
 Homogeneity (H2) says $f(\lambda I)=\lambda^{n}=e^{nz}$. Hence
 $$\exp\!\big(a\,nz+b\,n\bar z\big)=\exp(nz)\qquad\text{for all }z\in C.$$
 The function $z\mapsto a n z+b n\bar z-nz$ is continuous, takes values in $2\pi i\,\mathbb{Z}$, and vanishes at $z=0$; by connectedness of $C$ it is identically $0$. Thus $a z+b\bar z=z$ for all $z\in C$, and since $z$ and $\bar z$ are $\mathbb{R}$-independent,
-$$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{Λ5}$$
+$$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{$\Lambda$5}$$
 
-This is the exact counterpart of Step 4 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
+This is the exact counterpart of Layer 2 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
 
 ### Step 5 — Integrate: $f$ is the product of the eigenvalues
 
 Combining (Λ2) and (Λ5),
-$$f(\exp X)=\exp(\operatorname{tr}X)\qquad\text{for all }X\in\mathfrak{gl}(n,C). \tag{Λ6}$$
+$$f(\exp X)=\exp(\operatorname{tr}X)\qquad\text{for all }X\in\mathfrak{gl}(n,C). \tag{$\Lambda$6}$$
 Because $G=GL(n,C)$ is **connected**, a continuous homomorphism is determined by its differential, so (Λ6) determines $f$ on all of $G$. We make it fully explicit. Over $C$ the matrix exponential $\exp:\mathfrak{gl}(n,C)\to GL(n,C)$ is **surjective**, so every invertible $A$ equals $\exp X$ for some $X$. If $X$ has eigenvalues $\mu_1,\dots,\mu_n$ (with multiplicity), then $A=\exp X$ has eigenvalues $\lambda_i=e^{\mu_i}$, and $\operatorname{tr}X=\sum_i\mu_i$, so (Λ6) gives
-$$f(A)=\exp\!\Big(\sum_i\mu_i\Big)=\prod_i e^{\mu_i}=\prod_{i=1}^n\lambda_i(A). \tag{Λ7}$$
+$$f(A)=\exp\!\Big(\sum_i\mu_i\Big)=\prod_i e^{\mu_i}=\prod_{i=1}^n\lambda_i(A). \tag{$\Lambda$7}$$
 Thus **$f$ is the product of the eigenvalues** of $A$, counted with algebraic multiplicity — independent of the chosen $X$. (Surjectivity of $\exp$ over $C$ is the precise place the proof uses the complex field, just as the $n$-th-root property was in Part I; over $R$ it fails — e.g. $\operatorname{diag}(-1,-2)$ is not a real exponential — which is the analytic shadow of the missing real $n$-th roots.)
 
 **Example ($n=2$).** For $A=\begin{pmatrix}2&1\\0&3\end{pmatrix}$, eigenvalues $2,3$, so $f(A)=6$. For a rotation-scaling $A=r\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}=\exp\!\begin{pmatrix}\log r&-\theta\\\theta&\log r\end{pmatrix}$, $\operatorname{tr}=2\log r$, so $f(A)=e^{2\log r}=r^2$, matching $\lambda_1\lambda_2=(re^{i\theta})(re^{-i\theta})=r^2$.
@@ -436,7 +437,7 @@ Thus **$f$ is the product of the eigenvalues** of $A$, counted with algebraic mu
 ### Step 6 — The top exterior power gives the Leibniz formula
 
 It remains to write $\prod_i\lambda_i$ in coordinates. This is the natural job of the **top exterior power** $\Lambda^n(C^n)$, a one-dimensional space with basis $e_1\wedge\cdots\wedge e_n$. Any linear map $A$ induces a linear map $\Lambda^n A$ on this line, i.e. multiplication by a scalar $\delta(A)$:
-$$(Ae_1)\wedge(Ae_2)\wedge\cdots\wedge(Ae_n)=\delta(A)\;e_1\wedge\cdots\wedge e_n. \tag{Λ8}$$
+$$(Ae_1)\wedge(Ae_2)\wedge\cdots\wedge(Ae_n)=\delta(A)\;e_1\wedge\cdots\wedge e_n. \tag{$\Lambda$8}$$
 Two properties are immediate from functoriality of $\Lambda^n$: $\delta(AB)=\delta(A)\delta(B)$ (so $\delta$ is multiplicative and continuous, a polynomial in the entries), and on a diagonalizable $A$ with eigenvalues $\lambda_i$, choosing an eigenbasis, $\delta(A)=\prod_i\lambda_i$.
 
 Now expand (Λ8) in coordinates. Writing the columns $Ae_k=\sum_{j} A_{jk}\,e_j$ and using multilinearity and antisymmetry of the wedge ($e_{j_1}\wedge\cdots\wedge e_{j_n}=0$ if any index repeats, and $=\operatorname{sgn}(\sigma)\,e_1\wedge\cdots\wedge e_n$ when $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$),
@@ -444,7 +445,7 @@ $$(Ae_1)\wedge\cdots\wedge(Ae_n)=\sum_{j_1,\dots,j_n}A_{j_1 1}\cdots A_{j_n n}\;
 =\Big(\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}\Big)e_1\wedge\cdots\wedge e_n.$$
 Comparing with (Λ8),
 $$\delta(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}
-=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}, \tag{Λ9}$$
+=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}, \tag{$\Lambda$9}$$
 the two sums being equal by the substitution $\sigma\mapsto\sigma^{-1}$ (which preserves the sign). This is the **Leibniz formula**.
 
 Finally, $\delta$ and $f$ are both continuous and, by (Λ7) and the eigenvalue computation above, agree on the **dense** set of diagonalizable invertible matrices (both equal $\prod_i\lambda_i$ there). Two continuous functions agreeing on a dense set agree everywhere, so $f=\delta$ on all of $GL(n,C)$:
@@ -458,11 +459,11 @@ The Leibniz formula is recovered — now as the coordinate expression of the act
 |---|---|
 | conjugation invariance, $f$ trivial on transvections (Steps 1–2) | $\phi=df_I$ annihilates commutators (Λ1); vanishes on $[\mathfrak g,\mathfrak g]=\mathfrak{sl}_n$ (Λ3) |
 | $f(\operatorname{diag})=g(\prod d_i)$, $g$ a homomorphism (Step 3) | $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ on the quotient $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ (Λ4) |
-| homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Step 4) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
-| second branch $g(-1)=+1$ over $R$, giving $|\det|$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
+| homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Layer 2) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
+| second branch $g(-1)=+1$ over $R$, giving $\lvert\det\rvert$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
 | $f$ multilinear & alternating in rows (Steps 5–6) | $f$ = action on $\Lambda^n$; antisymmetry of the wedge (Λ8) |
 | basis expansion $\Rightarrow$ Leibniz (Step 7) | wedge expansion $\Rightarrow$ Leibniz (Λ9) |
-| uses $n$-th roots in $C$ once (Step 4) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
+| uses $n$-th roots in $C$ once (Layer 2) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
 
 Both proofs are the same story told at two levels: *kill the commutators, read off the one remaining degree of freedom on the torus / Cartan, and let homogeneity fix it.* The elementary version pays nothing in regularity but does the bookkeeping by hand; the Lie version assumes continuity and lets the exponential map and the top exterior power do the bookkeeping automatically.
 
@@ -470,24 +471,209 @@ Both proofs are the same story told at two levels: *kill the commutators, read o
 
 ## Part IV — Determinants of tensors and tensor densities
 
-The note characterised the determinant on $GL(n,C)$ as the unique homogeneous homomorphism. The one property we carry over to *tensors* is its **multiplicativity**, $\det(XY)=\det(X)\det(Y)$. It resolves a familiar puzzle from differential geometry: why the determinant of a $(1,1)$-tensor $A^i{}_j$ is an honest invariant scalar, while the determinant of a $(0,2)$-tensor $A_{ij}$ — such as the metric $g_{\mu\nu}$ — is only a *density*, invariant up to a power of the Jacobian.
+The note characterised the determinant on $GL(n,C)$ as the unique homogeneous homomorphism. Tensors fit the *same* machinery through a single notion — the **relative invariant** — whose multiplier is forced, by Layer 1, to be a character $g(\det S)$. This both extends "determinant" to tensors and resolves a familiar puzzle from differential geometry: why the determinant of a $(1,1)$-tensor $A^i{}_j$ is an honest invariant scalar, while the determinant of a $(0,2)$-tensor $A_{ij}$ — such as the metric $g_{\mu\nu}$ — is only a *density*, invariant up to a power of the Jacobian.
 
 Throughout, $V=C^n$ with dual $V^*$, and a change of basis is a map $S\in GL(V)$. We use the passive convention: under the new basis $e'_i=S^j{}_i e_j$, contravariant (upper) components transform by $S^{-1}$ and covariant (lower) components by $S$. We write $\det$ for the operator determinant already derived in this note; the tensor determinants below are *built on top of it*.
 
-### 1. The one fact we reuse — and one we do *not*
+### 1. Relative invariants and their multiplier
 
-The property we actually need is the **multiplicativity** of the operator determinant established above, $\det(XY)=\det(X)\det(Y)$; every transformation law below follows from it in one line.
+Call a scalar function $F$ of a tensor a **relative invariant** if, under a change of basis $S\in GL(V)$, it reproduces itself up to a scalar:
+$$F(S\!\cdot\!A)=c(S)\,F(A),$$
+where $S\!\cdot\!A$ is the transformation law of $A$ — which depends on its index type,
+$$(1,1):\ S\!\cdot\!A=S^{-1}AS,\qquad (0,2):\ S\!\cdot\!A=S^{T}AS,\qquad (2,0):\ S\!\cdot\!A=S^{-1}AS^{-T},\ \dots$$
+and $c(S)\in C^*$, the **multiplier**, depends only on $S$, not on $A$. A genuine tensor scalar — a *true* invariant — is the special case $c\equiv1$.
 
-It is tempting to invoke a stronger-sounding claim — that *every* homomorphism $c:GL(V)\to C^*$ is a power $\det^{m}$ — but, as the discussion around the introduction shows, **this is false**. Multiplicativity alone gives only that $c$ is trivial on transvections, hence on $SL=[GL,GL]$, so it factors through the determinant,
-$$c=g\circ\det,\qquad g:C^*\to C^*\ \text{a homomorphism};$$
-and $g$ is *not* pinned down. For instance $g(w)=|w|$, $g(w)=\bar w$, or (with continuity) any $g(w)=|w|^{s}(w/|w|)^{k}$ all qualify, giving the further homomorphisms $|\det|$, $\overline{\det}$, $|\det|^{s}(\det/|\det|)^{k}$; without any regularity there are wildly many more. Cutting $g$ down to a single power needs *homogeneity*, exactly as in the main note (Step 4). For the tensor determinants below we will not even need this — the weights fall straight out of $\det(XY)=\det(X)\det(Y)$ — but the same homogeneity-vs-non-uniqueness theme returns the moment we ask for an axiomatic *characterisation* (§3).
+Not every scalar function qualifies. For example $F(A)=A_{11}$, a single component, is **not** a relative invariant: a change of basis mixes $A_{11}$ with the other entries, and no $A$-independent factor $c(S)$ can undo that. But $F=\det$, $F=\det g_{\mu\nu}$ (the metric determinant), and $F=\sqrt{|\det g_{\mu\nu}|}$ (the volume element) all are, as the subsections below verify.
+
+**The multiplier is a character.** The transformations compose — they form an action of $GL(V)$, with $(ST)\!\cdot\!A=T\!\cdot\!(S\!\cdot\!A)$ (e.g. for $(0,2)$, $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$). Iterating the defining relation,
+$$c(ST)\,F(A)=F\big((ST)\!\cdot\!A\big)=c(T)\,c(S)\,F(A),$$
+so for $F\not\equiv0$, $c(ST)=c(S)c(T)$ ($C^*$ is abelian): **$c:GL(V)\to C^*$ is a homomorphism**. By **Layer 1** of Part I — every homomorphism $GL(V)\to C^*$ is trivial on transvections, hence factors through $\det$ —
+$$\boxed{\,c(S)=g(\det S)\qquad\text{for some homomorphism }g:C^*\to C^*.\,}$$
+We **cannot** invoke homogeneity to pin $g$ here, as we did for the determinant itself: $c$ is handed to us by the tensor type, with no normalization on scalar matrices to exploit. So $g$ stays general — a relative invariant's multiplier is an arbitrary character $g\circ\det$ of $GL(V)$.
+
+**Classifying $g$ (continuity / measurability).** Adding the mild hypothesis that $g$ is continuous — equivalently measurable, by automatic continuity — the homomorphisms $C^*\to C^*$ are exactly those of the introduction,
+$$g(w)=|w|^{s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\,\bar w^{q},\qquad s\in C,\ k\in\mathbb Z,\quad p-q=k\in\mathbb Z.$$
+Hence, with $w=\det S$, the possible multipliers are
+$$c(S)=|\det S|^{s}\Big(\tfrac{\det S}{|\det S|}\Big)^{k}=(\det S)^{p}\,\overline{(\det S)}^{\,q},$$
+the **characters** of $GL(V)$. Every relative invariant transforms by one of these, and the exponents — the pair $(p,q)$, equivalently $(s,k)$ — are its **weight**. (Without any regularity $g$ could be a wild abstract homomorphism; the factorization $c=g\circ\det$ still holds, and continuity is only what catalogues the $g$'s.)
+
+The next subsection derives the tensor determinant and its weight directly from this relative-invariance equation; the later subsections then place each standard object at its point in the family: true scalars at $c\equiv1$, the determinants of $(1,1)$, $(0,2)$, $(2,0)$ tensors, the metric density $\det g_{\mu\nu}$, and the volume element $\sqrt{|\det g|}$.
+
+### 1A. Defining tensor determinants from relative invariance, step by step
+
+The goal is to define the determinant of a two-index tensor without first saying
+"take the determinant of its component matrix." Components should be only the
+way to compute the answer after the intrinsic object has already been defined.
+
+There are two separate issues:
+
+1. **Relative invariance determines the transformation law.** It tells us what
+   character $c(S)$ must be, hence which density weight the determinant has.
+2. **The top exterior power defines the determinant itself.** For a tensor that
+   can be read as a linear map between two $n$-dimensional spaces, the determinant
+   is the induced map between their top exterior powers. Only after choosing a
+   basis does this line-valued object become an ordinary number.
+
+Relative invariance alone is not enough to single out a unique function. For
+example, many functions of an endomorphism are invariant under conjugation. What
+is special about the determinant is that it is the degree-$n$ volume multiplier,
+and the basis-free way to express "volume multiplier" is the functor
+$E\mapsto\Lambda^nE$.
+
+Let $\dim V=n$, and write
+$$\operatorname{Det}V:=\Lambda^n V,\qquad
+\operatorname{Det}V^*:=\Lambda^n V^*.$$
+If $L:E\to F$ is a linear map between $n$-dimensional spaces, define
+$$\boxed{\ \operatorname{Det}(L):=\Lambda^nL:
+\operatorname{Det}E\longrightarrow\operatorname{Det}F.\ } \tag{TDet}$$
+This is the basis-independent determinant. If $E=F$, then
+$\operatorname{Det}(L)$ is an endomorphism of the one-dimensional line
+$\operatorname{Det}E$, hence a scalar. If $E\ne F$, then it is not naturally a
+scalar; it is an element of the one-dimensional line
+$$
+\operatorname{Hom}(\operatorname{Det}E,\operatorname{Det}F)
+\cong \operatorname{Det}F\otimes(\operatorname{Det}E)^*.
+$$
+A basis trivialises this line and turns the determinant into a number; changing
+the basis changes that number by the character predicted by relative invariance.
+
+Now derive that character without using the component determinant.
+
+**Step 1: start with a numerical representative.** Choose a basis of $V$ and the
+dual basis of $V^*$. This choice trivialises every determinant line above, so the
+line-valued object $\operatorname{Det}(A)$ has a coefficient; call this
+coefficient $F(A)$. Under a change of basis $S\in GL(V)$, suppose this coefficient
+is a relative invariant:
+$$F(S\!\cdot\!A)=c(S)F(A), \tag{RI}$$
+where $c(S)$ is independent of $A$.
+
+**Step 2: the multiplier is a homomorphism.** Because basis changes compose,
+$(ST)\!\cdot A=T\!\cdot(S\!\cdot A)$ in the passive convention used here. Applying
+(RI) twice gives
+$$
+F((ST)\!\cdot A)=F(T\!\cdot(S\!\cdot A))
+=c(T)F(S\!\cdot A)=c(T)c(S)F(A).
+$$
+But applying (RI) once gives $F((ST)\!\cdot A)=c(ST)F(A)$. Choose one $A$ with
+$F(A)\ne0$ and cancel. Since the target $C^*$ is abelian,
+$$c(ST)=c(S)c(T).$$
+Thus $c:GL(V)\to C^*$ is a homomorphism.
+
+**Step 3: every such multiplier factors through the determinant.** By Layer 1 of
+the main note, every homomorphism $GL(V)\to C^*$ has the form
+$$c(S)=g(\det S) \tag{*}$$
+for some homomorphism $g:C^*\to C^*$. This is where the operator determinant
+already derived in the note enters. Up to this point we have used no determinant
+of the tensor components.
+
+**Step 4: homogeneity fixes the determinant branch.** A determinant of an
+$n\times n$ linear map should be homogeneous of degree $n$ in that map:
+$$F(\lambda A)=\lambda^nF(A). \tag{H}$$
+Let the tensor have $r$ upper indices and $s$ lower indices. For the two-index
+cases below, $r+s=2$. Under the scalar change of basis $S=\mu I$, each upper
+index contributes a factor $\mu^{-1}$ and each lower index contributes a factor
+$\mu$, so
+$$S\!\cdot A=\mu^{s-r}A.$$
+Using (RI), (*), and (H), for some $A$ with $F(A)\ne0$,
+$$
+g(\det(\mu I))F(A)
+=c(\mu I)F(A)
+=F(\mu^{s-r}A)
+=\mu^{n(s-r)}F(A).
+$$
+Since $\det(\mu I)=\mu^n$ and every $w\in C^*$ is $w=\mu^n$ for some $\mu$,
+$$g(w)=w^{s-r}.$$
+Therefore the determinant branch has
+$$\boxed{\ c(S)=(\det S)^{\,s-r}.\ } \tag{weight}$$
+In the continuous character notation $g(w)=w^p\bar w^q$, this is the holomorphic
+point
+$$\boxed{\ (p,q)=(s-r,0).\ }$$
+Other choices, such as $\bar w^{\,s-r}$ or $|w|^{s-r}$, are other relative
+invariants with the same abstract source, but they are not the holomorphic
+determinant branch selected by (H).
+
+**Step 5: identify the intrinsic map encoded by each index type.** Each
+two-index tensor is naturally a linear map between either $V$ or $V^*$:
+$$
+\begin{array}{c|c|c|c}
+\text{components} & \text{intrinsic map} & (r,s) & c(S) \\
+\hline
+A^i{}_j & A:V\to V & (1,1) & 1 \\
+A_i{}^j & A:V^*\to V^* & (1,1) & 1 \\
+A_{ij} & A^\flat:V\to V^* & (0,2) & (\det S)^2 \\
+A^{ij} & A^\sharp:V^*\to V & (2,0) & (\det S)^{-2}
+\end{array}
+$$
+Applying (TDet) to these four maps gives the tensor determinant:
+$$
+\begin{array}{c|c|c|c}
+\text{tensor} & \operatorname{Det}(A) \text{ lives in} & \text{coefficient transforms by} & (p,q) \\
+\hline
+A^i{}_j & \operatorname{End}(\operatorname{Det}V)\cong C & 1 & (0,0) \\
+A_i{}^j & \operatorname{End}(\operatorname{Det}V^*)\cong C & 1 & (0,0) \\
+A_{ij} & \operatorname{Hom}(\operatorname{Det}V,\operatorname{Det}V^*)
+\cong(\operatorname{Det}V^*)^{\otimes2} & (\det S)^2 & (2,0) \\
+A^{ij} & \operatorname{Hom}(\operatorname{Det}V^*,\operatorname{Det}V)
+\cong(\operatorname{Det}V)^{\otimes2} & (\det S)^{-2} & (-2,0)
+\end{array}
+$$
+This table is the promised classification. The determinant of a $(1,1)$-tensor
+is an honest scalar because it is an endomorphism determinant. The determinant of
+a $(0,2)$-tensor is not an honest scalar: it lives in
+$(\operatorname{Det}V^*)^{\otimes2}$, so its coefficient is a weight-$2$ density.
+The determinant of a $(2,0)$-tensor lives in $(\operatorname{Det}V)^{\otimes2}$,
+so its coefficient has weight $-2$.
+
+**Step 6: check the basis change directly on the determinant lines.** Let
+$e_1,\dots,e_n$ be a basis of $V$ and $e^1,\dots,e^n$ its dual basis. Put
+$$E=e_1\wedge\cdots\wedge e_n,\qquad
+E^*=e^1\wedge\cdots\wedge e^n.$$
+Under $e'_i=S^j{}_i e_j$,
+$$E'=(\det S)E,\qquad (E^*)'=(\det S)^{-1}E^*.$$
+Now:
+
+- For $A^i{}_j:V\to V$, both the input and output determinant lines are spanned
+  by $E$, so the two factors of $\det S$ cancel. The coefficient is invariant.
+- For $A_i{}^j:V^*\to V^*$, both determinant lines are spanned by $E^*$, so the
+  two factors of $(\det S)^{-1}$ cancel. The coefficient is invariant.
+- For $A_{ij}:V\to V^*$, the determinant lies in
+  $(\operatorname{Det}V^*)^{\otimes2}$, whose basis $(E^*)^{\otimes2}$ changes by
+  $(\det S)^{-2}$. The invariant line element is fixed, so its coefficient
+  changes by the inverse factor $(\det S)^2$.
+- For $A^{ij}:V^*\to V$, the determinant lies in
+  $(\operatorname{Det}V)^{\otimes2}$, whose basis $E^{\otimes2}$ changes by
+  $(\det S)^2$. Hence the coefficient changes by $(\det S)^{-2}$.
+
+This reproduces exactly the character calculation above, but now it also explains
+where the determinant *lives*. A scalar is a coefficient in a trivial line; a
+density is a coefficient in a determinant line whose trivialisation changes with
+the basis.
+
+**Step 7: only now compute in components.** For example, for $A_{ij}$ regarded as
+$A^\flat:V\to V^*$,
+$$
+\operatorname{Det}(A^\flat)(E)
+=A^\flat(e_1)\wedge\cdots\wedge A^\flat(e_n).
+$$
+Writing $A^\flat(e_j)=A_{ij}e^i$ and expanding the wedge gives
+$$
+A^\flat(e_1)\wedge\cdots\wedge A^\flat(e_n)
+=\left(\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+\prod_{j=1}^n A_{\sigma(j)j}\right)E^*.
+$$
+Thus the coefficient of the intrinsic line-valued determinant is the usual
+Leibniz determinant of the component array. The same computation for
+$A^i{}_j$, $A_i{}^j$, and $A^{ij}$ gives the familiar component formulas. The
+formula is therefore a coordinate computation of the intrinsic definition
+$\Lambda^nA$, not the definition itself.
 
 ### 2. $(1,1)$-tensors $A^i{}_j$: the determinant is an invariant scalar
 
 A $(1,1)$-tensor *is* a linear map $V\to V$, and the contraction $A^i{}_kB^k{}_j$ *is* composition of maps. So both hypotheses of the note hold verbatim — $f(AB)=f(A)f(B)$ and $f(\lambda I)=\lambda^{n}$ — and produce $\det(A^i{}_j)$.
 
-It is a *true scalar*. Under a change of basis a $(1,1)$-tensor transforms by **conjugation**, $A\mapsto S^{-1}AS$, and Step 1 of the note (homomorphism $\Rightarrow$ conjugation invariance) gives
-$$\det(S^{-1}AS)=\det(A).$$
+It is a *true scalar* — a relative invariant with $c\equiv1$. Under a change of basis a $(1,1)$-tensor transforms by **conjugation**, $S\!\cdot\!A=S^{-1}AS$, and Step 1 of the note (homomorphism $\Rightarrow$ conjugation invariance) gives
+$$\det(S^{-1}AS)=\det(A),$$
+so $c(S)=g(\det S)=1$ (here $g\equiv1$, the trivial character).
 Intrinsically $\det(A^i{}_j)=\Lambda^{n}A\in\operatorname{End}(\Lambda^{n}V)=C$ is the scalar by which $A$ acts on the one-dimensional top exterior power. In index form,
 $$\det(A)=\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\,A^{i_1}{}_{j_1}\cdots A^{i_n}{}_{j_n},$$
 using one *covariant* permutation symbol (to saturate the upper indices of $A$) and one *contravariant* one (for the lower indices). As we count in §6 this is **weight $0$**, hence invariant — the determinant of an endomorphism needs no metric and no choice of basis.
@@ -503,11 +689,11 @@ We characterise the form-determinant **by its properties**, exactly as the note 
 
 **The weight is forced** (with no regularity, no Leibniz, no transpose identity). Applying (T1) twice and using $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$ gives $c(ST)=c(S)c(T)$: the multiplier $c$ is a *homomorphism* $GL(V)\to C^*$. By the note's own result — a homomorphism is trivial on transvections, hence on $SL$ — it factors through the determinant, $c=g\circ\det$ with $g:C^*\to C^*$ a homomorphism (§1). Homogeneity then pins $g$: taking $S=\mu I$, (T1) gives $f(\mu^{2}A)=c(\mu I)\,f(A)=g(\mu^{n})\,f(A)$ while (T2) gives $f(\mu^{2}A)=\mu^{2n}f(A)$, so $g(\mu^{n})=\mu^{2n}$; since $\mu\mapsto\mu^{n}$ is onto $C^*$ (divisibility), $g(w)=w^{2}$. Hence
 $$\boxed{\ c(S)=\det(S)^{2},\qquad f(S^{T}AS)=\det(S)^{2}\,f(A).\ }$$
-This is the divisibility argument of Step 4 transplanted to forms. Without (T2) the homomorphism $c$ stays free — $c=|\det|^{2}$ (solution $f=|\det(A_{ij})|$) and $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$) also satisfy (T1) — and once again homogeneity is what selects the polynomial branch over the $|\det|$ one.
+This is the divisibility argument of Layer 2 transplanted to forms. Without (T2) the homomorphism $c$ stays free — $c=|\det|^{2}$ (solution $f=|\det(A_{ij})|$) and $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$) also satisfy (T1) — and once again homogeneity is what selects the polynomial branch over the $|\det|$ one.
 
 **Uniqueness.** Over $C$ every nondegenerate symmetric form is a single congruence orbit (Sylvester: $A=S^{T}IS$). If $f_1,f_2$ both obey (T1)–(T2) they share $c=\det^{2}$, so $f_i(A)=\det(S)^{2}f_i(I)$ and the ratio $f_1(A)/f_2(A)=f_1(I)/f_2(I)$ is constant. So $f$ is **unique up to overall scale**, fixed by the normalisation $f(I)=1$. (A general non-symmetric $A_{ij}$ falls into several congruence orbits; there the witness below is what ties the scales across orbits together — for a metric, one orbit suffices.)
 
-**Existence.** One explicit function obeys the axioms, and — exactly as the note anchors the existence of $\det$ on the Leibniz *polynomial* $L$ (part 2 of the main derivation) — it serves only as a *witness*, not as the definition: the component determinant satisfies $\det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\det(A)$ and $\det(\lambda A)=\lambda^{n}\det(A)$, with $c=\det^{2}$ and $\det(I)=1$.
+**Existence.** One explicit function obeys the axioms, and — exactly as the note anchors the existence of $\det$ on the Leibniz *polynomial* $L$ (part 2 of Layer 1) — it serves only as a *witness*, not as the definition: the component determinant satisfies $\det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\det(A)$ and $\det(\lambda A)=\lambda^{n}\det(A)$, with $c=\det^{2}$ and $\det(I)=1$.
 
 So a form-determinant exists, is unique up to scale, and is a **relative invariant of weight $2$** — a density, not a scalar.
 
@@ -531,16 +717,14 @@ coordinate-invariant ($\sqrt{|g|}\to|J|^{-1}\sqrt{|g|}$ while $d^{n}x\to|J|\,d^{
 
 ### 5. Where the weights live: the homomorphism family, and $\sqrt{|g|}$
 
-The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for $\sqrt{|\det g|}$ — are not independent oddities: they are points of the *single* catalogue of possible density weights, namely the continuous homomorphisms $C^*\to C^*$ found in §1 and the introduction,
-$$h(w)=|w|^{s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\bar w^{q},\qquad p-q=k\in\mathbb Z.$$
-A density of a $2$-index tensor transforms under a basis change by a multiplier $c(S)$, and $c$ is always one of these homomorphisms composed with $\det$, $c=h\circ\det$. Writing $w=\det S$:
+The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for $\sqrt{|\det g|}$ — are not independent oddities: each is the **weight** of a relative invariant, a point of the character family $c=g\circ\det$ with $g(w)=w^{p}\bar w^{q}$ of §1. Writing $w=\det S$:
 
-| object | multiplier $c(S)$ | $h(w)$ | $(p,q)$ |
+| object | multiplier $c(S)$ | $g(w)$ | $(p,q)$ |
 |---|---|---|---|
 | $\det(A^i{}_j)$ | $1$ | $1$ | $(0,0)$ |
 | $\det(g_{\mu\nu})$ | $\det(S)^{2}$ | $w^{2}$ | $(2,0)$ — holomorphic |
 | $\overline{\det(g_{\mu\nu})}$ | $\overline{\det S}^{\,2}$ | $\bar w^{2}$ | $(0,2)$ |
-| $\sqrt{|\det g_{\mu\nu}|}$ | $|\det S|$ | $|w|$ | $(\tfrac12,\tfrac12)$ — modulus |
+| $\sqrt{\lvert\det g_{\mu\nu}\rvert}$ | $\lvert\det S\rvert$ | $\lvert w\rvert$ | $(\tfrac12,\tfrac12)$ — modulus |
 
 The **determinant** sits in the holomorphic integer corner; the **volume density** $\sqrt{|\det g|}$ sits on the modulus diagonal $(\tfrac12,\tfrac12)$ — its weight is the character $|w|=w^{1/2}\bar w^{1/2}$. (As a bare function of $w=\det g$ it is $|w|^{1/2}=w^{1/4}\bar w^{1/4}$; the factor $2$ is just that $\det g$ already carries weight $2$. The structural object is the multiplier, at $(\tfrac12,\tfrac12)$.)
 
@@ -567,3 +751,185 @@ In one sentence: **the determinant of a $2$-index tensor transforms by a power o
 ### 7. Higher-valence tensors
 
 The clean story stops at two indices: a determinant of $A^i{}_j$ used both squareness (an $n\times n$ array) and the single character $\det$. A genuinely higher tensor such as $A_{ijk}$ has no analogous single-character invariant; the relevant objects are **hyperdeterminants** (Cayley), which are of higher degree and are relative invariants of a *product* $GL\times GL\times\cdots$ rather than characters of one $GL$. They fall outside the one-line mechanism above and need their own theory.
+
+### 8. Reconciliation with the classical tensor-density zoo
+
+Differential geometry classifies densities over the *reals*, $GL(n,R)$, where the only invariant of a change of basis is the real Jacobian $J:=\det S$. Textbooks then split densities four ways — and all four are special cases of the multiplier $c(S)=g(\det S)$ of §1. Two parallel labelling schemes are used for the behaviour under an *orientation-reversing* ($J<0$) change:
+
+| scheme | no sign flip | sign flip |
+|---|---|---|
+| integer weight only | **(authentic)**, $c=J^{W}$ | **pseudo**, $c=\operatorname{sgn}(J)\,J^{W}$ |
+| any real weight | **even**, $c=\lvert J\rvert^{W}$ | **odd**, $c=\operatorname{sgn}(J)\,\lvert J\rvert^{W}$ |
+
+They agree for integer $W$ by parity (*authentic* $W$ is *even* for even $W$, *odd* for odd $W$; *pseudo* is the opposite). Named corners: an **ordinary/true tensor** is $W=0$ with no flip; an **absolute tensor** is any $W=0$; a **tensor capacity** has $W<0$; a bare "density" defaults to $W=+1$.
+
+**The dictionary.** For real $S$ our character collapses to
+$$c(S)=(\det S)^{p}\,\overline{(\det S)}^{\,q}=|J|^{\,p+q}\,\operatorname{sgn}(J)^{\,p-q},$$
+so the two classical labels are *exactly*
+$$\boxed{\,W=p+q\ \ (\text{weight}),\qquad \text{even}/\text{odd}=(p-q)\bmod 2\,}$$
+— **no flip $\iff p-q$ even**, **flip $\iff p-q$ odd**. The whole four-way zoo is one weight $p+q$ plus one parity bit $p-q\bmod2$. (The signs match the standard convention: $\det g_{\mu\nu}\mapsto W{=}{+}2$, $\sqrt{-g}\mapsto W{=}{+}1$.)
+
+**Real vs. complex.** Real densities see only $\big(p+q,\ (p-q)\bmod2\big)$ — the *parity* of the winding $p-q$, not its value. The complex character $(p,q)$ of §1 is strictly **finer**: it remembers the full $p-q\in\mathbb Z$, which collapses over $R$ because $J^{2}=|J|^{2}$. So each classical type is really a $\mathbb Z$-family $\{(p,q),(p{+}1,q{-}1),\dots\}$; e.g. $\det g_{\mu\nu}$ sits at the holomorphic $(2,0)$ in §5 but equals the even-density representative $(1,1)$ over $R$.
+
+**General types**, with the simplest $(p,q)$ lift:
+
+| classical type | factor $c$ | $W$ | parity | $(p,q)$ |
+|---|---|---|---|---|
+| ordinary (true) tensor | $1$ | $0$ | even | $(0,0)$ |
+| even density, weight $W$ | $\lvert J\rvert^{W}$ | $W$ | even | $(\tfrac W2,\tfrac W2)$ |
+| odd density, weight $W$ | $\operatorname{sgn}(J)\,\lvert J\rvert^{W}$ | $W$ | odd | $(\tfrac{W+1}2,\tfrac{W-1}2)$ |
+| authentic, integer $W$ | $J^{W}$ | $W$ | $W\bmod2$ | $(W,0)$ |
+| pseudo, integer $W$ | $\operatorname{sgn}(J)\,J^{W}$ | $W$ | $(W{+}1)\bmod2$ | $(\tfrac{W+1}2,\tfrac{W-1}2)$ |
+| absolute tensor (even) | $1$ | $0$ | even | $(0,0)$ |
+| pseudoscalar (odd, $W{=}0$) | $\operatorname{sgn}(J)$ | $0$ | odd | $(\tfrac12,-\tfrac12)$ |
+| tensor capacity (even $W{=}{-}1$) | $\lvert J\rvert^{-1}$ | $-1$ | even | $(-\tfrac12,-\tfrac12)$ |
+| scalar/vector density (default) | $\lvert J\rvert$ | $1$ | even | $(\tfrac12,\tfrac12)$ |
+
+**Concrete objects:**
+
+| object | factor $c$ | $W$ | parity | $(p,q)$ |
+|---|---|---|---|---|
+| $\det g_{\mu\nu}$ | $J^{2}=\lvert J\rvert^{2}$ | $2$ | even | $(1,1)\equiv(2,0)$ |
+| $\sqrt{-g}=\sqrt{\lvert g\rvert}$ | $\lvert J\rvert$ | $1$ | even | $(\tfrac12,\tfrac12)$ |
+| $1/\sqrt{-g}$ | $\lvert J\rvert^{-1}$ | $-1$ | even | $(-\tfrac12,-\tfrac12)$ |
+| $\det g^{\mu\nu}=1/g$ | $J^{-2}=\lvert J\rvert^{-2}$ | $-2$ | even | $(-1,-1)\equiv(-2,0)$ |
+| Levi-Civita symbol $\tilde\epsilon^{i_1\cdots i_n}$ | $\operatorname{sgn}(J)\,\lvert J\rvert$ | $+1$ | odd | $(1,0)$ |
+| Levi-Civita symbol $\tilde\epsilon_{i_1\cdots i_n}$ | $\operatorname{sgn}(J)\,\lvert J\rvert^{-1}$ | $-1$ | odd | $(-1,0)$ |
+
+In short: **the determinant, the metric density, the volume element, the Levi-Civita symbols, and the entire authentic/pseudo/even/odd taxonomy are one object — a character $(\det S)^{p}\overline{(\det S)}^{q}$ — read at different $(p,q)$.** Weight is $p+q$; the orientation sign-flip is the parity of $p-q$; and the refinement $p-q\in\mathbb Z$ is the piece the real classification cannot see.
+
+### 9. Relation to the literature
+
+None of the *theorems* above are new; the value is the ab-initio route and the single dictionary. For context:
+
+- **Relative invariants are classical.** The defining relation $F(S\!\cdot\!A)=c(S)F(A)$, with $c$ a character, is exactly the notion of a *relative invariant* (or *semi-invariant*) in invariant theory — central, for instance, in Sato–Kimura's theory of prehomogeneous vector spaces and in the semi-invariants of quiver representations. That the multiplier $c$ must be a character is the standard first step there, and is our §1.
+- **Characters of $GL$ are $\det$-powers.** The factorization $c=g\circ\det$ together with $g(w)=w^{p}\bar w^{q}$ is the (continuous) character group of $GL(n,C)$ as a real Lie group; its rational/holomorphic part is the character lattice $X(GL_n)=\mathbb Z\cdot\det$, a textbook fact of linear algebraic groups.
+- **Densities are one-dimensional representations.** In differential geometry tensor densities are the sections of the line bundles associated to the characters $\det^{p}\overline{\det}^{q}$ (the theory of *natural bundles*); the even/odd dichotomy is the character of $\pi_0\,GL(n,R)=\mathbb Z/2$, i.e. orientation. The classical authentic/pseudo/even/odd taxonomy of §8 is this character group written in physics notation.
+
+What the note adds is not a theorem but an organisation: **everything follows from the one axiom** $F(S\!\cdot\!A)=c(S)F(A)$ — determinant, metric density, $\sqrt{\lvert g\rvert}$, Levi-Civita symbols, and the whole zoo are one character $(\det S)^{p}\overline{(\det S)}^{q}$, with $(W,\text{parity})=(p+q,\,(p-q)\bmod2)$ over $R$ and a genuine $\mathbb Z$-refinement over $C$.
+
+**The universal multiplier, three ways.** Everything rests on the single fact that *every* multiplier factors through $\det$ — equivalently that $GL/SL\xrightarrow{\ \det\ }C^*$ is the abelianisation. The note proves this three independent times, and any one suffices:
+
+1. **Commutators** (Step 2 / Lie chapter §4): $c$ kills $[GL,GL]=SL$ because transvections are commutators and generate $SL$, so $c$ sees $S$ only through $\det S$.
+2. **Trace** (Part III, (Λ1)–(Λ5); spelled out in §11): $dc_I$ vanishes on $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n$, so $dc_I=a\operatorname{tr}$ and $c=\det^{a}$ — trace is the only linear invariant, $\det=e^{\operatorname{tr}}$ its integral.
+3. **Eigenvalues + Weyl** (Lie chapter §5): a torus character $\prod_i\lambda_i^{m_i}$ that is symmetric in the $\lambda_i$ has all $m_i$ equal, so it is $(\prod_i\lambda_i)^m=\det^m$.
+
+In one line: $\det$ is the universal multiplier because it *generates the Weyl-invariant character lattice* — it is the abelianisation of $GL$, and a relative invariant can see nothing finer than $\det S$.
+
+### 10. Beyond densities: other relative invariants
+
+The definition $F(S\!\cdot\!A)=c(S)F(A)$ is far more general than tensor densities; densities are just its "$GL(n)$ acting on one tensor" slice. Three directions show what else it captures.
+
+**Same group, richer objects.** Tensor densities exhaust the *scalar functions of one matrix-like tensor* (§1). On other $GL(n,C)$-representations the relative invariants are the staples of classical invariant theory — still with a $\det$-power multiplier, but genuinely new functions:
+
+- **Pfaffian** — the polynomial square root of the determinant that the metalinear obstruction forbade for symmetric forms (§5). On *antisymmetric* forms ($A=-A^{T}$, $n=2m$), $\det A=\operatorname{Pf}(A)^{2}$ is a perfect square, so
+$$\operatorname{Pf}(S^{T}AS)=\det(S)\,\operatorname{Pf}(A)$$
+is a *single-valued* relative invariant of weight $1$, i.e. $(p,q)=(1,0)$ — half the weight of $\det A$, yet rational, because the antisymmetric locus is exactly where the square root rationalises. (Contrast $\sqrt{\det g}$ for symmetric $g$, which is *not* a perfect square and stays multivalued — needing the modulus $\sqrt{\lvert g\rvert}$ of §5.)
+- **Discriminants and resultants** of forms. The discriminant of a binary quadratic $Q=ax^{2}+bxy+cy^{2}$ is $b^{2}-4ac=-4\det M$, where $M=\big(\begin{smallmatrix}a&b/2\\ b/2&c\end{smallmatrix}\big)$ is its symmetric coefficient matrix — a $(0,2)$-tensor. A change of variables $\binom{x}{y}=S\binom{x'}{y'}$ sends $M\mapsto S^{T}MS$ (congruence), so the discriminant is just $\det g_{\mu\nu}$ for $n=2$ and transforms by $(\det S)^{2}$. Concretely, $Q=x^{2}+y^{2}$ (disc $-4$) under $S=\operatorname{diag}(2,1)$ becomes $4x'^{2}+y'^{2}$ (disc $-16=2^{2}\!\cdot\!(-4)$). It is an *even* weight-$2$ density, $(p,q)=(2,0)$: $(\det S)^{2}>0$ even when $\det S<0$ (e.g. $S=\big(\begin{smallmatrix}1&2\\3&4\end{smallmatrix}\big)$, $\det S=-2$, scales any discriminant by $4$).
+- **Maximal minors / Plücker brackets**, and $\det(SAT)=\det S\,\det A\,\det T$ — a relative invariant of $GL\times GL$.
+- **Hyperdeterminants** (Cayley) for $A_{ijk}$ — relative invariants of $GL\times GL\times\cdots$ (cf. §7).
+
+**Other groups, other multipliers.** Relative-invariance is group-relative: the multiplier ranges over $X(G)$, the character group of $G$.
+
+- **$O(n)$:** $\det=\pm1$, so the one nontrivial character is **orientation**; weight-$1$ relative invariants are **pseudoscalars** (the cross product, the Levi-Civita tensor as an $O(n)$ object).
+- **$SL(n,C)$, $Sp(2n,C)$ (perfect groups):** $X(G)=\{1\}$, so the *only* multiplier is trivial — **every relative invariant is absolute**. No nontrivial densities exist; the symplectic volume is a genuine invariant.
+- **Torus $(C^*)^n$ and products:** characters are monomials $\prod_i d_i^{m_i}$, giving multi-weight relative invariants (weight vectors, minors).
+
+**The principle.** A relative invariant is precisely a nonzero vector spanning a **$G$-stable line** — a one-dimensional subrepresentation, classically a *semi-invariant*. Its multiplier is a character, so
+$$\boxed{\ \{\text{relative invariants}\}\ \longleftrightarrow\ \{\text{one-dimensional subreps}\}\ \longleftrightarrow\ X(G)\ \text{(characters)}.\ }$$
+For $G=GL(n,C)$ this is $X=\mathbb Z\cdot\det$ — which is *why* every multiplier is a $\det$-power and "relative invariant of $GL$" means "density." Change the group and the catalogue changes with $X(G)$. Tensor densities are the $GL(n)$ slice of this one uniform statement.
+
+### 11. The infinitesimal (trace) route, in detail
+
+Route 2 of §9 — that a smooth multiplier $c:GL(n,C)\to C^*$ is a power of $\det$ — is worth spelling out, since it is the Lie-theoretic Part III run *without* the homogeneity normalisation. The idea: **differentiate** $c$ to the Lie algebra, where the statement is linear and immediate, then **integrate** back with $\exp$.
+
+**Differentiate.** A smooth homomorphism has a derivative at the identity that is itself a Lie-algebra homomorphism,
+$$\phi:=dc_I:\ \mathfrak{gl}_n=T_IGL(n)\ \longrightarrow\ \operatorname{Lie}(C^*)=C,$$
+where $\mathfrak{gl}_n$ is all $n\times n$ matrices with $[X,Y]=XY-YX$, and the Lie algebra of $C^*$ is $C$ with **zero bracket** ($C^*$ is abelian). [Part III, (Λ1)–(Λ2).]
+
+**The abelian target kills brackets.** Being a Lie-algebra map into a zero-bracket target,
+$$\phi([X,Y])=[\phi(X),\phi(Y)]=0\qquad\text{for all }X,Y$$
+— $\phi$ annihilates every commutator. (This is the infinitesimal shadow of "$c$ kills $[GL,GL]$" from route 1.)
+
+**Commutators are exactly the traceless matrices.** The span of all brackets is $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n=\{\operatorname{tr}=0\}$:
+
+* $\subseteq$ : $\operatorname{tr}[X,Y]=\operatorname{tr}(XY)-\operatorname{tr}(YX)=0$, so every commutator is traceless;
+* $\supseteq$ : the matrix units realise all of $\mathfrak{sl}_n$ as brackets, $e_{ij}=[e_{ii},e_{ij}]$ ($i\ne j$) and $e_{ii}-e_{jj}=[e_{ij},e_{ji}]$.
+
+So $\phi$ vanishes on the hyperplane $\mathfrak{sl}_n$. [Part III, (Λ3).]
+
+**Hence $\phi$ is a multiple of the trace.** $\operatorname{tr}:\mathfrak{gl}_n\to C$ has kernel exactly $\mathfrak{sl}_n$, and $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ is one-dimensional; a functional killing $\ker(\operatorname{tr})$ must be a scalar multiple of $\operatorname{tr}$:
+$$\phi(X)=a\,\operatorname{tr}X,\qquad a\in C.$$
+This is the precise sense in which **trace is the only linear invariant** — up to scale, the unique character of the Lie algebra. [Part III, (Λ4).]
+
+**Integrate with $\exp$.** A homomorphism intertwines the exponential maps, $c(\exp X)=\exp(\phi(X))$ — the matrix exponential on the left, $z\mapsto e^z$ on the right. With the bridge identity $\det(\exp X)=e^{\operatorname{tr}X}$ (the eigenvalues of $\exp X$ are $e^{\mu_i}$, so $\det=\prod_i e^{\mu_i}=e^{\sum_i\mu_i}$),
+$$c(\exp X)=e^{a\operatorname{tr}X}=(\det\exp X)^{a}.$$
+Over $C$ the matrix exponential is onto $GL(n,C)$, so $c(S)=(\det S)^{a}$ for all $S$. [Part III, (Λ6)–(Λ7).] In a slogan: **$\det=e^{\operatorname{tr}}$ is the group integral of the trace** — $\operatorname{tr}$ generates the algebra's only character, and exponentiating it produces $\det$, the group's only character.
+
+**The conjugate term restores $(p,q)$.** Because $c$ is only *smooth*, not holomorphic, $\phi$ is merely $R$-linear, so the general functional vanishing on $\mathfrak{sl}_n$ carries a conjugate piece,
+$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}\ \Longrightarrow\ c(S)=(\det S)^{a}\,\overline{(\det S)}^{\,b},$$
+which is exactly the $(p,q)=(a,b)$ character of §1/§5. So the Lie route *rederives the entire $(p,q)$ family*; the one extra ingredient Part III adds beyond this — homogeneity, (Λ5) — is what pins $a=1,b=0$ to select $\det$ itself.
+
+So routes 1 and 2 are the same fact at two levels, joined by $\exp$: route 1 on the group ($SL=[GL,GL]$), this route on the algebra ($\mathfrak{sl}_n=[\mathfrak{gl}_n,\mathfrak{gl}_n]$). Route 1 needs no regularity; this one needs $c\in C^{1}$ to differentiate.
+
+### 12. Connections: the affine (cocycle) cousin
+
+Christoffel symbols are *not* relative invariants — they are not even tensors — yet they obey a law of exactly the same shape, with one addition: a translation term. They are the **affine upgrade** of a relative invariant, obtained by replacing the multiplicative target $C^*$ with the *affine group*.
+
+**The equation.** A relative invariant scales, $F\xrightarrow{g}c(g)F$. A connection transforms the same way *plus a shift*:
+$$\Gamma\ \xrightarrow{\ g\ }\ \rho(g)\,\Gamma+\beta(g),$$
+where $\rho(g)$ is the linear $(1,2)$-tensor action and $\beta(g)$ — the "added constant" — is the inhomogeneous piece.
+
+**Consistency makes $\beta$ a cocycle.** The shift is not free. Requiring that $g$ then $h$ agree with $gh$,
+$$\rho(gh)\Gamma+\beta(gh)=g\!\cdot\!\big(\rho(h)\Gamma+\beta(h)\big)=\rho(gh)\Gamma+\rho(g)\beta(h)+\beta(g),$$
+forces the **1-cocycle (crossed-homomorphism) condition**
+$$\boxed{\ \beta(gh)=\rho(g)\,\beta(h)+\beta(g)\ }$$
+— the inhomogeneous analogue of $c(gh)=c(g)c(h)$. Equivalently, $g\mapsto(\rho(g),\beta(g))$ is a homomorphism into the **affine group** $\operatorname{Aff}(V)=V\rtimes GL(V)$:
+
+| object | homomorphism into | data |
+|---|---|---|
+| relative invariant / density | $C^{*}=GL_1$ | a **character** $c$ (multiplicative) |
+| connection (Christoffel) | $\operatorname{Aff}(V)=V\rtimes GL(V)$ | linear part $\rho$ **+ cocycle** $\beta$ |
+
+A relative invariant is the case $\beta=0$ with $V$ a line; turn on a translation cocycle and you get a connection. (For $\Gamma$ the group is the **$2$-jet** group of coordinate changes: $\rho$ sees only the $1$-jet $S=\partial x'/\partial x\in GL_n$, but $\beta$ needs the $2$-jet — the second derivatives.)
+
+**Deriving the transformation.** The cocycle $\beta$ is pinned by a single demand — the one that motivates connections in the first place: **the covariant derivative must be a genuine tensor**, i.e. a relative invariant of weight $0$. With $\nabla_\mu V^\lambda=\partial_\mu V^\lambda+\Gamma^\lambda_{\mu\rho}V^\rho$, the ordinary derivative fails tensoriality by exactly a second-derivative term,
+$$\partial'_\mu V'^\lambda=\frac{\partial x^\sigma}{\partial x'^\mu}\frac{\partial x'^\lambda}{\partial x^\rho}\,\partial_\sigma V^\rho+\underbrace{\frac{\partial x^\sigma}{\partial x'^\mu}\Big(\partial_\sigma\tfrac{\partial x'^\lambda}{\partial x^\rho}\Big)V^\rho}_{\text{non-tensorial}},$$
+so for $\nabla V$ to transform as a $(1,1)$-tensor the shift is *forced* to be
+$$\beta^\lambda_{\mu\nu}(g)=\frac{\partial x'^\lambda}{\partial x^\rho}\frac{\partial^{2}x^\rho}{\partial x'^\mu\partial x'^\nu},$$
+exactly the inhomogeneous term of the Christoffel law $\Gamma'^\lambda_{\mu\nu}=\rho(g)\Gamma+\beta(g)$. So one *derives* how $\Gamma$ transforms by demanding relative invariance of the derivative; the cocycle condition then holds automatically (it is the canonical "soldering" cocycle of the jet group).
+
+**Cohomological punchline.** Characters live in $\operatorname{Hom}(G,C^{*})$ (multiplicative — the relative-invariant data); connection shifts live in $Z^{1}(G,V)$ (the 1-cocycles — the affine data). Two connections differ by a **coboundary**, which is precisely a genuine $(1,2)$-tensor — so $\Gamma_1-\Gamma_2$ is a tensor and the space of connections is an affine torsor over that vector space. In one line:
+
+> **A relative invariant is a homomorphism to $C^{*}$ (a character, a $0$-cocycle); a connection is a homomorphism to the affine group (a $1$-cocycle) — the same functional equation, one cohomological degree up.**
+
+The two even meet: contracting the connection gives $\Gamma^\lambda_{\lambda\nu}=\partial_\nu\ln\sqrt{\lvert g\rvert}$, the connection $1$-form on the density line bundle. It is *not* a tensor — under a coordinate change it transforms as a covector *plus a gauge term*,
+$$\Gamma'^{\lambda}_{\lambda\nu}=\frac{\partial x^\tau}{\partial x'^\nu}\,\Gamma^{\rho}_{\rho\tau}-\partial'_\nu\ln J,\qquad J=\det\!\Big(\tfrac{\partial x'}{\partial x}\Big),$$
+the contraction having collapsed the linear part $\rho$ to the trivial scalar action while the cocycle $\beta$ survives as the pure-gauge $-\partial_\nu\ln J$. (Two such differ by a genuine covector — a coboundary; and $\Gamma_\nu\,dx^\nu=d\ln\sqrt{\lvert g\rvert}$ is closed, so this density connection is *flat*, $R^\lambda{}_{\lambda\mu\nu}=0$.) The covariant derivative of a weight-$w$ density then picks up the extra $-w\,\Gamma^\lambda_{\lambda\nu}$ — the affine cousin acting on the relative invariants of §1.
+
+### 13. Solving the affine equation: representation $\rho$ + cocycle $\beta$
+
+§12 wrote the law $\Gamma\mapsto\rho(g)\Gamma+\beta(g)$ and the cocycle relation for $\beta$. The companion relation for $\rho$, and whether the whole thing can be *solved* the way §1 solved relative invariance, complete the picture.
+
+**The two relations.** Demanding that $g\mapsto(\rho(g),\beta(g))$ be a homomorphism into $\operatorname{Aff}(V)=V\rtimes GL(V)$ — i.e. $(gh)\!\cdot\!\Gamma=g\!\cdot\!(h\!\cdot\!\Gamma)$ — splits into two:
+$$\rho(gh)=\rho(g)\,\rho(h)\qquad\text{($\rho$ a representation),}$$
+$$\beta(gh)=\rho(g)\,\beta(h)+\beta(g)\qquad\text{($\beta$ a $\rho$-twisted $1$-cocycle).}$$
+So $\rho$ obeys *exactly the same multiplicative law as the character $c$ of §1* — it is a homomorphism — only now matrix-valued, $\rho:G\to GL(V)$, instead of scalar, $c:G\to C^*=GL_1$. The relative invariant is the **rank-$1$, $\beta=0$ slice**: $V$ a line, $\rho=c$.
+
+**Stage 1 — solve $\rho$ by representation theory.** $\rho(gh)=\rho(g)\rho(h)$ is "classify the representations of $G$." Our §1 is precisely this restricted to *one-dimensional* reps: the only $1$-dim reps of $GL(n,C)$ are the $\det$-powers $\det^{p}\overline{\det}^{q}$. For higher $\rho$ — e.g. the Christoffel space $\rho=\operatorname{Sym}^2V^*\otimes V$ — it is the full $GL(n)$ representation theory (highest weights / Young diagrams), and the *same method* works: differentiate to a Lie-algebra representation $d\rho:\mathfrak{gl}_n\to\mathfrak{gl}(V)$ and classify by highest weight (cf. §11). The §1 character classification is the rank-$1$ corner.
+
+**Stage 2 — solve $\beta$ by group cohomology.** Given $\rho$, the cocycle equation is solved up to its removable solutions. A **coboundary** $\beta(g)=(\rho(g)-\mathbb 1)v_0$ is what shifting $\Gamma$ by a fixed tensor $v_0$ produces (a change of base connection) — gauge-trivial. The genuine, non-tensorial structures are the quotient
+$$\{\text{connections}\}\big/\{\text{tensor shifts}\}=H^1(G,\,V_\rho).$$
+Nonzero $H^1$ $\iff$ honest connections exist (the inhomogeneous term cannot be gauged away). Infinitesimally — the exact analogue of §11's trace route — one differentiates to **Lie-algebra cohomology** $H^1(\mathfrak g,V_\rho)$, with cocycles $b:\mathfrak g\to V$ obeying $b([X,Y])=d\rho(X)\,b(Y)-d\rho(Y)\,b(X)$.
+
+**Why connections exist at all (Whitehead).** Whitehead's first lemma: for a *semisimple* Lie algebra and finite-dimensional $V$, $H^1(\mathfrak g,V)=0$. Over a semisimple structure group *every cocycle is a coboundary* — every affine object is secretly a tensor, gaugeable to homogeneous, and there are no genuine connections. They exist precisely because the relevant groups are **not** semisimple: $\mathfrak{gl}_n=\mathfrak{sl}_n\oplus C\!\cdot\!\mathbb 1$ carries the extra $\det$/trace direction, and the **jet/diffeomorphism group** is far from semisimple. The Christoffel $\beta$ (the second-derivative *soldering* cocycle of §12) is a nonzero class in $H^1$ of that jet group — and that nonvanishing *is* the statement "$\Gamma$ is not a tensor."
+
+| | linear part | translation part |
+|---|---|---|
+| **relation** | $\rho(gh)=\rho(g)\rho(h)$ | $\beta(gh)=\rho(g)\beta(h)+\beta(g)$ |
+| **meaning** | a representation | a $1$-cocycle in $Z^1(G,V_\rho)$ |
+| **solved by** | rep theory ($\det$-powers $=$ §1, rank-$1$) | $H^1(G,V_\rho)$ ($=0$ if $G$ semisimple) |
+| **relative invariant** | $\rho=c=\det^{p}\overline{\det}^{q}$ | $\beta=0$ |
+| **connection** | $\rho=\operatorname{Sym}^2V^*\otimes V$ | $\beta=$ soldering cocycle $\ne0$ |
+
+In a sentence: the affine equation is the *same* functional equation solved the *same* way — multiplicativity for the linear part (now representation theory, with §1's characters the rank-$1$ case) plus the new datum $\beta$ solved by $H^1$ — and relative invariance is its degenerate corner, where $\rho$ is a character and $\beta$ vanishes.
