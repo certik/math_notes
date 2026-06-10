@@ -133,37 +133,15 @@ $$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\pr
 
 ---
 
-## Step 4 — Homogeneity forces $g=\mathrm{id}$
+## Layer 1 — the factorization theorem $f=g\circ\det$ (multiplicativity only)
 
-Apply (5) to $\lambda I=\operatorname{diag}(\lambda,\dots,\lambda)$ and compare with (H2):
-$$g(\lambda^n)=f(\lambda I)=\lambda^n\qquad\text{for all }\lambda\in C^*.$$
-Given any $w\in C^*$, pick an $n$-th root $\lambda$ with $\lambda^n=w$ (fact (R)); then $g(w)=g(\lambda^n)=\lambda^n=w$. Hence
-$$g=\mathrm{id}_{C^*}. \tag{6}$$
-
-Note: this does *not* hold for $R^*$, for example $w=-1$ has no real $\lambda$
-such that $\lambda^2 = w$.
-
-Two immediate consequences, used below: from (5) and (6) it follows
-$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g(\prod_i d_i) = \prod_i d_i, \tag{5$'$}$$
-and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$,
-so scaling a single row by $\lambda$ multiplies $f$ by $\lambda$:
-$$f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)A\big)
-=f\big(\operatorname{diag}(1,\dots,\underset{i}\lambda\dots,1)\big)f(A)
-=\lambda f(A)$$
-
-
-
----
-
-## The main derivation — from $GL(n,C)$ to the Leibniz formula
-
-Everything so far (Steps 1–4) takes place on $GL(n,C)$, where $f$ is genuinely defined, and three facts about $f$ are all we shall use:
+Everything so far (Steps 1–3) used **only** that $f$ is a homomorphism (H1); homogeneity has not yet been touched. Three facts are all we shall use:
 
 * (H1) $f$ is a homomorphism $GL(n,C)\to C^*$;
 * (2) $f\big(T_{ij}(c)\big)=1$ for every transvection;
-* (5$'$) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$.
+* (5) $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g\!\big(\prod_i d_i\big)$, with $g:C^*\to C^*$ the homomorphism of Step 3.
 
-We show these pin $f$ down **uniquely** and reproduce the **Leibniz formula**, working entirely inside $GL$ — never evaluating $f$ on a singular matrix, and with no appeal to continuity, exterior algebra, or Zariski density. (The optional Steps 5–7 below develop the classical multilinear/alternating viewpoint of $f$; the present derivation does **not** use them. The one ingredient missing for $f$ on $GL$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
+We show these force $f=g\circ\det$, the determinant being supplied — single-valued — by the Leibniz polynomial. We work entirely inside $GL$, never evaluating $f$ on a singular matrix, with no appeal to homogeneity, continuity, exterior algebra, or Zariski density. (The optional Steps 5–7 below develop the classical multilinear/alternating viewpoint of $f$; the present derivation does **not** use them. The one ingredient missing for $f$ on $GL$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
 
 **1. Transvections and diagonal matrices generate $GL$.**
 *Lemma.* Every $A\in GL(n,C)$ factors as
@@ -183,26 +161,45 @@ a polynomial defined for **every** matrix by this formula — hence single-value
 * (b) **two equal rows $\Rightarrow L=0$**: pairing each $\sigma$ with $\sigma\circ(\text{transposition of the two equal rows})$ cancels the sum term by term (using $\operatorname{char}C=0$);
 * (c) $L$ is **linear in each row** — every summand is.
 
-From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ obeys (2) and (5$'$) outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
+From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged, $L\big(T_{ij}(c)\,X\big)=L(X)$; taking $X=I$ and using (a) gives in particular $L(T_{ij}(c))=1$. Thus $L$ satisfies $L(T_{ij}(c))=1$ and $L(\operatorname{diag}(d_1,\dots,d_n))=\prod_i d_i$ outright — and, unlike the abstract $f$ on $GL$, with **no domain caveat**, because $L$ is everywhere-defined and (b) is a genuine polynomial identity even though "two equal rows" is a singular configuration. The obstruction that blocked the alternating property for $f$ has been transferred to $L$, where it evaporates.
 
 Feed $L$ a factorization (19). Peeling the transvections of $E$ off one at a time by $L(T_{ij}(c)X)=L(X)$, then applying (a),
 $$L(A)=L(E\,D)=L(D)=\prod_i d_i. \tag{20}$$
 
 **3. $\prod_i d_i$ is well-defined.** A priori the product in (20) could depend on the factorization (19) chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then (20) applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, an honest function of $A$ alone, which we write $p(A):=\prod_i d_i$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
 
-**4. Every $f$ obeying (H1),(2),(5$'$) equals $L$.** Now let $f$ be *any* function satisfying the three properties — the given $f$ of Steps 1–4 is one such. For any factorization (19), using only those three properties,
-$$f(A)=f(E)\,f(D)\overset{(\mathrm{H1})}{=}f(E)\prod_i d_i\overset{(2)}{=}\prod_i d_i=p(A),$$
-the value $p(A)$ being unambiguous by part 3. By (20), the concrete polynomial $L$ satisfies $L(A)=p(A)$ as well. Therefore $f$ and $L$ take the identical value $p(A)$ at every $A$:
-$$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}=\prod_i d_i\qquad(A\in GL(n,C)).\,}$$
-This is the **Leibniz formula — derived, not postulated**. It also shows there is **at most one** function on $GL(n,C)$ obeying (H1),(2),(5$'$): every such function equals $p$ pointwise (part 4), so any two coincide; the given $f$ is one of them, and it equals the explicit polynomial $L$. The grounding is fully transparent: existence/single-valuedness is the explicit polynomial $L$ (part 2), well-definedness of the forced value $p(A)$ is anchored on $L$ (part 3), and the identification $f=p=L$ is part 4. We needed neither multiplicativity of $L$, nor continuity, nor exterior algebra, nor Zariski density.
+**4. Every homomorphism $f$ equals $g\circ\det$.** Define $\det:=L$, the everywhere-defined Leibniz polynomial. Let $f$ be *any* homomorphism — the given $f$ of Steps 1–3 is one such. For any factorization (19), using (H1), then (2) (so $f(E)=1$), then (5) (so $f(D)=g(\prod_i d_i)$),
+$$f(A)=f(E)\,f(D)\overset{(2)}{=}f(D)\overset{(5)}{=}g\!\Big(\prod_i d_i\Big)=g\big(p(A)\big)=g\big(\det A\big),$$
+where $p(A)=\prod_i d_i$ is unambiguous by part 3 and equals $L(A)=\det A$ by (20). This is the **factorization theorem**:
+$$\boxed{\,f(A)=g(\det A),\qquad \det A:=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)),\,}$$
+for some homomorphism $g:C^*\to C^*$ — **derived from multiplicativity alone**, with no homogeneity, continuity, measurability, or Zariski density. The grounding is fully transparent: the single-valued determinant is the explicit polynomial $L$ (part 2), well-definedness of $p(A)=\det A$ is anchored on $L$ (part 3), and the factorization $f=g\circ\det$ is part 4.
 
-One may now *define* $\det:=L$, a polynomial on all of $M_n(C)$; then "$f=\det$ on $GL$" is the complete statement about $f$ (recall $f$ was only ever defined on $GL$). Continuity or Zariski density would furnish alternative *extensions* of the identity to singular matrices, but are not needed for the result.
+Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(C^*,C^*)$ *is* a homomorphism $GL(n,C)\to C^*$, so these are **exactly** all of them: the determinant is the universal homomorphism, and every other is a "rescaling" $g$ of it. The factor $g$ is genuinely free here — continuity or measurability would narrow it to $g(w)=|w|^s(w/|w|)^k$, and homogeneity (Layer 2) pins it to the identity.
+
+---
+
+## Layer 2 — homogeneity selects $g=\mathrm{id}$, hence $f=\det$
+
+Layer 1 leaves exactly one degree of freedom, the homomorphism $g$; homogeneity removes it. Apply the factorization theorem to $\lambda I$, whose determinant is $\det(\lambda I)=\lambda^n$, and compare with (H2):
+$$g(\lambda^n)=f(\lambda I)=\lambda^n\qquad\text{for all }\lambda\in C^*.$$
+Given any $w\in C^*$, pick an $n$-th root $\lambda$ with $\lambda^n=w$ (fact (R)); then $g(w)=g(\lambda^n)=\lambda^n=w$. Hence
+$$g=\mathrm{id}_{C^*}, \tag{6}$$
+and the factorization theorem collapses to
+$$\boxed{\,f(A)=\det A=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}\qquad(A\in GL(n,C)).\,}$$
+So $f$ is the determinant, and the **unique** homogeneous homomorphism.
+
+This last step is the *only* place $C$ rather than $R$ is used: it needs every $w\in C^*$ to be an $n$-th power. Over $R^*$ it fails — e.g. $w=-1$ has no real $\lambda$ with $\lambda^2=w$ — so over $R$ with even $n$ the value $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ gives a second, sign-blind solution (the permanent-like $|\det|$).
+
+Two consequences of $g=\mathrm{id}$, used in the optional sections below: from (5) and (6),
+$$f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i, \tag{5$'$}$$
+and, since left-multiplying by $\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)$ scales row $i$ by $\lambda$, scaling a single row by $\lambda$ multiplies $f$ by $\lambda$:
+$$f\big(\operatorname{diag}(1,\dots,\underset{i}{\lambda},\dots,1)A\big)=\lambda\,f(A). \tag{7}$$
 
 ---
 
 ## Optional — the multilinear and alternating viewpoint
 
-The two sections that follow (Steps 5–6) develop the classical multilinear and sign properties of $f$, and Step 7 expands them into the Leibniz formula. **None of this is used by the main derivation above** — it is the traditional textbook route, recorded for context and referenced by the Lie-theoretic correspondence in Part III. A reader after the shortest path may stop here.
+The two sections that follow (Steps 5–6) develop the classical multilinear and sign properties of $f$, and Step 7 expands them into the Leibniz formula. **None of this is used by Layers 1–2 above** — it is the traditional textbook route, recorded for context and referenced by the Lie-theoretic correspondence in Part III. A reader after the shortest path may stop here.
 
 ---
 
@@ -227,36 +224,40 @@ holds (it reduces to the $2\times2$ identity verified in the Appendix), where $S
 $$f(S_{ij})=g(-1)\cdot 1=-1. \tag{9}$$
 Since left-multiplication by $S_{ij}$ swaps rows $i$ and $j$, (9) and (H1) say: for every invertible $A$, swapping two of its rows multiplies $f$ by $-1$,
 $$f(S_{ij}A)=-f(A)\qquad(A\in GL(n,C)). \tag{10}$$
-This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; the main derivation above supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
+This **antisymmetry** is a genuine statement about $GL$: a swap sends invertible matrices to invertible matrices. One is tempted to conclude at once that $f=0$ whenever two rows coincide — equate the two rows, swap them, and $f=-f$. But a matrix with two equal rows is **singular**, where $f$ is not defined, so the *alternating* property is **not** available on $GL$; Layer 1 above supplies it in the only place it is needed, as a formal identity about the Leibniz polynomial.
 Finally, any permutation matrix $P_\sigma$ is a product of swaps, so by (9)
 $$f(P_\sigma)=\operatorname{sgn}(\sigma). \tag{11}$$
 
-(Here is the only place the choice of branch mattered: (9) used $g(-1)=-1$ from Step 4. Had $g(-1)=+1$ — the situation that survives over $R$ for even $n$ — we would get the sign-blind "permanent" instead. Homogeneity, through (6), is exactly what selects the alternating sign.)
+(Here is the only place the choice of branch mattered: (9) used $g(-1)=-1$ from Layer 2. Had $g(-1)=+1$ — the situation that survives over $R$ for even $n$ — we would get the sign-blind "permanent" instead. Homogeneity, through (6), is exactly what selects the alternating sign.)
 
 ---
 
 ## Step 7 — The same formula via the classical basis expansion (optional)
 
-The main derivation above already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that the main derivation was designed to handle.
+Layers 1–2 above already derived the boxed formula rigorously and elementarily. The familiar textbook route reaches it a different way — by expanding $f$ multilinearly over the standard basis — and is worth recording, with one caveat that Layer 1 was designed to handle.
 
 Multilinearity (8) lets one expand each row $r_i=\sum_{j}A_{ij}\,e_j$:
 $$f(A)=\sum_{j_1,\dots,j_n}A_{1,j_1}\cdots A_{n,j_n}\;f(e_{j_1},\dots,e_{j_n}).$$
 The surviving terms are those where $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$ for a permutation $\sigma$, contributing $f(P_\sigma)=\operatorname{sgn}(\sigma)$ by (11), and one recovers
 $$\boxed{\,f(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^{n}A_{i,\sigma(i)}\,,}$$
-the **Leibniz formula**, in agreement with the main derivation.
+the **Leibniz formula**, in agreement with Layers 1–2.
 
-A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in the main derivation: read every term as a value of the everywhere-defined polynomial $L(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of the main derivation (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
+A word on the basis expansion. The intermediate tuples $f(e_{j_1},\dots,e_{j_n})$ with a *repeated* index correspond to **singular** matrices, where $f$ was never defined — so the step "these terms vanish" cannot be justified by the abstract $f$ alone (this is the same gap that blocked the alternating property in Step 6). The clean fix is the one used in Layer 1: read every term as a value of the everywhere-defined polynomial $L(A)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$, whose vanishing on repeated indices is the *formal* identity (b) of Layer 1 (part 2), with no domain caveat. The expansion is then a convenient mnemonic for the rigorous generating-set derivation above — and needs neither continuity nor Zariski density.
 
 ---
 
 ## Conclusion
 
-> **Theorem.** Over $C$, any homogeneous homomorphism $f:GL(n,C)\to C^*$ is given by the Leibniz formula; i.e. $f$ is the determinant, and it is the unique such function.
+The argument splits into two independent layers.
+
+> **Layer 1 — factorization (multiplicativity only).** Every homomorphism $f:GL(n,C)\to C^*$ has the form $f(A)=g(\det A)$ for some homomorphism $g:C^*\to C^*$, where $\det$ is the Leibniz polynomial. No homogeneity, continuity, or measurability is used; conversely every $g\circ\det$ is a homomorphism, so these are *all* of them.
+
+> **Layer 2 — normalization (adding homogeneity).** If in addition $f(\lambda I)=\lambda^n$, then $g=\mathrm{id}$, so $f=\det$: the determinant is the unique homogeneous homomorphism.
 
 Two remarks:
 
-- **No regularity, no spectral theory.** We never assumed $f$ continuous or measurable, and never used eigenvalues, the polar decomposition, or the determinant itself. Everything came from (H1), (H2), and one use of (R).
-- **Where $C$ was essential.** The single step that needed $C$ rather than $R$ is Step 4: every $w\in C^*$ — in particular $-1=i^2$ — has an $n$-th root, which forces $g=\mathrm{id}$ and hence $g(-1)=-1$, the sign in Step 6. Over $R$ with even $n$ the value $-1$ has no real $n$-th root, $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ yields a second, sign-blind solution (the permanent-like $|\det|$). Over $C$ that ambiguity cannot occur.
+- **No regularity, no spectral theory.** We never assumed $f$ continuous or measurable, and never used eigenvalues, the polar decomposition, or the determinant itself. Layer 1 came from (H1) alone; Layer 2 added (H2) and one use of (R).
+- **Where $C$ was essential.** Homogeneity is needed only to select $g=\mathrm{id}$, and that is the single step (Layer 2) requiring $C$ rather than $R$: every $w\in C^*$ — in particular $-1=i^2$ — has an $n$-th root, which forces $g=\mathrm{id}$ and hence $g(-1)=-1$, the sign in Step 6. Over $R$ with even $n$ the value $-1$ has no real $n$-th root, $g(-1)=\pm1$ stays free, and the choice $g(-1)=+1$ yields a second, sign-blind solution (the permanent-like $|\det|$). Over $C$ that ambiguity cannot occur.
 
 ---
 
@@ -345,7 +346,7 @@ $$\operatorname{diag}(d_1,\dots,d_n)\longmapsto \prod_i d_i^{\,m_i},\qquad (m_1,
 The Weyl group of $GL(n,C)$ is the symmetric group $S_n$, permuting the $d_i$ (this is the permutation-matrix conjugation of Step 3). A character that is **Weyl-invariant** must have all $m_i$ equal, $m_i=m$, i.e. it is $(\prod_i d_i)^m=(\det|_T)^m$. Homogeneity (H2), $f(\lambda I)=\lambda^n$, evaluates this at $d_i=\lambda$: $(\lambda^n)^m=\lambda^{nm}\overset{!}{=}\lambda^n$, forcing $m=1$. So:
 
 - **Weyl-invariance** $\Rightarrow$ $f|_T=(\det|_T)^m$ — this is Step 3 ("position doesn't matter, $f(\operatorname{diag})=g(\prod d_i)$").
-- **Homogeneity** $\Rightarrow$ $m=1$ — this is Step 4 ("$g=\mathrm{id}$").
+- **Homogeneity** $\Rightarrow$ $m=1$ — this is Layer 2 ("$g=\mathrm{id}$").
 
 The note proves Weyl-invariance from scratch (permutation conjugation) and gets $m=1$ from the root property (every $w$ is an $n$-th power). The $C$-vs-$R$ subtlety lives entirely in this last point: over $C$ the only Weyl-invariant character matching (H2) is $\det$; over $R$ with even $n$ there is a second character of the disconnected torus $(R^*)^n$ — the sign-blind $\prod|d_i|$ — because $R^*$ is not divisible.
 
@@ -361,7 +362,7 @@ The note proves Weyl-invariance from scratch (permutation conjugation) and gets 
 | $f\equiv1$ on transvections (Step 2) | $f$ is trivial on $[G,G]=SL(n,C)$ (commutators) |
 | permutation conjugation (Step 3) | Weyl group $S_n$ acting on the torus |
 | $f(\operatorname{diag})=g(\prod d_i)$ | $f|_T$ is a Weyl-invariant character of $(C^*)^n$ |
-| homogeneity fixes $g=\mathrm{id}$ (Step 4) | normalization selecting the character $\det$ (exponent $m=1$) |
+| homogeneity fixes $g=\mathrm{id}$ (Layer 2) | normalization selecting the character $\det$ (exponent $m=1$) |
 | swap sign $f(S_{ij})=-1$ (Step 6) | longest Weyl element acts by $\operatorname{sgn}$; needs $-1\in(C^*)^n$-image |
 
 In one sentence: **the determinant is the unique Weyl-invariant character of the maximal torus that is trivial on the unipotent root subgroups and normalized by homogeneity** — and the elementary note is precisely this statement with all the Lie theory unwound into bare-hands matrix computations.
@@ -421,7 +422,7 @@ $$\exp\!\big(a\,nz+b\,n\bar z\big)=\exp(nz)\qquad\text{for all }z\in C.$$
 The function $z\mapsto a n z+b n\bar z-nz$ is continuous, takes values in $2\pi i\,\mathbb{Z}$, and vanishes at $z=0$; by connectedness of $C$ it is identically $0$. Thus $a z+b\bar z=z$ for all $z\in C$, and since $z$ and $\bar z$ are $\mathbb{R}$-independent,
 $$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{Λ5}$$
 
-This is the exact counterpart of Step 4 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
+This is the exact counterpart of Layer 2 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
 
 ### Step 5 — Integrate: $f$ is the product of the eigenvalues
 
@@ -458,11 +459,11 @@ The Leibniz formula is recovered — now as the coordinate expression of the act
 |---|---|
 | conjugation invariance, $f$ trivial on transvections (Steps 1–2) | $\phi=df_I$ annihilates commutators (Λ1); vanishes on $[\mathfrak g,\mathfrak g]=\mathfrak{sl}_n$ (Λ3) |
 | $f(\operatorname{diag})=g(\prod d_i)$, $g$ a homomorphism (Step 3) | $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ on the quotient $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ (Λ4) |
-| homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Step 4) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
+| homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Layer 2) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
 | second branch $g(-1)=+1$ over $R$, giving $|\det|$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
 | $f$ multilinear & alternating in rows (Steps 5–6) | $f$ = action on $\Lambda^n$; antisymmetry of the wedge (Λ8) |
 | basis expansion $\Rightarrow$ Leibniz (Step 7) | wedge expansion $\Rightarrow$ Leibniz (Λ9) |
-| uses $n$-th roots in $C$ once (Step 4) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
+| uses $n$-th roots in $C$ once (Layer 2) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
 
 Both proofs are the same story told at two levels: *kill the commutators, read off the one remaining degree of freedom on the torus / Cartan, and let homogeneity fix it.* The elementary version pays nothing in regularity but does the bookkeeping by hand; the Lie version assumes continuity and lets the exponential map and the top exterior power do the bookkeeping automatically.
 
@@ -480,7 +481,7 @@ The property we actually need is the **multiplicativity** of the operator determ
 
 It is tempting to invoke a stronger-sounding claim — that *every* homomorphism $c:GL(V)\to C^*$ is a power $\det^{m}$ — but, as the discussion around the introduction shows, **this is false**. Multiplicativity alone gives only that $c$ is trivial on transvections, hence on $SL=[GL,GL]$, so it factors through the determinant,
 $$c=g\circ\det,\qquad g:C^*\to C^*\ \text{a homomorphism};$$
-and $g$ is *not* pinned down. For instance $g(w)=|w|$, $g(w)=\bar w$, or (with continuity) any $g(w)=|w|^{s}(w/|w|)^{k}$ all qualify, giving the further homomorphisms $|\det|$, $\overline{\det}$, $|\det|^{s}(\det/|\det|)^{k}$; without any regularity there are wildly many more. Cutting $g$ down to a single power needs *homogeneity*, exactly as in the main note (Step 4). For the tensor determinants below we will not even need this — the weights fall straight out of $\det(XY)=\det(X)\det(Y)$ — but the same homogeneity-vs-non-uniqueness theme returns the moment we ask for an axiomatic *characterisation* (§3).
+and $g$ is *not* pinned down. For instance $g(w)=|w|$, $g(w)=\bar w$, or (with continuity) any $g(w)=|w|^{s}(w/|w|)^{k}$ all qualify, giving the further homomorphisms $|\det|$, $\overline{\det}$, $|\det|^{s}(\det/|\det|)^{k}$; without any regularity there are wildly many more. Cutting $g$ down to a single power needs *homogeneity*, exactly as in the main note (Layer 2). For the tensor determinants below we will not even need this — the weights fall straight out of $\det(XY)=\det(X)\det(Y)$ — but the same homogeneity-vs-non-uniqueness theme returns the moment we ask for an axiomatic *characterisation* (§3).
 
 ### 2. $(1,1)$-tensors $A^i{}_j$: the determinant is an invariant scalar
 
@@ -503,11 +504,11 @@ We characterise the form-determinant **by its properties**, exactly as the note 
 
 **The weight is forced** (with no regularity, no Leibniz, no transpose identity). Applying (T1) twice and using $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$ gives $c(ST)=c(S)c(T)$: the multiplier $c$ is a *homomorphism* $GL(V)\to C^*$. By the note's own result — a homomorphism is trivial on transvections, hence on $SL$ — it factors through the determinant, $c=g\circ\det$ with $g:C^*\to C^*$ a homomorphism (§1). Homogeneity then pins $g$: taking $S=\mu I$, (T1) gives $f(\mu^{2}A)=c(\mu I)\,f(A)=g(\mu^{n})\,f(A)$ while (T2) gives $f(\mu^{2}A)=\mu^{2n}f(A)$, so $g(\mu^{n})=\mu^{2n}$; since $\mu\mapsto\mu^{n}$ is onto $C^*$ (divisibility), $g(w)=w^{2}$. Hence
 $$\boxed{\ c(S)=\det(S)^{2},\qquad f(S^{T}AS)=\det(S)^{2}\,f(A).\ }$$
-This is the divisibility argument of Step 4 transplanted to forms. Without (T2) the homomorphism $c$ stays free — $c=|\det|^{2}$ (solution $f=|\det(A_{ij})|$) and $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$) also satisfy (T1) — and once again homogeneity is what selects the polynomial branch over the $|\det|$ one.
+This is the divisibility argument of Layer 2 transplanted to forms. Without (T2) the homomorphism $c$ stays free — $c=|\det|^{2}$ (solution $f=|\det(A_{ij})|$) and $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$) also satisfy (T1) — and once again homogeneity is what selects the polynomial branch over the $|\det|$ one.
 
 **Uniqueness.** Over $C$ every nondegenerate symmetric form is a single congruence orbit (Sylvester: $A=S^{T}IS$). If $f_1,f_2$ both obey (T1)–(T2) they share $c=\det^{2}$, so $f_i(A)=\det(S)^{2}f_i(I)$ and the ratio $f_1(A)/f_2(A)=f_1(I)/f_2(I)$ is constant. So $f$ is **unique up to overall scale**, fixed by the normalisation $f(I)=1$. (A general non-symmetric $A_{ij}$ falls into several congruence orbits; there the witness below is what ties the scales across orbits together — for a metric, one orbit suffices.)
 
-**Existence.** One explicit function obeys the axioms, and — exactly as the note anchors the existence of $\det$ on the Leibniz *polynomial* $L$ (part 2 of the main derivation) — it serves only as a *witness*, not as the definition: the component determinant satisfies $\det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\det(A)$ and $\det(\lambda A)=\lambda^{n}\det(A)$, with $c=\det^{2}$ and $\det(I)=1$.
+**Existence.** One explicit function obeys the axioms, and — exactly as the note anchors the existence of $\det$ on the Leibniz *polynomial* $L$ (part 2 of Layer 1) — it serves only as a *witness*, not as the definition: the component determinant satisfies $\det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\det(A)$ and $\det(\lambda A)=\lambda^{n}\det(A)$, with $c=\det^{2}$ and $\det(I)=1$.
 
 So a form-determinant exists, is unique up to scale, and is a **relative invariant of weight $2$** — a density, not a scalar.
 
