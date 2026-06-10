@@ -629,3 +629,21 @@ $$\boxed{\,W=p+q\ \ (\text{weight}),\qquad \text{even}/\text{odd}=(p-q)\bmod 2\,
 | Levi-Civita symbol $\tilde\epsilon_{i_1\cdots i_n}$ | $\operatorname{sgn}(J)\,\lvert J\rvert^{-1}$ | $-1$ | odd | $(-1,0)$ |
 
 In short: **the determinant, the metric density, the volume element, the Levi-Civita symbols, and the entire authentic/pseudo/even/odd taxonomy are one object — a character $(\det S)^{p}\overline{(\det S)}^{q}$ — read at different $(p,q)$.** Weight is $p+q$; the orientation sign-flip is the parity of $p-q$; and the refinement $p-q\in\mathbb Z$ is the piece the real classification cannot see.
+
+### 9. Relation to the literature
+
+None of the *theorems* above are new; the value is the ab-initio route and the single dictionary. For context:
+
+- **Relative invariants are classical.** The defining relation $F(S\!\cdot\!A)=c(S)F(A)$, with $c$ a character, is exactly the notion of a *relative invariant* (or *semi-invariant*) in invariant theory — central, for instance, in Sato–Kimura's theory of prehomogeneous vector spaces and in the semi-invariants of quiver representations. That the multiplier $c$ must be a character is the standard first step there, and is our §1.
+- **Characters of $GL$ are $\det$-powers.** The factorization $c=g\circ\det$ together with $g(w)=w^{p}\bar w^{q}$ is the (continuous) character group of $GL(n,C)$ as a real Lie group; its rational/holomorphic part is the character lattice $X(GL_n)=\mathbb Z\cdot\det$, a textbook fact of linear algebraic groups.
+- **Densities are one-dimensional representations.** In differential geometry tensor densities are the sections of the line bundles associated to the characters $\det^{p}\overline{\det}^{q}$ (the theory of *natural bundles*); the even/odd dichotomy is the character of $\pi_0\,GL(n,R)=\mathbb Z/2$, i.e. orientation. The classical authentic/pseudo/even/odd taxonomy of §8 is this character group written in physics notation.
+
+What the note adds is not a theorem but an organisation: **everything follows from the one axiom** $F(S\!\cdot\!A)=c(S)F(A)$ — determinant, metric density, $\sqrt{\lvert g\rvert}$, Levi-Civita symbols, and the whole zoo are one character $(\det S)^{p}\overline{(\det S)}^{q}$, with $(W,\text{parity})=(p+q,\,(p-q)\bmod2)$ over $R$ and a genuine $\mathbb Z$-refinement over $C$.
+
+**The universal multiplier, three ways.** Everything rests on the single fact that *every* multiplier factors through $\det$ — equivalently that $GL/SL\xrightarrow{\ \det\ }C^*$ is the abelianisation. The note proves this three independent times, and any one suffices:
+
+1. **Commutators** (Step 2 / Lie chapter §4): $c$ kills $[GL,GL]=SL$ because transvections are commutators and generate $SL$, so $c$ sees $S$ only through $\det S$.
+2. **Trace** (Part III, (Λ1)–(Λ5)): $dc_I$ vanishes on $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n$, so $dc_I=a\operatorname{tr}$ and $c=\det^{a}$ — trace is the only linear invariant, $\det=e^{\operatorname{tr}}$ its integral.
+3. **Eigenvalues + Weyl** (Lie chapter §5): a torus character $\prod_i\lambda_i^{m_i}$ that is symmetric in the $\lambda_i$ has all $m_i$ equal, so it is $(\prod_i\lambda_i)^m=\det^m$.
+
+In one line: $\det$ is the universal multiplier because it *generates the Weyl-invariant character lattice* — it is the abelianisation of $GL$, and a relative invariant can see nothing finer than $\det S$.
