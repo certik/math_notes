@@ -738,3 +738,30 @@ exactly the inhomogeneous term of the Christoffel law $\Gamma'^\lambda_{\mu\nu}=
 The two even meet: contracting the connection gives $\Gamma^\lambda_{\lambda\nu}=\partial_\nu\ln\sqrt{\lvert g\rvert}$, the connection $1$-form on the density line bundle. It is *not* a tensor — under a coordinate change it transforms as a covector *plus a gauge term*,
 $$\Gamma'^{\lambda}_{\lambda\nu}=\frac{\partial x^\tau}{\partial x'^\nu}\,\Gamma^{\rho}_{\rho\tau}-\partial'_\nu\ln J,\qquad J=\det\!\Big(\tfrac{\partial x'}{\partial x}\Big),$$
 the contraction having collapsed the linear part $\rho$ to the trivial scalar action while the cocycle $\beta$ survives as the pure-gauge $-\partial_\nu\ln J$. (Two such differ by a genuine covector — a coboundary; and $\Gamma_\nu\,dx^\nu=d\ln\sqrt{\lvert g\rvert}$ is closed, so this density connection is *flat*, $R^\lambda{}_{\lambda\mu\nu}=0$.) The covariant derivative of a weight-$w$ density then picks up the extra $-w\,\Gamma^\lambda_{\lambda\nu}$ — the affine cousin acting on the relative invariants of §1.
+
+### 13. Solving the affine equation: representation $\rho$ + cocycle $\beta$
+
+§12 wrote the law $\Gamma\mapsto\rho(g)\Gamma+\beta(g)$ and the cocycle relation for $\beta$. The companion relation for $\rho$, and whether the whole thing can be *solved* the way §1 solved relative invariance, complete the picture.
+
+**The two relations.** Demanding that $g\mapsto(\rho(g),\beta(g))$ be a homomorphism into $\operatorname{Aff}(V)=V\rtimes GL(V)$ — i.e. $(gh)\!\cdot\!\Gamma=g\!\cdot\!(h\!\cdot\!\Gamma)$ — splits into two:
+$$\rho(gh)=\rho(g)\,\rho(h)\qquad\text{($\rho$ a representation),}$$
+$$\beta(gh)=\rho(g)\,\beta(h)+\beta(g)\qquad\text{($\beta$ a $\rho$-twisted $1$-cocycle).}$$
+So $\rho$ obeys *exactly the same multiplicative law as the character $c$ of §1* — it is a homomorphism — only now matrix-valued, $\rho:G\to GL(V)$, instead of scalar, $c:G\to C^*=GL_1$. The relative invariant is the **rank-$1$, $\beta=0$ slice**: $V$ a line, $\rho=c$.
+
+**Stage 1 — solve $\rho$ by representation theory.** $\rho(gh)=\rho(g)\rho(h)$ is "classify the representations of $G$." Our §1 is precisely this restricted to *one-dimensional* reps: the only $1$-dim reps of $GL(n,C)$ are the $\det$-powers $\det^{p}\overline{\det}^{q}$. For higher $\rho$ — e.g. the Christoffel space $\rho=\operatorname{Sym}^2V^*\otimes V$ — it is the full $GL(n)$ representation theory (highest weights / Young diagrams), and the *same method* works: differentiate to a Lie-algebra representation $d\rho:\mathfrak{gl}_n\to\mathfrak{gl}(V)$ and classify by highest weight (cf. §11). The §1 character classification is the rank-$1$ corner.
+
+**Stage 2 — solve $\beta$ by group cohomology.** Given $\rho$, the cocycle equation is solved up to its removable solutions. A **coboundary** $\beta(g)=(\rho(g)-\mathbb 1)v_0$ is what shifting $\Gamma$ by a fixed tensor $v_0$ produces (a change of base connection) — gauge-trivial. The genuine, non-tensorial structures are the quotient
+$$\{\text{connections}\}\big/\{\text{tensor shifts}\}=H^1(G,\,V_\rho).$$
+Nonzero $H^1$ $\iff$ honest connections exist (the inhomogeneous term cannot be gauged away). Infinitesimally — the exact analogue of §11's trace route — one differentiates to **Lie-algebra cohomology** $H^1(\mathfrak g,V_\rho)$, with cocycles $b:\mathfrak g\to V$ obeying $b([X,Y])=d\rho(X)\,b(Y)-d\rho(Y)\,b(X)$.
+
+**Why connections exist at all (Whitehead).** Whitehead's first lemma: for a *semisimple* Lie algebra and finite-dimensional $V$, $H^1(\mathfrak g,V)=0$. Over a semisimple structure group *every cocycle is a coboundary* — every affine object is secretly a tensor, gaugeable to homogeneous, and there are no genuine connections. They exist precisely because the relevant groups are **not** semisimple: $\mathfrak{gl}_n=\mathfrak{sl}_n\oplus C\!\cdot\!\mathbb 1$ carries the extra $\det$/trace direction, and the **jet/diffeomorphism group** is far from semisimple. The Christoffel $\beta$ (the second-derivative *soldering* cocycle of §12) is a nonzero class in $H^1$ of that jet group — and that nonvanishing *is* the statement "$\Gamma$ is not a tensor."
+
+| | linear part | translation part |
+|---|---|---|
+| **relation** | $\rho(gh)=\rho(g)\rho(h)$ | $\beta(gh)=\rho(g)\beta(h)+\beta(g)$ |
+| **meaning** | a representation | a $1$-cocycle in $Z^1(G,V_\rho)$ |
+| **solved by** | rep theory ($\det$-powers $=$ §1, rank-$1$) | $H^1(G,V_\rho)$ ($=0$ if $G$ semisimple) |
+| **relative invariant** | $\rho=c=\det^{p}\overline{\det}^{q}$ | $\beta=0$ |
+| **connection** | $\rho=\operatorname{Sym}^2V^*\otimes V$ | $\beta=$ soldering cocycle $\ne0$ |
+
+In a sentence: the affine equation is the *same* functional equation solved the *same* way — multiplicativity for the linear part (now representation theory, with §1's characters the rank-$1$ case) plus the new datum $\beta$ solved by $H^1$ — and relative invariance is its degenerate corner, where $\rho$ is a character and $\beta$ vanishes.
