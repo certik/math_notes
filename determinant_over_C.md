@@ -212,7 +212,7 @@ Fix all rows of an invertible matrix except row $i$; call the others $r_1,\dots,
 
 A function on the one-dimensional space $C^n/V$ that is homogeneous of degree $1$ is **linear**. Concretely, fix a nonzero class $z_0$ and let $c$ be the value of $f$ there. Every nonzero class is $t\,z_0$ for a unique scalar $t\in C^*$, and degree-$1$ homogeneity forces the value to be exactly $t\,c$. This rule $t\,z_0\mapsto t\,c$ is linear by the field arithmetic of $C$ (no Hamel-basis pathologies can arise in dimension one). Pulling back, $f$ is an additive (indeed linear) function of $r_i$:
 $$f(\dots,\,u+v\,,\dots)=f(\dots,u,\dots)+f(\dots,v,\dots),\qquad f(\dots,\lambda u,\dots)=\lambda\,f(\dots,u,\dots).$$
-Since $i$ was arbitrary, **$f$ is multilinear in the rows.** $\tag{8}$
+Since $i$ was arbitrary, **$f$ is multilinear in the rows.** (8)
 
 ---
 
@@ -394,8 +394,8 @@ $$\phi:=df_I:\mathfrak{gl}(n,C)\longrightarrow C=\operatorname{Lie}(C^*)$$
 be the differential of $f$ at the identity. Two standard facts:
 
 1. **$\phi$ is a Lie-algebra homomorphism**: $\phi([X,Y])=[\phi(X),\phi(Y)]$. Because the target $C$ is abelian, the right-hand side is $0$, so
-$$\phi([X,Y])=0\qquad\text{for all }X,Y. \tag{Λ1}$$
-2. **$f$ intertwines the exponentials**: $f(\exp X)=\exp(\phi(X))$ for all $X\in\mathfrak{gl}(n,C)$, where on the left $\exp$ is the matrix exponential and on the right it is $C\to C^*,\ z\mapsto e^{z}$. $\tag{Λ2}$
+$$\phi([X,Y])=0\qquad\text{for all }X,Y. \tag{$\Lambda$1}$$
+2. **$f$ intertwines the exponentials**: $f(\exp X)=\exp(\phi(X))$ for all $X\in\mathfrak{gl}(n,C)$, where on the left $\exp$ is the matrix exponential and on the right it is $C\to C^*,\ z\mapsto e^{z}$. (Λ2)
 
 Here $\phi$ is only $\mathbb{R}$-linear (we did not assume holomorphy), a point that matters in Step 3.
 
@@ -404,11 +404,11 @@ This is the precise Lie-theoretic shadow of Step 1–2 of Part I: conjugation-in
 ### Step 3 — $\phi$ vanishes on $\mathfrak{sl}(n,C)$, hence is a multiple of the trace
 
 By (Λ1), $\phi$ vanishes on the **derived subalgebra** $[\mathfrak{g},\mathfrak{g}]$. For $\mathfrak{gl}(n,C)$ this derived subalgebra is exactly the traceless matrices:
-$$[\mathfrak{gl}(n,C),\mathfrak{gl}(n,C)]=\mathfrak{sl}(n,C). \tag{Λ3}$$
+$$[\mathfrak{gl}(n,C),\mathfrak{gl}(n,C)]=\mathfrak{sl}(n,C). \tag{$\Lambda$3}$$
 Indeed $\operatorname{tr}[X,Y]=0$ gives "$\subseteq$", while $e_{ij}=[e_{ii},e_{ij}]$ ($i\neq j$) and $e_{ii}-e_{jj}=[e_{ij},e_{ji}]$ produce a full basis of $\mathfrak{sl}(n,C)$, giving "$\supseteq$" (and incidentally that $\mathfrak{sl}(n,C)$ is **perfect** for $n\ge2$). So $\phi$ factors through the one-complex-dimensional quotient
 $$\mathfrak{gl}(n,C)/\mathfrak{sl}(n,C)\;\xrightarrow{\ \sim\ }\;C,\qquad X\longmapsto \operatorname{tr}X.$$
 An $\mathbb{R}$-linear functional on this quotient is an $\mathbb{R}$-linear functional of $\operatorname{tr}X\in C$, i.e. there are constants $a,b\in C$ with
-$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}. \tag{Λ4}$$
+$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}. \tag{$\Lambda$4}$$
 The conjugate term is present precisely because $\phi$ is only real-linear; it is the infinitesimal trace of the second, "anti-holomorphic" solution $A\mapsto\overline{\det A}$.
 
 **Example ($n=2$).** $\mathfrak{sl}(2,C)=\operatorname{span}\{h,e,f_-\}$ is spanned by the three commutators $[e,f_-]=h,\ [h,e]=2e,\ [h,f_-]=-2f_-$, so any commutator-annihilating $\phi$ already vanishes on all of it; only the trace direction $I=e_{11}+e_{22}$ survives.
@@ -420,16 +420,16 @@ $$f(\lambda I)=\exp\!\big(\phi(zI)\big)=\exp\!\big(a\,\operatorname{tr}(zI)+b\,\
 Homogeneity (H2) says $f(\lambda I)=\lambda^{n}=e^{nz}$. Hence
 $$\exp\!\big(a\,nz+b\,n\bar z\big)=\exp(nz)\qquad\text{for all }z\in C.$$
 The function $z\mapsto a n z+b n\bar z-nz$ is continuous, takes values in $2\pi i\,\mathbb{Z}$, and vanishes at $z=0$; by connectedness of $C$ it is identically $0$. Thus $a z+b\bar z=z$ for all $z\in C$, and since $z$ and $\bar z$ are $\mathbb{R}$-independent,
-$$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{Λ5}$$
+$$a=1,\qquad b=0,\qquad\text{i.e.}\qquad \boxed{\ \phi=\operatorname{tr}.\ } \tag{$\Lambda$5}$$
 
 This is the exact counterpart of Layer 2 of Part I ("$g=\mathrm{id}$"). Homogeneity does one job in both proofs: it discards the spurious second solution — here the conjugate-trace term $b\,\overline{\operatorname{tr}}$ (whose group-level form is $\overline{\det}$), there the branch $g(-1)=+1$ (whose form is $|\det|$).
 
 ### Step 5 — Integrate: $f$ is the product of the eigenvalues
 
 Combining (Λ2) and (Λ5),
-$$f(\exp X)=\exp(\operatorname{tr}X)\qquad\text{for all }X\in\mathfrak{gl}(n,C). \tag{Λ6}$$
+$$f(\exp X)=\exp(\operatorname{tr}X)\qquad\text{for all }X\in\mathfrak{gl}(n,C). \tag{$\Lambda$6}$$
 Because $G=GL(n,C)$ is **connected**, a continuous homomorphism is determined by its differential, so (Λ6) determines $f$ on all of $G$. We make it fully explicit. Over $C$ the matrix exponential $\exp:\mathfrak{gl}(n,C)\to GL(n,C)$ is **surjective**, so every invertible $A$ equals $\exp X$ for some $X$. If $X$ has eigenvalues $\mu_1,\dots,\mu_n$ (with multiplicity), then $A=\exp X$ has eigenvalues $\lambda_i=e^{\mu_i}$, and $\operatorname{tr}X=\sum_i\mu_i$, so (Λ6) gives
-$$f(A)=\exp\!\Big(\sum_i\mu_i\Big)=\prod_i e^{\mu_i}=\prod_{i=1}^n\lambda_i(A). \tag{Λ7}$$
+$$f(A)=\exp\!\Big(\sum_i\mu_i\Big)=\prod_i e^{\mu_i}=\prod_{i=1}^n\lambda_i(A). \tag{$\Lambda$7}$$
 Thus **$f$ is the product of the eigenvalues** of $A$, counted with algebraic multiplicity — independent of the chosen $X$. (Surjectivity of $\exp$ over $C$ is the precise place the proof uses the complex field, just as the $n$-th-root property was in Part I; over $R$ it fails — e.g. $\operatorname{diag}(-1,-2)$ is not a real exponential — which is the analytic shadow of the missing real $n$-th roots.)
 
 **Example ($n=2$).** For $A=\begin{pmatrix}2&1\\0&3\end{pmatrix}$, eigenvalues $2,3$, so $f(A)=6$. For a rotation-scaling $A=r\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}=\exp\!\begin{pmatrix}\log r&-\theta\\\theta&\log r\end{pmatrix}$, $\operatorname{tr}=2\log r$, so $f(A)=e^{2\log r}=r^2$, matching $\lambda_1\lambda_2=(re^{i\theta})(re^{-i\theta})=r^2$.
@@ -437,7 +437,7 @@ Thus **$f$ is the product of the eigenvalues** of $A$, counted with algebraic mu
 ### Step 6 — The top exterior power gives the Leibniz formula
 
 It remains to write $\prod_i\lambda_i$ in coordinates. This is the natural job of the **top exterior power** $\Lambda^n(C^n)$, a one-dimensional space with basis $e_1\wedge\cdots\wedge e_n$. Any linear map $A$ induces a linear map $\Lambda^n A$ on this line, i.e. multiplication by a scalar $\delta(A)$:
-$$(Ae_1)\wedge(Ae_2)\wedge\cdots\wedge(Ae_n)=\delta(A)\;e_1\wedge\cdots\wedge e_n. \tag{Λ8}$$
+$$(Ae_1)\wedge(Ae_2)\wedge\cdots\wedge(Ae_n)=\delta(A)\;e_1\wedge\cdots\wedge e_n. \tag{$\Lambda$8}$$
 Two properties are immediate from functoriality of $\Lambda^n$: $\delta(AB)=\delta(A)\delta(B)$ (so $\delta$ is multiplicative and continuous, a polynomial in the entries), and on a diagonalizable $A$ with eigenvalues $\lambda_i$, choosing an eigenbasis, $\delta(A)=\prod_i\lambda_i$.
 
 Now expand (Λ8) in coordinates. Writing the columns $Ae_k=\sum_{j} A_{jk}\,e_j$ and using multilinearity and antisymmetry of the wedge ($e_{j_1}\wedge\cdots\wedge e_{j_n}=0$ if any index repeats, and $=\operatorname{sgn}(\sigma)\,e_1\wedge\cdots\wedge e_n$ when $(j_1,\dots,j_n)=(\sigma(1),\dots,\sigma(n))$),
@@ -445,7 +445,7 @@ $$(Ae_1)\wedge\cdots\wedge(Ae_n)=\sum_{j_1,\dots,j_n}A_{j_1 1}\cdots A_{j_n n}\;
 =\Big(\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}\Big)e_1\wedge\cdots\wedge e_n.$$
 Comparing with (Λ8),
 $$\delta(A)=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{k=1}^n A_{\sigma(k),k}
-=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}, \tag{Λ9}$$
+=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)}, \tag{$\Lambda$9}$$
 the two sums being equal by the substitution $\sigma\mapsto\sigma^{-1}$ (which preserves the sign). This is the **Leibniz formula**.
 
 Finally, $\delta$ and $f$ are both continuous and, by (Λ7) and the eigenvalue computation above, agree on the **dense** set of diagonalizable invertible matrices (both equal $\prod_i\lambda_i$ there). Two continuous functions agreeing on a dense set agree everywhere, so $f=\delta$ on all of $GL(n,C)$:
