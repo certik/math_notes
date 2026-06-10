@@ -471,24 +471,41 @@ Both proofs are the same story told at two levels: *kill the commutators, read o
 
 ## Part IV — Determinants of tensors and tensor densities
 
-The note characterised the determinant on $GL(n,C)$ as the unique homogeneous homomorphism. The one property we carry over to *tensors* is its **multiplicativity**, $\det(XY)=\det(X)\det(Y)$. It resolves a familiar puzzle from differential geometry: why the determinant of a $(1,1)$-tensor $A^i{}_j$ is an honest invariant scalar, while the determinant of a $(0,2)$-tensor $A_{ij}$ — such as the metric $g_{\mu\nu}$ — is only a *density*, invariant up to a power of the Jacobian.
+The note characterised the determinant on $GL(n,C)$ as the unique homogeneous homomorphism. Tensors fit the *same* machinery through a single notion — the **relative invariant** — whose multiplier is forced, by Layer 1, to be a character $g(\det S)$. This both extends "determinant" to tensors and resolves a familiar puzzle from differential geometry: why the determinant of a $(1,1)$-tensor $A^i{}_j$ is an honest invariant scalar, while the determinant of a $(0,2)$-tensor $A_{ij}$ — such as the metric $g_{\mu\nu}$ — is only a *density*, invariant up to a power of the Jacobian.
 
 Throughout, $V=C^n$ with dual $V^*$, and a change of basis is a map $S\in GL(V)$. We use the passive convention: under the new basis $e'_i=S^j{}_i e_j$, contravariant (upper) components transform by $S^{-1}$ and covariant (lower) components by $S$. We write $\det$ for the operator determinant already derived in this note; the tensor determinants below are *built on top of it*.
 
-### 1. The one fact we reuse — and one we do *not*
+### 1. Relative invariants and their multiplier
 
-The property we actually need is the **multiplicativity** of the operator determinant established above, $\det(XY)=\det(X)\det(Y)$; every transformation law below follows from it in one line.
+Call a scalar function $F$ of a tensor a **relative invariant** if, under a change of basis $S\in GL(V)$, it reproduces itself up to a scalar:
+$$F(S\!\cdot\!A)=c(S)\,F(A),$$
+where $S\!\cdot\!A$ is the transformation law of $A$ — which depends on its index type,
+$$(1,1):\ S\!\cdot\!A=S^{-1}AS,\qquad (0,2):\ S\!\cdot\!A=S^{T}AS,\qquad (2,0):\ S\!\cdot\!A=S^{-1}AS^{-T},\ \dots$$
+and $c(S)\in C^*$, the **multiplier**, depends only on $S$, not on $A$. A genuine tensor scalar — a *true* invariant — is the special case $c\equiv1$.
 
-It is tempting to invoke a stronger-sounding claim — that *every* homomorphism $c:GL(V)\to C^*$ is a power $\det^{m}$ — but, as the discussion around the introduction shows, **this is false**. Multiplicativity alone gives only that $c$ is trivial on transvections, hence on $SL=[GL,GL]$, so it factors through the determinant,
-$$c=g\circ\det,\qquad g:C^*\to C^*\ \text{a homomorphism};$$
-and $g$ is *not* pinned down. For instance $g(w)=|w|$, $g(w)=\bar w$, or (with continuity) any $g(w)=|w|^{s}(w/|w|)^{k}$ all qualify, giving the further homomorphisms $|\det|$, $\overline{\det}$, $|\det|^{s}(\det/|\det|)^{k}$; without any regularity there are wildly many more. Cutting $g$ down to a single power needs *homogeneity*, exactly as in the main note (Layer 2). For the tensor determinants below we will not even need this — the weights fall straight out of $\det(XY)=\det(X)\det(Y)$ — but the same homogeneity-vs-non-uniqueness theme returns the moment we ask for an axiomatic *characterisation* (§3).
+Not every scalar function qualifies. For example $F(A)=A_{11}$, a single component, is **not** a relative invariant: a change of basis mixes $A_{11}$ with the other entries, and no $A$-independent factor $c(S)$ can undo that. But $F=\det$, $F=\det g_{\mu\nu}$ (the metric determinant), and $F=\sqrt{|\det g_{\mu\nu}|}$ (the volume element) all are, as the subsections below verify.
+
+**The multiplier is a character.** The transformations compose — they form an action of $GL(V)$, with $(ST)\!\cdot\!A=T\!\cdot\!(S\!\cdot\!A)$ (e.g. for $(0,2)$, $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$). Iterating the defining relation,
+$$c(ST)\,F(A)=F\big((ST)\!\cdot\!A\big)=c(T)\,c(S)\,F(A),$$
+so for $F\not\equiv0$, $c(ST)=c(S)c(T)$ ($C^*$ is abelian): **$c:GL(V)\to C^*$ is a homomorphism**. By **Layer 1** of Part I — every homomorphism $GL(V)\to C^*$ is trivial on transvections, hence factors through $\det$ —
+$$\boxed{\,c(S)=g(\det S)\qquad\text{for some homomorphism }g:C^*\to C^*.\,}$$
+We **cannot** invoke homogeneity to pin $g$ here, as we did for the determinant itself: $c$ is handed to us by the tensor type, with no normalization on scalar matrices to exploit. So $g$ stays general — a relative invariant's multiplier is an arbitrary character $g\circ\det$ of $GL(V)$.
+
+**Classifying $g$ (continuity / measurability).** Adding the mild hypothesis that $g$ is continuous — equivalently measurable, by automatic continuity — the homomorphisms $C^*\to C^*$ are exactly those of the introduction,
+$$g(w)=|w|^{s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\,\bar w^{q},\qquad s\in C,\ k\in\mathbb Z,\quad p-q=k\in\mathbb Z.$$
+Hence, with $w=\det S$, the possible multipliers are
+$$c(S)=|\det S|^{s}\Big(\tfrac{\det S}{|\det S|}\Big)^{k}=(\det S)^{p}\,\overline{(\det S)}^{\,q},$$
+the **characters** of $GL(V)$. Every relative invariant transforms by one of these, and the exponents — the pair $(p,q)$, equivalently $(s,k)$ — are its **weight**. (Without any regularity $g$ could be a wild abstract homomorphism; the factorization $c=g\circ\det$ still holds, and continuity is only what catalogues the $g$'s.)
+
+The remaining subsections place each standard object at its point in this family: true scalars at $c\equiv1$, the determinants of $(1,1)$, $(0,2)$, $(2,0)$ tensors, the metric density $\det g_{\mu\nu}$, and the volume element $\sqrt{|\det g|}$.
 
 ### 2. $(1,1)$-tensors $A^i{}_j$: the determinant is an invariant scalar
 
 A $(1,1)$-tensor *is* a linear map $V\to V$, and the contraction $A^i{}_kB^k{}_j$ *is* composition of maps. So both hypotheses of the note hold verbatim — $f(AB)=f(A)f(B)$ and $f(\lambda I)=\lambda^{n}$ — and produce $\det(A^i{}_j)$.
 
-It is a *true scalar*. Under a change of basis a $(1,1)$-tensor transforms by **conjugation**, $A\mapsto S^{-1}AS$, and Step 1 of the note (homomorphism $\Rightarrow$ conjugation invariance) gives
-$$\det(S^{-1}AS)=\det(A).$$
+It is a *true scalar* — a relative invariant with $c\equiv1$. Under a change of basis a $(1,1)$-tensor transforms by **conjugation**, $S\!\cdot\!A=S^{-1}AS$, and Step 1 of the note (homomorphism $\Rightarrow$ conjugation invariance) gives
+$$\det(S^{-1}AS)=\det(A),$$
+so $c(S)=g(\det S)=1$ (here $g\equiv1$, the trivial character).
 Intrinsically $\det(A^i{}_j)=\Lambda^{n}A\in\operatorname{End}(\Lambda^{n}V)=C$ is the scalar by which $A$ acts on the one-dimensional top exterior power. In index form,
 $$\det(A)=\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\,A^{i_1}{}_{j_1}\cdots A^{i_n}{}_{j_n},$$
 using one *covariant* permutation symbol (to saturate the upper indices of $A$) and one *contravariant* one (for the lower indices). As we count in §6 this is **weight $0$**, hence invariant — the determinant of an endomorphism needs no metric and no choice of basis.
@@ -532,11 +549,9 @@ coordinate-invariant ($\sqrt{|g|}\to|J|^{-1}\sqrt{|g|}$ while $d^{n}x\to|J|\,d^{
 
 ### 5. Where the weights live: the homomorphism family, and $\sqrt{|g|}$
 
-The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for $\sqrt{|\det g|}$ — are not independent oddities: they are points of the *single* catalogue of possible density weights, namely the continuous homomorphisms $C^*\to C^*$ found in §1 and the introduction,
-$$h(w)=|w|^{s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\bar w^{q},\qquad p-q=k\in\mathbb Z.$$
-A density of a $2$-index tensor transforms under a basis change by a multiplier $c(S)$, and $c$ is always one of these homomorphisms composed with $\det$, $c=h\circ\det$. Writing $w=\det S$:
+The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for $\sqrt{|\det g|}$ — are not independent oddities: each is the **weight** of a relative invariant, a point of the character family $c=g\circ\det$ with $g(w)=w^{p}\bar w^{q}$ of §1. Writing $w=\det S$:
 
-| object | multiplier $c(S)$ | $h(w)$ | $(p,q)$ |
+| object | multiplier $c(S)$ | $g(w)$ | $(p,q)$ |
 |---|---|---|---|
 | $\det(A^i{}_j)$ | $1$ | $1$ | $(0,0)$ |
 | $\det(g_{\mu\nu})$ | $\det(S)^{2}$ | $w^{2}$ | $(2,0)$ — holomorphic |
