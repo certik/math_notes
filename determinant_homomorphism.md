@@ -11,7 +11,7 @@ We are given a function $f:GL(n,\mathbb C)\to \mathbb C^*$ such that:
 
 The case $n=1$ is tautological: $GL(1,\mathbb C)=\mathbb C^*$, and the factorization is $f=g\circ\operatorname{id}$ with $g=f$. Hence assume $n\ge 2$ below.
 
-We also use only elementary language about rows, spans, and multilinear functions. We do **not** assume the determinant, the Leibniz formula, the polar decomposition, or the spectral theorem.
+We also use only elementary language about rows, spans, and multilinear functions. We do **not** assume any prior determinant theory, determinant multiplicativity, the polar decomposition, or the spectral theorem. When the Leibniz polynomial appears below, it is introduced as an explicit polynomial and its needed properties are proved directly.
 
 Throughout, $e_1,\dots,e_n$ is the standard basis, and we view a matrix $A$ as its list of rows $r_1,\dots,r_n\in \mathbb C^n$. The **matrix unit** $E_{ij}$ is the $n\times n$ matrix with a $1$ in row $i$, column $j$, and $0$ everywhere else. We write $T_{ij}(c)=I+c\,E_{ij}$ (for $i\neq j$) for the **transvection** that adds $c$ times row $j$ to row $i$ under left multiplication.
 
@@ -170,4 +170,6 @@ where $p(A)=\prod_i d_i$ is unambiguous and equals $L(A)$ by (7). This is the **
 $$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)} \equiv \det A \qquad(A\in GL(n,\mathbb C)),\,}$$
 for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $p(A)=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
 
-Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb C^*)$ *is* a homomorphism $GL(n,\mathbb C)\to \mathbb C^*$: by (8), $L(AB)=L(A)L(B)$ on $GL(n,\mathbb C)$, and then $g(L(AB))=g(L(A))g(L(B))$. Hence these are **exactly** all of them: the determinant is the universal homomorphism, and every other is a "rescaling" $g$ of it. The factor $g$ is genuinely free — continuity or measurability would narrow it to $g(w)=|w|^s(w/|w|)^k$, the determinant itself being the case $g=\mathrm{id}$.
+Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb C^*)$ *is* a homomorphism $GL(n,\mathbb C)\to \mathbb C^*$: by (8), $L(AB)=L(A)L(B)$ on $GL(n,\mathbb C)$, and then $g(L(AB))=g(L(A))g(L(B))$. Hence these are **exactly** all of them: the determinant is the universal homomorphism, and every other homomorphism is obtained by post-composing it with an arbitrary group homomorphism $g:\mathbb C^*\to\mathbb C^*$. The factor $g$ is genuinely free; if one additionally requires continuity, or merely Borel measurability, then
+$$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
+with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.

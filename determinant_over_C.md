@@ -497,7 +497,175 @@ Hence, with $w=\det S$, the possible multipliers are
 $$c(S)=|\det S|^{s}\Big(\tfrac{\det S}{|\det S|}\Big)^{k}=(\det S)^{p}\,\overline{(\det S)}^{\,q},$$
 the **characters** of $GL(V)$. Every relative invariant transforms by one of these, and the exponents — the pair $(p,q)$, equivalently $(s,k)$ — are its **weight**. (Without any regularity $g$ could be a wild abstract homomorphism; the factorization $c=g\circ\det$ still holds, and continuity is only what catalogues the $g$'s.)
 
-The remaining subsections place each standard object at its point in this family: true scalars at $c\equiv1$, the determinants of $(1,1)$, $(0,2)$, $(2,0)$ tensors, the metric density $\det g_{\mu\nu}$, and the volume element $\sqrt{|\det g|}$.
+The next subsection derives the tensor determinant and its weight directly from this relative-invariance equation; the later subsections then place each standard object at its point in the family: true scalars at $c\equiv1$, the determinants of $(1,1)$, $(0,2)$, $(2,0)$ tensors, the metric density $\det g_{\mu\nu}$, and the volume element $\sqrt{|\det g|}$.
+
+### 1A. Defining tensor determinants from relative invariance, step by step
+
+The goal is to define the determinant of a two-index tensor without first saying
+"take the determinant of its component matrix." Components should be only the
+way to compute the answer after the intrinsic object has already been defined.
+
+There are two separate issues:
+
+1. **Relative invariance determines the transformation law.** It tells us what
+   character $c(S)$ must be, hence which density weight the determinant has.
+2. **The top exterior power defines the determinant itself.** For a tensor that
+   can be read as a linear map between two $n$-dimensional spaces, the determinant
+   is the induced map between their top exterior powers. Only after choosing a
+   basis does this line-valued object become an ordinary number.
+
+Relative invariance alone is not enough to single out a unique function. For
+example, many functions of an endomorphism are invariant under conjugation. What
+is special about the determinant is that it is the degree-$n$ volume multiplier,
+and the basis-free way to express "volume multiplier" is the functor
+$E\mapsto\Lambda^nE$.
+
+Let $\dim V=n$, and write
+$$\operatorname{Det}V:=\Lambda^n V,\qquad
+\operatorname{Det}V^*:=\Lambda^n V^*.$$
+If $L:E\to F$ is a linear map between $n$-dimensional spaces, define
+$$\boxed{\ \operatorname{Det}(L):=\Lambda^nL:
+\operatorname{Det}E\longrightarrow\operatorname{Det}F.\ } \tag{TDet}$$
+This is the basis-independent determinant. If $E=F$, then
+$\operatorname{Det}(L)$ is an endomorphism of the one-dimensional line
+$\operatorname{Det}E$, hence a scalar. If $E\ne F$, then it is not naturally a
+scalar; it is an element of the one-dimensional line
+$$
+\operatorname{Hom}(\operatorname{Det}E,\operatorname{Det}F)
+\cong \operatorname{Det}F\otimes(\operatorname{Det}E)^*.
+$$
+A basis trivialises this line and turns the determinant into a number; changing
+the basis changes that number by the character predicted by relative invariance.
+
+Now derive that character without using the component determinant.
+
+**Step 1: start with a numerical representative.** Choose a basis of $V$ and the
+dual basis of $V^*$. This choice trivialises every determinant line above, so the
+line-valued object $\operatorname{Det}(A)$ has a coefficient; call this
+coefficient $F(A)$. Under a change of basis $S\in GL(V)$, suppose this coefficient
+is a relative invariant:
+$$F(S\!\cdot\!A)=c(S)F(A), \tag{RI}$$
+where $c(S)$ is independent of $A$.
+
+**Step 2: the multiplier is a homomorphism.** Because basis changes compose,
+$(ST)\!\cdot A=T\!\cdot(S\!\cdot A)$ in the passive convention used here. Applying
+(RI) twice gives
+$$
+F((ST)\!\cdot A)=F(T\!\cdot(S\!\cdot A))
+=c(T)F(S\!\cdot A)=c(T)c(S)F(A).
+$$
+But applying (RI) once gives $F((ST)\!\cdot A)=c(ST)F(A)$. Choose one $A$ with
+$F(A)\ne0$ and cancel. Since the target $C^*$ is abelian,
+$$c(ST)=c(S)c(T).$$
+Thus $c:GL(V)\to C^*$ is a homomorphism.
+
+**Step 3: every such multiplier factors through the determinant.** By Layer 1 of
+the main note, every homomorphism $GL(V)\to C^*$ has the form
+$$c(S)=g(\det S) \tag{*}$$
+for some homomorphism $g:C^*\to C^*$. This is where the operator determinant
+already derived in the note enters. Up to this point we have used no determinant
+of the tensor components.
+
+**Step 4: homogeneity fixes the determinant branch.** A determinant of an
+$n\times n$ linear map should be homogeneous of degree $n$ in that map:
+$$F(\lambda A)=\lambda^nF(A). \tag{H}$$
+Let the tensor have $r$ upper indices and $s$ lower indices. For the two-index
+cases below, $r+s=2$. Under the scalar change of basis $S=\mu I$, each upper
+index contributes a factor $\mu^{-1}$ and each lower index contributes a factor
+$\mu$, so
+$$S\!\cdot A=\mu^{s-r}A.$$
+Using (RI), (*), and (H), for some $A$ with $F(A)\ne0$,
+$$
+g(\det(\mu I))F(A)
+=c(\mu I)F(A)
+=F(\mu^{s-r}A)
+=\mu^{n(s-r)}F(A).
+$$
+Since $\det(\mu I)=\mu^n$ and every $w\in C^*$ is $w=\mu^n$ for some $\mu$,
+$$g(w)=w^{s-r}.$$
+Therefore the determinant branch has
+$$\boxed{\ c(S)=(\det S)^{\,s-r}.\ } \tag{weight}$$
+In the continuous character notation $g(w)=w^p\bar w^q$, this is the holomorphic
+point
+$$\boxed{\ (p,q)=(s-r,0).\ }$$
+Other choices, such as $\bar w^{\,s-r}$ or $|w|^{s-r}$, are other relative
+invariants with the same abstract source, but they are not the holomorphic
+determinant branch selected by (H).
+
+**Step 5: identify the intrinsic map encoded by each index type.** Each
+two-index tensor is naturally a linear map between either $V$ or $V^*$:
+$$
+\begin{array}{c|c|c|c}
+\text{components} & \text{intrinsic map} & (r,s) & c(S) \\
+\hline
+A^i{}_j & A:V\to V & (1,1) & 1 \\
+A_i{}^j & A:V^*\to V^* & (1,1) & 1 \\
+A_{ij} & A^\flat:V\to V^* & (0,2) & (\det S)^2 \\
+A^{ij} & A^\sharp:V^*\to V & (2,0) & (\det S)^{-2}
+\end{array}
+$$
+Applying (TDet) to these four maps gives the tensor determinant:
+$$
+\begin{array}{c|c|c|c}
+\text{tensor} & \operatorname{Det}(A) \text{ lives in} & \text{coefficient transforms by} & (p,q) \\
+\hline
+A^i{}_j & \operatorname{End}(\operatorname{Det}V)\cong C & 1 & (0,0) \\
+A_i{}^j & \operatorname{End}(\operatorname{Det}V^*)\cong C & 1 & (0,0) \\
+A_{ij} & \operatorname{Hom}(\operatorname{Det}V,\operatorname{Det}V^*)
+\cong(\operatorname{Det}V^*)^{\otimes2} & (\det S)^2 & (2,0) \\
+A^{ij} & \operatorname{Hom}(\operatorname{Det}V^*,\operatorname{Det}V)
+\cong(\operatorname{Det}V)^{\otimes2} & (\det S)^{-2} & (-2,0)
+\end{array}
+$$
+This table is the promised classification. The determinant of a $(1,1)$-tensor
+is an honest scalar because it is an endomorphism determinant. The determinant of
+a $(0,2)$-tensor is not an honest scalar: it lives in
+$(\operatorname{Det}V^*)^{\otimes2}$, so its coefficient is a weight-$2$ density.
+The determinant of a $(2,0)$-tensor lives in $(\operatorname{Det}V)^{\otimes2}$,
+so its coefficient has weight $-2$.
+
+**Step 6: check the basis change directly on the determinant lines.** Let
+$e_1,\dots,e_n$ be a basis of $V$ and $e^1,\dots,e^n$ its dual basis. Put
+$$E=e_1\wedge\cdots\wedge e_n,\qquad
+E^*=e^1\wedge\cdots\wedge e^n.$$
+Under $e'_i=S^j{}_i e_j$,
+$$E'=(\det S)E,\qquad (E^*)'=(\det S)^{-1}E^*.$$
+Now:
+
+- For $A^i{}_j:V\to V$, both the input and output determinant lines are spanned
+  by $E$, so the two factors of $\det S$ cancel. The coefficient is invariant.
+- For $A_i{}^j:V^*\to V^*$, both determinant lines are spanned by $E^*$, so the
+  two factors of $(\det S)^{-1}$ cancel. The coefficient is invariant.
+- For $A_{ij}:V\to V^*$, the determinant lies in
+  $(\operatorname{Det}V^*)^{\otimes2}$, whose basis $(E^*)^{\otimes2}$ changes by
+  $(\det S)^{-2}$. The invariant line element is fixed, so its coefficient
+  changes by the inverse factor $(\det S)^2$.
+- For $A^{ij}:V^*\to V$, the determinant lies in
+  $(\operatorname{Det}V)^{\otimes2}$, whose basis $E^{\otimes2}$ changes by
+  $(\det S)^2$. Hence the coefficient changes by $(\det S)^{-2}$.
+
+This reproduces exactly the character calculation above, but now it also explains
+where the determinant *lives*. A scalar is a coefficient in a trivial line; a
+density is a coefficient in a determinant line whose trivialisation changes with
+the basis.
+
+**Step 7: only now compute in components.** For example, for $A_{ij}$ regarded as
+$A^\flat:V\to V^*$,
+$$
+\operatorname{Det}(A^\flat)(E)
+=A^\flat(e_1)\wedge\cdots\wedge A^\flat(e_n).
+$$
+Writing $A^\flat(e_j)=A_{ij}e^i$ and expanding the wedge gives
+$$
+A^\flat(e_1)\wedge\cdots\wedge A^\flat(e_n)
+=\left(\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+\prod_{j=1}^n A_{\sigma(j)j}\right)E^*.
+$$
+Thus the coefficient of the intrinsic line-valued determinant is the usual
+Leibniz determinant of the component array. The same computation for
+$A^i{}_j$, $A_i{}^j$, and $A^{ij}$ gives the familiar component formulas. The
+formula is therefore a coordinate computation of the intrinsic definition
+$\Lambda^nA$, not the definition itself.
 
 ### 2. $(1,1)$-tensors $A^i{}_j$: the determinant is an invariant scalar
 
