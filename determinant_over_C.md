@@ -465,3 +465,76 @@ The Leibniz formula is recovered — now as the coordinate expression of the act
 | uses $n$-th roots in $C$ once (Step 4) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
 
 Both proofs are the same story told at two levels: *kill the commutators, read off the one remaining degree of freedom on the torus / Cartan, and let homogeneity fix it.* The elementary version pays nothing in regularity but does the bookkeeping by hand; the Lie version assumes continuity and lets the exponential map and the top exterior power do the bookkeeping automatically.
+
+---
+
+## Part IV — Determinants of tensors and tensor densities
+
+The note characterised the determinant on $GL(n,C)$ as the unique homogeneous homomorphism, and (in the Lie chapter and Part III) as the generator of the characters of $GL$. That second fact — **every homomorphism $GL(n,C)\to C^*$ is a power $\det^m$** — is exactly the tool needed to extend "determinant" from matrices to *tensors*. It also resolves a familiar puzzle from differential geometry: why the determinant of a $(1,1)$-tensor $A^i{}_j$ is an honest invariant scalar, while the determinant of a $(0,2)$-tensor $A_{ij}$ — such as the metric $g_{\mu\nu}$ — is only a *density*, invariant up to a power of the Jacobian.
+
+Throughout, $V=C^n$ with dual $V^*$, and a change of basis is a map $S\in GL(V)$. We use the passive convention: under the new basis $e'_i=S^j{}_i e_j$, contravariant (upper) components transform by $S^{-1}$ and covariant (lower) components by $S$. We write $\det$ for the operator determinant already derived in this note; the tensor determinants below are *built on top of it*.
+
+### 1. The one fact we reuse
+
+**(Characters of $GL$.)** Any homomorphism $c:GL(V)\to C^*$ equals $c(S)=\det(S)^{m}$ for a unique $m\in\mathbb Z$ — this is the main theorem of the note (homogeneity is what further fixes $m=1$ for $\det$ itself). Every *weight* that appears below is one of these integers $m$; the note guarantees there is nothing else.
+
+### 2. $(1,1)$-tensors $A^i{}_j$: the determinant is an invariant scalar
+
+A $(1,1)$-tensor *is* a linear map $V\to V$, and the contraction $A^i{}_kB^k{}_j$ *is* composition of maps. So both hypotheses of the note hold verbatim — $f(AB)=f(A)f(B)$ and $f(\lambda I)=\lambda^{n}$ — and produce $\det(A^i{}_j)$.
+
+It is a *true scalar*. Under a change of basis a $(1,1)$-tensor transforms by **conjugation**, $A\mapsto S^{-1}AS$, and Step 1 of the note (homomorphism $\Rightarrow$ conjugation invariance) gives
+$$\det(S^{-1}AS)=\det(A).$$
+Intrinsically $\det(A^i{}_j)=\Lambda^{n}A\in\operatorname{End}(\Lambda^{n}V)=C$ is the scalar by which $A$ acts on the one-dimensional top exterior power. In index form,
+$$\det(A)=\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\,A^{i_1}{}_{j_1}\cdots A^{i_n}{}_{j_n},$$
+using one *covariant* permutation symbol (to saturate the upper indices of $A$) and one *contravariant* one (for the lower indices). As we count in §5 this is **weight $0$**, hence invariant — the determinant of an endomorphism needs no metric and no choice of basis.
+
+### 3. $(0,2)$-tensors $A_{ij}$: the determinant is a weight-$2$ density
+
+Now there is no composition: two lower-index tensors $A_{ij}$ and $B_{ij}$ cannot be contracted into a third $(0,2)$-tensor, so $f(AB)=f(A)f(B)$ has *no meaning*. The structure that survives is the action of $GL(V)$ on bilinear forms by **congruence** — the way a $(0,2)$-tensor pulls back under a change of basis:
+$$A\longmapsto S^{T}AS,\qquad (S^{T}AS)_{ij}=S^k{}_iS^l{}_jA_{kl}.$$
+The correct replacement for multiplicativity is **equivariance under congruence**, together with homogeneity:
+
+- **(T1)** $f(S^{T}AS)=c(S)\,f(A)$ for all $S\in GL(V)$;
+- **(T2)** $f(\lambda A)=\lambda^{n}f(A)$.
+
+These pin the answer down. Associativity of congruence, $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$, forces the multiplier $c$ to be a **homomorphism** $GL(V)\to C^*$, so by §1, $c(S)=\det(S)^{m}$. Homogeneity fixes $m$: writing $\lambda A=(\sqrt\lambda\,I)^{T}A(\sqrt\lambda\,I)$,
+$$\lambda^{n}f(A)=f(\lambda A)=c(\sqrt\lambda\,I)\,f(A)=\det(\sqrt\lambda\,I)^{m}f(A)=\lambda^{\,nm/2}f(A)\ \Longrightarrow\ m=2.$$
+So the determinant of a $(0,2)$-tensor is a **relative invariant of weight $2$**:
+$$\boxed{\ \det(S^{T}AS)=\det(S)^{2}\,\det(A).\ }$$
+The ordinary component determinant $\det(A_{ij})$ (Leibniz in the entries) satisfies (T1)–(T2), and is the unique solution up to scale; the normalisation $f(\delta_{ij})=1$ fixes the scale. So "$\det(A_{ij})$" exists and is essentially unique — it is simply **not** a scalar.
+
+**Intrinsic home.** A form is a map $A:V\to V^*$ (namely $v\mapsto A(v,\cdot)$), so $\Lambda^{n}A:\Lambda^{n}V\to\Lambda^{n}V^*$ and therefore
+$$\det(A_{ij})\in\operatorname{Hom}(\Lambda^{n}V,\Lambda^{n}V^*)=(\Lambda^{n}V^*)^{\otimes 2},$$
+the **square of the volume line**. Choosing a basis trivialises this one-dimensional space by $(e^1\wedge\cdots\wedge e^n)^{\otimes2}$, and the *number* $\det(A_{ij})$ is the coefficient; the trivialisation changes by $\det(S)^{2}$, which is the weight. (Check: the component determinant scales by $\det(S)^{2}$ while the squared volume scales by $\det(S)^{-2}$, so $\det(A_{ij})\,(e^1\wedge\cdots\wedge e^n)^{\otimes2}$ is basis-independent.)
+
+**The metric.** This is exactly why $\det(g_{\mu\nu})$ is a *scalar density*. Under a coordinate change $x\to x'$ with Jacobian $J=\det(\partial x'/\partial x)$, the metric transforms by congruence, $g'_{\mu\nu}=\frac{\partial x^\alpha}{\partial x'^\mu}\frac{\partial x^\beta}{\partial x'^\nu}g_{\alpha\beta}$ with $S=\partial x/\partial x'$, $\det S=J^{-1}$, so
+$$\det(g'_{\mu\nu})=J^{-2}\det(g_{\mu\nu}).$$
+It is invariant *up to* $J^{-2}$ — "weight $2$" (the word's sign convention varies; the transformation law does not). It is as invariant as the index structure permits, and no more.
+
+### 4. A concrete construction: the square root / vielbein
+
+Over $C$ every nondegenerate symmetric form is a single congruence class (Sylvester), so $A=S^{T}S$ for some $S$. Then
+$$\det(A)=\det(S^{T}S)=\det(S)^{2},$$
+and the form-determinant is literally the **square of an operator determinant** of a "frame" $S$ — making the weight $2$ manifest and reducing the new object to the old one. The ambiguity $S\mapsto OS$ with $O^{T}O=I$ rescales $\det(S)$ by $\det(O)=\pm1$, leaving $\det(S)^{2}$ untouched, so the construction is well defined.
+
+In physics this is the vielbein/tetrad: $g=e^{T}e$, and the genuine **weight-$1$** density $\sqrt{|\det g|}=|\det e|$ is the square root that lives in a *single* volume line $\Lambda^{n}V^*$ (not its square). It is this weight-$1$ object that makes
+$$\sqrt{|\det g|}\;d^{n}x$$
+coordinate-invariant ($\sqrt{|g|}\to|J|^{-1}\sqrt{|g|}$ while $d^{n}x\to|J|\,d^{n}x$) — which is why $\sqrt{|g|}$, and not $\det g$ itself, is the integration measure.
+
+### 5. The general rule: weight $=$ (\#lower) $-$ (\#upper)
+
+For a two-index tensor the determinant is always "the determinant of the underlying matrix"; only its **weight** changes, and the weight is dictated entirely by the index placement through the $\det^{m}$ characters of §1. The cleanest bookkeeping is the Levi-Civita form: saturate each index of $A$ with a permutation symbol, using a *contravariant* symbol $\tilde\epsilon^{\,\cdots}$ (a weight $+1$ density) for each **lower** index of $A$, and a *covariant* symbol $\tilde\epsilon_{\cdots}$ (weight $-1$) for each **upper** index. The leftover weight is the sum of the symbols' weights:
+
+| tensor | transformation | $\det$ in Levi-Civita form | weight | lives in |
+|---|---|---|---|---|
+| $A^i{}_j$ | $S^{-1}AS$ (conjugation) | $\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\prod A^{i}{}_{j}$ | $0$ | $C$ (scalar) |
+| $A_{ij}$ | $S^{T}AS$ (congruence) | $\tfrac1{n!}\,\tilde\epsilon^{\,i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\prod A_{ij}$ | $+2$ | $(\Lambda^{n}V^*)^{\otimes2}$ |
+| $A^{ij}$ | $S^{-1}AS^{-T}$ | $\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon_{j_1\cdots j_n}\prod A^{ij}$ | $-2$ | $(\Lambda^{n}V)^{\otimes2}$ |
+
+So $\det(A^i{}_j)$ is the invariant (metric-free) determinant; $\det(A_{ij})$ is the metric-type density (e.g. $\det g_{\mu\nu}$); and $\det(A^{ij})$ is the inverse-metric density (e.g. $\det g^{\mu\nu}=1/\det g_{\mu\nu}$). The "$+1/-1$ per index" is just the statement that $\Lambda^{n}$ contributes a factor $\det(S)^{-1}$ for each upper index of $A$ (a vector volume) and $\det(S)^{+1}$ for each lower index (a covector volume) — i.e. exactly the characters $\det^{m}$ of §1. The symbol weights $\pm1$ are the standard ones, consistent with the Levi-Civita *tensor* $\epsilon_{i_1\cdots i_n}=\sqrt{|g|}\,\tilde\epsilon_{i_1\cdots i_n}$ being weight $0$ and $\sqrt{|g|}$ being weight $1$.
+
+In one sentence: **tensor densities are determinants valued in the one-dimensional $GL$-representations $\det^{m}$, and this note's theorem — that those powers are the only characters of $GL$ — is precisely what makes the notion of "weight" well defined.**
+
+### 6. Higher-valence tensors
+
+The clean story stops at two indices: a determinant of $A^i{}_j$ used both squareness (an $n\times n$ array) and the single character $\det$. A genuinely higher tensor such as $A_{ijk}$ has no analogous single-character invariant; the relevant objects are **hyperdeterminants** (Cayley), which are of higher degree and are relative invariants of a *product* $GL\times GL\times\cdots$ rather than characters of one $GL$. They fall outside the one-line mechanism above and need their own theory.
