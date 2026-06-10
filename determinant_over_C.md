@@ -361,7 +361,7 @@ The note proves Weyl-invariance from scratch (permutation conjugation) and gets 
 | $D\,T_{ij}(c)\,D^{-1}=T_{ij}(c\,d_i/d_j)$ | adjoint action of the torus; eigenvalue $=$ exponentiated root |
 | $f\equiv1$ on transvections (Step 2) | $f$ is trivial on $[G,G]=SL(n,C)$ (commutators) |
 | permutation conjugation (Step 3) | Weyl group $S_n$ acting on the torus |
-| $f(\operatorname{diag})=g(\prod d_i)$ | $f|_T$ is a Weyl-invariant character of $(C^*)^n$ |
+| $f(\operatorname{diag})=g(\prod d_i)$ | $f\rvert_T$ is a Weyl-invariant character of $(C^*)^n$ |
 | homogeneity fixes $g=\mathrm{id}$ (Layer 2) | normalization selecting the character $\det$ (exponent $m=1$) |
 | swap sign $f(S_{ij})=-1$ (Step 6) | longest Weyl element acts by $\operatorname{sgn}$; needs $-1\in(C^*)^n$-image |
 
@@ -460,7 +460,7 @@ The Leibniz formula is recovered — now as the coordinate expression of the act
 | conjugation invariance, $f$ trivial on transvections (Steps 1–2) | $\phi=df_I$ annihilates commutators (Λ1); vanishes on $[\mathfrak g,\mathfrak g]=\mathfrak{sl}_n$ (Λ3) |
 | $f(\operatorname{diag})=g(\prod d_i)$, $g$ a homomorphism (Step 3) | $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ on the quotient $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ (Λ4) |
 | homogeneity $\Rightarrow g=\mathrm{id}$, using $n$-th roots in $C$ (Layer 2) | homogeneity $\Rightarrow \phi=\operatorname{tr}$ ($a=1,b=0$) (Λ5) |
-| second branch $g(-1)=+1$ over $R$, giving $|\det|$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
+| second branch $g(-1)=+1$ over $R$, giving $\lvert\det\rvert$ | conjugate term $b\,\overline{\operatorname{tr}}$, giving $\overline{\det}$ |
 | $f$ multilinear & alternating in rows (Steps 5–6) | $f$ = action on $\Lambda^n$; antisymmetry of the wedge (Λ8) |
 | basis expansion $\Rightarrow$ Leibniz (Step 7) | wedge expansion $\Rightarrow$ Leibniz (Λ9) |
 | uses $n$-th roots in $C$ once (Layer 2) | uses $\exp$ surjective / $G$ connected over $C$ (Steps 4–5) |
@@ -556,7 +556,7 @@ The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for
 | $\det(A^i{}_j)$ | $1$ | $1$ | $(0,0)$ |
 | $\det(g_{\mu\nu})$ | $\det(S)^{2}$ | $w^{2}$ | $(2,0)$ — holomorphic |
 | $\overline{\det(g_{\mu\nu})}$ | $\overline{\det S}^{\,2}$ | $\bar w^{2}$ | $(0,2)$ |
-| $\sqrt{|\det g_{\mu\nu}|}$ | $|\det S|$ | $|w|$ | $(\tfrac12,\tfrac12)$ — modulus |
+| $\sqrt{\lvert\det g_{\mu\nu}\rvert}$ | $\lvert\det S\rvert$ | $\lvert w\rvert$ | $(\tfrac12,\tfrac12)$ — modulus |
 
 The **determinant** sits in the holomorphic integer corner; the **volume density** $\sqrt{|\det g|}$ sits on the modulus diagonal $(\tfrac12,\tfrac12)$ — its weight is the character $|w|=w^{1/2}\bar w^{1/2}$. (As a bare function of $w=\det g$ it is $|w|^{1/2}=w^{1/4}\bar w^{1/4}$; the factor $2$ is just that $\det g$ already carries weight $2$. The structural object is the multiplier, at $(\tfrac12,\tfrac12)$.)
 
@@ -583,3 +583,49 @@ In one sentence: **the determinant of a $2$-index tensor transforms by a power o
 ### 7. Higher-valence tensors
 
 The clean story stops at two indices: a determinant of $A^i{}_j$ used both squareness (an $n\times n$ array) and the single character $\det$. A genuinely higher tensor such as $A_{ijk}$ has no analogous single-character invariant; the relevant objects are **hyperdeterminants** (Cayley), which are of higher degree and are relative invariants of a *product* $GL\times GL\times\cdots$ rather than characters of one $GL$. They fall outside the one-line mechanism above and need their own theory.
+
+### 8. Reconciliation with the classical tensor-density zoo
+
+Differential geometry classifies densities over the *reals*, $GL(n,R)$, where the only invariant of a change of basis is the real Jacobian $J:=\det S$. Textbooks then split densities four ways — and all four are special cases of the multiplier $c(S)=g(\det S)$ of §1. Two parallel labelling schemes are used for the behaviour under an *orientation-reversing* ($J<0$) change:
+
+| scheme | no sign flip | sign flip |
+|---|---|---|
+| integer weight only | **(authentic)**, $c=J^{W}$ | **pseudo**, $c=\operatorname{sgn}(J)\,J^{W}$ |
+| any real weight | **even**, $c=\lvert J\rvert^{W}$ | **odd**, $c=\operatorname{sgn}(J)\,\lvert J\rvert^{W}$ |
+
+They agree for integer $W$ by parity (*authentic* $W$ is *even* for even $W$, *odd* for odd $W$; *pseudo* is the opposite). Named corners: an **ordinary/true tensor** is $W=0$ with no flip; an **absolute tensor** is any $W=0$; a **tensor capacity** has $W<0$; a bare "density" defaults to $W=+1$.
+
+**The dictionary.** For real $S$ our character collapses to
+$$c(S)=(\det S)^{p}\,\overline{(\det S)}^{\,q}=|J|^{\,p+q}\,\operatorname{sgn}(J)^{\,p-q},$$
+so the two classical labels are *exactly*
+$$\boxed{\,W=p+q\ \ (\text{weight}),\qquad \text{even}/\text{odd}=(p-q)\bmod 2\,}$$
+— **no flip $\iff p-q$ even**, **flip $\iff p-q$ odd**. The whole four-way zoo is one weight $p+q$ plus one parity bit $p-q\bmod2$. (The signs match the standard convention: $\det g_{\mu\nu}\mapsto W{=}{+}2$, $\sqrt{-g}\mapsto W{=}{+}1$.)
+
+**Real vs. complex.** Real densities see only $\big(p+q,\ (p-q)\bmod2\big)$ — the *parity* of the winding $p-q$, not its value. The complex character $(p,q)$ of §1 is strictly **finer**: it remembers the full $p-q\in\mathbb Z$, which collapses over $R$ because $J^{2}=|J|^{2}$. So each classical type is really a $\mathbb Z$-family $\{(p,q),(p{+}1,q{-}1),\dots\}$; e.g. $\det g_{\mu\nu}$ sits at the holomorphic $(2,0)$ in §5 but equals the even-density representative $(1,1)$ over $R$.
+
+**General types**, with the simplest $(p,q)$ lift:
+
+| classical type | factor $c$ | $W$ | parity | $(p,q)$ |
+|---|---|---|---|---|
+| ordinary (true) tensor | $1$ | $0$ | even | $(0,0)$ |
+| even density, weight $W$ | $\lvert J\rvert^{W}$ | $W$ | even | $(\tfrac W2,\tfrac W2)$ |
+| odd density, weight $W$ | $\operatorname{sgn}(J)\,\lvert J\rvert^{W}$ | $W$ | odd | $(\tfrac{W+1}2,\tfrac{W-1}2)$ |
+| authentic, integer $W$ | $J^{W}$ | $W$ | $W\bmod2$ | $(W,0)$ |
+| pseudo, integer $W$ | $\operatorname{sgn}(J)\,J^{W}$ | $W$ | $(W{+}1)\bmod2$ | $(\tfrac{W+1}2,\tfrac{W-1}2)$ |
+| absolute tensor (even) | $1$ | $0$ | even | $(0,0)$ |
+| pseudoscalar (odd, $W{=}0$) | $\operatorname{sgn}(J)$ | $0$ | odd | $(\tfrac12,-\tfrac12)$ |
+| tensor capacity (even $W{=}{-}1$) | $\lvert J\rvert^{-1}$ | $-1$ | even | $(-\tfrac12,-\tfrac12)$ |
+| scalar/vector density (default) | $\lvert J\rvert$ | $1$ | even | $(\tfrac12,\tfrac12)$ |
+
+**Concrete objects:**
+
+| object | factor $c$ | $W$ | parity | $(p,q)$ |
+|---|---|---|---|---|
+| $\det g_{\mu\nu}$ | $J^{2}=\lvert J\rvert^{2}$ | $2$ | even | $(1,1)\equiv(2,0)$ |
+| $\sqrt{-g}=\sqrt{\lvert g\rvert}$ | $\lvert J\rvert$ | $1$ | even | $(\tfrac12,\tfrac12)$ |
+| $1/\sqrt{-g}$ | $\lvert J\rvert^{-1}$ | $-1$ | even | $(-\tfrac12,-\tfrac12)$ |
+| $\det g^{\mu\nu}=1/g$ | $J^{-2}=\lvert J\rvert^{-2}$ | $-2$ | even | $(-1,-1)\equiv(-2,0)$ |
+| Levi-Civita symbol $\tilde\epsilon^{i_1\cdots i_n}$ | $\operatorname{sgn}(J)\,\lvert J\rvert$ | $+1$ | odd | $(1,0)$ |
+| Levi-Civita symbol $\tilde\epsilon_{i_1\cdots i_n}$ | $\operatorname{sgn}(J)\,\lvert J\rvert^{-1}$ | $-1$ | odd | $(-1,0)$ |
+
+In short: **the determinant, the metric density, the volume element, the Levi-Civita symbols, and the entire authentic/pseudo/even/odd taxonomy are one object — a character $(\det S)^{p}\overline{(\det S)}^{q}$ — read at different $(p,q)$.** Weight is $p+q$; the orientation sign-flip is the parity of $p-q$; and the refinement $p-q\in\mathbb Z$ is the piece the real classification cannot see.
