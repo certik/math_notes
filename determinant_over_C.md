@@ -703,3 +703,36 @@ $$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}\ \Longrightarro
 which is exactly the $(p,q)=(a,b)$ character of §1/§5. So the Lie route *rederives the entire $(p,q)$ family*; the one extra ingredient Part III adds beyond this — homogeneity, (Λ5) — is what pins $a=1,b=0$ to select $\det$ itself.
 
 So routes 1 and 2 are the same fact at two levels, joined by $\exp$: route 1 on the group ($SL=[GL,GL]$), this route on the algebra ($\mathfrak{sl}_n=[\mathfrak{gl}_n,\mathfrak{gl}_n]$). Route 1 needs no regularity; this one needs $c\in C^{1}$ to differentiate.
+
+### 12. Connections: the affine (cocycle) cousin
+
+Christoffel symbols are *not* relative invariants — they are not even tensors — yet they obey a law of exactly the same shape, with one addition: a translation term. They are the **affine upgrade** of a relative invariant, obtained by replacing the multiplicative target $C^*$ with the *affine group*.
+
+**The equation.** A relative invariant scales, $F\xrightarrow{g}c(g)F$. A connection transforms the same way *plus a shift*:
+$$\Gamma\ \xrightarrow{\ g\ }\ \rho(g)\,\Gamma+\beta(g),$$
+where $\rho(g)$ is the linear $(1,2)$-tensor action and $\beta(g)$ — the "added constant" — is the inhomogeneous piece.
+
+**Consistency makes $\beta$ a cocycle.** The shift is not free. Requiring that $g$ then $h$ agree with $gh$,
+$$\rho(gh)\Gamma+\beta(gh)=g\!\cdot\!\big(\rho(h)\Gamma+\beta(h)\big)=\rho(gh)\Gamma+\rho(g)\beta(h)+\beta(g),$$
+forces the **1-cocycle (crossed-homomorphism) condition**
+$$\boxed{\ \beta(gh)=\rho(g)\,\beta(h)+\beta(g)\ }$$
+— the inhomogeneous analogue of $c(gh)=c(g)c(h)$. Equivalently, $g\mapsto(\rho(g),\beta(g))$ is a homomorphism into the **affine group** $\operatorname{Aff}(V)=V\rtimes GL(V)$:
+
+| object | homomorphism into | data |
+|---|---|---|
+| relative invariant / density | $C^{*}=GL_1$ | a **character** $c$ (multiplicative) |
+| connection (Christoffel) | $\operatorname{Aff}(V)=V\rtimes GL(V)$ | linear part $\rho$ **+ cocycle** $\beta$ |
+
+A relative invariant is the case $\beta=0$ with $V$ a line; turn on a translation cocycle and you get a connection. (For $\Gamma$ the group is the **$2$-jet** group of coordinate changes: $\rho$ sees only the $1$-jet $S=\partial x'/\partial x\in GL_n$, but $\beta$ needs the $2$-jet — the second derivatives.)
+
+**Deriving the transformation.** The cocycle $\beta$ is pinned by a single demand — the one that motivates connections in the first place: **the covariant derivative must be a genuine tensor**, i.e. a relative invariant of weight $0$. With $\nabla_\mu V^\lambda=\partial_\mu V^\lambda+\Gamma^\lambda_{\mu\rho}V^\rho$, the ordinary derivative fails tensoriality by exactly a second-derivative term,
+$$\partial'_\mu V'^\lambda=\frac{\partial x^\sigma}{\partial x'^\mu}\frac{\partial x'^\lambda}{\partial x^\rho}\,\partial_\sigma V^\rho+\underbrace{\frac{\partial x^\sigma}{\partial x'^\mu}\Big(\partial_\sigma\tfrac{\partial x'^\lambda}{\partial x^\rho}\Big)V^\rho}_{\text{non-tensorial}},$$
+so for $\nabla V$ to transform as a $(1,1)$-tensor the shift is *forced* to be
+$$\beta^\lambda_{\mu\nu}(g)=\frac{\partial x'^\lambda}{\partial x^\rho}\frac{\partial^{2}x^\rho}{\partial x'^\mu\partial x'^\nu},$$
+exactly the inhomogeneous term of the Christoffel law $\Gamma'^\lambda_{\mu\nu}=\rho(g)\Gamma+\beta(g)$. So one *derives* how $\Gamma$ transforms by demanding relative invariance of the derivative; the cocycle condition then holds automatically (it is the canonical "soldering" cocycle of the jet group).
+
+**Cohomological punchline.** Characters live in $\operatorname{Hom}(G,C^{*})$ (multiplicative — the relative-invariant data); connection shifts live in $Z^{1}(G,V)$ (the 1-cocycles — the affine data). Two connections differ by a **coboundary**, which is precisely a genuine $(1,2)$-tensor — so $\Gamma_1-\Gamma_2$ is a tensor and the space of connections is an affine torsor over that vector space. In one line:
+
+> **A relative invariant is a homomorphism to $C^{*}$ (a character, a $0$-cocycle); a connection is a homomorphism to the affine group (a $1$-cocycle) — the same functional equation, one cohomological degree up.**
+
+The two even meet: contracting the connection, $\Gamma^\lambda_{\lambda\nu}=\partial_\nu\ln\sqrt{\lvert g\rvert}$ is the connection $1$-form on the density line bundle, and the covariant derivative of a weight-$w$ density picks up an extra $-w\,\Gamma^\lambda_{\lambda\nu}$ — the affine cousin acting on the relative invariants of §1.
