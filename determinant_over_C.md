@@ -490,22 +490,26 @@ It is a *true scalar*. Under a change of basis a $(1,1)$-tensor transforms by **
 $$\det(S^{-1}AS)=\det(A).$$
 Intrinsically $\det(A^i{}_j)=\Lambda^{n}A\in\operatorname{End}(\Lambda^{n}V)=C$ is the scalar by which $A$ acts on the one-dimensional top exterior power. In index form,
 $$\det(A)=\tfrac1{n!}\,\tilde\epsilon_{i_1\cdots i_n}\,\tilde\epsilon^{\,j_1\cdots j_n}\,A^{i_1}{}_{j_1}\cdots A^{i_n}{}_{j_n},$$
-using one *covariant* permutation symbol (to saturate the upper indices of $A$) and one *contravariant* one (for the lower indices). As we count in §5 this is **weight $0$**, hence invariant — the determinant of an endomorphism needs no metric and no choice of basis.
+using one *covariant* permutation symbol (to saturate the upper indices of $A$) and one *contravariant* one (for the lower indices). As we count in §6 this is **weight $0$**, hence invariant — the determinant of an endomorphism needs no metric and no choice of basis.
 
 ### 3. $(0,2)$-tensors $A_{ij}$: the determinant is a weight-$2$ density
 
-Now there is no composition: two lower-index tensors $A_{ij}$ and $B_{ij}$ cannot be contracted into a third $(0,2)$-tensor, so $f(AB)=f(A)f(B)$ has *no meaning*. The structure that survives is the action of $GL(V)$ on bilinear forms by **congruence** — the way a $(0,2)$-tensor pulls back under a change of basis:
+Now there is no composition: two lower-index tensors $A_{ij}$ and $B_{ij}$ cannot be contracted into a third $(0,2)$-tensor, so $f(AB)=f(A)f(B)$ has *no meaning*. The structure that *does* survive is the action of $GL(V)$ on bilinear forms by **congruence** — the way a $(0,2)$-tensor pulls back under a change of basis:
 $$A\longmapsto S^{T}AS,\qquad (S^{T}AS)_{ij}=S^k{}_iS^l{}_jA_{kl}.$$
-Define $\det(A_{ij})$ as the determinant of the component matrix (the Leibniz sum in the entries). Its transformation law is then immediate from the **multiplicativity** of the operator determinant — and nothing else:
-$$\boxed{\ \det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\,\det(A).\ }$$
-So the determinant of a $(0,2)$-tensor is a **relative invariant of weight $2$** — a density, not a scalar — with no appeal to regularity or to any classification of characters.
+We characterise the form-determinant **by its properties**, exactly as the note characterised $\det$ on $GL$ — never by writing down a formula — and then *derive* existence and uniqueness. The two axioms are the direct analogues of (H1)–(H2), with "multiplicativity" now meaning multiplicativity under congruence:
 
-**Axiomatic characterisation (optional).** One can instead pin $\det(A_{ij})$ down by properties, in the note's "homomorphism + homogeneity" spirit:
-
-- **(T1)** $f(S^{T}AS)=c(S)\,f(A)$ for all $S\in GL(V)$ (congruence-equivariance);
+- **(T1)** $f(S^{T}AS)=c(S)\,f(A)$ for all $S\in GL(V)$ (congruence-multiplicativity);
 - **(T2)** $f(\lambda A)=\lambda^{n}f(A)$ (homogeneity).
 
-Associativity, $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$, makes $c$ a homomorphism $GL(V)\to C^*$, so by §1 it factors as $c=g\circ\det$ — but (T1) *alone* does **not** give $g(w)=w^{2}$: it equally admits $c=|\det|^{2}$ (whose solution is $f=|\det(A_{ij})|$), $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$), and so on. **Homogeneity** removes these: with $S=\mu I$, (T1) gives $f(\mu^{2}A)=g(\mu^{n})f(A)$ while (T2) gives $f(\mu^{2}A)=\mu^{2n}f(A)$, so $g(\mu^{n})=\mu^{2n}$; since $\mu\mapsto\mu^{n}$ is onto $C^*$, $g(w)=w^{2}$ and $c(S)=\det(S)^{2}$. This is the divisibility argument of Step 4 again — and again homogeneity is what selects the polynomial determinant over the $|\det|$-type branch. The normalisation $f(\delta_{ij})=1$ fixes the remaining scale, so $\det(A_{ij})$ is essentially unique — and simply **not** a scalar.
+**The weight is forced** (with no regularity, no Leibniz, no transpose identity). Applying (T1) twice and using $(ST)^{T}A(ST)=T^{T}(S^{T}AS)T$ gives $c(ST)=c(S)c(T)$: the multiplier $c$ is a *homomorphism* $GL(V)\to C^*$. By the note's own result — a homomorphism is trivial on transvections, hence on $SL$ — it factors through the determinant, $c=g\circ\det$ with $g:C^*\to C^*$ a homomorphism (§1). Homogeneity then pins $g$: taking $S=\mu I$, (T1) gives $f(\mu^{2}A)=c(\mu I)\,f(A)=g(\mu^{n})\,f(A)$ while (T2) gives $f(\mu^{2}A)=\mu^{2n}f(A)$, so $g(\mu^{n})=\mu^{2n}$; since $\mu\mapsto\mu^{n}$ is onto $C^*$ (divisibility), $g(w)=w^{2}$. Hence
+$$\boxed{\ c(S)=\det(S)^{2},\qquad f(S^{T}AS)=\det(S)^{2}\,f(A).\ }$$
+This is the divisibility argument of Step 4 transplanted to forms. Without (T2) the homomorphism $c$ stays free — $c=|\det|^{2}$ (solution $f=|\det(A_{ij})|$) and $c=\overline{\det}^{\,2}$ ($f=\overline{\det(A_{ij})}$) also satisfy (T1) — and once again homogeneity is what selects the polynomial branch over the $|\det|$ one.
+
+**Uniqueness.** Over $C$ every nondegenerate symmetric form is a single congruence orbit (Sylvester: $A=S^{T}IS$). If $f_1,f_2$ both obey (T1)–(T2) they share $c=\det^{2}$, so $f_i(A)=\det(S)^{2}f_i(I)$ and the ratio $f_1(A)/f_2(A)=f_1(I)/f_2(I)$ is constant. So $f$ is **unique up to overall scale**, fixed by the normalisation $f(I)=1$. (A general non-symmetric $A_{ij}$ falls into several congruence orbits; there the witness below is what ties the scales across orbits together — for a metric, one orbit suffices.)
+
+**Existence.** One explicit function obeys the axioms, and — exactly as the note anchors the existence of $\det$ on the Leibniz *polynomial* $L$ (part 2 of the main derivation) — it serves only as a *witness*, not as the definition: the component determinant satisfies $\det(S^{T}AS)=\det(S^{T})\det(A)\det(S)=\det(S)^{2}\det(A)$ and $\det(\lambda A)=\lambda^{n}\det(A)$, with $c=\det^{2}$ and $\det(I)=1$.
+
+So a form-determinant exists, is unique up to scale, and is a **relative invariant of weight $2$** — a density, not a scalar.
 
 **Intrinsic home.** A form is a map $A:V\to V^*$ (namely $v\mapsto A(v,\cdot)$), so $\Lambda^{n}A:\Lambda^{n}V\to\Lambda^{n}V^*$ and therefore
 $$\det(A_{ij})\in\operatorname{Hom}(\Lambda^{n}V,\Lambda^{n}V^*)=(\Lambda^{n}V^*)^{\otimes 2},$$
@@ -525,7 +529,28 @@ In physics this is the vielbein/tetrad: $g=e^{T}e$, and the genuine **weight-$1$
 $$\sqrt{|\det g|}\;d^{n}x$$
 coordinate-invariant ($\sqrt{|g|}\to|J|^{-1}\sqrt{|g|}$ while $d^{n}x\to|J|\,d^{n}x$) — which is why $\sqrt{|g|}$, and not $\det g$ itself, is the integration measure.
 
-### 5. The general rule: weight $=$ (\#lower) $-$ (\#upper)
+### 5. Where the weights live: the homomorphism family, and $\sqrt{|g|}$
+
+The weights above — $0$ for $A^i{}_j$, $\pm2$ for $A_{ij},A^{ij}$, and $1$ for $\sqrt{|\det g|}$ — are not independent oddities: they are points of the *single* catalogue of possible density weights, namely the continuous homomorphisms $C^*\to C^*$ found in §1 and the introduction,
+$$h(w)=|w|^{s}\Big(\tfrac{w}{|w|}\Big)^{k}=w^{p}\bar w^{q},\qquad p-q=k\in\mathbb Z.$$
+A density of a $2$-index tensor transforms under a basis change by a multiplier $c(S)$, and $c$ is always one of these homomorphisms composed with $\det$, $c=h\circ\det$. Writing $w=\det S$:
+
+| object | multiplier $c(S)$ | $h(w)$ | $(p,q)$ |
+|---|---|---|---|
+| $\det(A^i{}_j)$ | $1$ | $1$ | $(0,0)$ |
+| $\det(g_{\mu\nu})$ | $\det(S)^{2}$ | $w^{2}$ | $(2,0)$ — holomorphic |
+| $\overline{\det(g_{\mu\nu})}$ | $\overline{\det S}^{\,2}$ | $\bar w^{2}$ | $(0,2)$ |
+| $\sqrt{|\det g_{\mu\nu}|}$ | $|\det S|$ | $|w|$ | $(\tfrac12,\tfrac12)$ — modulus |
+
+The **determinant** sits in the holomorphic integer corner; the **volume density** $\sqrt{|\det g|}$ sits on the modulus diagonal $(\tfrac12,\tfrac12)$ — its weight is the character $|w|=w^{1/2}\bar w^{1/2}$. (As a bare function of $w=\det g$ it is $|w|^{1/2}=w^{1/4}\bar w^{1/4}$; the factor $2$ is just that $\det g$ already carries weight $2$. The structural object is the multiplier, at $(\tfrac12,\tfrac12)$.)
+
+Two consequences are worth drawing out.
+
+**The integrator uses exactly the branch the determinant discards.** Homogeneity, in isolating $\det$, *rejects* the modulus characters: $|\det|$ fails $f(\lambda I)=\lambda^{n}$ (it gives $|\lambda|^{n}$). But a measure *must* rescale by $|J|$, a positive real number, so the integration density is forced to be the modulus character $|\det S|=|J|^{-1}$ — precisely the discarded branch. The determinant's reject pile is the integrator's tool, and that is why the invariant volume element is $\sqrt{|\det g|}\,d^{n}x$ and nothing holomorphic in $\det g$.
+
+**Single-valuedness is the $p-q\in\mathbb Z$ constraint once more.** A *holomorphic* square root $\det^{1/2}$ would be $(p,q)=(\tfrac12,0)$, with $p-q=\tfrac12\notin\mathbb Z$: multivalued — the metalinear / half-form obstruction. The *modulus* root $\sqrt{|\det g|}$ is $(\tfrac12,\tfrac12)$, with $p-q=0\in\mathbb Z$: single-valued. Taking the modulus restores integrality, which is exactly why $\sqrt{|g|}$ exists globally as an honest measure while $\det^{1/2}$ does not. (For a real metric this is the real shadow: the weight is the character $|\det|=|J|^{-1}$ on $GL(n,R)$, the $\mathbb R$-analogue of the point $(\tfrac12,\tfrac12)$.)
+
+### 6. The general rule: weight $=$ (\#lower) $-$ (\#upper)
 
 For a two-index tensor the determinant is always "the determinant of the underlying matrix"; only its **weight** changes, and the weight is read straight off the multiplicativity of $\det$: a basis change sends the component matrix to $M_1AM_2$ with $M_1,M_2\in\{S,S^{-1},S^{T},S^{-T}\}$ fixed by the index types, and $\det(M_1AM_2)=\det(M_1)\det(M_2)\det(A)$, so the weight is the total power of $\det(S)$. The cleanest bookkeeping is the Levi-Civita form: saturate each index of $A$ with a permutation symbol, using a *contravariant* symbol $\tilde\epsilon^{\,\cdots}$ (a weight $+1$ density) for each **lower** index of $A$, and a *covariant* symbol $\tilde\epsilon_{\cdots}$ (weight $-1$) for each **upper** index. The leftover weight is the sum of the symbols' weights:
 
@@ -539,6 +564,6 @@ So $\det(A^i{}_j)$ is the invariant (metric-free) determinant; $\det(A_{ij})$ is
 
 In one sentence: **the determinant of a $2$-index tensor transforms by a power of $\det(S)$ set by its index type — weight $=$ (\#lower) $-$ (\#upper) — directly from $\det(XY)=\det(X)\det(Y)$; these integer powers $\det^{m}$ are precisely the *polynomial* characters of $GL$, and tensor densities are the determinants valued in those lines.**
 
-### 6. Higher-valence tensors
+### 7. Higher-valence tensors
 
 The clean story stops at two indices: a determinant of $A^i{}_j$ used both squareness (an $n\times n$ array) and the single character $\det$. A genuinely higher tensor such as $A_{ijk}$ has no analogous single-character invariant; the relevant objects are **hyperdeterminants** (Cayley), which are of higher degree and are relative invariants of a *product* $GL\times GL\times\cdots$ rather than characters of one $GL$. They fall outside the one-line mechanism above and need their own theory.
