@@ -643,7 +643,7 @@ What the note adds is not a theorem but an organisation: **everything follows fr
 **The universal multiplier, three ways.** Everything rests on the single fact that *every* multiplier factors through $\det$ — equivalently that $GL/SL\xrightarrow{\ \det\ }C^*$ is the abelianisation. The note proves this three independent times, and any one suffices:
 
 1. **Commutators** (Step 2 / Lie chapter §4): $c$ kills $[GL,GL]=SL$ because transvections are commutators and generate $SL$, so $c$ sees $S$ only through $\det S$.
-2. **Trace** (Part III, (Λ1)–(Λ5)): $dc_I$ vanishes on $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n$, so $dc_I=a\operatorname{tr}$ and $c=\det^{a}$ — trace is the only linear invariant, $\det=e^{\operatorname{tr}}$ its integral.
+2. **Trace** (Part III, (Λ1)–(Λ5); spelled out in §11): $dc_I$ vanishes on $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n$, so $dc_I=a\operatorname{tr}$ and $c=\det^{a}$ — trace is the only linear invariant, $\det=e^{\operatorname{tr}}$ its integral.
 3. **Eigenvalues + Weyl** (Lie chapter §5): a torus character $\prod_i\lambda_i^{m_i}$ that is symmetric in the $\lambda_i$ has all $m_i$ equal, so it is $(\prod_i\lambda_i)^m=\det^m$.
 
 In one line: $\det$ is the universal multiplier because it *generates the Weyl-invariant character lattice* — it is the abelianisation of $GL$, and a relative invariant can see nothing finer than $\det S$.
@@ -670,3 +670,36 @@ is a *single-valued* relative invariant of weight $1$, i.e. $(p,q)=(1,0)$ — ha
 **The principle.** A relative invariant is precisely a nonzero vector spanning a **$G$-stable line** — a one-dimensional subrepresentation, classically a *semi-invariant*. Its multiplier is a character, so
 $$\boxed{\ \{\text{relative invariants}\}\ \longleftrightarrow\ \{\text{one-dimensional subreps}\}\ \longleftrightarrow\ X(G)\ \text{(characters)}.\ }$$
 For $G=GL(n,C)$ this is $X=\mathbb Z\cdot\det$ — which is *why* every multiplier is a $\det$-power and "relative invariant of $GL$" means "density." Change the group and the catalogue changes with $X(G)$. Tensor densities are the $GL(n)$ slice of this one uniform statement.
+
+### 11. The infinitesimal (trace) route, in detail
+
+Route 2 of §9 — that a smooth multiplier $c:GL(n,C)\to C^*$ is a power of $\det$ — is worth spelling out, since it is the Lie-theoretic Part III run *without* the homogeneity normalisation. The idea: **differentiate** $c$ to the Lie algebra, where the statement is linear and immediate, then **integrate** back with $\exp$.
+
+**Differentiate.** A smooth homomorphism has a derivative at the identity that is itself a Lie-algebra homomorphism,
+$$\phi:=dc_I:\ \mathfrak{gl}_n=T_IGL(n)\ \longrightarrow\ \operatorname{Lie}(C^*)=C,$$
+where $\mathfrak{gl}_n$ is all $n\times n$ matrices with $[X,Y]=XY-YX$, and the Lie algebra of $C^*$ is $C$ with **zero bracket** ($C^*$ is abelian). [Part III, (Λ1)–(Λ2).]
+
+**The abelian target kills brackets.** Being a Lie-algebra map into a zero-bracket target,
+$$\phi([X,Y])=[\phi(X),\phi(Y)]=0\qquad\text{for all }X,Y$$
+— $\phi$ annihilates every commutator. (This is the infinitesimal shadow of "$c$ kills $[GL,GL]$" from route 1.)
+
+**Commutators are exactly the traceless matrices.** The span of all brackets is $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n=\{\operatorname{tr}=0\}$:
+
+* $\subseteq$ : $\operatorname{tr}[X,Y]=\operatorname{tr}(XY)-\operatorname{tr}(YX)=0$, so every commutator is traceless;
+* $\supseteq$ : the matrix units realise all of $\mathfrak{sl}_n$ as brackets, $e_{ij}=[e_{ii},e_{ij}]$ ($i\ne j$) and $e_{ii}-e_{jj}=[e_{ij},e_{ji}]$.
+
+So $\phi$ vanishes on the hyperplane $\mathfrak{sl}_n$. [Part III, (Λ3).]
+
+**Hence $\phi$ is a multiple of the trace.** $\operatorname{tr}:\mathfrak{gl}_n\to C$ has kernel exactly $\mathfrak{sl}_n$, and $\mathfrak{gl}_n/\mathfrak{sl}_n\cong C$ is one-dimensional; a functional killing $\ker(\operatorname{tr})$ must be a scalar multiple of $\operatorname{tr}$:
+$$\phi(X)=a\,\operatorname{tr}X,\qquad a\in C.$$
+This is the precise sense in which **trace is the only linear invariant** — up to scale, the unique character of the Lie algebra. [Part III, (Λ4).]
+
+**Integrate with $\exp$.** A homomorphism intertwines the exponential maps, $c(\exp X)=\exp(\phi(X))$ — the matrix exponential on the left, $z\mapsto e^z$ on the right. With the bridge identity $\det(\exp X)=e^{\operatorname{tr}X}$ (the eigenvalues of $\exp X$ are $e^{\mu_i}$, so $\det=\prod_i e^{\mu_i}=e^{\sum_i\mu_i}$),
+$$c(\exp X)=e^{a\operatorname{tr}X}=(\det\exp X)^{a}.$$
+Over $C$ the matrix exponential is onto $GL(n,C)$, so $c(S)=(\det S)^{a}$ for all $S$. [Part III, (Λ6)–(Λ7).] In a slogan: **$\det=e^{\operatorname{tr}}$ is the group integral of the trace** — $\operatorname{tr}$ generates the algebra's only character, and exponentiating it produces $\det$, the group's only character.
+
+**The conjugate term restores $(p,q)$.** Because $c$ is only *smooth*, not holomorphic, $\phi$ is merely $R$-linear, so the general functional vanishing on $\mathfrak{sl}_n$ carries a conjugate piece,
+$$\phi(X)=a\,\operatorname{tr}X+b\,\overline{\operatorname{tr}X}\ \Longrightarrow\ c(S)=(\det S)^{a}\,\overline{(\det S)}^{\,b},$$
+which is exactly the $(p,q)=(a,b)$ character of §1/§5. So the Lie route *rederives the entire $(p,q)$ family*; the one extra ingredient Part III adds beyond this — homogeneity, (Λ5) — is what pins $a=1,b=0$ to select $\det$ itself.
+
+So routes 1 and 2 are the same fact at two levels, joined by $\exp$: route 1 on the group ($SL=[GL,GL]$), this route on the algebra ($\mathfrak{sl}_n=[\mathfrak{gl}_n,\mathfrak{gl}_n]$). Route 1 needs no regularity; this one needs $c\in C^{1}$ to differentiate.
