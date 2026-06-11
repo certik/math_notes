@@ -199,3 +199,52 @@ Multiplying the positive and unit-circle parts gives
 
 This is the formula needed for the free factor $g$ in
 [Determinant From Homomorphism](determinant_homomorphism.md).
+
+## Multiplicative Cauchy from Measurable Homomorphisms
+
+The measurable homomorphism classification gives a shorter derivation of the
+solutions to {eq}`eq-cauchy-multiplicative-real`.
+
+Let $m:\mathbb R\to\mathbb R$ be measurable and multiplicative:
+$$
+m(xy)=m(x)m(y).
+$$
+First, $m(1)=m(1)^2$, so $m(1)=0$ or $m(1)=1$. If $m(1)=0$, then
+$$
+m(x)=m(x\cdot 1)=m(x)m(1)=0,
+$$
+so $m\equiv0$.
+
+Now assume $m(1)=1$. Since $m(0)=m(0)^2$, either $m(0)=0$ or $m(0)=1$. If
+$m(0)=1$, then
+$$
+1=m(0)=m(0\cdot x)=m(0)m(x)=m(x),
+$$
+so $m\equiv1$.
+
+It remains to handle $m(1)=1$ and $m(0)=0$. For every $x\in\mathbb R^*$,
+$$
+m(x)m(x^{-1})=m(1)=1,
+$$
+so $m(x)\in\mathbb R^*$. Therefore the restriction
+$$
+m|_{\mathbb R^*}:\mathbb R^*\to\mathbb R^*
+$$
+is a measurable group homomorphism.
+
+The same classification argument as in
+[](#cstar-homomorphism-formula), applied to
+$\mathbb R^*\cong\mathbb R_{>0}\times\{\pm1\}$, gives
+```{math}
+:label: eq-rstar-homomorphism-formula
+
+m(x)=\operatorname{sgn}(x)^\epsilon |x|^c,
+\qquad x\in\mathbb R^*,
+\qquad \epsilon\in\{0,1\},\quad c\in\mathbb R.
+```
+Indeed, the positive factor contributes $|x|^c$, and the $\{\pm1\}$ factor
+contributes $m(-1)=\pm1$, which is $\operatorname{sgn}(x)^\epsilon$.
+
+Extending by $m(0)=0$ gives exactly the nondegenerate solutions listed in
+{eq}`eq-real-multiplicative-one-formula`, together with the degenerate
+solutions $m\equiv0$ and $m\equiv1$.
