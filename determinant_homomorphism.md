@@ -151,9 +151,15 @@ L(AB)=\prod_i a_i b_i=\Big(\prod_i a_i\Big)\Big(\prod_i b_i\Big)=L(A)L(B).
 ```
 Thus the Leibniz polynomial is multiplicative on $GL(n,\mathbb C)$. This note deliberately restricts the determinant derivation to $GL(n,\mathbb C)$, not all matrices, to keep the foundational factorization theorem completely internal to invertible matrices. Multiplicativity and other determinant facts on singular matrices can be developed separately when needed; the rock-solid $GL(n,\mathbb C)$ factorization theorem is the piece used in many applications in separate notes.
 
-**5. Uniqueness: every homomorphism $f$ factors as $g\circ\det$.** For any factorization {eq}`eq-dethom-transvection-diagonal-factorization`, using (H1), then {eq}`eq-dethom-transvection-value` (so $f(E)=1$), then {eq}`eq-dethom-diagonal-product`,
+**5. Uniqueness: $f$ is determined by its values on diagonal matrices, and $f=g\circ\det$.** Points 2–4 were the *existence* half: the explicit homomorphism $L$ exists, is single-valued, and is multiplicative on $GL(n,\mathbb C)$. Now the *uniqueness* half. For any factorization {eq}`eq-dethom-transvection-diagonal-factorization`, using (H1), then {eq}`eq-dethom-transvection-value` (so $f(E)=1$), then {eq}`eq-dethom-diagonal-product`,
 $$f(A)=f(E)\,f(D)=f(D)=g\!\Big(\prod_i d_i\Big)=g\big(L(A)\big),$$
-the last equality by {eq}`eq-dethom-leibniz-factorization`. This is the **factorization theorem**:
+the last equality by {eq}`eq-dethom-leibniz-factorization`. This forces the value of $f$ at **every** $A\in GL(n,\mathbb C)$: it must equal $g(L(A))$, where $g$ is read off from $f$ on the matrices $\operatorname{diag}(x,1,\dots,1)$ (Step 3). So a homomorphism has no freedom beyond its values on diagonal matrices — two homomorphisms $GL(n,\mathbb C)\to\mathbb C^*$ that agree on the invertible diagonal matrices agree everywhere — and every homomorphism factors as $f=g\circ L$.
+
+In particular, suppose $f$ satisfies the normalization $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$, i.e. $g=\operatorname{id}$. Then the displayed equation reads $f(A)=L(A)$ for all $A$. Combined with existence, this *characterizes* the determinant:
+
+> $L=\det$ is the **unique** homomorphism $GL(n,\mathbb C)\to\mathbb C^*$ whose value on every invertible diagonal matrix is the product of its diagonal entries.
+
+For a general $f$, this is the **factorization theorem**:
 $$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)} \equiv \det A \qquad(A\in GL(n,\mathbb C)),\,}$$
 for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $\prod_i d_i=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
 
