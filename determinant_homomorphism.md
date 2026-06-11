@@ -15,42 +15,6 @@ We also use only elementary language about rows, spans, and multilinear function
 
 Throughout, $e_1,\dots,e_n$ is the standard basis, and we view a matrix $A$ as its list of rows $r_1,\dots,r_n\in \mathbb C^n$. The **matrix unit** $E_{ij}$ is the $n\times n$ matrix with a $1$ in row $i$, column $j$, and $0$ everywhere else. We write $T_{ij}(c)=I+c\,E_{ij}$ (for $i\neq j$) for the **transvection** that adds $c$ times row $j$ to row $i$ under left multiplication.
 
-The permutation matrix swapping indices $i$ and $j$ can be written using
-transvections and one diagonal matrix as:
-
-$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
-
-Indeed, all basis vectors except $e_i,e_j$ are fixed. On the span of
-$e_i,e_j$, in the ordered basis $(e_i,e_j)$, the right three factors have
-the block product
-
-$$
-\begin{pmatrix}1&1\\0&1\end{pmatrix}
-\begin{pmatrix}1&0\\-1&1\end{pmatrix}
-\begin{pmatrix}1&1\\0&1\end{pmatrix}
-=
-\begin{pmatrix}0&1\\-1&0\end{pmatrix},
-$$
-
-while the diagonal factor has block
-
-$$
-\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
-$$
-
-Multiplying these two blocks gives
-
-$$
-\begin{pmatrix}1&0\\0&-1\end{pmatrix}
-\begin{pmatrix}0&1\\-1&0\end{pmatrix}
-=
-\begin{pmatrix}0&1\\1&0\end{pmatrix},
-$$
-
-the swap matrix. Hence $S_{ij}\in GL(n,\mathbb C)$ and
-$S_{ij}^{-1}=S_{ij}=S_{ji}$.
-
-
 ---
 
 ## Step 1 — $f(I)=1$ and conjugation invariance
@@ -67,15 +31,13 @@ So $f$ is invariant under conjugation.
 
 ---
 
-## Step 2 — $f(T_{ij}(c))$ is $1$ on every transvection $T_{ij}(c)$
+## Step 2 — $f$ equals $1$ on every transvection
 
 Fix $i\neq j$. Two observations.
 
-**All nonzero $c$ give conjugate transvections.** For a diagonal $D=\operatorname{diag}(d_1,\dots,d_n)$ one computes $D\,T_{ij}(c)\,D^{-1}=T_{ij}\!\big(c\,d_i/d_j\big)$. Choosing $d_i/d_j$ freely, the factor $c\,d_i/d_j$ ranges over all of $\mathbb C^*$. Hence all $T_{ij}(c)$ with $c\neq 0$ are conjugate, so by {eq}`eq-dethom-conjugation-invariance` the value $f(T_{ij}(c))=:t$ is the same for every $c\neq 0$.
+**All nonzero $c$ give conjugate transvections.** For an invertible diagonal $D=\operatorname{diag}(d_1,\dots,d_n)$ one computes $D\,T_{ij}(c)\,D^{-1}=T_{ij}\!\big(c\,d_i/d_j\big)$. Choosing $d_i/d_j$ freely, the factor $c\,d_i/d_j$ ranges over all of $\mathbb C^*$. Hence all $T_{ij}(c)$ with $c\neq 0$ are conjugate, so by {eq}`eq-dethom-conjugation-invariance` the value $f(T_{ij}(c))=:t$ is the same for every $c\neq 0$.
 
-**The values multiply additively.** Since $E_{ij}^2=0$, we have $T_{ij}(c)\,T_{ij}(c')=T_{ij}(c+c')$, so by (H1) the map $c\mapsto f(T_{ij}(c))$ turns addition into multiplication. Taking $c=c'=1$: $t=f(T_{ij}(2))=f(T_{ij}(1))^2=t^2$. As $t\in \mathbb C^*$, this forces $t=1$.
-
-Therefore
+**The common value satisfies $t=t^2$.** Since $E_{ij}^2=0$, we have $T_{ij}(c)\,T_{ij}(c')=T_{ij}(c+c')$. Taking $c=c'=1$ and applying (H1): $t=f(T_{ij}(2))=f(T_{ij}(1))^2=t^2$. As $t\in \mathbb C^*$, this forces $t=1$. Together with $T_{ij}(0)=I$ and Step 1,
 ```{math}
 :label: eq-dethom-transvection-value
 
@@ -97,17 +59,14 @@ $$g(x):=f\big(\operatorname{diag}(x,1,\dots,1)\big),\qquad x\in \mathbb C^*.$$
 g(xy)=g(x)g(y).
 ```
 
-**Position does not matter.** Let $P_1=I$, and for $i>1$ let $P_i=S_{1i}$ be the permutation matrix swapping coordinates $1$ and $i$ (so $P_i\in GL(n,\mathbb C)$, $P_i^{-1}=P_i^{T}$). Explicitly, for $i>1$, $P_i=S_{1i}=I-E_{11}-E_{ii}+E_{1i}+E_{i1}$: the identity with rows (and columns) $1$ and $i$ interchanged.
-This moves $x$ from slot $1$ to slot $i$. Then $\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)=P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}$, so by {eq}`eq-dethom-conjugation-invariance`
+**Position does not matter.** For $i>1$ let
+$$P_i=I-E_{11}-E_{ii}+E_{1i}+E_{i1},$$
+the permutation matrix that sends $e_1\mapsto e_i$, $e_i\mapsto e_1$, and fixes every other basis vector. Then $P_i^2=I$, so $P_i\in GL(n,\mathbb C)$ with $P_i^{-1}=P_i$. Conjugating a diagonal matrix by $P_i$ just relabels the two basis vectors, so it swaps the diagonal entries in slots $1$ and $i$: $P_i\operatorname{diag}(x,1,\dots,1)P_i^{-1}=\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)$. By {eq}`eq-dethom-conjugation-invariance`
 ```{math}
 :label: eq-dethom-diagonal-slot
 
 f\big(\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)\big)=g(x).
 ```
-
-(More generally, conjugating any diagonal matrix by a permutation matrix permutes its diagonal entries: $P_\sigma\operatorname{diag}(d_1,\dots,d_n)P_\sigma^{-1}=\operatorname{diag}(d_{\sigma^{-1}(1)},\dots,d_{\sigma^{-1}(n)})$.)
-
-
 
 **Product over the diagonal.** Writing $\operatorname{diag}(d_1,\dots,d_n)=\prod_{i=1}^n\operatorname{diag}(1,\dots,\underset{i}{d_i},\dots,1)$ and using (H1), {eq}`eq-dethom-diagonal-slot`, and {eq}`eq-dethom-g-homomorphism`,
 ```{math}
@@ -126,7 +85,7 @@ Everything so far (Steps 1–3) used **only** that $f$ is a homomorphism (H1). T
 * {eq}`eq-dethom-transvection-value`: $f\big(T_{ij}(c)\big)=1$ for every transvection;
 * {eq}`eq-dethom-diagonal-product`: $f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=g\!\big(\prod_i d_i\big)$, with $g:\mathbb C^*\to \mathbb C^*$ the homomorphism of Step 3.
 
-We show these force $f=g\circ\det$, the determinant being supplied — single-valued — by the Leibniz polynomial. We work entirely inside $GL(n,\mathbb C)$, never evaluating $f$ on a singular matrix, with no appeal to continuity, exterior algebra, or Zariski density. (The one ingredient missing for $f$ on $GL(n,\mathbb C)$ — the *alternating* property — enters here only as a formal identity about a polynomial, where the singular-matrix obstruction simply does not arise.)
+We show these force $f=g\circ\det$, the determinant being supplied — single-valued — by the Leibniz polynomial. We work entirely inside $GL(n,\mathbb C)$, never evaluating $f$ on a singular matrix, with no appeal to continuity, exterior algebra, or Zariski density.
 
 **1. Transvections and diagonal matrices generate $GL(n,\mathbb C)$.**
 *Lemma.* Every $A\in GL(n,\mathbb C)$ factors as
@@ -135,26 +94,22 @@ We show these force $f=g\circ\det$, the determinant being supplied — single-va
 
 A=E\,D,\qquad E=\text{a product of transvections},\quad D=\operatorname{diag}(d_1,\dots,d_n),\quad d_i\in \mathbb C^*.
 ```
-*Proof.* Use Gauss-Jordan row reduction, without normalizing pivots. Adding $c$ times row $j$ to row $i$ is left multiplication by $T_{ij}(c)$. Proceed column by column. Suppose columns $1,\dots,k-1$ have already been reduced to diagonal nonzero entries, with all other entries in those columns cleared. In column $k$, at least one entry in rows $k,\dots,n$ is nonzero: if all those lower entries were zero, then column $k$ would be supported only in rows $1,\dots,k-1$, hence would be a linear combination of the already diagonal columns $1,\dots,k-1$, contradicting the column independence of the invertible matrix obtained from $A$ by the previous invertible row operations. Swap such a nonzero entry into row $k$ if necessary. If the pivot is $\alpha\neq0$, then for each row $\ell\neq k$ add $-a_{\ell k}/\alpha$ times row $k$ to row $\ell$ to clear the other entries in column $k$; this does not disturb the earlier pivot columns because row $k$ has zeros there. The row swap used above is the purely algebraic identity
-$$S_{ij}=\operatorname{diag}(1,\dots,\underset{j}{-1},\dots,1)\,T_{ij}(1)\,T_{ji}(-1)\,T_{ij}(1)$$
-— one diagonal matrix and three transvections. Thus there are row-operation matrices $R_1,\dots,R_m$, each a transvection or a product of transvections and an invertible diagonal matrix, such that
-$$R_m\cdots R_1 A=D_0$$
-with $D_0$ an invertible diagonal matrix. Hence
-$$A=R_1^{-1}\cdots R_m^{-1}D_0,$$
-and this is a product of transvections and invertible diagonal matrices, because $T_{ij}(c)^{-1}=T_{ij}(-c)$ and the inverse of an invertible diagonal matrix is diagonal.
+*Proof.* Row-reduce $A$ using only transvections — no row swaps, no pivot normalization. Adding $c$ times row $j$ to row $i$ is left multiplication by $T_{ij}(c)$, and every intermediate matrix is invertible, being a product of invertible matrices.
 
-It remains only to collect all diagonal factors on the right. If $\Delta=\operatorname{diag}(\delta_1,\dots,\delta_n)$ is invertible, then
-$$\Delta\,T_{ij}(c)
-=\Delta\,T_{ij}(c)\Delta^{-1}\Delta
-=T_{ij}(c\,\delta_i/\delta_j)\Delta.$$
-So whenever a diagonal factor stands immediately to the left of a transvection, it can be slid past it, turning that transvection into another transvection. Repeating this finitely many times moves all diagonal factors to the far right; their product is a single invertible diagonal matrix $D$, and the remaining left-hand factors form a product $E$ of transvections. This gives {eq}`eq-dethom-transvection-diagonal-factorization`. $\square$
+Proceed column by column. Suppose columns $1,\dots,k-1$ have already been reduced to nonzero diagonal entries with all their other entries cleared. In column $k$, at least one entry in rows $k,\dots,n$ is nonzero: otherwise column $k$ would be supported in rows $1,\dots,k-1$, hence a linear combination of columns $1,\dots,k-1$ (which are nonzero multiples of $e_1,\dots,e_{k-1}$), contradicting invertibility. If the pivot entry $a_{kk}$ is zero, pick $\ell>k$ with $a_{\ell k}\neq 0$ and add row $\ell$ to row $k$ (one transvection $T_{k\ell}(1)$); this makes the pivot equal to $a_{\ell k}\neq 0$, and it disturbs nothing in columns $1,\dots,k-1$, where row $\ell$ has only zeros. Now, with pivot $\alpha=a_{kk}\neq 0$, for each row $\ell\neq k$ add $-a_{\ell k}/\alpha$ times row $k$ to row $\ell$ to clear the rest of column $k$; this leaves the earlier pivot columns untouched because row $k$ has zeros there.
+
+After column $n$ this yields transvections $T_1,\dots,T_m$ with
+$$T_m\cdots T_1 A=D,$$
+$D$ invertible diagonal. Since $T_{ij}(c)^{-1}=T_{ij}(-c)$ is again a transvection,
+$$A=T_1^{-1}\cdots T_m^{-1}\,D$$
+is a factorization of the required form. $\square$
 
 **2. Existence: the Leibniz polynomial.** Before drawing any conclusion about the abstract $f$, exhibit one *explicit* function we can evaluate unambiguously. Let
 $$L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n a_{i,\sigma(i)},$$
 a polynomial defined for **every** matrix by this formula — hence single-valued by construction. The following are **formal identities in the entries**, valid for all $A$ (singular included) and checked directly on the sum:
 
 * (a) $L(I)=1$, and more generally $L\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_i d_i$ — only $\sigma=\mathrm{id}$ survives;
-* (b) **two equal rows $\Rightarrow L=0$**: if rows $p$ and $q$ are equal and $\tau=(p\ q)$, then pairing each $\sigma$ with $\sigma\circ\tau$ gives equal products with opposite signs, so the sum cancels term by term (using $\operatorname{char}(\mathbb C)=0$);
+* (b) **two equal rows $\Rightarrow L=0$**: if rows $p$ and $q$ are equal and $\tau=(p\ q)$, then pairing each $\sigma$ with $\sigma\circ\tau$ gives equal products with opposite signs, so the sum cancels pair by pair;
 * (c) $L$ is **linear in each row** — every summand is.
 
 From (b) and (c), adding a multiple of one row to another leaves $L$ unchanged. Explicitly, write $L(r_1,\dots,r_n)$ for $L$ evaluated on the matrix with rows $r_1,\dots,r_n$. If $i\neq j$, then multilinearity in the $i$-th row gives
@@ -177,7 +132,7 @@ L(A)=L(E\,D)=L(D)=\prod_i d_i.
 ```
 In particular, $L(A)\in \mathbb C^*$ for $A\in GL(n,\mathbb C)$.
 
-**3. $\prod_i d_i$ is well-defined.** A priori the product in {eq}`eq-dethom-leibniz-factorization` could depend on the factorization {eq}`eq-dethom-transvection-diagonal-factorization` chosen, and the concrete $L$ is exactly what rules this out. If a second factorization $A=E'D'$ gave a different product $\prod_i d_i'$, then {eq}`eq-dethom-leibniz-factorization` applied to *it* would read $L(A)=\prod_i d_i'$ as well; but $L(A)$ is one unambiguous number, so $\prod_i d_i=\prod_i d_i'$. Hence every factorization of $A$ yields the same product, a function of $A$ alone, which we write $p(A):=\prod_i d_i=L(A)$. (Note we proved independence *using* the single-valued $L$ — never assuming it beforehand.)
+**3. $\prod_i d_i$ is well-defined.** A priori the product in {eq}`eq-dethom-leibniz-factorization` could depend on the factorization {eq}`eq-dethom-transvection-diagonal-factorization` chosen, and the concrete $L$ is exactly what rules this out: any two factorizations $A=ED=E'D'$ both satisfy {eq}`eq-dethom-leibniz-factorization`, so both diagonal products equal the one unambiguous number $L(A)$.
 
 **4. $L$ is multiplicative on $GL(n,\mathbb C)$.** Let $A,B\in GL(n,\mathbb C)$. Choose factorizations
 $$A=E_A D_A,\qquad B=E_B D_B,$$
@@ -188,7 +143,7 @@ $$AB=E_A\,D_A\,E_B\,D_B
 =E_A\,(D_AE_BD_A^{-1})\,D_AD_B.$$
 If $E_B=T_1\cdots T_m$ is a product of transvections, then
 $$D_AE_BD_A^{-1}=(D_AT_1D_A^{-1})\cdots(D_AT_mD_A^{-1}),$$
-and each factor $D_AT_kD_A^{-1}$ is again a transvection by the diagonal-conjugation formula above. Therefore the displayed expression for $AB$ is a factorization of the form {eq}`eq-dethom-transvection-diagonal-factorization`, with diagonal factor $D_AD_B=\operatorname{diag}(a_1b_1,\dots,a_nb_n)$. Applying {eq}`eq-dethom-leibniz-factorization` to the chosen factorizations of $A$, $B$, and $AB$ gives
+and each factor $D_AT_kD_A^{-1}$ is again a transvection by the diagonal-conjugation formula of Step 2. Therefore the displayed expression for $AB$ is a factorization of the form {eq}`eq-dethom-transvection-diagonal-factorization`, with diagonal factor $D_AD_B=\operatorname{diag}(a_1b_1,\dots,a_nb_n)$. Applying {eq}`eq-dethom-leibniz-factorization` to the chosen factorizations of $A$, $B$, and $AB$ gives
 ```{math}
 :label: eq-dethom-leibniz-multiplicativity
 
@@ -196,11 +151,11 @@ L(AB)=\prod_i a_i b_i=\Big(\prod_i a_i\Big)\Big(\prod_i b_i\Big)=L(A)L(B).
 ```
 Thus the Leibniz polynomial is multiplicative on $GL(n,\mathbb C)$. This note deliberately restricts the determinant derivation to $GL(n,\mathbb C)$, not all matrices, to keep the foundational factorization theorem completely internal to invertible matrices. Multiplicativity and other determinant facts on singular matrices can be developed separately when needed; the rock-solid $GL(n,\mathbb C)$ factorization theorem is the piece used in many applications in separate notes.
 
-**5. Uniqueness: every homomorphism $f$ factors as $g\circ\det$.**  Let $f$ be *any* homomorphism — the given $f$ of Steps 1–3 is one such. For any factorization {eq}`eq-dethom-transvection-diagonal-factorization`, using (H1), then {eq}`eq-dethom-transvection-value` (so $f(E)=1$), then {eq}`eq-dethom-diagonal-product` (so $f(D)=g(\prod_i d_i)$),
-$$f(A)=f(E)\,f(D)=f(D)=g\!\Big(\prod_i d_i\Big)=g\big(p(A)\big)=g\big(L(A)\big),$$
-where $p(A)=\prod_i d_i$ is unambiguous and equals $L(A)$ by {eq}`eq-dethom-leibniz-factorization`. This is the **factorization theorem**:
+**5. Uniqueness: every homomorphism $f$ factors as $g\circ\det$.** For any factorization {eq}`eq-dethom-transvection-diagonal-factorization`, using (H1), then {eq}`eq-dethom-transvection-value` (so $f(E)=1$), then {eq}`eq-dethom-diagonal-product`,
+$$f(A)=f(E)\,f(D)=f(D)=g\!\Big(\prod_i d_i\Big)=g\big(L(A)\big),$$
+the last equality by {eq}`eq-dethom-leibniz-factorization`. This is the **factorization theorem**:
 $$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)} \equiv \det A \qquad(A\in GL(n,\mathbb C)),\,}$$
-for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $p(A)=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
+for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $\prod_i d_i=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
 
 Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb C^*)$ *is* a homomorphism $GL(n,\mathbb C)\to \mathbb C^*$: by {eq}`eq-dethom-leibniz-multiplicativity`, $L(AB)=L(A)L(B)$ on $GL(n,\mathbb C)$, and then $g(L(AB))=g(L(A))g(L(B))$. Hence these are **exactly** all of them: the determinant is the universal homomorphism, and every other homomorphism is obtained by post-composing it with an arbitrary group homomorphism $g:\mathbb C^*\to\mathbb C^*$. The factor $g$ is genuinely free; as derived in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md), if one additionally requires continuity, or merely Borel measurability, then
 $$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
