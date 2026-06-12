@@ -31,7 +31,21 @@ GL(n,\mathbb C) & \xrightarrow{\ \ f\,=\,\det\ \ } & \mathbb C^*
 f\big(e^{X}\big)=e^{\phi(X)}.
 $$
 
-Generators map to generators (top arrow), finite transformations map to finite transformations (bottom arrow), and exponentiation commutes with everything. The model you already know is $U(1)$: group $\{e^{i\theta}\}$, algebra $i\mathbb R$, representations $f_k(e^{i\theta})=e^{ik\theta}$ labeled by an integer charge $k$. The algebra-level map is "multiply by $k$," the group-level map is its exponentiation, and $k$ must be an *integer* for single-valuedness. The determinant is the same story with $G=GL(n,\mathbb C)$: the algebra-level map will be forced to be $a\cdot\operatorname{tr}$, single-valuedness will quantize the charge, and $\det$ is the charge-$1$ representation. The sections below derive every arrow of the square; in particular the bottom arrow (the Leibniz formula) is *constructed* in section 6, not assumed.
+Generators map to generators (top arrow), finite transformations map to finite transformations (bottom arrow), and exponentiation commutes with everything.
+
+Because the same letters tend to blur together, here is every symbol of this note with its type. In particular, $\phi$ is **not** a Lie algebra — it is a linear *map between* the two Lie algebras (the top arrow of the square), exactly as $\det$ is a map between the two groups (the bottom arrow):
+
+| symbol | type |
+|---|---|
+| $GL(n,\mathbb C)$, $\;\mathbb C^*$ | the two **groups** |
+| $\mathfrak{gl}(n,\mathbb C)$, $\;\mathbb C$ | their two **Lie algebras** |
+| $A$, $\;T_{ij}(c)$, $\;\operatorname{diag}(d_1,\dots,d_n)$ | **group elements**, in $GL(n,\mathbb C)$ |
+| $X$, $\;E_{ij}$, $\;\log A$ | **algebra elements** (generators), in $\mathfrak{gl}(n,\mathbb C)$ |
+| $\lambda$, $\;f(A)$, $\;\det A$, $\;w$ | group elements of the target, in $\mathbb C^*$ |
+| $z$, $\;\phi(X)$, $\;\operatorname{tr}X$ | algebra elements of the target, in $\mathbb C$ |
+| $f$, $\;\det$, $\;g$ | **group homomorphisms** — horizontal arrows between groups |
+| $\phi$, $\;\operatorname{tr}$, $\;\bar\phi$ | **Lie-algebra homomorphisms** — horizontal arrows between algebras (linear maps with $\phi([X,Y])=0$) |
+| $\exp$ (both legs) | the vertical arrows, algebra $\to$ group | The model you already know is $U(1)$: group $\{e^{i\theta}\}$, algebra $i\mathbb R$, representations $f_k(e^{i\theta})=e^{ik\theta}$ labeled by an integer charge $k$. The algebra-level map is "multiply by $k$," the group-level map is its exponentiation, and $k$ must be an *integer* for single-valuedness. The determinant is the same story with $G=GL(n,\mathbb C)$: the algebra-level map will be forced to be $a\cdot\operatorname{tr}$, single-valuedness will quantize the charge, and $\det$ is the charge-$1$ representation. The sections below derive every arrow of the square; in particular the bottom arrow (the Leibniz formula) is *constructed* in section 6, not assumed.
 
 ## 2. The bottom-left corner: $E_{ij}$ exponentiates to a transvection (a Galilean boost)
 
@@ -102,14 +116,26 @@ Compare with the groups you know: for $SU(2)$ or the Lorentz group, *every* gene
 
 ## 5. Down the right leg: $\det=\exp\circ\operatorname{tr}\circ\log$, and the quantization of the charge
 
-At this point one is tempted to declare victory. The flow formula plus $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ says: *to evaluate $f$ on $A$, find any generator $X$ that reaches it ($e^X=A$, a logarithm of $A$), apply $\phi$, exponentiate.* For the normalized case this is the direct formula
+Take stock of which arrows of the square are now known. The top arrow is **known**: section 4 forced $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$. The two vertical legs are **known**: they are the exponentials. The bottom arrow $f$ is the **unknown** we are after. But a square that commutes lets you compute a missing side by going around the other way: instead of crossing the bottom directly ($A\mapsto f(A)$, unknown), go *up* the left leg, *across* the known top, and *down* the right leg. Explicitly, to evaluate $f(A)$:
+
+1. **Up the left leg** (the only hard step — the leg must be traversed *backwards*). Find a generator that reaches $A$: a matrix $X\in\mathfrak{gl}(n,\mathbb C)$ with $e^X=A$. Any such $X$ is called a logarithm of $A$ and written $X=\log A$. Mind the types: $A$ is a group element; $\log A$ is an **algebra element** — an honest $n\times n$ matrix (generally not unique; that is gap (i) below).
+2. **Across the top arrow.** Apply the known map $\phi$ to it: the number $\phi(X)=a\operatorname{tr}X+b\,\overline{\operatorname{tr}X}\in\mathbb C$. (Recall from the type table of section 1: $\phi$ is not a Lie algebra — it is the linear map $\mathfrak{gl}(n,\mathbb C)\to\mathbb C$, the algebra-level shadow of $f$.)
+3. **Down the right leg.** Exponentiate the number: $e^{\phi(X)}\in\mathbb C^*$.
+4. **The square commutes**, so the detour lands on the right answer: by the flow formula of section 3, $f(A)=f(e^X)=e^{\phi(X)}$.
+
+For the normalized charge $a=1,\ b=0$ (i.e. $\phi=\operatorname{tr}$) the detour reads, symbol by symbol,
+
+$$A\ \xrightarrow{\ \log\ }\ \underbrace{\log A}_{\text{matrix }\in\,\mathfrak{gl}(n,\mathbb C)}\ \xrightarrow{\ \operatorname{tr}\ }\ \underbrace{\operatorname{tr}\log A}_{\text{number }\in\,\mathbb C}\ \xrightarrow{\ \exp\ }\ \underbrace{e^{\operatorname{tr}\log A}}_{\in\,\mathbb C^*},$$
+
+i.e. the direct formula
 
 $$\boxed{\ \det A = e^{\operatorname{tr}\log A}\ }$$
 
-and it is worth checking on transformations you know:
+— three known maps composed, replacing the one unknown map. It is worth checking on transformations you know:
 
 * $A=\operatorname{diag}(d_1,d_2)$: take $X=\operatorname{diag}(\log d_1,\log d_2)$, so $\operatorname{tr}X=\log d_1+\log d_2$ and $e^{\operatorname{tr}X}=d_1d_2$. ✓
 * a rotation $R(\theta)=e^{\theta(E_{21}-E_{12})}$: the generator is traceless, so $\det R=e^0=1$ — rotations preserve volume *because their generator is traceless*. Same for boosts/transvections.
+* a rotation–scaling $A=r\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$: one checks $A=e^X$ with $X=\begin{pmatrix}\log r&-\theta\\ \theta&\log r\end{pmatrix}$, so $\operatorname{tr}X=2\log r$ and $\det A=e^{2\log r}=r^2$ — the area-expansion factor of the spiral map, with the rotation angle dropping out of the trace.
 
 But two honest gaps separate the boxed formula from a theorem. **Gap (i):** $\log A$ is multivalued — the recipe must not depend on which $X$ we pick. **Gap (ii):** the formula is not closed-form — it requires producing a logarithm, and even the statement "every $A\in GL(n,\mathbb C)$ has one" is a theorem. This section closes gap (i) by integrating the two generator families of section 2 by hand; section 6 closes gap (ii).
 
