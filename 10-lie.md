@@ -192,7 +192,50 @@ $$f=L=\det.$$
 
 (Aside: the eigenvalue formula $f(A)=\prod_i\lambda_i(A)$ of Part III, Step 5 in `determinant_over_C.md` expresses the same result, but needs the surjectivity of $\exp$ over $\mathbb C$ — gap (ii) closed by analysis instead of algebra. The route above trades that analytic input for the Gauss factorization, the same trade the elementary note makes, and produces the Leibniz formula constructively along the way.)
 
-## 8. Dictionary: the Lie picture vs. the elementary derivation
+## 8. The role of $g$: the charge of the representation
+
+The derivation above did not — and could not — produce $f=\det$ outright: the boxed result of section 7 is $f=g\circ L$, and only the normalization $f(\lambda I)=\lambda^n$ collapsed $g$ to the identity. This is not a defect of the method; the factor $g$ has a precise Lie-theoretic identity, worth spelling out. **$g$ is the charge of the representation** — a one-dimensional representation of the *target* group $\mathbb C^*$ itself. The determinant carries no freedom; it is the universal, canonical piece. All the freedom of $f$ lives in $g$.
+
+### 8.1 The square factors into two stacked squares
+
+What sections 4–7 actually established is that the commuting square of section 1 splits in the middle:
+
+$$
+\begin{array}{ccccc}
+\mathfrak{gl}(n,\mathbb C) & \xrightarrow{\ \operatorname{tr}\ } & \mathbb C & \xrightarrow{\ z\,\mapsto\, az+b\bar z\ } & \mathbb C\\[4pt]
+{\scriptstyle\exp}\big\downarrow\ \ & & \big\downarrow{\scriptstyle\exp} & & \big\downarrow{\scriptstyle\exp}\\[4pt]
+GL(n,\mathbb C) & \xrightarrow{\ \det\ } & \mathbb C^* & \xrightarrow{\ \ g\ \ } & \mathbb C^*
+\end{array}
+$$
+
+Top row: $\phi=\bar\phi\circ\operatorname{tr}$, where $\bar\phi(z)=az+b\bar z$ is a functional on the **one-dimensional quotient** $\mathfrak{gl}_n/\mathfrak{sl}_n\cong\mathbb C$. Bottom row: $f=g\circ\det$. The *left* square is rigid — no parameters, the same for every $f$; it is pure structure ($[\mathfrak{gl},\mathfrak{gl}]=\mathfrak{sl}$, and the trace is the quotient map). The *right* square is where the entire $(a,b)$ freedom sits, and its bottom arrow is $g$. So $g$ is literally "the part of $f$ that remains after the universal part has been factored out."
+
+### 8.2 Group level: $g$ is $f$ seen on the quotient
+
+The commutator argument forces $f$ to be trivial on $SL(n,\mathbb C)=[GL,GL]$. A function trivial on $SL$ depends on $A$ only through its coset $A\cdot SL$ — i.e., it **descends to the quotient group** $GL(n,\mathbb C)/SL(n,\mathbb C)$. The determinant is exactly the identification of that quotient with $\mathbb C^*$. So the statement $f=g\circ\det$ decomposes as
+
+$$f \;=\; \underbrace{\big(\text{the descended map on the quotient}\big)}_{=\;g\;:\;\mathbb C^*\to\,\mathbb C^*}\ \circ\ \underbrace{\big(\text{the quotient map}\big)}_{=\;\det}.$$
+
+This is the most Lie-theoretic answer to "where does $g$ come from": **group theory can prove that $f$ factors through the abelianization, and can identify the abelianization with $\mathbb C^*$ — but it cannot choose a representation *of* $\mathbb C^*$.** The target group has many self-homomorphisms ($w\mapsto w^2$, $w\mapsto\bar w$, $w\mapsto|w|^s(w/|w|)^k$, …), all equally lawful, and composing any homomorphism with one of them produces another homomorphism. No structural principle prefers $w\mapsto w$ among them. That residual choice *is* $g$.
+
+### 8.3 Charge level: $g$ is the pair $(s,k)$ — and physics uses the nontrivial ones
+
+At the generator level $g$ is just two numbers: $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ with the quantization $a-b\in\mathbb Z$ of section 5.2. Writing $s=a+b\in\mathbb C$ and $k=a-b\in\mathbb Z$,
+
+$$g(w)=|w|^{\,s}\Big(\frac{w}{|w|}\Big)^{k}.$$
+
+Compare with $\mathbb C^*\cong\mathbb R_{>0}\times U(1)$: on the circle factor, $k$ is the integer **winding charge** (quantized, exactly as for $U(1)$ representations); on the contractible $\mathbb R_{>0}$ factor, $s$ is a continuous **scaling dimension** (no quantization — nothing to wind around). A one-dimensional representation of $GL(n,\mathbb C)$ is thus labeled by a charge $(s,k)$, exactly as a representation of $U(1)$ is labeled by $k$, and "$f=g\circ\det$" says: *every representation is the universal one, taken to the power of its charge.*
+
+The $g\neq\mathrm{id}$ members are not exotica — physics uses them constantly: **tensor densities of weight $w$** transform with the extra factor $(\det J)^{-w}$ or $|\det J|^{-w}$, which is precisely a nontrivial choice of $g$; the $\sqrt{|g_{\mu\nu}|}$ in the invariant volume element is the member $g(w)=|w|^{1/2}$. This is the subject of Part IV of [determinant_over_C.md](determinant_over_C.md): the "weight" of a density is its charge.
+
+### 8.4 So in what sense was $f=\det$ "derived"?
+
+In two layers, which mirror Layer 1/Layer 2 of the elementary derivation exactly:
+
+1. **Forced by Lie theory:** $f=g\circ\det$ for *some* charge $g$. Equivalently, $\det$ is the **universal** one-dimensional representation — every other factors through it. This part contains no choices.
+2. **A normalization, imposed from outside:** homogeneity $f(\lambda I)=\lambda^n$ forces $a=1,\ b=0$, i.e. charge $(s,k)=(1,1)$, i.e. $g=\mathrm{id}$, i.e. $f=\det$. This is not Lie theory — it is the *definition* of which member of the family we agree to call "the determinant," just as "the electron has charge $1$" is a normalization, not a theorem about $U(1)$.
+
+## 9. Dictionary: the Lie picture vs. the elementary derivation
 
 The derivation in `determinant_homomorphism.md` is **the same argument run entirely at the group level, without ever differentiating** — which is exactly why it needs no continuity assumption:
 
