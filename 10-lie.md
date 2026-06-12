@@ -98,11 +98,95 @@ For $f=\det$, $\phi=\operatorname{tr}$, it is the identity used in one-loop effe
 
 ## 4. The top arrow is forced: $\phi = a\operatorname{tr} + b\,\overline{\operatorname{tr}}$
 
-Here is the structural heart, and it is a one-line physics argument. The target $\mathbb C^*$ is **abelian**. An abelian charge cannot see commutators: $f(ABA^{-1}B^{-1})=f(A)f(B)f(A)^{-1}f(B)^{-1}=1$. Infinitesimally,
+Here is the structural heart. The group-level statement is a one-liner: the target $\mathbb C^*$ is **abelian**, and an abelian charge cannot see group commutators,
 
-$$\phi([X,Y])=0\qquad\text{for all }X,Y.$$
+$$f\big(ABA^{-1}B^{-1}\big)=f(A)\,f(B)\,f(A)^{-1}f(B)^{-1}=1,$$
 
-Which matrices are commutators? Cyclicity of the trace gives $\operatorname{tr}[X,Y]=0$, so commutators are traceless. The converse also holds, and the $E_{ij}$ are exactly the witnesses:
+because the four values are *numbers* and numbers commute. The algebra-level consequence is $\phi([X,Y])=0$ — but getting there requires a bridge between the group commutator $ABA^{-1}B^{-1}$ and the Lie bracket $[X,Y]=XY-YX$. We build the bridge first (4.1), cross it carefully (4.2), and then ask which matrices are brackets (4.3).
+
+### 4.1 The Lie bracket is the infinitesimal group commutator
+
+Run the flow of $X$ for a small time $s$, the flow of $Y$ for a small time $t$, then undo both, in order:
+
+$$C(s,t):=e^{sX}\,e^{tY}\,e^{-sX}\,e^{-tY}.$$
+
+If $X$ and $Y$ commuted as matrices, the four factors would reorder and cancel, $C=I$. In general, expand every exponential, keeping all terms up to total degree $2$ in $(s,t)$:
+
+$$e^{\pm sX}=I\pm sX+\tfrac{s^2}{2}X^2+O(s^3),\qquad e^{\pm tY}=I\pm tY+\tfrac{t^2}{2}Y^2+O(t^3).$$
+
+Multiply the left pair and the right pair:
+
+$$e^{sX}e^{tY}=I+\underbrace{(sX+tY)}_{u_1}+\underbrace{\Big(st\,XY+\tfrac{s^2}{2}X^2+\tfrac{t^2}{2}Y^2\Big)}_{u_2}+(\text{deg}\ge3),$$
+
+$$e^{-sX}e^{-tY}=I+\underbrace{(-sX-tY)}_{v_1}+\underbrace{\Big(st\,XY+\tfrac{s^2}{2}X^2+\tfrac{t^2}{2}Y^2\Big)}_{v_2}+(\text{deg}\ge3)$$
+
+(note $v_2=u_2$: both signs flip, and the cross term $(-sX)(-tY)=st\,XY$ comes out the same). Now multiply the two halves and collect by degree:
+
+$$C(s,t)=(I+u_1+u_2)(I+v_1+v_2)=I+(u_1+v_1)+(u_2+v_2+u_1v_1)+(\text{deg}\ge3).$$
+
+Degree $1$: $u_1+v_1=0$ — to first order the flows *do* commute; whatever survives is second order. Degree $2$:
+
+$$u_1v_1=-(sX+tY)^2=-s^2X^2-st\,(XY+YX)-t^2Y^2,$$
+
+$$u_2+v_2+u_1v_1=\big(2st\,XY+s^2X^2+t^2Y^2\big)-s^2X^2-st\,XY-st\,YX-t^2Y^2=st\,(XY-YX).$$
+
+The pure $s^2$ and $t^2$ terms cancel identically — only the *bilinear* term survives, and it is exactly the bracket:
+
+$$\boxed{\ e^{sX}\,e^{tY}\,e^{-sX}\,e^{-tY}=I+st\,[X,Y]+(\text{total degree}\ge3).\ }$$
+
+This is what "the Lie bracket is the infinitesimal group commutator" means: the bracket measures the leading failure of two flows to close. You know it from rotations — a small rotation about $x$, a small one about $y$, then undoing both leaves a small rotation about $z$ of angle $st$: that is $[J_x,J_y]=J_z$ made tangible. (Same phenomenon as parallel parking: "steer" and "drive" don't commute, and their commutator is the sideways translation you actually want.)
+
+### 4.2 Crossing the bridge: $\phi([X,Y])=0$, every step
+
+The cleanest complete derivation goes through conjugation; the direct second-order route is at the end.
+
+**Step 1 (group level: the charge is conjugation-blind).** For any $g,h\in GL(n,\mathbb C)$:
+
+$$f\big(g\,h\,g^{-1}\big)=f(g)\,f(h)\,f(g)^{-1}=f(h),$$
+
+since the values are commuting numbers. (This is Step 1 of `determinant_homomorphism.md`, reappearing.)
+
+**Step 2 (conjugation of an exponential is the exponential of the conjugated generator).** For any invertible $g$ and any matrix $M$, $(gMg^{-1})^k=gM^kg^{-1}$ — the interior $g^{-1}g$ pairs cancel. Apply this to every term of the exponential series:
+
+$$g\,e^{tY}g^{-1}=g\Big(\sum_k \tfrac{t^k}{k!}Y^k\Big)g^{-1}=\sum_k\tfrac{t^k}{k!}\,(gYg^{-1})^k=e^{\,t\,gYg^{-1}}.$$
+
+**Step 3 (transfer to the algebra: $\phi$ is conjugation-invariant).** Apply $f$ to Step 2 and use Step 1 on the left, the flow formula of section 3 on both sides:
+
+$$e^{\,t\,\phi(gYg^{-1})}=f\big(e^{\,t\,gYg^{-1}}\big)=f\big(g\,e^{tY}g^{-1}\big)=f\big(e^{tY}\big)=e^{\,t\,\phi(Y)}\qquad\text{for all }t.$$
+
+Two exponentials of linear functions of $t$ that agree for *all* $t$ have equal slopes at $t=0$ (differentiate), so
+
+$$\phi\big(gYg^{-1}\big)=\phi(Y)\qquad\text{for every invertible }g.$$
+
+**Step 4 (Hadamard's lemma — the physicist's $e^{A}Be^{-A}$ formula).** Take $g=e^{sX}$ and expand the conjugated generator in $s$. Let $G(s):=e^{sX}\,Y\,e^{-sX}$, a curve of matrices in $\mathfrak{gl}(n,\mathbb C)$. Differentiate:
+
+$$G'(s)=X\,e^{sX}Ye^{-sX}-e^{sX}Ye^{-sX}\,X=[X,\,G(s)],\qquad G(0)=Y.$$
+
+In particular $G'(0)=[X,Y]$, so the Taylor expansion is
+
+$$e^{sX}\,Y\,e^{-sX}=Y+s\,[X,Y]+O(s^2)$$
+
+(iterating gives the full series $Y+s[X,Y]+\tfrac{s^2}{2}[X,[X,Y]]+\cdots=e^{s\,\mathrm{ad}_X}Y$, the adjoint action — "$\mathrm{Ad}=\exp(\mathrm{ad})$" — but the first-order term is all we need).
+
+**Step 5 (conclude).** Insert Step 4 into Step 3 and use linearity of $\phi$:
+
+$$\phi(Y)=\phi\big(e^{sX}Ye^{-sX}\big)=\phi\big(Y+s[X,Y]+O(s^2)\big)=\phi(Y)+s\,\phi([X,Y])+O(s^2)\qquad\text{for all }s.$$
+
+The coefficient of $s$ must vanish:
+
+$$\boxed{\ \phi([X,Y])=0\qquad\text{for all }X,Y.\ }$$
+
+$\square$
+
+*The second-order route, for comparison.* One can instead apply $f$ directly to the group commutator of 4.1. Define $F(s,t):=f\big(C(s,t)\big)$. By multiplicativity and commuting values (the one-liner at the top of this section), $F(s,t)=1$ **exactly**, for all $s,t$. On the other hand, by 4.1 and the defining expansion of $\phi$,
+
+$$F(s,t)=f\big(I+st[X,Y]+\cdots\big)=1+st\,\phi([X,Y])+(\text{deg}\ge3),$$
+
+and a function identically equal to $1$ has all Taylor coefficients zero — in particular the $st$ coefficient, $\phi([X,Y])=0$. (Pedantic check that no second-derivative-of-$f$ terms pollute the $st$ coefficient: along the axes the commutator is trivial, $C(s,0)=C(0,t)=I$ identically, so both first partials of $C$ vanish at the origin and the mixed partial of $F$ is $\phi$ applied to the mixed partial of $C$, which is $[X,Y]$.) The conjugation route of Steps 1–5 is the same argument reorganized so that only *first*-order expansions are ever needed.
+
+### 4.3 Which matrices are brackets: $[\mathfrak{gl}_n,\mathfrak{gl}_n]=\mathfrak{sl}_n$
+
+Cyclicity of the trace gives $\operatorname{tr}[X,Y]=0$, so brackets are traceless. The converse also holds, and the $E_{ij}$ are exactly the witnesses:
 
 $$E_{ij}=[E_{ii},E_{ij}]\ (i\neq j),\qquad E_{ii}-E_{jj}=[E_{ij},E_{ji}],$$
 
