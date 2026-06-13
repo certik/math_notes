@@ -304,7 +304,7 @@ $$f=L=\det.$$
 
 ## 8. The role of $g$: the charge of the representation
 
-The derivation above did not — and could not — produce $f=\det$ outright: the boxed result of section 7 is $f=g\circ L$, and only the normalization $f(\lambda I)=\lambda^n$ collapsed $g$ to the identity. This is not a defect of the method; the factor $g$ has a precise Lie-theoretic identity, worth spelling out. **$g$ is the charge of the representation** — a one-dimensional representation of the *target* group $\mathbb C^*$ itself. The determinant carries no freedom; it is the universal, canonical piece. All the freedom of $f$ lives in $g$.
+The derivation above did not — and could not — produce $f=\det$ outright: the boxed result of section 7 is $f=g\circ L$, and only the normalization $f(\lambda I)=\lambda^n$ collapsed $g$ to the identity. This is not a defect of the method; the factor $g$ has a precise Lie-theoretic identity, worth spelling out. **$g$ is a one-dimensional representation of the *target* group $\mathbb C^*$ itself, and it carries a charge** — a label, in the exact sense of the $U(1)$ charge of gauge theory, that section 8.3 makes precise. The determinant carries no freedom; it is the universal, canonical piece. All the freedom of $f$ lives in $g$.
 
 ### 8.1 The square factors into two stacked squares
 
@@ -328,15 +328,34 @@ $$f \;=\; \underbrace{\big(\text{the descended map on the quotient}\big)}_{=\;g\
 
 This is the most Lie-theoretic answer to "where does $g$ come from": **group theory can prove that $f$ factors through the abelianization, and can identify the abelianization with $\mathbb C^*$ — but it cannot choose a representation *of* $\mathbb C^*$.** The target group has many self-homomorphisms ($w\mapsto w^2$, $w\mapsto\bar w$, $w\mapsto|w|^s(w/|w|)^k$, …), all equally lawful, and composing any homomorphism with one of them produces another homomorphism. No structural principle prefers $w\mapsto w$ among them. That residual choice *is* $g$.
 
-### 8.3 Charge level: $g$ is the pair $(s,k)$ — and physics uses the nontrivial ones
+### 8.3 What "charge" means here, and how it works
 
-At the generator level $g$ is just two numbers: $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ with the quantization $a-b\in\mathbb Z$ of section 5.2. Writing $s=a+b\in\mathbb C$ and $k=a-b\in\mathbb Z$,
+A word of precision first, because it is easy to conflate two things: **$g$ is a *representation*; the *charge* is the label that names it.** Saying loosely "$g$ is the charge" is shorthand for "$g$ is the character carrying a particular charge." The two are in bijection — each charge names exactly one $g$ — but they are different kinds of object (a number versus a map), and the whole point of the word "charge" is the structure that label carries. Here is that structure, built up from the example you already know.
 
-$$g(w)=|w|^{\,s}\Big(\frac{w}{|w|}\Big)^{k}.$$
+**The model: the $U(1)$ charge.** In electromagnetism a field $\psi$ has a charge $q\in\mathbb Z$. The integer $q$ does not act on anything by itself; it *labels how $\psi$ transforms* under the gauge group: a gauge rotation $e^{i\theta}\in U(1)$ multiplies $\psi$ by $e^{iq\theta}$. The map $\rho_q:e^{i\theta}\mapsto e^{iq\theta}$ is the one-dimensional representation; $q$ is its charge. Three properties make $q$ deserve the name — and all three will recur verbatim for $g$:
 
-Compare with $\mathbb C^*\cong\mathbb R_{>0}\times U(1)$: on the circle factor, $k$ is the integer **winding charge** (quantized, exactly as for $U(1)$ representations); on the contractible $\mathbb R_{>0}$ factor, $s$ is a continuous **scaling dimension** (no quantization — nothing to wind around). A one-dimensional representation of $GL(n,\mathbb C)$ is thus labeled by a charge $(s,k)$, exactly as a representation of $U(1)$ is labeled by $k$, and "$f=g\circ\det$" says: *every representation is the universal one, taken to the power of its charge.*
+* *(quantization)* $q$ must be an **integer**, because $e^{i\theta}$ and $e^{i(\theta+2\pi)}$ are the same group element, so $e^{iq\theta}$ must be single-valued on the circle. This is not imposed; it is forced by the topology of $U(1)$.
+* *(additivity)* charges **add** under tensoring: $\psi_1\otimes\psi_2$ transforms by $e^{i(q_1+q_2)\theta}$, so it has charge $q_1+q_2$. The product of representations corresponds to the sum of labels.
+* *(coupling to the generator)* writing $e^{i\theta}=e^{i\theta}$ as the exponential of the generator, $q$ is the eigenvalue with which $\psi$ couples to it: $\hat Q\psi=q\psi$. The charge is the coefficient in front of the generator.
 
-The $g\neq\mathrm{id}$ members are not exotica — physics uses them constantly: **tensor densities of weight $w$** transform with the extra factor $(\det J)^{-w}$ or $|\det J|^{-w}$, which is precisely a nontrivial choice of $g$; the $\sqrt{|g_{\mu\nu}|}$ in the invariant volume element is the member $g(w)=|w|^{1/2}$. This is the subject of Part IV of [determinant_over_C.md](determinant_over_C.md): the "weight" of a density is its charge.
+**The case at hand.** Our target group is $\mathbb C^*$ instead of $U(1)$, and $g:\mathbb C^*\to\mathbb C^*$ is the representation. At the generator level $g$ is encoded in two numbers — the $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ of section 4, with the quantization $a-b\in\mathbb Z$ of section 5.2. Set
+
+$$s:=a+b\in\mathbb C,\qquad k:=a-b\in\mathbb Z,\qquad\text{so that}\qquad g(w)=|w|^{\,s}\Big(\frac{w}{|w|}\Big)^{k}.$$
+
+The pair $(s,k)$ is the charge. It is *two* numbers rather than one because $\mathbb C^*$ has two factors, $\mathbb C^*\cong\mathbb R_{>0}\times U(1)$ (modulus and phase), and a representation must specify how it responds to each:
+
+* on the **phase** factor $U(1)$, the label is $k$, the genuine **winding charge** — an integer for exactly the $U(1)$ reason above ($w$ and $w$ after a $2\pi$ phase loop are the same number, so the $(w/|w|)^k$ factor must be single-valued). This is the quantization derived in section 5.2, now read as charge quantization.
+* on the **modulus** factor $\mathbb R_{>0}$, the label is $s$, a continuous complex **scaling dimension**. It is *not* quantized: $\mathbb R_{>0}$ is contractible — there is no loop to wind around — so single-valuedness imposes nothing.
+
+Now the same three properties hold, and they are what justify the name:
+
+* *(quantization)* the discrete part $k$ is quantized by topology, exactly as $q$ is — same mechanism, $\pi_1(U(1))=\mathbb Z$.
+* *(additivity)* charges add under tensoring. If two objects transform by $g_1,g_2$, the pair transforms by the product $g_1g_2$, whose charge is $(s_1+s_2,\,k_1+k_2)$ — the labels add while the representations multiply. A weight-$w_1$ density times a weight-$w_2$ density is a weight-$(w_1{+}w_2)$ density: that *is* charge additivity, and it is why "weight" behaves like a charge.
+* *(coupling to the generator)* the single abelian (i.e. $U(1)$-like) direction of $GL(n,\mathbb C)$ is overall scaling, whose generator is $\operatorname{tr}$ (section 4 showed every other direction is a commutator and so carries no charge). The numbers $(a,b)$ — equivalently $(s,k)$ — are precisely the coefficients with which $g$ couples to that generator, $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$. The charge is the coefficient in front of the generator, just as $q$ is the coefficient of $\hat Q$.
+
+So a one-dimensional representation of $GL(n,\mathbb C)$ is labeled by a charge $(s,k)$, exactly as a representation of $U(1)$ is labeled by $k$, and "$f=g\circ\det$" reads: *every such representation is the universal one ($\det$), dressed by a charge.* In this language the determinant itself is simply the **unit-charge** representation $(s,k)=(1,1)$ — the choice $g=\mathrm{id}$, fixed by the normalization $f(\lambda I)=\lambda^n$, exactly the way "the electron has charge $1$" is a convention setting the unit, not a theorem.
+
+The $g\neq\mathrm{id}$ members are not exotica — physics uses them constantly. A **tensor density of weight $w$** is, by definition, an object transforming with the extra factor $(\det J)^{-w}$ (or $|\det J|^{-w}$) under a coordinate change with Jacobian $J$ — i.e. a quantity carrying charge $w$ under $g$. The $\sqrt{|g_{\mu\nu}|}$ in the invariant volume element is the charge-$\tfrac12$ member $g(w)=|w|^{1/2}$, which is exactly why $\sqrt{|g|}\,d^nx$ is coordinate-invariant: the $+\tfrac12$ charge of $\sqrt{|g|}$ cancels the $-\tfrac12$ from $d^nx$, charges adding to zero. This is the subject of Part IV of [determinant_over_C.md](determinant_over_C.md) and is derived from scratch in section 11 below: **the "weight" of a density is its charge under $g$**, with all the additivity and quantization that word implies.
 
 ### 8.4 So in what sense was $f=\det$ "derived"?
 
@@ -357,3 +376,122 @@ The derivation in `determinant_homomorphism.md` is **the same argument run entir
 One sentence for the road: *the determinant is to the trace what a finite transformation is to its generator; it exists because $GL(n)$ has exactly one abelian direction (overall scaling), every abelian charge must vanish on the boost-like nilpotent generators $E_{ij}$ spanning the rest, and the unique charge consistent with $f(\lambda I)=\lambda^n$ is $\det=\exp\circ\operatorname{tr}\circ\log$ — made polynomial by the $\varepsilon$-tensor singlet.*
 
 The table "How the two proofs correspond" in [determinant_over_C.md](determinant_over_C.md) lists this dictionary line by line.
+
+## 10. What we used from Lie theory, and what can fail
+
+For honesty's sake, here is the complete inventory of Lie-theoretic facts the note relies on, each with its status — a genuine theorem, an elementary computation, or a general result we deliberately *replaced* with something concrete:
+
+| # | fact | status | where used |
+|---|------|--------|-----------|
+| F1 | a *continuous* homomorphism between Lie groups is automatically smooth (Cartan–von Neumann) | genuine theorem; bypassed if smoothness is assumed outright | lets us differentiate $f$ at all |
+| F2 | $\phi:=df_I$ exists and is ($\mathbb R$-)linear; $\phi(X)=\frac{d}{d\theta}f(e^{\theta X})\big|_0=\frac{d}{d\theta}f(I+\theta X)\big|_0$ | definition + chain rule | section 3 |
+| F3 | $f(e^{tX})=e^{t\phi(X)}$ for every smooth homomorphism ("homomorphisms intertwine the exponentials") | general theorem; proved self-contained here via the ODE $\dot u=\phi(X)\,u$ | flow formula, section 3 |
+| F4 | $\phi$ preserves brackets: $\phi([X,Y])=[\phi(X),\phi(Y)]$ ($=0$ for an abelian target) | general theorem; the abelian case proved from scratch here | section 4.2 |
+| F5 | Hadamard: $e^{sX}Ye^{-sX}=Y+s[X,Y]+O(s^2)$ | elementary matrix calculus ($G'=[X,G]$) | section 4.2, step 4 |
+| F6 | $e^{sX}e^{tY}e^{-sX}e^{-tY}=I+st\,[X,Y]+\cdots$ | elementary series computation (second-order BCH done by hand) | section 4.1 |
+| F7 | every $A\in GL(n,\mathbb C)$ is a product of exponentials we control | replaced by the explicit Gauss factorization of [determinant_homomorphism.md](determinant_homomorphism.md); the general theorems ($\exp$ surjective over $\mathbb C$, "connected group = products of exponentials") are *not* used | section 7 |
+| F8 | a Lie algebra homomorphism $\phi$ integrates to a group homomorphism iff a global integrality condition holds ($GL(n,\mathbb C)$ is not simply connected: $\pi_1=\mathbb Z$) | deep theorem in general (Lie's second theorem + monodromy); appears here *concretely* as the quantization $a-b\in\mathbb Z$ | section 5.2 |
+
+Not used anywhere: the full Baker–Campbell–Hausdorff theorem, Jordan form, eigenvalues, surjectivity of $\exp$, or the abstract uniqueness theorem "two homomorphisms of a connected group with equal differentials coincide" (the constructive sections 5–7 compute $f$ instead).
+
+### 10.1 The differential: any curve through $I$ with velocity $X$ will do
+
+The differential of a smooth map sees only the first-order data of the curve fed into it: *any* smooth curve $\gamma(\theta)$ with $\gamma(0)=I$, $\gamma'(0)=X$ gives, by the chain rule,
+
+$$\frac{d}{d\theta}f\big(\gamma(\theta)\big)\Big|_{\theta=0}=df_I\big(\gamma'(0)\big)=\phi(X).$$
+
+Both $\gamma(\theta)=e^{\theta X}$ and $\gamma(\theta)=I+\theta X$ qualify (the latter stays inside $GL(n,\mathbb C)$ for small $\theta$ because $GL$ is open in matrix space), which is why section 3 could use the expansion $f(I+\varepsilon X)=1+\varepsilon\phi(X)+O(\varepsilon^2)$ and the flow $f(e^{\theta X})$ interchangeably. One caution: with real $\theta$ this defines $\phi$ as an $\mathbb R$-linear map only; complex-linearity ($b=0$) would additionally require $f$ to be holomorphic, which is never assumed — that is the origin of the $b\,\overline{\operatorname{tr}}$ term in section 4.
+
+### 10.2 Does $f(e^X)=e^{\phi(X)}$ hold for *any* homomorphism?
+
+For any **smooth** homomorphism, yes — and via F1, for any *continuous* one. The structure of the proof in section 3 shows why: $u(t)=f(e^{tX})$ satisfies $u(s+t)=u(s)\,u(t)$ (it is a one-parameter subgroup of the target), and a differentiable solution of this functional equation is forced to be $u(t)=e^{t\,\dot u(0)}=e^{t\phi(X)}$. In general Lie theory this is the statement "every one-parameter subgroup of a Lie group is $t\mapsto e^{tZ}$ for a unique generator $Z$."
+
+For a homomorphism with **no** regularity assumed it fails — and not as a technicality. There exist wild homomorphisms $g:\mathbb C^*\to\mathbb C^*$ (axiom-of-choice constructions, not even measurable; see [cstar_homomorphism.md](cstar_homomorphism.md)), and $f=g\circ\det$ is then a perfectly valid group homomorphism $GL(n,\mathbb C)\to\mathbb C^*$ for which $\phi$ does not exist at all — such an $f$ is not differentiable, not continuous, not measurable. The whole Lie route is unavailable for those. This is exactly the division of labor between the two notes: the Lie derivation buys conceptual transparency at the price of continuity (needed for F1–F3), while [determinant_homomorphism.md](determinant_homomorphism.md) covers *every* homomorphism, wild ones included, and correspondingly can conclude only $f=g\circ\det$ with $g$ unconstrained.
+
+### 10.3 The converse direction: not every $\phi$ comes from an $f$
+
+There is a fine point hiding in "any homomorphism," in the other direction. At the algebra level the candidate generators $\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}$ form a two-complex-parameter family, but **not every $\phi$ integrates to a group homomorphism** — only those with $a-b\in\mathbb Z$ do. That is F8: since $GL(n,\mathbb C)$ is not simply connected, algebra-level data does not automatically globalize, and the obstruction is precisely the winding/quantization condition of section 5.2. The clean correspondence is therefore:
+
+$$\big\{\text{continuous group homomorphisms } f:GL(n,\mathbb C)\to\mathbb C^*\big\}
+\;\longleftrightarrow\;
+\big\{\phi=a\operatorname{tr}+b\,\overline{\operatorname{tr}}\ \text{with}\ a-b\in\mathbb Z\big\},$$
+
+with $f\mapsto df_I$ one way and the construction of sections 5–7 the other. (On a *simply connected* group every algebra homomorphism would integrate — Lie's second theorem; the integrality condition is the fingerprint of the loop in $GL(n,\mathbb C)$.)
+
+## 11. Application: why $\det g_{ij}$ is a density — derived, not postulated
+
+The charge family of section 8 is not bookkeeping for its own sake; it is forced on you the moment you ask for the determinant of a *tensor*. We now derive — assuming nothing about densities — that any "determinant of $g_{ij}$" must transform with the charge-$2$ character $(\det S)^2$, that the determinant of $g^{ij}$ must use the charge-$(-2)$ character, that for $A^i{}_j$ the charge is $0$ (an honest scalar), and that in every case the number is computed by applying the Leibniz polynomial $L$ of section 6 to the component matrix *in any basis you like*.
+
+### 11.1 The transformation laws of components (from multilinearity alone)
+
+Let $V$ be an $n$-dimensional space with basis $e_1,\dots,e_n$, and change basis by an invertible $S$: $e'_j=e_i\,S^i{}_j$. Components transform by the chain rule of multilinearity:
+
+* $(0,2)$ tensor (a bilinear form, e.g. a metric): $g'_{ij}=g(e'_i,e'_j)=S^k{}_i S^l{}_j\,g_{kl}$, i.e. in matrix form $G'=S^{T}GS$;
+* $(2,0)$ tensor (e.g. the inverse metric): $G'=S^{-1}G\,S^{-T}$;
+* $(1,1)$ tensor (a linear map $V\to V$): $A'=S^{-1}AS$.
+
+These are not assumptions; they are what "tensor" means.
+
+### 11.2 No scalar determinant of $g_{ij}$ can exist
+
+Suppose someone hands you a universal polynomial formula $F$ in the components of a $(0,2)$ tensor — the *same* formula in every basis — and claims its value is basis-independent: $F(S^TGS)=F(G)$ for all $S$. Test it on the scalings $S=\lambda I$, which act on components by $G\mapsto\lambda^2G$. Decompose $F$ into homogeneous pieces $F_d$ of degree $d$ (each must satisfy the invariance separately, since the scaling acts on each by a different power): $F_d(\lambda^2G)=\lambda^{2d}F_d(G)\overset{!}{=}F_d(G)$ for all $\lambda$ forces $F_d=0$ for every $d>0$. **Only constants are invariant.** So a nontrivial determinant-like quantity built from $g_{ij}$ alone *cannot* be a scalar — some transformation factor is unavoidable. (Contrast the $(1,1)$ case, where $S=\lambda I$ acts trivially, $A'=\lambda^{-1}A\lambda=A$, and no obstruction arises.)
+
+### 11.3 The factor must be a character — and the factorization theorem classifies it
+
+So the best one can ask of $F$ is a **relative invariant**: the values in two bases differ by a factor depending only on the basis change, not on the tensor,
+
+$$F\big(S^TGS\big)=\mu(S)\,F(G)\qquad\text{for all }S\in GL(n,\mathbb C)\text{ and all }G.$$
+
+Now *derive* the structure of $\mu$. Compose two basis changes, $S_1$ then $S_2$: the components change by $G\mapsto(S_1S_2)^T G\,(S_1S_2)=S_2^T(S_1^TGS_1)S_2$, so applying the defining property once directly and once in two steps,
+
+$$\mu(S_1S_2)\,F(G)=F\big((S_1S_2)^TG(S_1S_2)\big)=\mu(S_2)\,\mu(S_1)\,F(G)
+\quad\Longrightarrow\quad \mu(S_1S_2)=\mu(S_1)\,\mu(S_2).$$
+
+**The multiplier of any relative invariant is automatically a homomorphism $GL(n,\mathbb C)\to\mathbb C^*$** — and now the entire machinery of this note applies to $\mu$. By the factorization theorem (section 7), $\mu=h\circ\det$ for a character $h$ of $\mathbb C^*$. If $F$ is polynomial in the components, $\mu(S)=F(S^TG_0S)/F(G_0)$ is polynomial in the entries of $S$, and a polynomial character of $\mathbb C^*$ is a single monomial: writing $h(w)=\sum_m c_mw^m$, multiplicativity $h(\lambda w)=h(\lambda)h(w)$ gives $c_m\lambda^m=h(\lambda)c_m$ for each $m$, so every surviving $m$ would force $h(\lambda)=\lambda^m$ — only one can survive. Hence
+
+$$\mu(S)=(\det S)^{p}\qquad\text{for some integer }p\ge0.$$
+
+(In the smooth, non-holomorphic setting the classification of section 8.3 allows $\mu(S)=(\det S)^p\,(\overline{\det S})^{q}$ — the $(p,q)$ charges — and on real manifolds also $|\det S|^{s}$; the polynomial case pins the pure power.)
+
+Finally the scaling test of 11.2, now used positively: for a determinant-like $F$, homogeneous of degree $n$ in the components, $S=\lambda I$ gives
+
+$$\lambda^{2n}F(G)=F(\lambda^2G)=\mu(\lambda I)F(G)=\lambda^{np}F(G)
+\quad\Longrightarrow\quad p=2.$$
+
+**Derived:** any degree-$n$ polynomial relative invariant of a $(0,2)$ tensor transforms with the charge-$2$ character $(\det S)^2$ — it has no choice. Running the same argument with $G'=S^{-1}GS^{-T}$ gives $p=-2$ for $g^{ij}$, and with $A'=S^{-1}AS$ gives $p=0$ for $(1,1)$ tensors.
+
+### 11.4 Existence, and "compute it in any basis": two one-line proofs
+
+It remains to exhibit the relative invariant and verify the multiplier. The candidate is forced by section 6: apply the Leibniz polynomial $L$ to the component matrix, $F(G):=L(G)$. Two derivations of its transformation law:
+
+**Via multiplicativity (section 6).** $L(S^TGS)=L(S^T)\,L(G)\,L(S)=(\det S)^2\,L(G)$, using $L(S^T)=L(S)$ (the row and column Leibniz sums agree under $\sigma\mapsto\sigma^{-1}$). Done. Likewise $L(S^{-1}GS^{-T})=(\det S)^{-2}L(G)$ and $L(S^{-1}AS)=L(A)$.
+
+**Via the $\varepsilon$-tensor, which also explains the weight.** The fully contracted expression
+
+$$L(G)=\frac{1}{n!}\,\varepsilon^{\,i_1\cdots i_n}\,\varepsilon^{\,j_1\cdots j_n}\,g_{i_1j_1}\cdots g_{i_nj_n}$$
+
+(expanding the two $\varepsilon$'s as sums over permutations $\sigma,\tau$ and substituting $\rho=\sigma\tau^{-1}$ collapses the double sum to $n!\,L(G)$) is the *only* way to saturate the $2n$ lower indices of $n$ copies of $g$: it needs exactly **two** upper-index $\varepsilon$'s. Under a basis change each $\varepsilon$ absorbs one batch of $n$ transformation matrices through the identity of section 6,
+
+$$\varepsilon^{\,i_1\cdots i_n}\,S^{k_1}{}_{i_1}\cdots S^{k_n}{}_{i_n}=(\det S)\,\varepsilon^{\,k_1\cdots k_n},$$
+
+(both sides are totally antisymmetric in $k_1,\dots,k_n$, hence proportional to $\varepsilon$; the coefficient is the value at $(1,\dots,n)$, which is the Leibniz sum $=\det S$), so the two $\varepsilon$'s emit $(\det S)^2$ — **the weight literally counts the $\varepsilon$-tensors needed to saturate the indices**. For $g^{ij}$ the $2n$ *upper* indices need two lower-index $\varepsilon$'s, each emitting $(\det S)^{-1}$: weight $-2$. For $A^i{}_j$ one $\varepsilon$ of each kind: the factors cancel, weight $0$. General rule: weight $=$ (number of lower indices) $-$ (number of upper indices) per copy of the tensor — the full zoo is in Part IV of [determinant_over_C.md](determinant_over_C.md).
+
+So the *recipe* is basis-democratic by construction — the same polynomial $L$ applied to whatever the components are in your basis — and what transforms is the *value*, by exactly the derived character. Consistency check: for an invertible metric, $g^{ij}$ the matrix inverse of $g_{ij}$, the charges $+2$ and $-2$ cancel: $L(G)\cdot L(G^{-1})=L(I)=1$ is an honest scalar equation, valid in every basis.
+
+### 11.5 What $\det g_{ij}$ intrinsically *is*: a number on the wrong line
+
+The singlet picture of section 6 says exactly which object the recipe computes — and why no scalar was possible. A $(0,2)$ tensor is the same thing as a linear map $\hat g:V\to V^*$, $v\mapsto g(v,\cdot)$. Section 6 defined the determinant of a map by its action on top wedges; do the same here:
+
+$$\Lambda^n\hat g\;:\;\Lambda^nV\longrightarrow\Lambda^nV^*.$$
+
+Both sides are one-dimensional — but they are **different** lines. A linear map between two *different* lines is not a number; it is canonically an element of $(\Lambda^nV)^*\otimes(\Lambda^nV^*)\cong(\Lambda^nV^*)^{\otimes2}$. **That element is $\det g$**, and "$(\Lambda^nV^*)^{\otimes2}$-valued" is precisely what "scalar density of weight $2$" means: choosing a basis trivializes the line by the frame $(e^1\wedge\cdots\wedge e^n)^{\otimes2}$, the coefficient in that frame is $L(G)$ (the component computation of 11.4), and under $e'_j=e_iS^i{}_j$ the frame itself rescales by $(\det S)^{-2}$ — so the coefficient must rescale by $(\det S)^{+2}$ to describe the same invariant object. The three cases are now one statement:
+
+$$\det(\text{map }V\to V)\in\operatorname{Hom}(\Lambda^nV,\Lambda^nV)\cong\mathbb C\ \text{(scalar)},\qquad
+\det(\hat g:V\to V^*)\in(\Lambda^nV^*)^{\otimes2},\qquad
+\det(V^*\to V)\in(\Lambda^nV)^{\otimes2}.$$
+
+The determinant of a map is always an element of $\operatorname{Hom}(\Lambda^n(\text{source}),\Lambda^n(\text{target}))$; it is a scalar precisely when source and target coincide. The "weight" is nothing but the bookkeeping of which line the answer lives on.
+
+One more derivation of the same $2$, group-theoretic and very short. Over $\mathbb C$ every nondegenerate symmetric $G$ is congruent to the identity: $G=S^TS$ for some invertible $S$ (Gram–Schmidt, no signature obstruction over $\mathbb C$). Try to *define* $\det G:=(\det S)^2$ by this congruence. Is it well-defined? If $S^TS=T^TT$ then $R:=ST^{-1}$ satisfies $R^TR=I$, i.e. $R\in O(n,\mathbb C)$, whose determinant is $\pm1$ — so $\det S=\pm\det T$, and the **square** is exactly the part that survives the ambiguity. The minimal character of $GL$ that is blind to the stabilizer $O(n,\mathbb C)$ is $(\det)^2$: the weight $2$ is the price of the orbit–stabilizer geometry of metrics. And the definition agrees with the recipe: $(\det S)^2=L(S^T)L(S)=L(S^TS)=L(G)$.
+
+In the real differential-geometry setting the same derivations run with $S=$ the Jacobian $J^\alpha{}_\mu=\partial x^\alpha/\partial x'^\mu$: $\det g'_{\mu\nu}=(\det J)^2\det g_{\alpha\beta}$, hence $\sqrt{|g'|}=|\det J|\,\sqrt{|g|}$ — the volume element is the $|w|$-member of the character family of section 8.3 (charge $(s,k)=(1,0)$), which is why $\sqrt{|g|}\,d^nx$ is coordinate-invariant.
