@@ -758,6 +758,190 @@ Equivalently, pseudotensors are tensor densities of weight $0$ with a sign
 character: they differ from ordinary tensors only in carrying the sign
 representation of $GL(n,\R) \to \{\pm 1\}$ given by $\operatorname{sgn}(\det)$.
 
+## Tensor densities and the determinant of $A_{ij}$
+
+The same language also gives the clean way to say what the determinant of a
+covariant rank-$2$ tensor means. The important point is that $\det(A_{ij})$ is
+not naturally a scalar. It is naturally a **density-like object**.
+
+### Relative invariants
+
+Let $J\in GL(n,\R)$ be a change-of-basis matrix, and let $J*A$ denote the
+induced action on whatever object $A$ is. A scalar-valued expression $F(A)$ is a
+**relative invariant** if
+
+$$
+F(J*A)=\chi(J)F(A)
+$$
+
+for some factor $\chi(J)$ depending only on $J$, not on $A$. If $F$ is not
+identically zero, then $\chi$ is forced to be a group homomorphism. Indeed, for
+some $A$ with $F(A)\ne0$,
+
+$$
+F((J K)*A)=\chi(JK)F(A),
+$$
+
+while associativity of the group action gives
+
+$$
+F(J*(K*A))=\chi(J)F(K*A)=\chi(J)\chi(K)F(A).
+$$
+
+Thus
+
+$$
+\chi(JK)=\chi(J)\chi(K).
+$$
+
+The determinant notes show the corresponding principle for matrix
+homomorphisms: a multiplicative character of $GL(n)$ factors through the
+determinant. Over $\R$, with the usual regularity assumptions used for
+Cauchy-type equations (continuity, or merely measurability), the characters
+are
+
+$$
+\chi(J)=|\det J|^{-w}\big(\operatorname{sgn}\det J\big)^k,
+\qquad k\in\mathbb Z,
+$$
+
+where only the parity of $k$ matters. This is the tensor-density
+classification. The pair $(w,k)$ records:
+
+| Object | Component transformation | $(w,k)$ |
+|---|---:|---:|
+| scalar | $s'=s$ | $(0,0)$ |
+| pseudoscalar | $s'=\operatorname{sgn}(\det J)\,s$ | $(0,1)$ |
+| scalar density | $\rho'=\lvert\det J\rvert^{-1}\rho$ | $(1,0)$ |
+| top form component | $\omega'=(\det J)^{-1}\omega$ | $(1,1)$ |
+| determinant of $A_{ij}$ | $d'=\lvert\det J\rvert^{-2}d$ | $(2,0)$ |
+| determinant of $A^{ij}$ | $d'=\lvert\det J\rvert^2d$ | $(-2,0)$ |
+| determinant of $A^i{}_j$ | $d'=d$ | $(0,0)$ |
+
+So the determinant of a linear map $A^i{}_j$ is a true scalar, but the
+determinant of a covariant tensor $A_{ij}$ is a weight-$2$, even-parity scalar
+density.
+
+### Basis-independent definition
+
+Let $V$ be $n$-dimensional and let
+
+$$
+A\in V^*\otimes V^*
+$$
+
+be a covariant rank-$2$ tensor, i.e. a bilinear form. It defines a linear map
+
+$$
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)(u)=A(v,u).
+$$
+
+For a genuine linear map $T:V\to V$, the determinant is a scalar because
+$\Lambda^n T$ maps the one-dimensional line $\Lambda^n V$ to itself. Here the
+map is instead $A^\flat:V\to V^*$, so its top exterior power maps one
+determinant line to a different determinant line:
+
+$$
+\Lambda^n A^\flat:\Lambda^n V\to \Lambda^n V^*.
+$$
+
+This is the basis-independent determinant of $A_{ij}$:
+
+$$
+\boxed{\;
+\operatorname{Det}(A):=\Lambda^n A^\flat
+\in \operatorname{Hom}(\Lambda^n V,\Lambda^n V^*)
+\cong (\Lambda^n V^*)^{\otimes 2}.
+\;}
+$$
+
+Equivalently,
+
+$$
+\big[\operatorname{Det}(A)(v_1\wedge\cdots\wedge v_n)\big]
+(u_1,\dots,u_n)
+=
+\det\!\big(A(v_i,u_j)\big).
+$$
+
+This formula uses an ordinary determinant only on the final $n\times n$ array
+of numbers obtained after feeding $A$ actual vectors. The output
+$\operatorname{Det}(A)$ itself is coordinate-free.
+
+In a basis $e_i$ with dual coframe $\theta^i$, let
+
+$$
+\Omega=\theta^1\wedge\cdots\wedge\theta^n.
+$$
+
+Then
+
+$$
+\operatorname{Det}(A)=\det(A_{ij})\,\Omega\otimes\Omega.
+$$
+
+Thus the component number $\det(A_{ij})$ depends on the chosen co-volume
+$\Omega$, but the product $\det(A_{ij})\,\Omega\otimes\Omega$ does not. Under
+the component transformation
+
+$$
+A'=J^{-T}AJ^{-1},
+\qquad
+\Omega'=(\det J)\Omega,
+$$
+
+we get
+
+$$
+\det(A'_{ij})
+=\det(J^{-T})\det(A_{ij})\det(J^{-1})
+=(\det J)^{-2}\det(A_{ij})
+=|\det J|^{-2}\det(A_{ij}),
+$$
+
+and therefore
+
+$$
+\det(A'_{ij})\,\Omega'\otimes\Omega'
+=\det(A_{ij})\,\Omega\otimes\Omega.
+$$
+
+This is the precise meaning of the shorthand $\det A_{ij}$: it is the
+coordinate component of the invariant object $\operatorname{Det}(A)$, and that
+component is a tensor density with $(w,k)=(2,0)$.
+
+The component formula is the usual two-antisymmetrizer expression
+
+$$
+\det(A_{ij})
+= {1\over n!}\,
+\varepsilon^{i_1\cdots i_n}\varepsilon^{j_1\cdots j_n}
+A_{i_1j_1}\cdots A_{i_nj_n}.
+$$
+
+In this sense this is the $p=q=1$ case: one alternating symbol antisymmetrizes
+the first index family, and one alternating symbol antisymmetrizes the second
+index family. It should not be confused with a tensor of type $(1,1)$; a
+$(1,1)$ tensor has the similarity law $A'=JAJ^{-1}$, and its determinant is an
+ordinary scalar.
+
+If one wants an actual scalar from $A_{ij}$, one must choose an additional
+volume form $\Omega_0$ and write
+
+$$
+\operatorname{Det}(A)=d_{\Omega_0}\,\Omega_0\otimes\Omega_0.
+$$
+
+The number $d_{\Omega_0}$ is the determinant **relative to that chosen volume
+form**. Without such a choice, the invariant object is
+$\operatorname{Det}(A)\in(\Lambda^n V^*)^{\otimes2}$, not a scalar.
+
+For a nondegenerate metric $g_{ij}$ this explains the familiar expression
+$\sqrt{|\det g_{ij}|}$: it is a weight-$1$ density, so
+$\sqrt{|\det g_{ij}|}\,d^n x$ is coordinate-invariant.
+
 ## Summary
 
 Pulling all of the above together:
@@ -800,3 +984,8 @@ Pulling all of the above together:
   $\vec B$ and $\vec\omega$ are antisymmetric rank‑$2$ tensors in disguise via
   $\varepsilon_{ijk}$. They can be understood uniformly as tensors on an
   unoriented manifold, i.e. sections of $T^r_s M \otimes \mathrm{or}(M)$.
+- Tensor densities are relative invariants with character
+  $|\det J|^{-w}(\operatorname{sgn}\det J)^k$. The determinant of a covariant
+  tensor $A_{ij}$ is basis-independently
+  $\operatorname{Det}(A)=\Lambda^n A^\flat\in(\Lambda^n V^*)^{\otimes2}$; its
+  component $\det(A_{ij})$ has $(w,k)=(2,0)$, so it is not an ordinary scalar.
