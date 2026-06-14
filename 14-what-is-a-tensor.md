@@ -1397,6 +1397,104 @@ But this multiplicativity depends on the extra choice of $h$. Without such a
 choice, the intrinsic statement is the functorial homomorphism
 $\Delta(M\circ L)=\Delta(M)\Delta(L)$ for composable linear maps.
 
+### What is assumed, and what is derived
+
+It is important to separate two different questions.
+
+**Question 1: How do we define the determinant of a covariant $2$-tensor?**
+For this question, the assumptions are:
+
+1. $A$ is a covariant rank-$2$ tensor, i.e. a bilinear form
+
+   $$
+   A:V\times V\to\R.
+   $$
+
+2. We use the canonical currying operation
+
+   $$
+   A^\flat:V\to V^*,
+   \qquad
+   (A^\flat v)(u)=A(v,u).
+   $$
+
+3. We define the determinant to be the scalar by which this linear map acts on
+   the top antisymmetric line:
+
+   $$
+   F(A):=\Delta(A^\flat).
+   $$
+
+These are the defining inputs. The following facts are then **derived**:
+
+1. Every linear map $L$ induces a map on antisymmetric top tensors by applying
+   $L$ to each tensor index.
+2. These induced maps compose, so
+
+   $$
+   \Delta(M\circ L)=\Delta(M)\Delta(L).
+   $$
+
+3. On diagonal maps,
+
+   $$
+   \Delta(\operatorname{diag}(d_1,\dots,d_n))=d_1\cdots d_n.
+   $$
+
+4. Therefore, by the determinant homomorphism theorem,
+
+   $$
+   \Delta(L)=\det L
+   $$
+
+   in components.
+
+5. Hence
+
+   $$
+   F(A)=\Delta(A^\flat)=\det(A_{ij}).
+   $$
+
+6. Under a change of basis this component has weight $(w,k)=(2,0)$:
+
+   $$
+   F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A).
+   $$
+
+So in this construction the weight law is a consequence, not an assumption.
+The homomorphism law is also not an extra axiom about multiplying two
+covariant tensors; it is the functoriality of induced maps on the top
+antisymmetric line.
+
+**Question 2: If all we know is weight $(2,0)$, is the expression forced to be
+$\det(A_{ij})$?** No. The weight law alone only says how a component changes
+under a basis change. It does not say which construction produced that
+component. For example, in dimension $2$,
+
+$$
+(A_{12}-A_{21})^2
+$$
+
+also has weight $(2,0)$, but it is not the scalar by which
+$A^\flat:V\to V^*$ acts on the top antisymmetric line. It comes from a
+different construction: take the antisymmetric part of $A$, which is a
+$2$-form, and square its component.
+
+Thus there are two clean ways to single out $\det(A_{ij})$:
+
+1. **Constructive/functorial definition:** define
+
+   $$
+   F(A):=\Delta(A^\flat).
+   $$
+
+   Then the determinant formula and the weight $(2,0)$ are derived.
+
+2. **Classification from weight alone:** start with an arbitrary expression
+   satisfying weight $(2,0)$, and add extra assumptions such as polynomiality,
+   vanishing on degenerate $A^\flat$, and normalization. This is the next
+   subsection.
+
 ### Starting from weight $(2,0)$
 
 Now suppose we start only with the desired density character
