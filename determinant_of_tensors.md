@@ -293,19 +293,135 @@ Let $d$ be a map that assigns to each bilinear form $T \in \mathcal{B}(V)$ a wei
    (densities multiply compatibly).
 
 5. **Polynomial (or algebraic) character**  
-   In any basis, $d(T)$ is given by a homogeneous polynomial of degree $n$ in the components of $T$.
+   In any basis, $d(T)$ is given by a homogeneous polynomial of degree $n$ in the components of $T$. For symmetric forms this can be weakened all the way to mere **continuity** — in fact it can be dropped entirely; see Section 7.5.
 
 These axioms are all intrinsic and motivated by the classical properties of the determinant, adapted to the density setting.
 
-### 7.2 Uniqueness (Sketch)
+### 7.2 Uniqueness: Complete Derivation
 
-The set of degenerate bilinear forms is the zero set of a single irreducible homogeneous polynomial of degree $n$ in the components (the determinantal hypersurface). Because this hypersurface is irreducible, any polynomial vanishing on it must be a scalar multiple of this generator.
+We now carry out the full argument that the five axioms force $d(T)$ to equal, in components, the ordinary determinant of the Gram matrix.
 
-Axiom 3 fixes the precise character (weight 2) under the $\mathrm{GL}(V)$ action. Therefore the polynomial is unique up to a constant scalar in $K$.
+**Theorem.** Let $\dim V = n$ and fix a basis $\{e_1,\dots,e_n\}$, so that a bilinear form $T$ is represented by its Gram matrix $M=(T_{ij})$ with $T_{ij}=T(e_i,e_j)$. The only map $d$ satisfying Axioms 1–5 is, in components,
+$$
+d(T) = c\,\det(T_{ij})
+$$
+for a single constant $c\in K$, and the normalization of Section 7.3 forces $c=1$, so that
+$$
+d(T)=\det(T_{ij}).
+$$
 
-Axioms 1 and 4 ensure consistency with scaling and direct sums (where the Gram matrix becomes block-diagonal and the usual determinant factors). Axiom 5 guarantees we remain inside the polynomial ring.
+We work over an algebraically closed field $K$ (for instance $K=\mathbb{C}$); the field $K=\mathbb{R}$ is recovered at the very end by complexification.
 
-Hence any two functions satisfying the five axioms differ only by a constant factor.
+#### Step 0 — Reduce to a single polynomial in the components
+
+A weight-2 density on an $n$-dimensional space has a *single* top component. Relative to the fixed basis, $d(T)$ is therefore encoded by one scalar
+$$
+D(M) := d(T)\big|_{\{e_i\}} \in K, \qquad M=(T_{ij}).
+$$
+By Axiom 5, $D:\mathrm{Mat}_n(K)\to K$ is a homogeneous polynomial of degree $n$ in the $n^2$ entries $x_{ij}:=T_{ij}$. The entire problem reduces to identifying this one polynomial. The remaining axioms translate into the following statements about $D$:
+
+- **(A1) Homogeneity.** $D(\lambda M)=\lambda^n D(M)$.
+- **(A2) Degeneracy.** $D(M)=0 \iff \det M = 0$, because $\phi_T$ is an isomorphism iff $M$ is invertible.
+- **(A3) Weight-2 law.** $D(P^{\mathsf T} M P) = (\det P)^2\,D(M)$ for all $P\in GL_n(K)$ (this is exactly the computation of Section 4.3).
+- **(A4) Block multiplicativity.** $D\!\begin{pmatrix}M_1&0\\0&M_2\end{pmatrix} = D_{k}(M_1)\,D_{n-k}(M_2)$, where $D_m$ denotes the degree-$m$ function in dimension $m$.
+
+#### Step 1 — The determinant is an irreducible polynomial
+
+This is the structural fact that makes the degeneracy axiom so powerful.
+
+**Lemma.** For every $n\ge 1$, $\det_n=\det(x_{ij})$ is irreducible in the polynomial ring $K[x_{ij} : 1\le i,j\le n]$.
+
+*Proof.* Induct on $n$. For $n=1$, $\det_1=x_{11}$ is irreducible. Let $n\ge 2$ and expand along the first column:
+$$
+\det_n=\sum_{i=1}^n (-1)^{i+1} x_{i1}\,A_{i1},
+$$
+where $A_{i1}$ is the minor obtained by deleting row $i$ and column $1$. Observe:
+
+1. $A_{11}$ is the determinant of the block on rows and columns $\{2,\dots,n\}$, hence irreducible by the inductive hypothesis;
+2. no minor $A_{i1}$ contains any column-1 variable, and $A_{11}$ contains no row-1 variable.
+
+Because the variables $x_{i1}$ of column $1$ occur in $\det_n$ only through the explicit factors above, $\det_n$ is **linear in $x_{11}$**, with coefficient $A_{11}$.
+
+Suppose $\det_n=PQ$ with $P,Q$ non-constant. Linearity in $x_{11}$ forces $x_{11}$ to appear in exactly one factor, say $P$; then $Q$ is free of $x_{11}$. Comparing the coefficients of $x_{11}$ gives $A_{11}=(\partial_{x_{11}}P)\,Q$, so $Q\mid A_{11}$. Since $A_{11}$ is irreducible, either $Q$ is a nonzero constant — contradicting non-constancy — or
+$$
+Q=c\,A_{11}\quad(c\in K^\times), \qquad\text{whence}\qquad A_{11}\mid \det_n.
+$$
+We rule out the latter. As $A_{11}$ is free of $x_{11}$, the divisibility persists after setting $x_{11}=0$:
+$$
+A_{11}\mid \det_n\big|_{x_{11}=0}.
+$$
+Now $\det_n$ is linear in $x_{21}$ with coefficient $-A_{21}$ (every column-1 variable appears only once), and $A_{11}$ is free of $x_{21}$; hence $A_{11}\mid A_{21}$. Both polynomials have degree $n-1$ and $A_{11}$ is irreducible, so $A_{21}=c'A_{11}$ for a constant $c'$. This is impossible: the minor $A_{21}$ (delete row $2$, column $1$) involves the row-1 variable $x_{12}$, whereas $A_{11}$ does not. The contradiction shows $Q$ must be constant, so $\det_n$ is irreducible. $\qquad\square$
+
+#### Step 2 — The determinant divides $D$
+
+By Axiom A2 the polynomial $D$ vanishes at *every* point of the determinantal hypersurface $\{M : \det M = 0\}$. Since $\det$ is irreducible (Step 1), it is in particular squarefree, so the principal ideal $(\det)$ is prime and therefore radical. Hilbert's Nullstellensatz then gives
+$$
+I\big(\{\det = 0\}\big)=\sqrt{(\det)}=(\det).
+$$
+As $D$ lies in this vanishing ideal, $D\in(\det)$; that is, $\det\mid D$, so there is a polynomial $E$ with
+$$
+D=E\cdot\det .
+$$
+
+#### Step 3 — A degree count pins down $D=c\det$
+
+Both $\det$ and (by Axiom 5 / A1) $D$ are homogeneous of degree exactly $n$. Hence the quotient $E=D/\det$ is homogeneous of degree $0$, i.e. a constant:
+$$
+\boxed{\,D(M)=c\,\det(M)\,}\qquad\text{for some } c\in K.
+$$
+This already establishes uniqueness up to a single scalar, using **only Axioms 2 and 5** together with the irreducibility of $\det$. (Note that the weight law A3 has not yet been used — in agreement with the fact that the weight alone does *not* characterize the determinant; the degeneracy and polynomiality axioms are what do the work.)
+
+#### Step 4 — Identifying the constant intrinsically
+
+Axioms 1 and 4 compute $c$ without any arbitrary basis-dependent choice. Apply A4 repeatedly to a diagonal Gram matrix $M=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$, arising from an orthogonal direct sum $T=T_1\oplus\cdots\oplus T_n$ of one-dimensional forms with $\lambda_i=T_i(e_i,e_i)$:
+$$
+D\big(\operatorname{diag}(\lambda_1,\dots,\lambda_n)\big)=\prod_{i=1}^n D_1(\lambda_i).
+$$
+In dimension one, A1 gives $D_1(\lambda)=\lambda\,D_1(1)$. Writing $\kappa:=D_1(1)$,
+$$
+D\big(\operatorname{diag}(\lambda_1,\dots,\lambda_n)\big)=\kappa^{\,n}\prod_{i=1}^n \lambda_i=\kappa^{\,n}\,\det\big(\operatorname{diag}(\lambda_1,\dots,\lambda_n)\big).
+$$
+Comparing with Step 3 on diagonal matrices yields
+$$
+c=\kappa^{\,n}=\big(D_1(1)\big)^n .
+$$
+The overall constant is thus the $n$-th power of the single one-dimensional normalization constant $D_1(1)$ — precisely the residual freedom removed in Section 7.3.
+
+#### Step 5 — Consistency with the weight-2 law (and a Nullstellensatz-free route)
+
+The solution $D=c\det$ automatically satisfies A3, since
+$$
+D(P^{\mathsf T}MP)=c\det(P^{\mathsf T}MP)=c\,(\det P)^2\det M=(\det P)^2 D(M).
+$$
+So A3 imposes no further constraint: it is exactly the transformation law $\det$ already obeys, and its real content is that the answer is a genuine weight-2 *density*, not a bare number.
+
+Conversely, A3 by itself gives a quick elementary derivation on the dense set of nondegenerate symmetric forms, bypassing the Nullstellensatz. Over $K=\overline{K}$ with $\operatorname{char}K\ne 2$, every nondegenerate symmetric $M$ is congruent to the identity, $M=P^{\mathsf T}P$, so
+$$
+D(M)=D(P^{\mathsf T}P)=(\det P)^2 D(I)=(\det P)^2\,c=c\,\det M,
+$$
+because $\det M=(\det P)^2$. Since the nondegenerate matrices are Zariski-dense and $D-c\det$ is polynomial, $D=c\det$ everywhere on symmetric forms. (For non-symmetric bilinear forms the symmetric and antisymmetric parts decouple under congruence and cannot be simultaneously diagonalized — which is exactly why the general statement genuinely needs the irreducibility argument of Steps 1–3.)
+
+#### Step 6 — The real field
+
+Over $K=\mathbb{R}$ the identity $D=c\det$ follows by complexification. By Axiom 5, $D\in\mathbb{R}[x_{ij}]$; extend it to $D_{\mathbb{C}}\in\mathbb{C}[x_{ij}]$. Steps 1–3 apply over $\mathbb{C}$ and give $D_{\mathbb{C}}=c\det$ with $c\in\mathbb{C}$; evaluating at a single real matrix (e.g. $D(I)$) shows $c\in\mathbb{R}$. Equivalently, an identity of polynomials that holds on the Zariski-dense set of real points holds identically.
+
+#### Conclusion and the role of each axiom
+
+Putting the steps together, every solution of Axioms 1–5 is
+$$
+d(T)=c\,\det(T_{ij}),\qquad c=\big(D_1(1)\big)^n,
+$$
+and imposing the normalization $d(T_0)=1$ of Section 7.3 (e.g. taking $T_0$ to be the form with Gram matrix $I$) forces $c=1$:
+$$
+\boxed{\,d(T)=\det(T_{ij})\,}.
+$$
+
+The five axioms play sharply distinct roles:
+
+- **Axiom 5** (polynomial of degree $n$) places $D$ inside $K[x_{ij}]$ and bounds its degree.
+- **Axiom 2** (degeneracy) forces $D$ to vanish on the *irreducible* hypersurface $\{\det=0\}$; with Axiom 5 this already yields $D=c\det$ (Steps 1–3). **These two axioms alone give uniqueness up to scale.**
+- **Axioms 1 and 4** (homogeneity and direct sums) pin the constant intrinsically as the $n$-th power of the one-dimensional value (Step 4).
+- **Axiom 3** (weight-2 law) is automatically satisfied; it supplies the alternative congruence derivation and, crucially, certifies that the output is the correct density rather than a mere scalar. By itself it is *not* enough to single out the determinant — uniqueness rests on Axioms 2 and 5.
 
 ### 7.3 Normalization – Removing the Ambiguity
 
@@ -325,6 +441,58 @@ The map $\bigwedge^n \phi_T : L \to L^*$ (or the associated quadratic form on $L
 - Is polynomial of degree $n$.
 
 When a volume form is chosen to normalize, it yields a scalar density satisfying the normalization condition on reference forms. Therefore it *is* the unique object characterized by the axioms.
+
+### 7.5 Continuity in Place of Polynomiality
+
+Axiom 5 was used in Section 7.2 in an essential, but rather heavy, way: it placed $D$ inside the polynomial ring so that the Nullstellensatz could be applied. It is natural to ask whether the much weaker hypothesis of **continuity** suffices. The answer is a clean *yes for symmetric forms* — which is exactly the geometrically relevant case, since metrics and quadratic forms are symmetric — and there the regularity hypothesis can in fact be removed altogether. We also explain the one genuine pitfall over $\mathbb{R}$ that makes the precise statement matter.
+
+Throughout, $D(M)$ denotes the component function of Section 7.2 (Step 0), and we read the axioms as holding for forms on spaces of *every* finite dimension (Axiom 4 already forces us to consider subspaces), so in particular homogeneity (Axiom 1) holds in each dimension.
+
+#### The symmetric case: Axioms 1–4 already suffice (no regularity at all)
+
+**Theorem.** Let $T$ range over *symmetric* bilinear forms. Then Axioms 1–4 alone force
+$$
+d(T)=\kappa^{\,n}\,\det(T_{ij}),\qquad \kappa:=D_1(1),
+$$
+and the normalization of Section 7.3 gives $\kappa=1$. No polynomiality and no continuity are needed.
+
+*Proof.* 
+
+**Step 1 (dimension one).** A one-dimensional form is a single number $\lambda$, and Axiom 1 (in dimension one) reads $D_1(\lambda)=D_1(\lambda\cdot 1)=\lambda\,D_1(1)=\kappa\lambda$. Thus $D_1$ is *linear* — there is no room for, say, $|\lambda|$.
+
+**Step 2 (diagonal forms).** Iterating the block-multiplicativity Axiom 4 over the orthogonal splitting into one-dimensional pieces,
+$$
+D\big(\operatorname{diag}(\lambda_1,\dots,\lambda_n)\big)=\prod_{i=1}^n D_1(\lambda_i)=\kappa^{\,n}\prod_{i=1}^n\lambda_i=\kappa^{\,n}\det\big(\operatorname{diag}(\lambda_1,\dots,\lambda_n)\big).
+$$
+
+**Step 3 (all symmetric forms).** By the real spectral theorem (or Sylvester's law of inertia) every symmetric $M$ is congruent to a diagonal matrix, $M=P^{\mathsf T}\Lambda P$ with $\Lambda$ diagonal. If $M$ is nondegenerate, Axiom 3 gives
+$$
+D(M)=(\det P)^2 D(\Lambda)=(\det P)^2\,\kappa^{\,n}\det\Lambda=\kappa^{\,n}\det(P^{\mathsf T}\Lambda P)=\kappa^{\,n}\det M.
+$$
+If $M$ is degenerate, Axiom 2 gives $D(M)=0=\kappa^{\,n}\det M$. Hence $D=\kappa^{\,n}\det$ on *all* symmetric forms. $\qquad\square$
+
+The point is that congruence is **transitive enough** on symmetric forms — every symmetric matrix has a diagonal representative — so Axiom 3 alone propagates the value from the diagonal forms (where Axioms 1 and 4 already determine it) to every symmetric form, *exactly*, with no limiting argument. This is why no regularity is needed here. If one nevertheless prefers to state a fifth axiom, **continuity is more than enough** and is the "much better" hypothesis: it is far weaker than polynomiality and is automatically satisfied by the exterior-algebra construction of Section 7.4.
+
+#### Why "continuity in dimension $n$ alone" is *not* enough
+
+It is essential that homogeneity be imposed in *every* dimension (so that the one-dimensional piece is forced to be linear). If one only assumes the axioms in the fixed dimension $n$ and merely asks for continuity, the determinant is **not** singled out. The clean counterexample is, for **even** $n$,
+$$
+D(M)=|\det M|.
+$$
+Indeed $|\det|$ is continuous and satisfies, in dimension $n$ even,
+$$
+|\det(\lambda M)|=|\lambda|^{n}|\det M|=\lambda^{n}|\det M|,\quad
+|\det(P^{\mathsf T}MP)|=(\det P)^2|\det M|,\quad
+|\det(M_1\oplus M_2)|=|\det M_1|\,|\det M_2|,
+$$
+so it obeys Axioms 1–4 *within dimension $n$* and the degeneracy Axiom 2, yet it is not a constant multiple of $\det$ (it never takes negative values). What rescues uniqueness is precisely the cross-dimensional reading above: $|\det|$ corresponds to the one-dimensional rule $D_1(\lambda)=|\lambda|$, which violates Axiom 1 in dimension one ($D_1(-1)=1\neq -1=(-1)\cdot D_1(1)$). Equivalently, $|\det|$ is exactly the sign-twisted impostor $D=\operatorname{sign}(\det)\cdot\det$, and over $\mathbb{R}$ the nondegenerate locus is *disconnected* (the connected components are the signature classes $(p,q)$), so a hypothesis that does not link the components — bare continuity in one dimension — cannot exclude a different constant on each component. The polynomial Axiom 5 excluded these impostors automatically, because $|\det|$ and its relatives are not polynomials; the cross-dimensional homogeneity above excludes them just as effectively, and much more cheaply.
+
+#### The general (non-symmetric) case
+
+For a *general* (0,2) tensor the Gram matrix need not be congruent to a diagonal one: congruence preserves the symmetric and antisymmetric parts separately, so the reduction of Step 3 is unavailable, and the nondegenerate orbits are neither dense nor open in one another. Here continuity by itself is delicate (one must control congruence invariants such as the eigenvalues of the cosquare $M^{-\mathsf T}M$), and the clean sufficient hypothesis is the polynomial Axiom 5 used in Section 7.2. In short:
+
+- **Symmetric forms (metrics, quadratic forms):** Axioms 1–4 already give $d(T)=\det(T_{ij})$ after normalization; a regularity axiom is optional, and if included, *continuity* is the natural and sufficient choice.
+- **Arbitrary bilinear forms:** keep the polynomial Axiom 5 (Section 7.2), which handles every form uniformly via the irreducibility of $\det$.
 
 ---
 
