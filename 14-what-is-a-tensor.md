@@ -967,6 +967,124 @@ For a nondegenerate metric $g_{ij}$ this explains the familiar expression
 $\sqrt{|\det g_{ij}|}$: it is a weight-$1$ density, so
 $\sqrt{|\det g_{ij}|}\,d^n x$ is coordinate-invariant.
 
+
+### Why the weight-$2$ invariant is $\det(A_{ij})$
+
+Now suppose we go in the opposite direction. We know only that a scalar
+component expression $F(A)$ has the relative-invariance law
+
+$$
+F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A).
+$$
+
+This transformation law alone fixes the **density weight**, but it does not
+fix the formula. To get the uniqueness statement
+
+$$
+F(A)=\det(A_{ij}),
+$$
+
+we must also specify the class of objects and functions. The standard
+determinant uniqueness statement is:
+
+> Let $A_{ij}=A_{ji}$ be a symmetric covariant rank-$2$ tensor. If $F(A)$ is a
+> polynomial in the components $A_{ij}$, satisfies
+> $F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A)$ for every $J\in GL(n,\R)$, and is
+> normalized by $F(I)=1$, then $F(A)=\det(A_{ij})$.
+
+Here is the proof.
+
+1. **The character gives the homogeneity.** Put $J=\lambda I$. Then
+
+   $$
+   J^{-T}AJ^{-1}=\lambda^{-2}A,
+   \qquad
+   |\det J|^{-2}=|\lambda|^{-2n}.
+   $$
+
+   Hence
+
+   $$
+   F(\lambda^{-2}A)=|\lambda|^{-2n}F(A).
+   $$
+
+   For $t>0$, choose $\lambda=t^{-1/2}$. Then
+
+   $$
+   F(tA)=t^n F(A).
+   $$
+
+   So a weight-$2$ relative invariant of a covariant $2$-tensor is homogeneous
+   of degree $n$ in the components.
+
+2. **Evaluate on the positive-definite orbit.** If $A$ is positive definite,
+   choose $B\in GL(n,\R)$ with
+
+   $$
+   A=B^T B.
+   $$
+
+   Put $J=B^{-1}$. Since $J^{-T}=B^T$ and $J^{-1}=B$,
+
+   $$
+   A=J^{-T} I J^{-1}.
+   $$
+
+   The relative-invariance law and the normalization $F(I)=1$ give
+
+   $$
+   F(A)
+   =F(J^{-T}IJ^{-1})
+   =|\det J|^{-2}F(I)
+   =|\det B^{-1}|^{-2}
+   =|\det B|^2.
+   $$
+
+   But
+
+   $$
+   \det A=\det(B^T B)=(\det B)^2=|\det B|^2.
+   $$
+
+   Therefore
+
+   $$
+   F(A)=\det A
+   $$
+
+   for every positive-definite symmetric $A$.
+
+3. **Extend by polynomiality.** The positive-definite symmetric matrices form
+   an open subset of the vector space $S^2V^*$. Both $F(A)$ and $\det(A)$ are
+   polynomial functions of the independent components $A_{ij}=A_{ji}$. A
+   polynomial that vanishes on a nonempty open set vanishes identically, so the
+   equality from the positive-definite cone extends to all symmetric matrices:
+
+   $$
+   F(A)=\det(A_{ij}).
+   $$
+
+Thus the determinant is the unique normalized polynomial relative invariant of
+weight $(w,k)=(2,0)$ on symmetric covariant rank-$2$ tensors.
+
+The assumptions are essential. For a general, not necessarily symmetric
+$(0,2)$ tensor, the same weight does not single out the determinant. In
+dimension $2$, for example, the skew part
+
+$$
+A_{12}-A_{21}
+$$
+
+is the component of a $2$-form and transforms by $(\det J)^{-1}$; hence
+
+$$
+(A_{12}-A_{21})^2
+$$
+
+also transforms by $|\det J|^{-2}$. So the character $(w,k)=(2,0)$ alone says
+"weight-$2$ density"; the determinant formula is obtained only after adding
+symmetry, polynomial dependence, and the normalization $F(I)=1$.
+
 ## Summary
 
 Pulling all of the above together:
