@@ -54,6 +54,27 @@ a(q)=q\,a(1)=cq
 $$
 for rational $q$, where $c=a(1)$.
 
+:::{note}
+The condition $a(q)=cq$ on rational numbers is not enough by itself. For
+example, the measurable function
+$$
+a(x)=
+\begin{cases}
+cx, & x\in\mathbb Q,\\
+0, & x\notin\mathbb Q,
+\end{cases}
+$$
+has the correct values on $\mathbb Q$, but it is not additive unless $c=0$.
+Indeed, if $q\in\mathbb Q$ is nonzero and $\alpha\notin\mathbb Q$, then
+$\alpha+q\notin\mathbb Q$, so
+$$
+a(\alpha+q)=0
+\qquad\text{but}\qquad
+a(\alpha)+a(q)=cq.
+$$
+Thus the additive hypothesis is essential, in addition to measurability.
+:::
+
 :::{tip} Theorem
 If $a:\mathbb R\to\mathbb R$ is additive and measurable, then
 $$
@@ -69,17 +90,58 @@ Since
 $$
 [-1,1]=\bigcup_{m=1}^{\infty}\{x\in[-1,1]: |b(x)|\le m\},
 $$
-one of these measurable sets has positive measure. By the Steinhaus theorem,
-its difference set contains an interval around $0$, so $b$ is bounded on
-some interval around $0$. Additivity then implies continuity at $0$: if
-$x_j\to0$, choose integers $n_j\to\infty$ with $n_jx_j$ in that interval;
-then
+one of these measurable sets has positive measure. Let
+$$
+E=\{x\in[-1,1]: |b(x)|\le m\}
+$$
+be such a set. By the Steinhaus theorem, the difference set
+$$
+E-E=\{u-v:u,v\in E\}
+$$
+contains an open interval around $0$: there is $\epsilon>0$ such that
+$(-\epsilon,\epsilon)\subset E-E$. Thus, if $|t|<\epsilon$, then $t=u-v$ for some
+$u,v\in E$. By additivity,
+$$
+b(t)=b(u-v)=b(u)-b(v),
+$$
+so
+$$
+|b(t)|\le |b(u)|+|b(v)|\le 2m.
+$$
+Therefore $b$ is bounded on an interval around $0$. Taking
+$\delta=\epsilon/2$ and $M=2m$, we have
+$$
+|b(t)|\le M
+\qquad\text{whenever}\qquad
+|t|\le\delta.
+$$
+Additivity then implies continuity at $0$. Indeed, let $x_j\to0$. For
+$x_j\ne0$, choose, for all large $j$,
+$$
+n_j=\left\lfloor {\delta\over 2|x_j|}\right\rfloor.
+$$
+Then $n_j\to\infty$ and $|n_jx_j|\le\delta$, so $n_jx_j$ lies in the interval
+where $b$ is bounded. Since $b$ is additive,
+$$
+b(n_jx_j)=n_jb(x_j),
+$$
+and therefore
 $$
 |b(x_j)|={|b(n_jx_j)|\over n_j}\to0.
 $$
-An additive function continuous at $0$ is continuous everywhere. Since $b$
-vanishes on the dense set $\mathbb Q$, continuity gives $b(x)=0$ for every
-real $x$.
+The last limit follows from $|b(n_jx_j)|\le M$ and $n_j\to\infty$. Hence
+$b$ is continuous at $0$.
+
+An additive function continuous at $0$ is continuous everywhere. To see this,
+fix $x_0\in\mathbb R$ and let $x\to x_0$. Then $x-x_0\to0$, and additivity
+gives
+$$
+b(x)-b(x_0)=b(x-x_0).
+$$
+Since $b$ is continuous at $0$, the right-hand side tends to $0$. Therefore
+$b(x)\to b(x_0)$, so $b$ is continuous at $x_0$. Since $x_0$ was arbitrary,
+$b$ is continuous everywhere. Since $b$ vanishes on the dense set $\mathbb Q$,
+continuity gives $b(x)=0$ for every real $x$.
 :::
 
 :::{note}
