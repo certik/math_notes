@@ -967,98 +967,134 @@ For a nondegenerate metric $g_{ij}$ this explains the familiar expression
 $\sqrt{|\det g_{ij}|}$: it is a weight-$1$ density, so
 $\sqrt{|\det g_{ij}|}\,d^n x$ is coordinate-invariant.
 
-### The same definition using only antisymmetric tensors
+### Non-circular index derivation using antisymmetric tensors
 
 The exterior-power notation is compact, but it is not necessary. The same
-object can be written entirely with ordinary tensors and Einstein index
-notation. A differential form is just an antisymmetric covariant tensor; here
+construction can be written entirely with ordinary tensors and Einstein index
+notation, and the Leibniz formula then appears as a theorem rather than a
+definition. A differential form is just an antisymmetric covariant tensor; here
 we use only that tensor fact.
 
-For any covariant rank-$2$ tensor $A_{ij}$, define a covariant rank-$2n$ tensor
+First convert the covariant rank-$2$ tensor into a linear map. If
 
 $$
-D_{i_1\cdots i_n\,j_1\cdots j_n}
-:=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
-A_{i_{\sigma(1)}j_1}A_{i_{\sigma(2)}j_2}\cdots A_{i_{\sigma(n)}j_n}.
+A=A_{ij}\,\theta^i\otimes\theta^j,
 $$
 
-Equivalently, using the standard antisymmetrization convention
+then define
 
 $$
-T_{[i_1\cdots i_n]}
-={1\over n!}\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
-T_{i_{\sigma(1)}\cdots i_{\sigma(n)}},
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)_j=A_{ij}v^i.
 $$
 
-this is
+This is not a determinant construction; it is just currying one slot of the
+bilinear form $A(v,u)$.
+
+Now let $X^{i_1\cdots i_n}$ be an antisymmetric contravariant rank-$n$ tensor.
+Define
 
 $$
-D_{i_1\cdots i_n\,j_1\cdots j_n}
-=n!\,A_{[i_1|j_1|}A_{i_2|j_2|}\cdots A_{i_n]j_n}.
+Y_{j_1\cdots j_n}
+:=A_{i_1j_1}\cdots A_{i_nj_n}X^{i_1\cdots i_n}.
 $$
 
-The tensor $D$ is antisymmetric in the $i$-indices by construction. It is also
-antisymmetric in the $j$-indices: swapping two $j$-indices swaps two columns in
-the displayed alternating sum, hence gives a minus sign. Therefore $D$ is an
-ordinary covariant tensor with two antisymmetric $n$-index blocks; one often
-denotes this subspace by
+This is tensor multiplication and contraction only. The output $Y$ is
+antisymmetric in the $j$-indices: swapping $j_a$ and $j_b$ and then relabeling
+the dummy indices $i_a$ and $i_b$ changes $X$ by a minus sign. Thus $A$ induces
+a linear map
 
 $$
-D\in (\Lambda^n V^*)\otimes(\Lambda^n V^*)
+\operatorname{Det}(A):\operatorname{Alt}^n(V)\longrightarrow
+\operatorname{Alt}^n(V^*),
+\qquad
+X\longmapsto Y.
 $$
 
-but we reached it using only antisymmetrization of ordinary tensor indices.
-This $D$ is the basis-independent determinant object:
+This is the basis-independent determinant object. No alternating sum over
+permutations has been used to define it.
+
+Now choose a basis. Let $E^{i_1\cdots i_n}$ be the antisymmetric contravariant
+tensor with $E^{12\cdots n}=1$, and let
+$\varepsilon_{j_1\cdots j_n}$ be the antisymmetric covariant tensor with
+$\varepsilon_{12\cdots n}=1$. Since the space of antisymmetric $n$-tensors is
+one-dimensional, there is a unique scalar $F(A)$ such that
 
 $$
-D=\operatorname{Det}(A).
+A_{i_1j_1}\cdots A_{i_nj_n}E^{i_1\cdots i_n}
+=F(A)\,\varepsilon_{j_1\cdots j_n}.
 $$
 
-Now choose a basis and let $\varepsilon_{i_1\cdots i_n}$ be the alternating
-symbol in that basis, normalized by $\varepsilon_{12\cdots n}=1$. Since an
-antisymmetric $n$-index tensor has only one independent component, the tensor
-$D$ must have the form
+This equation defines the **component coefficient** of the intrinsic map
+$\operatorname{Det}(A)$ in the chosen basis. It still does not define $F$ by a
+Leibniz sum.
+
+To identify $F$, use the homomorphism characterization of the ordinary
+determinant from [Determinant From Homomorphism](determinant_homomorphism.md).
+For any linear map $M:V\to V$, define $\Delta(M)$ by its induced action on the
+one-dimensional space of antisymmetric contravariant $n$-tensors:
 
 $$
-D_{i_1\cdots i_n\,j_1\cdots j_n}
-=F(A)\,\varepsilon_{i_1\cdots i_n}\varepsilon_{j_1\cdots j_n}
+M^{a_1}{}_{i_1}\cdots M^{a_n}{}_{i_n}E^{i_1\cdots i_n}
+=\Delta(M)E^{a_1\cdots a_n}.
 $$
 
-in that basis. The coefficient is obtained by taking
-$i_1\cdots i_n=1\cdots n$ and $j_1\cdots j_n=1\cdots n$:
+Induced actions compose, so
 
 $$
-F(A)=D_{12\cdots n\,12\cdots n}
-=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
-A_{\sigma(1)1}A_{\sigma(2)2}\cdots A_{\sigma(n)n}.
+\Delta(MN)=\Delta(M)\Delta(N).
 $$
 
-This is the usual component determinant of the array $A_{ij}$ (equivalently,
-the determinant of its transpose, which is the same number):
+On diagonal maps $D=\operatorname{diag}(d_1,\dots,d_n)$, the induced action is
+immediate:
 
 $$
-F(A)=\det(A_{ij}).
+\Delta(D)=d_1\cdots d_n.
 $$
 
-The basis-independent object is the tensor $D$, not the coefficient $F(A)$ by
-itself. Under a basis change, the covariant tensor law gives
+In particular $\Delta(\lambda I)=\lambda^n$, but the full diagonal
+normalization is the point that fixes the sign as well. Therefore $\Delta$ is
+the unique homomorphism normalized by the product of diagonal entries, hence
 
 $$
-D'_{12\cdots n\,12\cdots n}
-=(\det J)^{-1}(\det J)^{-1}
-D_{12\cdots n\,12\cdots n}.
+\Delta(M)=\det M.
 $$
 
-Thus
+This is exactly the determinant theorem already derived for ordinary linear
+maps; its Leibniz component formula is a consequence, not an assumption.
+
+Applying this to the component matrix of $A^\flat$ gives
 
 $$
-F(A')=|\det J|^{-2}F(A),
+F(A)=\Delta(A^\flat)=\det(A_{ij}).
 $$
 
-so the component coefficient $F(A)=\det(A_{ij})$ is a scalar density of weight
-$(w,k)=(2,0)$, while $D_{i_1\cdots i_n\,j_1\cdots j_n}$ is an ordinary tensor
-with two fully antisymmetric index blocks. This is exactly the index-notation
-version of the exterior-power definition.
+If we now expand the already-derived ordinary determinant in components, we
+recover the familiar formula
+
+$$
+F(A)=
+\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
+A_{\sigma(1)1}A_{\sigma(2)2}\cdots A_{\sigma(n)n}
+=\det(A_{ij}).
+$$
+
+So the permutation sum is recovered at the end; it was not the definition of
+the determinant object.
+
+Under a basis change, $A'=J^{-T}AJ^{-1}$. By the multiplicativity of $\Delta$,
+
+$$
+F(A')=\Delta(J^{-T})\Delta(A)\Delta(J^{-1})
+=(\det J)^{-2}F(A)
+=|\det J|^{-2}F(A).
+$$
+
+Thus the component coefficient $F(A)=\det(A_{ij})$ is a scalar density of
+weight $(w,k)=(2,0)$, while $\operatorname{Det}(A)$ itself is the intrinsic
+linear map from antisymmetric contravariant $n$-tensors to antisymmetric
+covariant $n$-tensors.
 
 ### Why the weight-$2$ invariant is $\det(A_{ij})$
 
