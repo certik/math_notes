@@ -512,7 +512,43 @@ Varying $\beta$ produces an infinite-dimensional family of distinct continuous s
 **Moral.** The symmetric case is special precisely because congruence orbits exhaust the symmetric forms (the spectral theorem), so there are no continuous invariants beyond $\det$ to exploit. For an arbitrary (0,2) tensor those invariants exist, so one must keep a hypothesis that kills them. The cheap, natural choice is the polynomial/algebraic Axiom 5 of Section 7.2. (Continuity could only be salvaged by enlarging the symmetry group to two-sided equivalence $M\mapsto AMB$, under which rank is the sole invariant — but that action is *not* a symmetry of a genuine (0,2) tensor, since a single vector space offers only the diagonal congruence $A=P^{\mathsf T},B=P$.) In short:
 
 - **Symmetric forms (metrics, quadratic forms):** Axioms 1–4 already give $d(T)=\det(T_{ij})$ after normalization; a regularity axiom is optional, and if included, *continuity* is the natural and sufficient choice.
-- **Arbitrary bilinear forms:** continuity is **not** sufficient (the counterexample above); keep the polynomial Axiom 5 (Section 7.2), which handles every form uniformly via the irreducibility of $\det$.
+- **Arbitrary bilinear forms:** continuity is **not** sufficient (the counterexample above); keep the polynomial Axiom 5 (Section 7.2), or replace it by the structural axiom of Section 7.6.
+
+### 7.6 The Natural Non-Regularity Alternative: the Two-Slot Weight Law
+
+There *is* a single extra assumption that removes the need for polynomiality (or continuity) and works for **arbitrary** (0,2) tensors. It is obtained by noticing exactly where the impostors of Section 7.5 slip through.
+
+The weight-2 Axiom 3 only constrains $d$ under the *diagonal* congruence $T\mapsto T(P\,\cdot\,,P\,\cdot\,)$, in which the **same** map $P$ acts on both arguments. But a (0,2) tensor is an element of $V^*\otimes V^*$, whose two covariant slots are *a priori independent*: for any $A,B\in GL(V)$ the tensor
+$$
+T_{A,B}(v,w):=T(Av,\,Bw),\qquad\text{with Gram matrix } A^{\mathsf T}MB,
+$$
+is again a perfectly good (0,2) tensor. The impostors exploit precisely the directions with $A\neq B$: their cosquare $S=M^{-\mathsf T}M$ measures the mismatch between the two slots, and is invariant only under the diagonal $A=B$. Demanding the correct behavior under *independent* slot transformations destroys them.
+
+**Axiom 3′ (separate / bi-weight $(1,1)$ law).** For all $A,B\in GL(V)$,
+$$
+d\big(T_{A,B}\big)=\det(A)\,\det(B)\,d(T).
+$$
+This says $d(T)$ is a density of weight $1$ in *each* covariant slot separately, rather than merely of total weight $2$ — manifestly the honest functorial requirement for an object built from the two tensor factors. It contains Axiom 3 as the special case $A=B$ (and Axiom 1 as $A=B=\lambda^{1/2}\,\mathrm{Id}$).
+
+**Theorem.** Axiom 3′ together with the degeneracy Axiom 2 and the normalization $d(T_0)=1$ (with $T_0$ the form whose Gram matrix is $I$) forces, in any basis,
+$$
+d(T)=\det(T_{ij}),
+$$
+for **every** (0,2) tensor, with no polynomiality, no continuity, and indeed without Axioms 1 or 4.
+
+*Proof.* Let $M$ be the Gram matrix of $T$. If $M$ is nondegenerate, factor it as $M=A^{\mathsf T}\,I\,B$ with $A=I$, $B=M$ (any factorization $M=A^{\mathsf T}B$ works). Then $T=(T_0)_{A,B}$ and Axiom 3′ gives
+$$
+d(T)=\det(A)\det(B)\,d(T_0)=\det(M)\cdot 1=\det(T_{ij}).
+$$
+If $M$ is degenerate, Axiom 2 gives $d(T)=0=\det(T_{ij})$. $\qquad\square$
+
+The proof is a one-liner because two-sided equivalence $M\mapsto A^{\mathsf T}MB$ acts **transitively** on the nondegenerate matrices (rank is its only invariant), so the single value $d(T_0)$ propagates to every nondegenerate form *exactly* — no limiting argument, no irreducibility, no Nullstellensatz. The cosquare invariants that powered the Section 7.5 counterexamples are not invariant under Axiom 3′, so the family of impostors collapses to the single function $\det$. Numerically, the impostor $D(M)=\det(M)\exp\!\big(\operatorname{tr}\beta(S+S^{-1})\big)$ satisfies the diagonal law $D(P^{\mathsf T}MP)=(\det P)^2D(M)$ but fails $D(A^{\mathsf T}MB)=\det(A)\det(B)D(M)$ whenever $A\neq B$, exactly as Axiom 3′ requires.
+
+**This is the same statement as the functorial definition.** Axiom 3′ is nothing but the coordinate form of the exterior-algebra construction of Sections 5 and 7.4: applying $\bigwedge^n$ to $\phi_{T_{A,B}}=A^{*}\circ\phi_T\circ B$ gives
+$$
+\textstyle\bigwedge^n\phi_{T_{A,B}}=\big(\textstyle\bigwedge^n A^{*}\big)\circ\big(\textstyle\bigwedge^n\phi_T\big)\circ\big(\textstyle\bigwedge^n B\big)=\det(A)\,\det(B)\,\textstyle\bigwedge^n\phi_T,
+$$
+so the induced map $\bigwedge^n\phi_T:\bigwedge^n V\to\bigwedge^n V^*$ automatically obeys Axiom 3′. In other words, **defining** the determinant functorially as $d(T)=\bigwedge^n\phi_T$ builds Axiom 3′ in for free and needs no regularity hypothesis whatsoever — the cleanest resolution of all, and the one to prefer over any classification by polynomial or continuity axioms.
 
 ---
 
