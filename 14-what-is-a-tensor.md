@@ -806,17 +806,42 @@ $$
 $$
 
 where only the parity of $k$ matters. This is the tensor-density
-classification. The pair $(w,k)$ records:
+classification. For objects with free tensor indices, the table records the
+extra density factor multiplying the ordinary tensor index transformation.
 
-| Object | Component transformation | $(w,k)$ |
-|---|---:|---:|
-| scalar | $s'=s$ | $(0,0)$ |
-| pseudoscalar | $s'=\operatorname{sgn}(\det J)\,s$ | $(0,1)$ |
-| scalar density | $\rho'=\lvert\det J\rvert^{-1}\rho$ | $(1,0)$ |
-| top form component | $\omega'=(\det J)^{-1}\omega$ | $(1,1)$ |
-| determinant of $A_{ij}$ | $d'=\lvert\det J\rvert^{-2}d$ | $(2,0)$ |
-| determinant of $A^{ij}$ | $d'=\lvert\det J\rvert^2d$ | $(-2,0)$ |
-| determinant of $A^i{}_j$ | $d'=d$ | $(0,0)$ |
+| Object | Ordinary tensor type | Extra factor $\chi(J)$ | $(w,k)$ |
+|---|---:|---:|---:|
+| scalar $s$ | $(0,0)$ | $1$ | $(0,0)$ |
+| pseudoscalar $s$ | $(0,0)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| scalar density $\rho$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| inverse scalar density $\rho^{-1}$ | $(0,0)$ | $\lvert\det J\rvert$ | $(-1,0)$ |
+| top-form component $\omega$ in $\omega\,\Omega$ | coefficient | $(\det J)^{-1}$ | $(1,1)$ |
+| coordinate volume basis $\Omega=dx^1\wedge\cdots\wedge dx^n$ | basis | $\det J$ | $(-1,1)$ |
+| metric density $\sqrt{\lvert\det g\rvert}$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| inverse metric density $1/\sqrt{\lvert\det g\rvert}$ | $(0,0)$ | $\lvert\det J\rvert$ | $(-1,0)$ |
+| Lagrangian density $\sqrt{\lvert\det g\rvert}\,\mathcal L$ for scalar $\mathcal L$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| coordinate Dirac delta $\delta^{(n)}(x)$ | distribution coefficient | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| determinant of $A_{ij}$ | $(0,0)$ | $\lvert\det J\rvert^{-2}$ | $(2,0)$ |
+| determinant of $A^{ij}$ | $(0,0)$ | $\lvert\det J\rvert^2$ | $(-2,0)$ |
+| determinant of $A^i{}_j$ | $(0,0)$ | $1$ | $(0,0)$ |
+| lower Levi-Civita symbol $\varepsilon_{i_1\cdots i_n}$ | $(0,n)$ | $\det J$ | $(-1,1)$ |
+| upper Levi-Civita symbol $\varepsilon^{i_1\cdots i_n}$ | $(n,0)$ | $(\det J)^{-1}$ | $(1,1)$ |
+| covariant Levi-Civita tensor $E_{i_1\cdots i_n}=\sqrt{\lvert g\rvert}\,\varepsilon_{i_1\cdots i_n}$ | $(0,n)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| contravariant Levi-Civita tensor $E^{i_1\cdots i_n}=\varepsilon^{i_1\cdots i_n}/\sqrt{\lvert g\rvert}$ | $(n,0)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| densitized vector $\sqrt{\lvert g\rvert}\,V^i$ | $(1,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| densitized inverse metric $\sqrt{\lvert g\rvert}\,g^{ij}$ | $(2,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+
+Here $\lvert g\rvert$ abbreviates $\lvert\det g_{ij}\rvert$. For example, the
+lower Levi-Civita symbol row means
+
+$$
+\varepsilon'_{i_1\cdots i_n}
+=(\det J)(J^{-1})^{a_1}{}_{i_1}\cdots(J^{-1})^{a_n}{}_{i_n}
+\varepsilon_{a_1\cdots a_n},
+$$
+
+so it is not an ordinary $(0,n)$ tensor; it is a $(0,n)$ tensor density with
+$(w,k)=(-1,1)$. Similarly, the upper Levi-Civita symbol has $(w,k)=(1,1)$.
 
 So the determinant of a linear map $A^i{}_j$ is a true scalar, but the
 determinant of a covariant tensor $A_{ij}$ is a weight-$2$, even-parity scalar
