@@ -1129,6 +1129,127 @@ weight $(w,k)=(2,0)$, while $\operatorname{Det}(A)$ itself is the intrinsic
 linear map from antisymmetric contravariant $n$-tensors to antisymmetric
 covariant $n$-tensors.
 
+### Where the homomorphism property lives
+
+For an ordinary linear map $M:V\to V$, the determinant is characterized by
+
+$$
+\det(MN)=\det(M)\det(N).
+$$
+
+It is tempting to impose the same condition on covariant rank-$2$ tensors by
+writing
+
+$$
+F(AB)=F(A)F(B).
+$$
+
+But this is not a basis-independent statement. If $A$ and $B$ are both
+covariant tensors, then their components transform as
+
+$$
+A'=J^{-T}AJ^{-1},
+\qquad
+B'=J^{-T}BJ^{-1}.
+$$
+
+Ordinary matrix multiplication gives
+
+$$
+A'B'
+=J^{-T}A(J^{-1}J^{-T})BJ^{-1},
+$$
+
+which is not the covariant transformation law
+
+$$
+(AB)'=J^{-T}(AB)J^{-1}
+$$
+
+unless $J^{-1}J^{-T}=I$, i.e. unless the change of basis is orthogonal with
+respect to an extra background metric. Thus $AB$ is not a natural product of
+two $(0,2)$ tensors. It secretly contracts two lower indices using a hidden
+identity matrix $\delta^{ij}$, and $\delta^{ij}$ is not available without extra
+structure.
+
+The correct homomorphism property is instead the functoriality of the induced
+map on top antisymmetric tensors. A covariant rank-$2$ tensor gives a genuine
+linear map
+
+$$
+A^\flat:V\to V^*.
+$$
+
+Linear maps compose whenever their domains and codomains match. If
+
+$$
+L:U\to V,\qquad M:V\to W,
+$$
+
+then their induced maps on top antisymmetric tensors compose, and therefore
+their coefficients satisfy
+
+$$
+\Delta(M\circ L)=\Delta(M)\Delta(L).
+$$
+
+This is the homomorphism that replaces the invalid formula $F(AB)=F(A)F(B)$.
+The determinant of a covariant tensor is then
+
+$$
+F(A):=\Delta(A^\flat).
+$$
+
+Together with the diagonal normalization
+
+$$
+\Delta(\operatorname{diag}(d_1,\dots,d_n))=d_1\cdots d_n,
+$$
+
+the determinant homomorphism theorem gives
+
+$$
+F(A)=\Delta(A^\flat)=\det(A_{ij}).
+$$
+
+So the two determinant principles still appear:
+
+1. the weight law gives the correct homogeneity of the component density; and
+2. the homomorphism law is functoriality of induced maps, not multiplication of
+   two covariant tensors.
+
+If one does choose extra structure, such as a nondegenerate bilinear form
+$h_{ij}$ with inverse $h^{ij}$, then one can manufacture a product of covariant
+tensors:
+
+$$
+(A\star_h B)_{ij}:=A_{ik}h^{kl}B_{lj}.
+$$
+
+Equivalently,
+
+$$
+(A\star_h B)^\flat=B^\flat\circ h^\sharp\circ A^\flat,
+\qquad
+h^\sharp:V^*\to V.
+$$
+
+Then the scalar determinant relative to $h$,
+
+$$
+\det_h(A):=\det(h^\sharp\circ A^\flat),
+$$
+
+is multiplicative:
+
+$$
+\det_h(A\star_h B)=\det_h(A)\det_h(B).
+$$
+
+But this multiplicativity depends on the extra choice of $h$. Without such a
+choice, the intrinsic statement is the functorial homomorphism
+$\Delta(M\circ L)=\Delta(M)\Delta(L)$ for composable linear maps.
+
 ### Starting from weight $(2,0)$
 
 Now suppose we start only with the desired density character
