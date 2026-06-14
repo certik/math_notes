@@ -544,9 +544,9 @@ If $M$ is degenerate, Axiom 2 gives $d(T)=0=\det(T_{ij})$. $\qquad\square$
 
 The proof is a one-liner because two-sided equivalence $M\mapsto A^{\mathsf T}MB$ acts **transitively** on the nondegenerate matrices (rank is its only invariant), so the single value $d(T_0)$ propagates to every nondegenerate form *exactly* — no limiting argument, no irreducibility, no Nullstellensatz. The cosquare invariants that powered the Section 7.5 counterexamples are not invariant under Axiom 3′, so the family of impostors collapses to the single function $\det$. Numerically, the impostor $D(M)=\det(M)\exp\!\big(\operatorname{tr}\beta(S+S^{-1})\big)$ satisfies the diagonal law $D(P^{\mathsf T}MP)=(\det P)^2D(M)$ but fails $D(A^{\mathsf T}MB)=\det(A)\det(B)D(M)$ whenever $A\neq B$, exactly as Axiom 3′ requires.
 
-**This is the same statement as the functorial definition.** Axiom 3′ is nothing but the coordinate form of the exterior-algebra construction of Sections 5 and 7.4: applying $\bigwedge^n$ to $\phi_{T_{A,B}}=A^{*}\circ\phi_T\circ B$ gives
+**This is the same statement as the functorial definition.** Axiom 3′ is nothing but the coordinate form of the exterior-algebra construction of Sections 5 and 7.4: applying $\bigwedge^n$ to $\phi_{T_{A,B}}=B^{*}\circ\phi_T\circ A$ gives
 $$
-\textstyle\bigwedge^n\phi_{T_{A,B}}=\big(\textstyle\bigwedge^n A^{*}\big)\circ\big(\textstyle\bigwedge^n\phi_T\big)\circ\big(\textstyle\bigwedge^n B\big)=\det(A)\,\det(B)\,\textstyle\bigwedge^n\phi_T,
+\textstyle\bigwedge^n\phi_{T_{A,B}}=\big(\textstyle\bigwedge^n B^{*}\big)\circ\big(\textstyle\bigwedge^n\phi_T\big)\circ\big(\textstyle\bigwedge^n A\big)=\det(A)\,\det(B)\,\textstyle\bigwedge^n\phi_T,
 $$
 so the induced map $\bigwedge^n\phi_T:\bigwedge^n V\to\bigwedge^n V^*$ automatically obeys Axiom 3′. In other words, **defining** the determinant functorially as $d(T)=\bigwedge^n\phi_T$ builds Axiom 3′ in for free and needs no regularity hypothesis whatsoever — the cleanest resolution of all, and the one to prefer over any classification by polynomial or continuity axioms.
 
