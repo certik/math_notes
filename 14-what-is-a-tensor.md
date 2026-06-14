@@ -1173,40 +1173,185 @@ identity matrix $\delta^{ij}$, and $\delta^{ij}$ is not available without extra
 structure.
 
 The correct homomorphism property is instead the functoriality of the induced
-map on top antisymmetric tensors. A covariant rank-$2$ tensor gives a genuine
-linear map
+map on top antisymmetric tensors. Here are the details.
+
+Let $U,V,W$ be $n$-dimensional vector spaces. For a linear map
 
 $$
-A^\flat:V\to V^*.
+L:U\to V,
 $$
 
-Linear maps compose whenever their domains and codomains match. If
+with components $L^i{}_a$ in chosen bases, define its induced map on
+antisymmetric contravariant rank-$n$ tensors by
+
+$$
+(\operatorname{Alt}^n L)(X)^{i_1\cdots i_n}
+:=L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}X^{a_1\cdots a_n}.
+$$
+
+This is just tensor multiplication and contraction. If $X$ is antisymmetric,
+then $(\operatorname{Alt}^n L)(X)$ is antisymmetric, because swapping two
+output indices swaps two factors and hence, after relabeling dummy indices,
+uses the antisymmetry of $X$.
+
+The space of antisymmetric contravariant rank-$n$ tensors is one-dimensional.
+Choose basis tensors $E_U,E_V$ normalized by
+
+$$
+E_U^{12\cdots n}=1,\qquad E_V^{12\cdots n}=1.
+$$
+
+Then there is a unique scalar $\Delta(L)$ such that
+
+$$
+(\operatorname{Alt}^n L)(E_U)=\Delta(L)E_V,
+$$
+
+or in components,
+
+$$
+L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}
+E_U^{a_1\cdots a_n}
+=\Delta(L)E_V^{i_1\cdots i_n}.
+$$
+
+This is the definition of $\Delta(L)$. It is the scalar by which $L$ acts on
+the top antisymmetric line. No determinant formula has been used.
+
+Now let
 
 $$
 L:U\to V,\qquad M:V\to W,
 $$
 
-then their induced maps on top antisymmetric tensors compose, and therefore
-their coefficients satisfy
+be composable. The induced maps compose:
 
 $$
-\Delta(M\circ L)=\Delta(M)\Delta(L).
+\operatorname{Alt}^n(M\circ L)
+=(\operatorname{Alt}^n M)\circ(\operatorname{Alt}^n L).
 $$
 
-This is the homomorphism that replaces the invalid formula $F(AB)=F(A)F(B)$.
-The determinant of a covariant tensor is then
+Indeed, in components,
+
+$$
+\begin{aligned}
+(\operatorname{Alt}^n(M\circ L)(X))^{\alpha_1\cdots\alpha_n}
+&=(M^{\alpha_1}{}_{i_1}L^{i_1}{}_{a_1})
+\cdots
+(M^{\alpha_n}{}_{i_n}L^{i_n}{}_{a_n})
+X^{a_1\cdots a_n} \\
+&=M^{\alpha_1}{}_{i_1}\cdots M^{\alpha_n}{}_{i_n}
+\big(L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}X^{a_1\cdots a_n}\big) \\
+&=(\operatorname{Alt}^n M(\operatorname{Alt}^n L(X)))^{\alpha_1\cdots\alpha_n}.
+\end{aligned}
+$$
+
+Apply this to $E_U$. First
+
+$$
+(\operatorname{Alt}^n L)(E_U)=\Delta(L)E_V,
+$$
+
+then
+
+$$
+(\operatorname{Alt}^n M)(\Delta(L)E_V)
+=\Delta(L)\Delta(M)E_W.
+$$
+
+Therefore
+
+$$
+\boxed{\;\Delta(M\circ L)=\Delta(M)\Delta(L).\;}
+$$
+
+This is the homomorphism that replaces the invalid formula $F(AB)=F(A)F(B)$
+for two covariant tensors.
+
+Now specialize to an endomorphism $M:V\to V$, using the same basis in the
+source and target. Then $\Delta$ is a group homomorphism
+
+$$
+\Delta:GL(V)\to\R^*.
+$$
+
+On diagonal maps the value is immediate. If
+
+$$
+D=\operatorname{diag}(d_1,\dots,d_n),
+$$
+
+then
+
+$$
+(\operatorname{Alt}^n D)(E)^{12\cdots n}
+=D^1{}_1\cdots D^n{}_n E^{12\cdots n}
+=d_1\cdots d_n.
+$$
+
+Thus
+
+$$
+\boxed{\;\Delta(D)=d_1\cdots d_n.\;}
+$$
+
+This diagonal normalization includes the scalar homogeneity
+
+$$
+\Delta(\lambda I)=\lambda^n,
+$$
+
+but it is slightly stronger. Over $\mathbb C$, the homogeneity
+$\Delta(\lambda I)=\lambda^n$ plus the homomorphism property is enough to
+select the determinant, because every nonzero complex number has an $n$-th
+root, as in [determinant_over_C.md](determinant_over_C.md). Over $\mathbb R$,
+for even $n$, scalar homogeneity alone does not distinguish $\det$ from
+$|\det|$. The diagonal normalization $\Delta(D)=d_1\cdots d_n$ fixes this sign
+ambiguity directly, and it was derived above from the action on the top
+antisymmetric tensor.
+
+By the homomorphism characterization in
+[Determinant From Homomorphism](determinant_homomorphism.md) -- the same
+argument applies over $\mathbb R$ when the full diagonal normalization is used
+-- a homomorphism $GL(V)\to\R^*$ with this diagonal normalization is the
+determinant:
+
+$$
+\Delta(M)=\det M.
+$$
+
+For a non-invertible linear map $M$, the image of $M$ has dimension $<n$, so
+the induced top antisymmetric map is zero; hence $\Delta(M)=0$, matching
+$\det M=0$. Thus the same formula holds for all linear maps, not just
+invertible ones.
+
+Finally return to a covariant rank-$2$ tensor. It gives a genuine linear map
+
+$$
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)(u)=A(v,u).
+$$
+
+In a basis,
+
+$$
+(A^\flat)^j{}_i=A_{ij}.
+$$
+
+With the usual convention that matrix rows are target indices and columns are
+source indices, this is the transpose of the displayed array $A_{ij}$; the
+determinant is unchanged.
+
+The determinant component of $A$ is therefore defined by the same top-line
+coefficient:
 
 $$
 F(A):=\Delta(A^\flat).
 $$
 
-Together with the diagonal normalization
-
-$$
-\Delta(\operatorname{diag}(d_1,\dots,d_n))=d_1\cdots d_n,
-$$
-
-the determinant homomorphism theorem gives
+Applying the already identified formula for $\Delta$ to the component matrix
+of $A^\flat$ gives
 
 $$
 F(A)=\Delta(A^\flat)=\det(A_{ij}).
@@ -1214,9 +1359,11 @@ $$
 
 So the two determinant principles still appear:
 
-1. the weight law gives the correct homogeneity of the component density; and
-2. the homomorphism law is functoriality of induced maps, not multiplication of
-   two covariant tensors.
+1. the weight law gives the correct homogeneity of the component density
+   $\det(A_{ij})$; and
+2. the homomorphism law is the functoriality
+   $\Delta(M\circ L)=\Delta(M)\Delta(L)$ for induced maps on top
+   antisymmetric tensors, not multiplication of two covariant tensors.
 
 If one does choose extra structure, such as a nondegenerate bilinear form
 $h_{ij}$ with inverse $h^{ij}$, then one can manufacture a product of covariant
