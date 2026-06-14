@@ -54,6 +54,27 @@ a(q)=q\,a(1)=cq
 $$
 for rational $q$, where $c=a(1)$.
 
+:::{note}
+The condition $a(q)=cq$ on rational numbers is not enough by itself. For
+example, the measurable function
+$$
+a(x)=
+\begin{cases}
+cx, & x\in\mathbb Q,\\
+0, & x\notin\mathbb Q,
+\end{cases}
+$$
+has the correct values on $\mathbb Q$, but it is not additive unless $c=0$.
+Indeed, if $q\in\mathbb Q$ is nonzero and $\alpha\notin\mathbb Q$, then
+$\alpha+q\notin\mathbb Q$, so
+$$
+a(\alpha+q)=0
+\qquad\text{but}\qquad
+a(\alpha)+a(q)=cq.
+$$
+Thus the additive hypothesis is essential, in addition to measurability.
+:::
+
 :::{tip} Theorem
 If $a:\mathbb R\to\mathbb R$ is additive and measurable, then
 $$
@@ -71,12 +92,29 @@ $$
 $$
 one of these measurable sets has positive measure. By the Steinhaus theorem,
 its difference set contains an interval around $0$, so $b$ is bounded on
-some interval around $0$. Additivity then implies continuity at $0$: if
-$x_j\to0$, choose integers $n_j\to\infty$ with $n_jx_j$ in that interval;
-then
+some interval around $0$. Thus there are $\delta>0$ and $M>0$ such that
+$$
+|b(t)|\le M
+\qquad\text{whenever}\qquad
+|t|\le\delta.
+$$
+Additivity then implies continuity at $0$. Indeed, let $x_j\to0$. For
+$x_j\ne0$, choose, for all large $j$,
+$$
+n_j=\left\lfloor {\delta\over 2|x_j|}\right\rfloor.
+$$
+Then $n_j\to\infty$ and $|n_jx_j|\le\delta$, so $n_jx_j$ lies in the interval
+where $b$ is bounded. Since $b$ is additive,
+$$
+b(n_jx_j)=n_jb(x_j),
+$$
+and therefore
 $$
 |b(x_j)|={|b(n_jx_j)|\over n_j}\to0.
 $$
+The last limit follows from $|b(n_jx_j)|\le M$ and $n_j\to\infty$. Hence
+$b$ is continuous at $0$.
+
 An additive function continuous at $0$ is continuous everywhere. Since $b$
 vanishes on the dense set $\mathbb Q$, continuity gives $b(x)=0$ for every
 real $x$.
