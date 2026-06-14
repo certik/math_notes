@@ -487,12 +487,32 @@ $$
 $$
 so it obeys Axioms 1–4 *within dimension $n$* and the degeneracy Axiom 2, yet it is not a constant multiple of $\det$ (it never takes negative values). What rescues uniqueness is precisely the cross-dimensional reading above: $|\det|$ corresponds to the one-dimensional rule $D_1(\lambda)=|\lambda|$, which violates Axiom 1 in dimension one ($D_1(-1)=1\neq -1=(-1)\cdot D_1(1)$). Equivalently, $|\det|$ is exactly the sign-twisted impostor $D=\operatorname{sign}(\det)\cdot\det$, and over $\mathbb{R}$ the nondegenerate locus is *disconnected* (the connected components are the signature classes $(p,q)$), so a hypothesis that does not link the components — bare continuity in one dimension — cannot exclude a different constant on each component. The polynomial Axiom 5 excluded these impostors automatically, because $|\det|$ and its relatives are not polynomials; the cross-dimensional homogeneity above excludes them just as effectively, and much more cheaply.
 
-#### The general (non-symmetric) case
+#### The general (non-symmetric) case: continuity is provably insufficient
 
-For a *general* (0,2) tensor the Gram matrix need not be congruent to a diagonal one: congruence preserves the symmetric and antisymmetric parts separately, so the reduction of Step 3 is unavailable, and the nondegenerate orbits are neither dense nor open in one another. Here continuity by itself is delicate (one must control congruence invariants such as the eigenvalues of the cosquare $M^{-\mathsf T}M$), and the clean sufficient hypothesis is the polynomial Axiom 5 used in Section 7.2. In short:
+For a *general* (0,2) tensor the situation changes completely, and the honest answer is negative: **continuity does not single out the determinant.** The reduction of Step 3 is unavailable, because congruence $M\mapsto P^{\mathsf T}MP$ preserves the symmetric and antisymmetric parts separately and therefore cannot diagonalize a non-symmetric Gram matrix. More to the point, congruence has a *moduli* of orbits on the nondegenerate locus: the **cosquare** (or "asymmetry operator")
+$$
+S(M):=M^{-\mathsf T}M
+$$
+transforms by conjugation, $S(P^{\mathsf T}MP)=P^{-1}S(M)P$, so the entire conjugacy class of $S$ — in particular its eigenvalues, which occur in reciprocal pairs $\{\mu,\mu^{-1}\}$ — is a *continuous* congruence invariant. The orbit space is thus positive-dimensional, and a continuous, congruence-invariant function need not be constant on it. This is enough to manufacture impostors.
+
+**Counterexample.** Fix any bounded continuous $\beta:\mathbb{R}\to\mathbb{R}$ with $\beta(2)=0$ (for instance $\beta(w)=\frac{(w-2)^2}{1+(w-2)^2}$), and define, in every dimension,
+$$
+D(M):=\det(M)\,\exp\!\Big(\operatorname{tr}\,\beta\big(S+S^{-1}\big)\Big),\qquad S=M^{-\mathsf T}M,
+$$
+on nondegenerate $M$, extended by $D(M)=0$ where $\det M=0$. Then $D$ satisfies **all** of Axioms 1–4, is **continuous**, and meets the normalization $D(I)=1$, yet $D\neq c\det$:
+
+- **Homogeneity (A1).** $S(\lambda M)=S(M)$ for every scalar $\lambda\neq0$, so the exponential factor is scale-invariant and $D(\lambda M)=\lambda^n D(M)$.
+- **Degeneracy (A2).** $|\beta|\le 1$ gives $|\exp(\operatorname{tr}\beta(\cdot))|\le e^{n}$, a bounded nonzero factor; hence $D=0\iff\det=0$, and $D=\det\cdot(\text{bounded})\to0$ at the degenerate locus, so the extension by $0$ is continuous.
+- **Weight-2 law (A3).** $S\mapsto P^{-1}SP$ is a conjugation, so $\operatorname{tr}\,\beta(S+S^{-1})$ is unchanged and $D(P^{\mathsf T}MP)=(\det P)^2 D(M)$.
+- **Block multiplicativity (A4).** $S(M_1\oplus M_2)=S_1\oplus S_2$, so the trace adds and the exponential factorizes: $D(M_1\oplus M_2)=D(M_1)\,D(M_2)$. (In dimension one $S=1$, $\beta(2)=0$, so $D_1(\lambda)=\lambda$ — the linear, $\kappa=1$ normalization.)
+- **It is genuinely different.** On symmetric forms $S=I$, $S+S^{-1}=2I$, $\beta(2)=0$, so $D=\det$ there — but on a non-symmetric form the factor is $\neq1$. For example $M=\left(\begin{smallmatrix}1&2\\0&1\end{smallmatrix}\right)$ has $S$ with the double eigenvalue $-1$, giving $w=\mu+\mu^{-1}=-2$, $\operatorname{tr}\beta(S+S^{-1})=2\beta(-2)=\tfrac{32}{17}$, hence $D(M)=e^{32/17}\det M\neq\det M$.
+
+Varying $\beta$ produces an infinite-dimensional family of distinct continuous solutions. The polynomial Axiom 5 excludes every one of them at a stroke, because none is a polynomial (indeed none is even algebraic). Equivalently: the determinant is the *unique* solution that is **algebraic** in the components; the non-uniqueness lives entirely in the transcendental, cosquare-dependent directions that polynomiality forbids but continuity permits.
+
+**Moral.** The symmetric case is special precisely because congruence orbits exhaust the symmetric forms (the spectral theorem), so there are no continuous invariants beyond $\det$ to exploit. For an arbitrary (0,2) tensor those invariants exist, so one must keep a hypothesis that kills them. The cheap, natural choice is the polynomial/algebraic Axiom 5 of Section 7.2. (Continuity could only be salvaged by enlarging the symmetry group to two-sided equivalence $M\mapsto AMB$, under which rank is the sole invariant — but that action is *not* a symmetry of a genuine (0,2) tensor, since a single vector space offers only the diagonal congruence $A=P^{\mathsf T},B=P$.) In short:
 
 - **Symmetric forms (metrics, quadratic forms):** Axioms 1–4 already give $d(T)=\det(T_{ij})$ after normalization; a regularity axiom is optional, and if included, *continuity* is the natural and sufficient choice.
-- **Arbitrary bilinear forms:** keep the polynomial Axiom 5 (Section 7.2), which handles every form uniformly via the irreducibility of $\det$.
+- **Arbitrary bilinear forms:** continuity is **not** sufficient (the counterexample above); keep the polynomial Axiom 5 (Section 7.2), which handles every form uniformly via the irreducibility of $\det$.
 
 ---
 
