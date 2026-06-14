@@ -967,6 +967,98 @@ For a nondegenerate metric $g_{ij}$ this explains the familiar expression
 $\sqrt{|\det g_{ij}|}$: it is a weight-$1$ density, so
 $\sqrt{|\det g_{ij}|}\,d^n x$ is coordinate-invariant.
 
+### The same definition using only antisymmetric tensors
+
+The exterior-power notation is compact, but it is not necessary. The same
+object can be written entirely with ordinary tensors and Einstein index
+notation. A differential form is just an antisymmetric covariant tensor; here
+we use only that tensor fact.
+
+For any covariant rank-$2$ tensor $A_{ij}$, define a covariant rank-$2n$ tensor
+
+$$
+D_{i_1\cdots i_n\,j_1\cdots j_n}
+:=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
+A_{i_{\sigma(1)}j_1}A_{i_{\sigma(2)}j_2}\cdots A_{i_{\sigma(n)}j_n}.
+$$
+
+Equivalently, using the standard antisymmetrization convention
+
+$$
+T_{[i_1\cdots i_n]}
+={1\over n!}\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+T_{i_{\sigma(1)}\cdots i_{\sigma(n)}},
+$$
+
+this is
+
+$$
+D_{i_1\cdots i_n\,j_1\cdots j_n}
+=n!\,A_{[i_1|j_1|}A_{i_2|j_2|}\cdots A_{i_n]j_n}.
+$$
+
+The tensor $D$ is antisymmetric in the $i$-indices by construction. It is also
+antisymmetric in the $j$-indices: swapping two $j$-indices swaps two columns in
+the displayed alternating sum, hence gives a minus sign. Therefore $D$ is an
+ordinary covariant tensor with two antisymmetric $n$-index blocks; one often
+denotes this subspace by
+
+$$
+D\in (\Lambda^n V^*)\otimes(\Lambda^n V^*)
+$$
+
+but we reached it using only antisymmetrization of ordinary tensor indices.
+This $D$ is the basis-independent determinant object:
+
+$$
+D=\operatorname{Det}(A).
+$$
+
+Now choose a basis and let $\varepsilon_{i_1\cdots i_n}$ be the alternating
+symbol in that basis, normalized by $\varepsilon_{12\cdots n}=1$. Since an
+antisymmetric $n$-index tensor has only one independent component, the tensor
+$D$ must have the form
+
+$$
+D_{i_1\cdots i_n\,j_1\cdots j_n}
+=F(A)\,\varepsilon_{i_1\cdots i_n}\varepsilon_{j_1\cdots j_n}
+$$
+
+in that basis. The coefficient is obtained by taking
+$i_1\cdots i_n=1\cdots n$ and $j_1\cdots j_n=1\cdots n$:
+
+$$
+F(A)=D_{12\cdots n\,12\cdots n}
+=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
+A_{\sigma(1)1}A_{\sigma(2)2}\cdots A_{\sigma(n)n}.
+$$
+
+This is the usual component determinant of the array $A_{ij}$ (equivalently,
+the determinant of its transpose, which is the same number):
+
+$$
+F(A)=\det(A_{ij}).
+$$
+
+The basis-independent object is the tensor $D$, not the coefficient $F(A)$ by
+itself. Under a basis change, the covariant tensor law gives
+
+$$
+D'_{12\cdots n\,12\cdots n}
+=(\det J)^{-1}(\det J)^{-1}
+D_{12\cdots n\,12\cdots n}.
+$$
+
+Thus
+
+$$
+F(A')=|\det J|^{-2}F(A),
+$$
+
+so the component coefficient $F(A)=\det(A_{ij})$ is a scalar density of weight
+$(w,k)=(2,0)$, while $D_{i_1\cdots i_n\,j_1\cdots j_n}$ is an ordinary tensor
+with two fully antisymmetric index blocks. This is exactly the index-notation
+version of the exterior-power definition.
 
 ### Why the weight-$2$ invariant is $\det(A_{ij})$
 
