@@ -1028,19 +1028,30 @@ $$
 
 This equation defines the **component coefficient** of the intrinsic map
 $\operatorname{Det}(A)$ in the chosen basis. It still does not define $F$ by a
-Leibniz sum.
+Leibniz sum. The purpose of this step is only to read one scalar from the
+intrinsic map
+
+$$
+\operatorname{Det}(A):\operatorname{Alt}^n(V)\to\operatorname{Alt}^n(V^*).
+$$
+
+Both the source and target are one-dimensional. Once the basis tensors $E$ and
+$\varepsilon$ are chosen, any linear map between these two lines is described
+by a single number. That number is $F(A)$.
 
 To identify $F$, use the homomorphism characterization of the ordinary
 determinant from [Determinant From Homomorphism](determinant_homomorphism.md).
-For any linear map $M:V\to V$, define $\Delta(M)$ by its induced action on the
-one-dimensional space of antisymmetric contravariant $n$-tensors:
+More generally, if $L:V\to W$ is a linear map between two $n$-dimensional
+vector spaces with chosen bases, define $\Delta(L)$ to be the scalar by which
+the induced map acts on top antisymmetric tensors:
 
 $$
-M^{a_1}{}_{i_1}\cdots M^{a_n}{}_{i_n}E^{i_1\cdots i_n}
-=\Delta(M)E^{a_1\cdots a_n}.
+L^{a_1}{}_{i_1}\cdots L^{a_n}{}_{i_n}E_V^{i_1\cdots i_n}
+=\Delta(L)E_W^{a_1\cdots a_n}.
 $$
 
-Induced actions compose, so
+When $W=V$ and the same basis is used on both sides, induced actions compose,
+so
 
 $$
 \Delta(MN)=\Delta(M)\Delta(N).
@@ -1061,10 +1072,31 @@ $$
 \Delta(M)=\det M.
 $$
 
-This is exactly the determinant theorem already derived for ordinary linear
-maps; its Leibniz component formula is a consequence, not an assumption.
+This is exactly the determinant theorem already derived for ordinary
+endomorphisms; its Leibniz component formula is a consequence, not an
+assumption. For a map $L:V\to W$ between two different $n$-dimensional spaces,
+the same statement is applied to its component matrix $L^a{}_i$ in the chosen
+bases:
 
-Applying this to the component matrix of $A^\flat$ gives
+$$
+\Delta(L)=\det(L^a{}_i).
+$$
+
+Now take $W=V^*$ with basis $\theta^j$ and $L=A^\flat$. Its components are
+$L^j{}_i=A_{ij}$, so the defining equation for $\Delta(A^\flat)$ is exactly
+
+$$
+A_{i_1j_1}\cdots A_{i_nj_n}E^{i_1\cdots i_n}
+=\Delta(A^\flat)\,\varepsilon_{j_1\cdots j_n}.
+$$
+
+Comparing with the defining equation for $F(A)$ above gives
+
+$$
+F(A)=\Delta(A^\flat).
+$$
+
+Then the determinant theorem gives
 
 $$
 F(A)=\Delta(A^\flat)=\det(A_{ij}).
@@ -1083,10 +1115,11 @@ $$
 So the permutation sum is recovered at the end; it was not the definition of
 the determinant object.
 
-Under a basis change, $A'=J^{-T}AJ^{-1}$. By the multiplicativity of $\Delta$,
+Under a basis change, $A'=J^{-T}AJ^{-1}$. Applying the same multiplicativity to
+these component matrices,
 
 $$
-F(A')=\Delta(J^{-T})\Delta(A)\Delta(J^{-1})
+F(A')=\Delta(J^{-T})F(A)\Delta(J^{-1})
 =(\det J)^{-2}F(A)
 =|\det J|^{-2}F(A).
 $$
