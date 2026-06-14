@@ -90,9 +90,26 @@ Since
 $$
 [-1,1]=\bigcup_{m=1}^{\infty}\{x\in[-1,1]: |b(x)|\le m\},
 $$
-one of these measurable sets has positive measure. By the Steinhaus theorem,
-its difference set contains an interval around $0$, so $b$ is bounded on
-some interval around $0$. Thus there are $\delta>0$ and $M>0$ such that
+one of these measurable sets has positive measure. Let
+$$
+E=\{x\in[-1,1]: |b(x)|\le m\}
+$$
+be such a set. By the Steinhaus theorem, the difference set
+$$
+E-E=\{u-v:u,v\in E\}
+$$
+contains an open interval around $0$: there is $\epsilon>0$ such that
+$(-\epsilon,\epsilon)\subset E-E$. Thus, if $|t|<\epsilon$, then $t=u-v$ for some
+$u,v\in E$. By additivity,
+$$
+b(t)=b(u-v)=b(u)-b(v),
+$$
+so
+$$
+|b(t)|\le |b(u)|+|b(v)|\le 2m.
+$$
+Therefore $b$ is bounded on an interval around $0$. Taking
+$\delta=\epsilon/2$ and $M=2m$, we have
 $$
 |b(t)|\le M
 \qquad\text{whenever}\qquad
