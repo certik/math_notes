@@ -115,9 +115,16 @@ $$
 The last limit follows from $|b(n_jx_j)|\le M$ and $n_j\to\infty$. Hence
 $b$ is continuous at $0$.
 
-An additive function continuous at $0$ is continuous everywhere. Since $b$
-vanishes on the dense set $\mathbb Q$, continuity gives $b(x)=0$ for every
-real $x$.
+An additive function continuous at $0$ is continuous everywhere. To see this,
+fix $x_0\in\mathbb R$ and let $x\to x_0$. Then $x-x_0\to0$, and additivity
+gives
+$$
+b(x)-b(x_0)=b(x-x_0).
+$$
+Since $b$ is continuous at $0$, the right-hand side tends to $0$. Therefore
+$b(x)\to b(x_0)$, so $b$ is continuous at $x_0$. Since $x_0$ was arbitrary,
+$b$ is continuous everywhere. Since $b$ vanishes on the dense set $\mathbb Q$,
+continuity gives $b(x)=0$ for every real $x$.
 :::
 
 :::{note}
