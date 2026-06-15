@@ -230,24 +230,40 @@ are genuine weight-2 relative invariants of congruence ($D(P^{\mathsf T}MP)=(\de
 
 ---
 
-## Appendix D: Why the two slots may be transformed independently
+## Appendix D: Deriving the relative-invariance equation
 
-Axiom I — and the relative-invariance hypothesis of Appendix C — allow $A\neq B$, whereas an honest change of basis of $V$ produces only the *diagonal* case $A=B=P$ (congruence, Section 2). Why are we entitled to transform the two slots **independently**? The decisive fact first:
-
-**It cannot be derived from the change-of-basis law — so it must be motivated.** The diagonal law $D(P^{\mathsf T}MP)=(\det P)^2D(M)$ is strictly weaker than the two-slot law: the cosquare impostors of Appendix C satisfy congruence exactly, yet are not $\det$. So independence of the slots is genuine *extra* content; it is justified not by deriving it from change of basis, but by the bilinear, two-factor nature of $T$ itself. Three views make this natural.
-
-**1. Independence of the slots is just bilinearity.** A $(0,2)$ tensor is *bilinear* — linear in each argument separately. Feeding the two arguments through independent maps,
+Appendix C *starts* from relative invariance,
 $$
-T_{A,B}(v,w):=T(Av,\,Bw),
+D(A^{\mathsf T}MB)=\chi(A,B)\,D(M),
 $$
-is therefore a well-defined tensor for *every* pair $(A,B)$; that is precisely what "two independent arguments" means. Asking how $D$ responds to $T\mapsto T_{A,B}$ is the determinant-level expression of bilinearity. Forcing $A=B$ would couple the two arguments and discard the very feature — separate linearity in each slot — that defines a bilinear form.
+and identifies $\chi$. Here we supply the step before it: we **derive the equation itself** — that the two-slot operation rescales $D$ by a factor depending on $(A,B)$ but **not** on $M$ — without computing $\chi$ (which stays Appendix C's task). Two ingredients suffice: that the operation is legitimate, and that the determinant is a *top-degree* quantity.
 
-**2. Two independent factors: $T\in V^{*}\otimes V^{*}$.** Label the two tensor factors as distinct copies $V_1^{*},V_2^{*}$. The structural symmetry of a tensor product acts on the factors independently, $(A,B)\in GL(V_1)\times GL(V_2)$, and on components this is exactly $M\mapsto A^{\mathsf T}MB$: "$T$ is a $(0,1)$ tensor in each slot." Congruence $A=B=P$ arises *only* after one identifies $V_1=V_2=V$ and varies the basis of the single underlying $V$, which ties the two factors together. The abstract object $V^{*}\otimes V^{*}$ carries no such tie.
-
-**3. Rows and columns.** Concretely, the columns of $M$ are indexed by the second argument of $T$ and the rows by the first (column $j$ is the partial form $T(\cdot,e_j)$, row $i$ is $T(e_i,\cdot)$). Right multiplication $M\mapsto MB$ recombines the columns; left multiplication $M\mapsto A^{\mathsf T}M$ recombines the rows. The classical determinant is multilinear and alternating *separately* in the columns and in the rows — which says exactly
+**The operation is legitimate (bilinearity).** A $(0,2)$ tensor is *bilinear* — separately linear in each argument — so feeding the two arguments through independent maps,
 $$
-\det(MB)=\det(M)\det(B),\qquad \det(A^{\mathsf T}M)=\det(A)\det(M),
+T_{A,B}(v,w):=T(Av,\,Bw),\qquad\text{components } A^{\mathsf T}MB,
 $$
-and therefore $\det(A^{\mathsf T}MB)=\det(A)\det(B)\det(M)$. So the independence of $A$ and $B$ is nothing but the independence of rows and columns — i.e. of the two arguments of $T$. This is the most hands-on "derivation": the two-slot law is the row/column multilinearity of $\det$, read through the dictionary rows $\leftrightarrow$ first slot, columns $\leftrightarrow$ second slot.
+is a well-defined tensor for *every* pair $(A,B)$, not only for $A=B$. Equivalently $T\in V_1^{*}\otimes V_2^{*}$ has two independent factors, on which $GL(V_1)\times GL(V_2)$ acts independently; the diagonal $A=B=P$ is merely the sub-case obtained by identifying $V_1=V_2=V$ and changing the basis of the single $V$. So nothing forbids independent $A,B$; what remains to be shown is that $D$ responds to this operation by a single scalar.
 
-**The same story via the lowering map.** Equivalently, $T$ is the linear map $\phi_T:V\to V^{*}$, $\phi_T(v)=T(v,\cdot)$, between two *different* spaces — source $V$ and target $V^{*}$. The determinant of a map between two spaces is a function of bases on **both**, transforming once in the source and once in the target, *independently*: that is the two-slot law. A change of basis $P$ of $V$ is the special case that links the target basis to the source one by duality (the contragredient $P^{-\mathsf T}$); the two $+\det P$ contributions then add to the weight $(\det P)^2$ of Section 2. Independence is the default for a map between two spaces; congruence is the linked, diagonal shadow of it.
+**The determinant is top-degree, hence lives on a line.** Realize $T$ as the lowering map $\phi_T:V\to V^{*}$, $\phi_T(v)=T(v,\cdot)$, and take its top exterior power — the induced map on volumes,
+$$
+d(T):=\textstyle\bigwedge^{n}\phi_T\ \in\ \mathcal L:=\operatorname{Hom}\!\big(\textstyle\bigwedge^{n}V,\ \textstyle\bigwedge^{n}V^{*}\big).
+$$
+Since $\bigwedge^{n}V$ and $\bigwedge^{n}V^{*}$ are each **one-dimensional**, the determinant line $\mathcal L$ is one-dimensional. (Concretely, $D=d(T)$ is a top-degree, volume-type function of the $n$ columns of $M$ together; recombining those columns can only *rescale* such a quantity, never reshape it. The one-dimensionality of $\mathcal L$ is the exact form of this remark.) In a basis $d(T)$ is the single number $\det M$, but below we use only that it lives on a line.
+
+**The derivation.** Under the two-slot operation $\phi_{T_{A,B}}=B^{*}\circ\phi_T\circ A$ (computed in Appendix A), functoriality of $\bigwedge^{n}$ gives
+$$
+d(T_{A,B})=\textstyle\bigwedge^{n}\!\big(B^{*}\phi_T A\big)=\big(\textstyle\bigwedge^{n}B^{*}\big)\circ d(T)\circ\big(\textstyle\bigwedge^{n}A\big).
+$$
+Now the one general fact that does all the work:
+
+> **An endomorphism of a one-dimensional space is multiplication by a single scalar.**
+
+Hence $\bigwedge^{n}A:\bigwedge^{n}V\to\bigwedge^{n}V$ is multiplication by *some* scalar $a(A)\in K$ depending on $A$ alone, and $\bigwedge^{n}B^{*}:\bigwedge^{n}V^{*}\to\bigwedge^{n}V^{*}$ by *some* scalar $b(B)$. These scalars are the same for every $T$: a scalar acts uniformly on the whole line, so it cannot depend on which element $d(T)$ it multiplies. Pulling them out,
+$$
+\boxed{\,d(T_{A,B})=a(A)\,b(B)\,d(T)=\chi(A,B)\,d(T)\,},\qquad \chi(A,B):=a(A)\,b(B),
+$$
+with $\chi$ manifestly independent of $M$. **This is the relative-invariance equation.** $\qquad\blacksquare$
+
+We have *not* evaluated $a(A)$ or $b(B)$ — and that is the point. Identifying these abstract scalars as $a(A)=\det A$, $b(B)=\det B$ is exactly Appendix C: each is a character $GL(V)\to K^{*}$, the homomorphism theorem forces it to factor through the Leibniz determinant, and homogeneity fixes it to $\det$ itself. (Alternatively, if one *defines* the determinant of an endomorphism as its scalar action on $\bigwedge^{n}V$, then $a(A)=\det A$ by definition and Appendix A's Axiom I follows in one stroke. The present appendix deliberately keeps the scalar abstract, so that the relative-invariance *equation* — and nothing more — is what gets derived.)
+
+**Why this needs the two slots, not congruence.** The very same computation with $A=B=P$ yields $d(T_{P,P})=a(P)b(P)\,d(T)$ — the weight law of Section 2, but only along the diagonal. Relative invariance for *independent* $A,B$ is strictly stronger and is **not** recoverable from the diagonal case: the cosquare impostors of Appendix C satisfy the weight law yet violate the two-slot equation. Their extra freedom is killed only by the independence legitimized by bilinearity above — and it is that independence, handed to Appendix C, which finally forces $\chi(A,B)=\det(A)\det(B)$ and $D=\det$.
