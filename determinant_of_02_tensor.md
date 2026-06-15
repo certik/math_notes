@@ -230,62 +230,40 @@ are genuine weight-2 relative invariants of congruence ($D(P^{\mathsf T}MP)=(\de
 
 ---
 
-## Appendix D: Deriving the relative-invariance equation, with indices
+## Appendix D: Deriving the relative-invariance equation from covariance in each slot
 
-Appendix C *starts* from relative invariance,
+The equation
 $$
-D(A^{\mathsf T}MB)=\chi(A,B)\,D(M),
+D(A^{\mathsf T}MB)=\chi(A,B)\,D(M)
 $$
-and identifies $\chi$. Here we derive the equation itself — that the two-slot operation rescales $D$ by a factor depending on $(A,B)$ but **not** on $M$ — using nothing but ordinary tensors written in index notation and the totally antisymmetric symbol. We will *not* compute $\chi$; that stays Appendix C's job.
+is a pure *rescaling* (covariance) statement: it says the two-slot operation multiplies $D$ by a number independent of $M$. It contains no antisymmetry. So it ought to be derived from a covariance hypothesis — not by writing down the antisymmetric determinant and verifying, which only confirms it for the one function we already suspected. Here is a derivation whose single ingredient is relative invariance itself, imposed one slot at a time.
 
-**Conventions.** A repeated index is summed from $1$ to $n$ (Einstein's convention); we keep all indices lowered and treat matrices as arrays of numbers $M_{ij}$, $A_{ij}$, $B_{ij}$. The **totally antisymmetric symbol** $\varepsilon_{i_1 i_2\cdots i_n}$ is defined by $\varepsilon_{12\cdots n}=1$ and by changing sign whenever two indices are swapped; consequently it is $0$ as soon as any two indices are equal, and equals $\pm1$ when $(i_1,\dots,i_n)$ is a permutation of $(1,\dots,n)$, with the sign of that permutation. It is itself a totally antisymmetric rank-$n$ tensor — an "antisymmetric tensor" is all a differential form ever was.
+**The primitive: $D$ is a relative scalar in each slot.** A $(0,2)$ tensor has two independent arguments — it is bilinear. Recombining the **first** argument by an invertible $A$, i.e. replacing $T(v,w)$ by $T(Av,w)$, changes the components by
+$$
+M_{ij}\ \longmapsto\ T(Ae_i,e_j)=A_{ki}M_{kj}=(A^{\mathsf T}M)_{ij},
+$$
+and recombining the **second** argument by $B$, i.e. $T(v,w)\mapsto T(v,Bw)$, gives $M\mapsto MB$. Each of these is a change of basis *within one slot*. The defining property of a density (a relative scalar) attached to the tensor is that such a change of basis rescales it by a factor that depends only on the change, not on the tensor:
+$$
+D(A^{\mathsf T}M)=\alpha(A)\,D(M),\qquad D(MB)=\beta(B)\,D(M). \tag{$\dagger$}
+$$
+This is the natural covariance assumption. It mentions no antisymmetry and builds nothing; it is the same *kind* of statement as "a weight-$w$ density transforms by $(\det P)^{w}$", written before the factor is known. (It is also genuinely non-trivial: setting $M=I$ already gives $D(A^{\mathsf T})=\alpha(A^{\mathsf T})\,D(I)$, so $D$ on invertible matrices is essentially the factor itself — relative invariance in even one slot is nearly as strong as being the determinant. That strength is unavoidable, by Appendix C; what we *can* choose is to assume it as a clean covariance law rather than to construct it.)
 
-**The two-slot operation in indices.** Writing out $\tilde M:=A^{\mathsf T}MB$,
+**Two-slot invariance is the product of the two.** The first- and second-slot operations are independent and commute, $A^{\mathsf T}(MB)=(A^{\mathsf T}M)B$, so applying both and using ($\dagger$) twice,
 $$
-\tilde M_{ij}=A_{ki}\,B_{lj}\,M_{kl}.
+D(A^{\mathsf T}MB)=D\big(A^{\mathsf T}(MB)\big)=\alpha(A)\,D(MB)=\alpha(A)\,\beta(B)\,D(M).
 $$
-So $A$ acts on the **first** index of $M$ and $B$ on the **second**, independently. This is exactly what "bilinear" means — $T$ is linear in each of its two arguments separately — which is why feeding the two slots through different matrices $A\neq B$ is a legitimate operation at all (the change of basis of Section 2 is only the special case $A=B$).
+Hence
+$$
+\boxed{\,D(A^{\mathsf T}MB)=\chi(A,B)\,D(M),\qquad \chi(A,B):=\alpha(A)\,\beta(B)\,,}
+$$
+with $\chi$ manifestly independent of $M$. The two-slot equation is nothing but per-slot covariance imposed in each of the two arguments — no antisymmetric contraction anywhere, as befits an equation that is not antisymmetric in anything.
 
-**The determinant as a top-degree antisymmetric contraction.** The natural scalar of degree $n$ in $M$ that uses each slot antisymmetrically is built by contracting $n$ copies of $M$ with two antisymmetric symbols, one for the row indices and one for the column indices:
+**The factors are automatically multiplicative.** Composition within one slot forces $\alpha$ and $\beta$ to be characters. Recombining the first argument by $A_1$ and then by $A_2$ is recombining it by $A_2A_1$; since $(A_2A_1)^{\mathsf T}M=A_1^{\mathsf T}(A_2^{\mathsf T}M)$,
 $$
-D(M)=\frac{1}{n!}\,\varepsilon_{i_1\cdots i_n}\,\varepsilon_{j_1\cdots j_n}\,M_{i_1 j_1}\,M_{i_2 j_2}\cdots M_{i_n j_n}.
+\alpha(A_2A_1)\,D(M)=D\big(A_1^{\mathsf T}(A_2^{\mathsf T}M)\big)=\alpha(A_1)\,\alpha(A_2)\,D(M),
 $$
-The first $\varepsilon$ antisymmetrizes the first index of each $M$, the second $\varepsilon$ the second index; the $1/n!$ cancels the $n!$ identical terms produced by relabelling the pairs. (Componentwise this is the usual determinant, but the only feature we use below is that $D$ is this fully antisymmetric, degree-$n$ — "top-degree" — contraction.)
+so $\alpha(A_1A_2)=\alpha(A_1)\alpha(A_2)$, and likewise $\beta(B_1B_2)=\beta(B_1)\beta(B_2)$. Thus $\alpha,\beta:GL(V)\to K^{*}$ are multiplicative characters — a derived consequence, not an assumption.
 
-**The one fact that does all the work.** *In $n$ dimensions, a tensor $W_{k_1\cdots k_n}$ that is totally antisymmetric in its $n$ indices is a single number times $\varepsilon$:*
-$$
-W_{k_1\cdots k_n}=w\,\varepsilon_{k_1\cdots k_n},\qquad w:=W_{12\cdots n}.
-$$
-*Proof.* If two of the indices coincide, antisymmetry forces $W=0$, and $\varepsilon=0$ there too. If $(k_1,\dots,k_n)$ are distinct, they are a permutation of $(1,\dots,n)$; reordering them into $(1,\dots,n)$ multiplies $W$ by the sign of the permutation, so $W_{k_1\cdots k_n}=\operatorname{sgn}\cdot W_{12\cdots n}=w\,\varepsilon_{k_1\cdots k_n}$. $\square$
+**What remains.** We now have the relative-invariance equation with $\chi=\alpha\beta$ and $\alpha,\beta$ characters, obtained from covariance alone. Appendix C finishes the job: the homomorphism theorem forces $\alpha=g\circ\det$ and $\beta=g\circ\det$, and homogeneity fixes $g=\operatorname{id}$, giving $\chi(A,B)=\det(A)\det(B)$ and $D=\det$. The determinant is therefore the value of the factor, never an input.
 
-This is the elementary, index-level version of "the top antisymmetric tensors form a one-dimensional space": once you know a quantity is totally antisymmetric in $n$ indices, it is pinned down by the *single* number $w$.
-
-**Each slot collapses to one number.** Apply that fact to the array obtained by hitting one $\varepsilon$ with $n$ copies of $A$:
-$$
-W_{k_1\cdots k_n}:=\varepsilon_{i_1\cdots i_n}\,A_{k_1 i_1}\,A_{k_2 i_2}\cdots A_{k_n i_n}.
-$$
-$W$ is totally antisymmetric in the $k$'s: swapping $k_1\leftrightarrow k_2$ and then relabelling the dummy indices $i_1\leftrightarrow i_2$ turns it into $\varepsilon_{i_2 i_1\cdots}A_{k_1 i_1}A_{k_2 i_2}\cdots=-W_{k_1 k_2\cdots}$, using the antisymmetry of $\varepsilon$. Hence, by the boxed fact,
-$$
-\varepsilon_{i_1\cdots i_n}\,A_{k_1 i_1}\cdots A_{k_n i_n}=a(A)\,\varepsilon_{k_1\cdots k_n},
-$$
-where $a(A)$ is **one number depending only on $A$**. (Setting $k=(1,\dots,n)$ shows $a(A)=\varepsilon_{i_1\cdots i_n}A_{1 i_1}\cdots A_{n i_n}$; we will not need this value — that it equals $\det A$, and that $D$ is thereby unique, is Appendix C.) In the same way,
-$$
-\varepsilon_{j_1\cdots j_n}\,B_{l_1 j_1}\cdots B_{l_n j_n}=b(B)\,\varepsilon_{l_1\cdots l_n}.
-$$
-
-**The derivation.** Substitute $\tilde M_{i_a j_a}=A_{k_a i_a}B_{l_a j_a}M_{k_a l_a}$ into $D(\tilde M)$ and gather the $n$ factors of $A$ next to the first $\varepsilon$ and the $n$ factors of $B$ next to the second:
-$$
-D(A^{\mathsf T}MB)
-=\frac{1}{n!}\Big(\varepsilon_{i_1\cdots i_n}A_{k_1 i_1}\cdots A_{k_n i_n}\Big)\Big(\varepsilon_{j_1\cdots j_n}B_{l_1 j_1}\cdots B_{l_n j_n}\Big)M_{k_1 l_1}\cdots M_{k_n l_n}.
-$$
-Replace the two bracketed contractions by $a(A)\,\varepsilon_{k_1\cdots k_n}$ and $b(B)\,\varepsilon_{l_1\cdots l_n}$:
-$$
-D(A^{\mathsf T}MB)=a(A)\,b(B)\,\frac{1}{n!}\,\varepsilon_{k_1\cdots k_n}\,\varepsilon_{l_1\cdots l_n}\,M_{k_1 l_1}\cdots M_{k_n l_n}=a(A)\,b(B)\,D(M).
-$$
-Therefore
-$$
-\boxed{\,D(A^{\mathsf T}MB)=\chi(A,B)\,D(M),\qquad \chi(A,B):=a(A)\,b(B)\,,}
-$$
-and $\chi$ is manifestly independent of $M$. This is the relative-invariance equation. $\qquad\blacksquare$
-
-**What was and was not used.** The factor split into one piece per slot, $a(A)b(B)$, purely because each antisymmetric symbol absorbed its own $n$ copies of a matrix and collapsed to a single number — the one-dimensionality of top antisymmetric tensors, written with indices. We never evaluated $a(A)$ or $b(B)$; relative invariance needs only that they are numbers depending on $A$ and $B$ alone. The special case $A=B=P$ gives $\chi(P,P)=a(P)b(P)$, the weight law of Section 2; the independent case is strictly stronger, and it is exactly the freedom $A\neq B$ — legitimate because $T$ is bilinear — that the cosquare impostors of Appendix C cannot survive.
+**Why per-slot, and not change of basis.** Imposing ($\dagger$) in each slot treats the two arguments independently, $A$ and $B$ unrelated — legitimate precisely because $T$ is bilinear. An honest change of basis of the single space $V$ ties the slots together, $A=B=P$, and yields only $D(P^{\mathsf T}MP)=\alpha(P)\beta(P)D(M)$ — the weight law of Section 2. That diagonal case is strictly weaker and does **not** give back ($\dagger$): the cosquare impostors of Appendix C obey it yet fail to be relatively invariant slot by slot. All the force is in allowing $A\neq B$, i.e. in reading the bilinearity of $T$ as covariance in each argument on its own.
