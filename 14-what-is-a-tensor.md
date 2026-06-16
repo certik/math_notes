@@ -758,6 +758,1044 @@ Equivalently, pseudotensors are tensor densities of weight $0$ with a sign
 character: they differ from ordinary tensors only in carrying the sign
 representation of $GL(n,\R) \to \{\pm 1\}$ given by $\operatorname{sgn}(\det)$.
 
+## Tensor densities and the determinant of $A_{ij}$
+
+The same language also gives the clean way to say what the determinant of a
+covariant rank-$2$ tensor means. The important point is that $\det(A_{ij})$ is
+not naturally a scalar. It is naturally a **density-like object**.
+
+### Relative invariants
+
+Let $J\in GL(n,\R)$ be a change-of-basis matrix, and let $J*A$ denote the
+induced action on whatever object $A$ is. A scalar-valued expression $F(A)$ is a
+**relative invariant** if
+
+$$
+F(J*A)=\chi(J)F(A)
+$$
+
+for some factor $\chi(J)$ depending only on $J$, not on $A$. If $F$ is not
+identically zero, then $\chi$ is forced to be a group homomorphism. Indeed, for
+some $A$ with $F(A)\ne0$,
+
+$$
+F((J K)*A)=\chi(JK)F(A),
+$$
+
+while associativity of the group action gives
+
+$$
+F(J*(K*A))=\chi(J)F(K*A)=\chi(J)\chi(K)F(A).
+$$
+
+Thus
+
+$$
+\chi(JK)=\chi(J)\chi(K).
+$$
+
+The determinant notes show the corresponding principle for matrix
+homomorphisms: a multiplicative character of $GL(n)$ factors through the
+determinant. Over $\R$, with the usual regularity assumptions used for
+Cauchy-type equations (continuity, or merely measurability), the characters
+are
+
+$$
+\chi(J)=|\det J|^{-w}\big(\operatorname{sgn}\det J\big)^k,
+\qquad k\in\mathbb Z,
+$$
+
+where only the parity of $k$ matters. This is the tensor-density
+classification. For objects with free tensor indices, the table records the
+extra density factor multiplying the ordinary tensor index transformation.
+
+| Object | Ordinary tensor type | Extra factor $\chi(J)$ | $(w,k)$ |
+|---|---:|---:|---:|
+| scalar $s$ | $(0,0)$ | $1$ | $(0,0)$ |
+| pseudoscalar $s$ | $(0,0)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| scalar density $\rho$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| inverse scalar density $\rho^{-1}$ | $(0,0)$ | $\lvert\det J\rvert$ | $(-1,0)$ |
+| top-form component $\omega$ in $\omega\,\Omega$ | coefficient | $(\det J)^{-1}$ | $(1,1)$ |
+| coordinate volume basis $\Omega=dx^1\wedge\cdots\wedge dx^n$ | basis | $\det J$ | $(-1,1)$ |
+| metric density $\sqrt{\lvert\det g\rvert}$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| inverse metric density $1/\sqrt{\lvert\det g\rvert}$ | $(0,0)$ | $\lvert\det J\rvert$ | $(-1,0)$ |
+| Lagrangian density $\sqrt{\lvert\det g\rvert}\,\mathcal L$ for scalar $\mathcal L$ | $(0,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| coordinate Dirac delta $\delta^{(n)}(x)$ | distribution coefficient | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| determinant of $A_{ij}$ | $(0,0)$ | $\lvert\det J\rvert^{-2}$ | $(2,0)$ |
+| determinant of $A^{ij}$ | $(0,0)$ | $\lvert\det J\rvert^2$ | $(-2,0)$ |
+| determinant of $A^i{}_j$ | $(0,0)$ | $1$ | $(0,0)$ |
+| lower Levi-Civita symbol $\varepsilon_{i_1\cdots i_n}$ | $(0,n)$ | $\det J$ | $(-1,1)$ |
+| upper Levi-Civita symbol $\varepsilon^{i_1\cdots i_n}$ | $(n,0)$ | $(\det J)^{-1}$ | $(1,1)$ |
+| covariant Levi-Civita tensor $E_{i_1\cdots i_n}=\sqrt{\lvert g\rvert}\,\varepsilon_{i_1\cdots i_n}$ | $(0,n)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| contravariant Levi-Civita tensor $E^{i_1\cdots i_n}=\varepsilon^{i_1\cdots i_n}/\sqrt{\lvert g\rvert}$ | $(n,0)$ | $\operatorname{sgn}(\det J)$ | $(0,1)$ |
+| densitized vector $\sqrt{\lvert g\rvert}\,V^i$ | $(1,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+| densitized inverse metric $\sqrt{\lvert g\rvert}\,g^{ij}$ | $(2,0)$ | $\lvert\det J\rvert^{-1}$ | $(1,0)$ |
+
+Here $\lvert g\rvert$ abbreviates $\lvert\det g_{ij}\rvert$. For example, the
+lower Levi-Civita symbol row means
+
+$$
+\varepsilon'_{i_1\cdots i_n}
+=(\det J)(J^{-1})^{a_1}{}_{i_1}\cdots(J^{-1})^{a_n}{}_{i_n}
+\varepsilon_{a_1\cdots a_n},
+$$
+
+so it is not an ordinary $(0,n)$ tensor; it is a $(0,n)$ tensor density with
+$(w,k)=(-1,1)$. Similarly, the upper Levi-Civita symbol has $(w,k)=(1,1)$.
+
+So the determinant of a linear map $A^i{}_j$ is a true scalar, but the
+determinant of a covariant tensor $A_{ij}$ is a weight-$2$, even-parity scalar
+density.
+
+### Basis-independent definition
+
+Let $V$ be $n$-dimensional and let
+
+$$
+A\in V^*\otimes V^*
+$$
+
+be a covariant rank-$2$ tensor, i.e. a bilinear form. It defines a linear map
+
+$$
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)(u)=A(v,u).
+$$
+
+For a genuine linear map $T:V\to V$, the determinant is a scalar because
+$\Lambda^n T$ maps the one-dimensional line $\Lambda^n V$ to itself. Here the
+map is instead $A^\flat:V\to V^*$, so its top exterior power maps one
+determinant line to a different determinant line:
+
+$$
+\Lambda^n A^\flat:\Lambda^n V\to \Lambda^n V^*.
+$$
+
+This is the basis-independent determinant of $A_{ij}$:
+
+$$
+\boxed{\;
+\operatorname{Det}(A):=\Lambda^n A^\flat
+\in \operatorname{Hom}(\Lambda^n V,\Lambda^n V^*)
+\cong (\Lambda^n V^*)^{\otimes 2}.
+\;}
+$$
+
+Equivalently,
+
+$$
+\big[\operatorname{Det}(A)(v_1\wedge\cdots\wedge v_n)\big]
+(u_1,\dots,u_n)
+=
+\det\!\big(A(v_i,u_j)\big).
+$$
+
+This formula uses an ordinary determinant only on the final $n\times n$ array
+of numbers obtained after feeding $A$ actual vectors. The output
+$\operatorname{Det}(A)$ itself is coordinate-free.
+
+In a basis $e_i$ with dual coframe $\theta^i$, let
+
+$$
+\Omega=\theta^1\wedge\cdots\wedge\theta^n.
+$$
+
+Then
+
+$$
+\operatorname{Det}(A)=\det(A_{ij})\,\Omega\otimes\Omega.
+$$
+
+Thus the component number $\det(A_{ij})$ depends on the chosen co-volume
+$\Omega$, but the product $\det(A_{ij})\,\Omega\otimes\Omega$ does not. Under
+the component transformation
+
+$$
+A'=J^{-T}AJ^{-1},
+\qquad
+\Omega'=(\det J)\Omega,
+$$
+
+we get
+
+$$
+\det(A'_{ij})
+=\det(J^{-T})\det(A_{ij})\det(J^{-1})
+=(\det J)^{-2}\det(A_{ij})
+=|\det J|^{-2}\det(A_{ij}),
+$$
+
+and therefore
+
+$$
+\det(A'_{ij})\,\Omega'\otimes\Omega'
+=\det(A_{ij})\,\Omega\otimes\Omega.
+$$
+
+This is the precise meaning of the shorthand $\det A_{ij}$: it is the
+coordinate component of the invariant object $\operatorname{Det}(A)$, and that
+component is a tensor density with $(w,k)=(2,0)$.
+
+The component formula is the usual two-antisymmetrizer expression
+
+$$
+\det(A_{ij})
+= {1\over n!}\,
+\varepsilon^{i_1\cdots i_n}\varepsilon^{j_1\cdots j_n}
+A_{i_1j_1}\cdots A_{i_nj_n}.
+$$
+
+In this sense this is the $p=q=1$ case: one alternating symbol antisymmetrizes
+the first index family, and one alternating symbol antisymmetrizes the second
+index family. It should not be confused with a tensor of type $(1,1)$; a
+$(1,1)$ tensor has the similarity law $A'=JAJ^{-1}$, and its determinant is an
+ordinary scalar.
+
+If one wants an actual scalar from $A_{ij}$, one must choose an additional
+volume form $\Omega_0$ and write
+
+$$
+\operatorname{Det}(A)=d_{\Omega_0}\,\Omega_0\otimes\Omega_0.
+$$
+
+The number $d_{\Omega_0}$ is the determinant **relative to that chosen volume
+form**. Without such a choice, the invariant object is
+$\operatorname{Det}(A)\in(\Lambda^n V^*)^{\otimes2}$, not a scalar.
+
+For a nondegenerate metric $g_{ij}$ this explains the familiar expression
+$\sqrt{|\det g_{ij}|}$: it is a weight-$1$ density, so
+$\sqrt{|\det g_{ij}|}\,d^n x$ is coordinate-invariant.
+
+### Non-circular index derivation using antisymmetric tensors
+
+The exterior-power notation is compact, but it is not necessary. The same
+construction can be written entirely with ordinary tensors and Einstein index
+notation, and the Leibniz formula then appears as a theorem rather than a
+definition. A differential form is just an antisymmetric covariant tensor; here
+we use only that tensor fact.
+
+First convert the covariant rank-$2$ tensor into a linear map. If
+
+$$
+A=A_{ij}\,\theta^i\otimes\theta^j,
+$$
+
+then define
+
+$$
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)_j=A_{ij}v^i.
+$$
+
+This is not a determinant construction; it is just currying one slot of the
+bilinear form $A(v,u)$.
+
+Now let $X^{i_1\cdots i_n}$ be an antisymmetric contravariant rank-$n$ tensor.
+Define
+
+$$
+Y_{j_1\cdots j_n}
+:=A_{i_1j_1}\cdots A_{i_nj_n}X^{i_1\cdots i_n}.
+$$
+
+This is tensor multiplication and contraction only. The output $Y$ is
+antisymmetric in the $j$-indices: swapping $j_a$ and $j_b$ and then relabeling
+the dummy indices $i_a$ and $i_b$ changes $X$ by a minus sign. Thus $A$ induces
+a linear map
+
+$$
+\operatorname{Det}(A):\operatorname{Alt}^n(V)\longrightarrow
+\operatorname{Alt}^n(V^*),
+\qquad
+X\longmapsto Y.
+$$
+
+This is the basis-independent determinant object. No alternating sum over
+permutations has been used to define it.
+
+Now choose a basis. Let $E^{i_1\cdots i_n}$ be the antisymmetric contravariant
+tensor with $E^{12\cdots n}=1$, and let
+$\varepsilon_{j_1\cdots j_n}$ be the antisymmetric covariant tensor with
+$\varepsilon_{12\cdots n}=1$. Since the space of antisymmetric $n$-tensors is
+one-dimensional, there is a unique scalar $F(A)$ such that
+
+$$
+A_{i_1j_1}\cdots A_{i_nj_n}E^{i_1\cdots i_n}
+=F(A)\,\varepsilon_{j_1\cdots j_n}.
+$$
+
+This equation defines the **component coefficient** of the intrinsic map
+$\operatorname{Det}(A)$ in the chosen basis. It still does not define $F$ by a
+Leibniz sum. The purpose of this step is only to read one scalar from the
+intrinsic map
+
+$$
+\operatorname{Det}(A):\operatorname{Alt}^n(V)\to\operatorname{Alt}^n(V^*).
+$$
+
+Both the source and target are one-dimensional. Once the basis tensors $E$ and
+$\varepsilon$ are chosen, any linear map between these two lines is described
+by a single number. That number is $F(A)$.
+
+To identify $F$, use the homomorphism characterization of the ordinary
+determinant from [Determinant From Homomorphism](determinant_homomorphism.md).
+More generally, if $L:V\to W$ is a linear map between two $n$-dimensional
+vector spaces with chosen bases, define $\Delta(L)$ to be the scalar by which
+the induced map acts on top antisymmetric tensors:
+
+$$
+L^{a_1}{}_{i_1}\cdots L^{a_n}{}_{i_n}E_V^{i_1\cdots i_n}
+=\Delta(L)E_W^{a_1\cdots a_n}.
+$$
+
+When $W=V$ and the same basis is used on both sides, induced actions compose,
+so
+
+$$
+\Delta(MN)=\Delta(M)\Delta(N).
+$$
+
+On diagonal maps $D=\operatorname{diag}(d_1,\dots,d_n)$, the induced action is
+immediate:
+
+$$
+\Delta(D)=d_1\cdots d_n.
+$$
+
+In particular $\Delta(\lambda I)=\lambda^n$, but the full diagonal
+normalization is the point that fixes the sign as well. Therefore $\Delta$ is
+the unique homomorphism normalized by the product of diagonal entries, hence
+
+$$
+\Delta(M)=\det M.
+$$
+
+This is exactly the determinant theorem already derived for ordinary
+endomorphisms; its Leibniz component formula is a consequence, not an
+assumption. For a map $L:V\to W$ between two different $n$-dimensional spaces,
+the same statement is applied to its component matrix $L^a{}_i$ in the chosen
+bases:
+
+$$
+\Delta(L)=\det(L^a{}_i).
+$$
+
+Now take $W=V^*$ with basis $\theta^j$ and $L=A^\flat$. Its components are
+$L^j{}_i=A_{ij}$, so the defining equation for $\Delta(A^\flat)$ is exactly
+
+$$
+A_{i_1j_1}\cdots A_{i_nj_n}E^{i_1\cdots i_n}
+=\Delta(A^\flat)\,\varepsilon_{j_1\cdots j_n}.
+$$
+
+Comparing with the defining equation for $F(A)$ above gives
+
+$$
+F(A)=\Delta(A^\flat).
+$$
+
+Then the determinant theorem gives
+
+$$
+F(A)=\Delta(A^\flat)=\det(A_{ij}).
+$$
+
+If we now expand the already-derived ordinary determinant in components, we
+recover the familiar formula
+
+$$
+F(A)=
+\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,
+A_{\sigma(1)1}A_{\sigma(2)2}\cdots A_{\sigma(n)n}
+=\det(A_{ij}).
+$$
+
+So the permutation sum is recovered at the end; it was not the definition of
+the determinant object.
+
+Under a basis change, $A'=J^{-T}AJ^{-1}$. Applying the same multiplicativity to
+these component matrices,
+
+$$
+F(A')=\Delta(J^{-T})F(A)\Delta(J^{-1})
+=(\det J)^{-2}F(A)
+=|\det J|^{-2}F(A).
+$$
+
+Thus the component coefficient $F(A)=\det(A_{ij})$ is a scalar density of
+weight $(w,k)=(2,0)$, while $\operatorname{Det}(A)$ itself is the intrinsic
+linear map from antisymmetric contravariant $n$-tensors to antisymmetric
+covariant $n$-tensors.
+
+### Where the homomorphism property lives
+
+For an ordinary linear map $M:V\to V$, the determinant is characterized by
+
+$$
+\det(MN)=\det(M)\det(N).
+$$
+
+It is tempting to impose the same condition on covariant rank-$2$ tensors by
+writing
+
+$$
+F(AB)=F(A)F(B).
+$$
+
+But this is not a basis-independent statement. If $A$ and $B$ are both
+covariant tensors, then their components transform as
+
+$$
+A'=J^{-T}AJ^{-1},
+\qquad
+B'=J^{-T}BJ^{-1}.
+$$
+
+Ordinary matrix multiplication gives
+
+$$
+A'B'
+=J^{-T}A(J^{-1}J^{-T})BJ^{-1},
+$$
+
+which is not the covariant transformation law
+
+$$
+(AB)'=J^{-T}(AB)J^{-1}
+$$
+
+unless $J^{-1}J^{-T}=I$, i.e. unless the change of basis is orthogonal with
+respect to an extra background metric. Thus $AB$ is not a natural product of
+two $(0,2)$ tensors. It secretly contracts two lower indices using a hidden
+identity matrix $\delta^{ij}$, and $\delta^{ij}$ is not available without extra
+structure.
+
+The correct homomorphism property is instead the functoriality of the induced
+map on top antisymmetric tensors. Here are the details.
+
+Let $U,V,W$ be $n$-dimensional vector spaces. For a linear map
+
+$$
+L:U\to V,
+$$
+
+with components $L^i{}_a$ in chosen bases, define its induced map on
+antisymmetric contravariant rank-$n$ tensors by
+
+$$
+(\operatorname{Alt}^n L)(X)^{i_1\cdots i_n}
+:=L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}X^{a_1\cdots a_n}.
+$$
+
+This is just tensor multiplication and contraction. If $X$ is antisymmetric,
+then $(\operatorname{Alt}^n L)(X)$ is antisymmetric, because swapping two
+output indices swaps two factors and hence, after relabeling dummy indices,
+uses the antisymmetry of $X$.
+
+The space of antisymmetric contravariant rank-$n$ tensors is one-dimensional.
+Choose basis tensors $E_U,E_V$ normalized by
+
+$$
+E_U^{12\cdots n}=1,\qquad E_V^{12\cdots n}=1.
+$$
+
+Then there is a unique scalar $\Delta(L)$ such that
+
+$$
+(\operatorname{Alt}^n L)(E_U)=\Delta(L)E_V,
+$$
+
+or in components,
+
+$$
+L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}
+E_U^{a_1\cdots a_n}
+=\Delta(L)E_V^{i_1\cdots i_n}.
+$$
+
+This is the definition of $\Delta(L)$. It is the scalar by which $L$ acts on
+the top antisymmetric line. No determinant formula has been used.
+
+Now let
+
+$$
+L:U\to V,\qquad M:V\to W,
+$$
+
+be composable. The induced maps compose:
+
+$$
+\operatorname{Alt}^n(M\circ L)
+=(\operatorname{Alt}^n M)\circ(\operatorname{Alt}^n L).
+$$
+
+Indeed, in components,
+
+$$
+\begin{aligned}
+(\operatorname{Alt}^n(M\circ L)(X))^{\alpha_1\cdots\alpha_n}
+&=(M^{\alpha_1}{}_{i_1}L^{i_1}{}_{a_1})
+\cdots
+(M^{\alpha_n}{}_{i_n}L^{i_n}{}_{a_n})
+X^{a_1\cdots a_n} \\
+&=M^{\alpha_1}{}_{i_1}\cdots M^{\alpha_n}{}_{i_n}
+\big(L^{i_1}{}_{a_1}\cdots L^{i_n}{}_{a_n}X^{a_1\cdots a_n}\big) \\
+&=(\operatorname{Alt}^n M(\operatorname{Alt}^n L(X)))^{\alpha_1\cdots\alpha_n}.
+\end{aligned}
+$$
+
+Apply this to $E_U$. First
+
+$$
+(\operatorname{Alt}^n L)(E_U)=\Delta(L)E_V,
+$$
+
+then
+
+$$
+(\operatorname{Alt}^n M)(\Delta(L)E_V)
+=\Delta(L)\Delta(M)E_W.
+$$
+
+Therefore
+
+$$
+\boxed{\;\Delta(M\circ L)=\Delta(M)\Delta(L).\;}
+$$
+
+This is the homomorphism that replaces the invalid formula $F(AB)=F(A)F(B)$
+for two covariant tensors.
+
+Now specialize to an endomorphism $M:V\to V$, using the same basis in the
+source and target. Then $\Delta$ is a group homomorphism
+
+$$
+\Delta:GL(V)\to\R^*.
+$$
+
+On diagonal maps the value is immediate. If
+
+$$
+D=\operatorname{diag}(d_1,\dots,d_n),
+$$
+
+then
+
+$$
+(\operatorname{Alt}^n D)(E)^{12\cdots n}
+=D^1{}_1\cdots D^n{}_n E^{12\cdots n}
+=d_1\cdots d_n.
+$$
+
+Thus
+
+$$
+\boxed{\;\Delta(D)=d_1\cdots d_n.\;}
+$$
+
+This diagonal normalization includes the scalar homogeneity
+
+$$
+\Delta(\lambda I)=\lambda^n,
+$$
+
+but it is slightly stronger. Over $\mathbb C$, the homogeneity
+$\Delta(\lambda I)=\lambda^n$ plus the homomorphism property is enough to
+select the determinant, because every nonzero complex number has an $n$-th
+root, as in [determinant_over_C.md](determinant_over_C.md). Over $\mathbb R$,
+for even $n$, scalar homogeneity alone does not distinguish $\det$ from
+$|\det|$. The diagonal normalization $\Delta(D)=d_1\cdots d_n$ fixes this sign
+ambiguity directly, and it was derived above from the action on the top
+antisymmetric tensor.
+
+By the homomorphism characterization in
+[Determinant From Homomorphism](determinant_homomorphism.md) -- the same
+argument applies over $\mathbb R$ when the full diagonal normalization is used
+-- a homomorphism $GL(V)\to\R^*$ with this diagonal normalization is the
+determinant:
+
+$$
+\Delta(M)=\det M.
+$$
+
+For a non-invertible linear map $M$, the image of $M$ has dimension $<n$, so
+the induced top antisymmetric map is zero; hence $\Delta(M)=0$, matching
+$\det M=0$. Thus the same formula holds for all linear maps, not just
+invertible ones.
+
+Finally return to a covariant rank-$2$ tensor. It gives a genuine linear map
+
+$$
+A^\flat:V\to V^*,
+\qquad
+(A^\flat v)(u)=A(v,u).
+$$
+
+In a basis,
+
+$$
+(A^\flat)^j{}_i=A_{ij}.
+$$
+
+With the usual convention that matrix rows are target indices and columns are
+source indices, this is the transpose of the displayed array $A_{ij}$; the
+determinant is unchanged.
+
+The determinant component of $A$ is therefore defined by the same top-line
+coefficient:
+
+$$
+F(A):=\Delta(A^\flat).
+$$
+
+Applying the already identified formula for $\Delta$ to the component matrix
+of $A^\flat$ gives
+
+$$
+F(A)=\Delta(A^\flat)=\det(A_{ij}).
+$$
+
+So the two determinant principles still appear:
+
+1. the weight law gives the correct homogeneity of the component density
+   $\det(A_{ij})$; and
+2. the homomorphism law is the functoriality
+   $\Delta(M\circ L)=\Delta(M)\Delta(L)$ for induced maps on top
+   antisymmetric tensors, not multiplication of two covariant tensors.
+
+If one does choose extra structure, such as a nondegenerate bilinear form
+$h_{ij}$ with inverse $h^{ij}$, then one can manufacture a product of covariant
+tensors:
+
+$$
+(A\star_h B)_{ij}:=A_{ik}h^{kl}B_{lj}.
+$$
+
+Equivalently,
+
+$$
+(A\star_h B)^\flat=B^\flat\circ h^\sharp\circ A^\flat,
+\qquad
+h^\sharp:V^*\to V.
+$$
+
+Then the scalar determinant relative to $h$,
+
+$$
+\det_h(A):=\det(h^\sharp\circ A^\flat),
+$$
+
+is multiplicative:
+
+$$
+\det_h(A\star_h B)=\det_h(A)\det_h(B).
+$$
+
+But this multiplicativity depends on the extra choice of $h$. Without such a
+choice, the intrinsic statement is the functorial homomorphism
+$\Delta(M\circ L)=\Delta(M)\Delta(L)$ for composable linear maps.
+
+### What is assumed, and what is derived
+
+It is important to separate two different questions.
+
+**Question 1: How do we define the determinant of a covariant $2$-tensor?**
+For this question, the assumptions are:
+
+1. $A$ is a covariant rank-$2$ tensor, i.e. a bilinear form
+
+   $$
+   A:V\times V\to\R.
+   $$
+
+2. We use the canonical currying operation
+
+   $$
+   A^\flat:V\to V^*,
+   \qquad
+   (A^\flat v)(u)=A(v,u).
+   $$
+
+3. We define the determinant to be the scalar by which this linear map acts on
+   the top antisymmetric line:
+
+   $$
+   F(A):=\Delta(A^\flat).
+   $$
+
+These are the defining inputs. The following facts are then **derived**:
+
+1. Every linear map $L$ induces a map on antisymmetric top tensors by applying
+   $L$ to each tensor index.
+2. These induced maps compose, so
+
+   $$
+   \Delta(M\circ L)=\Delta(M)\Delta(L).
+   $$
+
+3. On diagonal maps,
+
+   $$
+   \Delta(\operatorname{diag}(d_1,\dots,d_n))=d_1\cdots d_n.
+   $$
+
+4. Therefore, by the determinant homomorphism theorem,
+
+   $$
+   \Delta(L)=\det L
+   $$
+
+   in components.
+
+5. Hence
+
+   $$
+   F(A)=\Delta(A^\flat)=\det(A_{ij}).
+   $$
+
+6. Under a change of basis this component has weight $(w,k)=(2,0)$:
+
+   $$
+   F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A).
+   $$
+
+So in this construction the weight law is a consequence, not an assumption.
+The homomorphism law is also not an extra axiom about multiplying two
+covariant tensors; it is the functoriality of induced maps on the top
+antisymmetric line.
+
+**Question 2: If all we know is weight $(2,0)$, is the expression forced to be
+$\det(A_{ij})$?** No. The weight law alone only says how a component changes
+under a basis change. It does not say which construction produced that
+component. For example, in dimension $2$,
+
+$$
+(A_{12}-A_{21})^2
+$$
+
+also has weight $(2,0)$, but it is not the scalar by which
+$A^\flat:V\to V^*$ acts on the top antisymmetric line. It comes from a
+different construction: take the antisymmetric part of $A$, which is a
+$2$-form, and square its component.
+
+Thus there are two clean ways to single out $\det(A_{ij})$:
+
+1. **Constructive/functorial definition:** define
+
+   $$
+   F(A):=\Delta(A^\flat).
+   $$
+
+   Then the determinant formula and the weight $(2,0)$ are derived.
+
+2. **Classification from weight alone:** start with an arbitrary expression
+   satisfying weight $(2,0)$, and add extra assumptions such as polynomiality,
+   vanishing on degenerate $A^\flat$, and normalization. This is the next
+   subsection.
+
+### Starting from weight $(2,0)$
+
+Now suppose we start only with the desired density character
+
+$$
+\chi(J)=|\det J|^{-2}.
+$$
+
+We want to know which scalar component expression $F(A)$ this character
+selects. The character alone is not enough, but the following assumptions are
+natural and do characterize the determinant.
+
+Let $A\in V^*\otimes V^*$ be an arbitrary covariant rank-$2$ tensor, not
+necessarily symmetric. Assume:
+
+1. **Weight $(2,0)$.**
+
+   $$
+   F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A)
+   $$
+
+   for every $J\in GL(n,\R)$.
+
+2. **Polynomial dependence.** $F(A)$ is a polynomial in the components
+   $A_{ij}$.
+
+3. **Degeneracy detection.** If $A^\flat:V\to V^*$ is not invertible, then
+   $F(A)=0$. Equivalently, if there is a nonzero vector $v$ such that
+
+   $$
+   A(v,u)=0\qquad\text{for every }u\in V,
+   $$
+
+   then $F(A)=0$.
+
+4. **Normalization.** In a chosen basis, for the component matrix
+   $I_{ij}=\delta_{ij}$,
+
+   $$
+   F(I)=1.
+   $$
+
+   This fixes the overall multiplicative constant. The tensor $I_{ij}$ is not
+   canonical without choosing extra structure; it is only a normalization point
+   for the component formula.
+
+Under these assumptions,
+
+$$
+F(A)=\det(A_{ij}).
+$$
+
+Here is the proof.
+
+1. **The character forces degree $n$ homogeneity.** Put $J=\lambda I$. Then
+
+   $$
+   J^{-T}AJ^{-1}=\lambda^{-2}A,
+   \qquad
+   |\det J|^{-2}=|\lambda|^{-2n}.
+   $$
+
+   Hence
+
+   $$
+   F(\lambda^{-2}A)=|\lambda|^{-2n}F(A).
+   $$
+
+   For $t>0$, choose $\lambda=t^{-1/2}$. Then
+
+   $$
+   F(tA)=t^nF(A).
+   $$
+
+   Since $F$ is polynomial, write it as a sum of homogeneous parts,
+
+   $$
+   F=F_0+F_1+\cdots+F_N,
+   $$
+
+   where $F_m(tA)=t^mF_m(A)$. Substituting into the homogeneity identity gives
+
+   $$
+   \sum_m t^mF_m(A)=t^n\sum_m F_m(A)
+   $$
+
+   for every $t>0$ and every $A$. This is a polynomial identity in $t$, so all
+   homogeneous parts vanish except the degree-$n$ part. Thus $F$ is homogeneous
+   of degree $n$.
+
+2. **The ordinary determinant gives the degeneracy hypersurface.** The tensor
+   $A$ defines the linear map
+
+   $$
+   A^\flat:V\to V^*,
+   \qquad
+   (A^\flat v)(u)=A(v,u).
+   $$
+
+   The ordinary determinant of this linear map has already been characterized
+   in [Determinant From Homomorphism](determinant_homomorphism.md). In a basis
+   its component matrix is $A_{ij}$, so write
+
+   $$
+   D(A):=\det(A^\flat)=\det(A_{ij}).
+   $$
+
+   Then
+
+   $$
+   A^\flat\text{ is not invertible}
+   \qquad\Longleftrightarrow\qquad
+   D(A)=0.
+   $$
+
+   By the degeneracy assumption, $F$ vanishes on the whole hypersurface
+   $D(A)=0$.
+
+3. **Polynomial algebra forces divisibility by $D$.** We use the standard
+   algebra fact:
+
+   > If a polynomial $P$ in the entries of an $n\times n$ matrix vanishes on
+   > every singular matrix, then $P$ is divisible by the determinant polynomial.
+
+   More explicitly, after complexifying the coefficients, the determinant
+   polynomial is irreducible, so the hypersurface $\det(A_{ij})=0$ is
+   irreducible. The real singular matrices are Zariski dense in that
+   hypersurface, so a real polynomial vanishing on all of them vanishes on the
+   whole complex hypersurface. Since the ideal of an irreducible hypersurface
+   cut out by one square-free polynomial is generated by that polynomial, the
+   polynomial must be divisible by $\det(A_{ij})$. Applying this to $F$ gives
+
+   $$
+   F(A)=D(A)\,G(A)
+   $$
+
+   for some polynomial $G$.
+
+   This is the only algebraic input in the argument. Intuitively, the equation
+   $D(A)=0$ is one irreducible polynomial equation cutting out the rank
+   $<n$ matrices; therefore a polynomial that vanishes on all rank-deficient
+   matrices must contain that irreducible factor.
+
+4. **The degree and normalization fix the remaining factor.** Both $F$ and
+   $D$ are homogeneous of degree $n$. Therefore $G$ is homogeneous of degree
+   $0$. A polynomial homogeneous of degree $0$ is constant, so
+
+   $$
+   F(A)=c\,D(A).
+   $$
+
+   Finally,
+
+   $$
+   1=F(I)=c\,D(I)=c,
+   $$
+
+   since $D(I)=1$. Thus $c=1$, and hence
+
+   $$
+   \boxed{\;F(A)=D(A)=\det(A_{ij}).\;}
+   $$
+
+So starting from the character $(w,k)=(2,0)$, the determinant is singled out by
+three extra natural requirements: polynomiality, vanishing on degenerate
+bilinear forms, and the normalization $F(I)=1$. No symmetry assumption is
+needed.
+
+Each extra assumption rules out a real ambiguity:
+
+- Without normalization, any constant multiple $c\det(A_{ij})$ works.
+- Without polynomiality, $|\det(A_{ij})|$ has the same weight; in the symmetric
+  case, one can also choose different constants on the different signature
+  classes.
+- Without degeneracy detection, other polynomial weight-$2$ expressions can
+  occur. In dimension $2$, for example,
+
+  $$
+  \det(A_{ij})+c(A_{12}-A_{21})^2
+  $$
+
+  still has weight $(2,0)$ and still satisfies $F(I)=1$, but it does not vanish
+  on all degenerate tensors unless $c=0$.
+
+### Symmetric special case without the degeneracy axiom
+
+Now suppose we go in the opposite direction. We know only that a scalar
+component expression $F(A)$ has the relative-invariance law
+
+$$
+F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A).
+$$
+
+This transformation law alone fixes the **density weight**, but it does not
+fix the formula. To get the uniqueness statement
+
+$$
+F(A)=\det(A_{ij}),
+$$
+
+we must also specify the class of objects and functions. The standard
+determinant uniqueness statement is:
+
+> Let $A_{ij}=A_{ji}$ be a symmetric covariant rank-$2$ tensor. If $F(A)$ is a
+> polynomial in the components $A_{ij}$, satisfies
+> $F(J^{-T}AJ^{-1})=|\det J|^{-2}F(A)$ for every $J\in GL(n,\R)$, and is
+> normalized by $F(I)=1$, then $F(A)=\det(A_{ij})$.
+
+Here is the proof.
+
+1. **The character gives the homogeneity.** Put $J=\lambda I$. Then
+
+   $$
+   J^{-T}AJ^{-1}=\lambda^{-2}A,
+   \qquad
+   |\det J|^{-2}=|\lambda|^{-2n}.
+   $$
+
+   Hence
+
+   $$
+   F(\lambda^{-2}A)=|\lambda|^{-2n}F(A).
+   $$
+
+   For $t>0$, choose $\lambda=t^{-1/2}$. Then
+
+   $$
+   F(tA)=t^n F(A).
+   $$
+
+   So a weight-$2$ relative invariant of a covariant $2$-tensor is homogeneous
+   of degree $n$ in the components.
+
+2. **Evaluate on the positive-definite orbit.** If $A$ is positive definite,
+   choose $B\in GL(n,\R)$ with
+
+   $$
+   A=B^T B.
+   $$
+
+   Put $J=B^{-1}$. Since $J^{-T}=B^T$ and $J^{-1}=B$,
+
+   $$
+   A=J^{-T} I J^{-1}.
+   $$
+
+   The relative-invariance law and the normalization $F(I)=1$ give
+
+   $$
+   F(A)
+   =F(J^{-T}IJ^{-1})
+   =|\det J|^{-2}F(I)
+   =|\det B^{-1}|^{-2}
+   =|\det B|^2.
+   $$
+
+   But
+
+   $$
+   \det A=\det(B^T B)=(\det B)^2=|\det B|^2.
+   $$
+
+   Therefore
+
+   $$
+   F(A)=\det A
+   $$
+
+   for every positive-definite symmetric $A$.
+
+3. **Extend by polynomiality.** The positive-definite symmetric matrices form
+   an open subset of the vector space $S^2V^*$. Both $F(A)$ and $\det(A)$ are
+   polynomial functions of the independent components $A_{ij}=A_{ji}$. A
+   polynomial that vanishes on a nonempty open set vanishes identically, so the
+   equality from the positive-definite cone extends to all symmetric matrices:
+
+   $$
+   F(A)=\det(A_{ij}).
+   $$
+
+Thus the determinant is the unique normalized polynomial relative invariant of
+weight $(w,k)=(2,0)$ on symmetric covariant rank-$2$ tensors.
+
+The assumptions are essential. For a general, not necessarily symmetric
+$(0,2)$ tensor, the same weight does not single out the determinant. In
+dimension $2$, for example, the skew part
+
+$$
+A_{12}-A_{21}
+$$
+
+is the component of a $2$-form and transforms by $(\det J)^{-1}$; hence
+
+$$
+(A_{12}-A_{21})^2
+$$
+
+also transforms by $|\det J|^{-2}$. So the character $(w,k)=(2,0)$ alone says
+"weight-$2$ density"; the determinant formula is obtained only after adding
+symmetry, polynomial dependence, and the normalization $F(I)=1$.
+
 ## Summary
 
 Pulling all of the above together:
@@ -800,3 +1838,8 @@ Pulling all of the above together:
   $\vec B$ and $\vec\omega$ are antisymmetric rank‑$2$ tensors in disguise via
   $\varepsilon_{ijk}$. They can be understood uniformly as tensors on an
   unoriented manifold, i.e. sections of $T^r_s M \otimes \mathrm{or}(M)$.
+- Tensor densities are relative invariants with character
+  $|\det J|^{-w}(\operatorname{sgn}\det J)^k$. The determinant of a covariant
+  tensor $A_{ij}$ is basis-independently
+  $\operatorname{Det}(A)=\Lambda^n A^\flat\in(\Lambda^n V^*)^{\otimes2}$; its
+  component $\det(A_{ij})$ has $(w,k)=(2,0)$, so it is not an ordinary scalar.
