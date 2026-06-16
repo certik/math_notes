@@ -27,33 +27,44 @@ $$
 \textbf{(H)}\ \ D(\lambda M)=\lambda^{n}D(M)\ \ (\lambda\in\mathbb{C}),\qquad\qquad \textbf{(N)}\ \ D(I)=1 .
 $$
 
-## Step 1: the two-slot law, and $\alpha,\beta$ are characters
+## Step 1: the two-slot law (R$'$)
 
-The two operations commute, $A^{\mathsf T}(MB)=(A^{\mathsf T}M)B$, so applying (R) twice,
+Apply (R) in the two slots successively (the operations commute, $A^{\mathsf T}(MB)=(A^{\mathsf T}M)B$): by the second equation of (R), $D(MB)=\beta(B)D(M)$, then by the first, $D\big(A^{\mathsf T}(MB)\big)=\alpha(A)D(MB)$. So the two-slot operation rescales $D$ by a factor depending only on $A$ and $B$, which we name $\chi(A,B)$:
 $$
-D(A^{\mathsf T}MB)=\alpha(A)\,D(MB)=\alpha(A)\beta(B)\,D(M).
-$$
-Hence
-$$
-\boxed{\,D(A^{\mathsf T}MB)=\chi(A,B)\,D(M),\qquad \chi(A,B):=\alpha(A)\,\beta(B).\,}
+\textbf{(R}'\textbf{)}\qquad D(A^{\mathsf T}MB)=\chi(A,B)\,D(M).
 $$
 
-The factors are multiplicative. Since $(A_2A_1)^{\mathsf T}M=A_1^{\mathsf T}(A_2^{\mathsf T}M)$, the first equation of (R) gives
+**Alternative starting point.** One may take (R$'$) *itself* as the assumption, in place of (R): a single two-slot relative-invariance equation, with $\chi:GL(V)\times GL(V)\to\mathbb{C}$ an unspecified function and $D\not\equiv0$. It is equivalent to (R) — setting $B=I$ and then $A=I$ in (R$'$) returns the two equations of (R). Everything below uses only (R$'$), (H), and (N).
+
+## Step 2: $\chi$ splits into two characters
+
+Working from (R$'$) alone, set $B=I$, then $A=I$:
 $$
-\alpha(A_2A_1)\,D(M)=D\big(A_1^{\mathsf T}(A_2^{\mathsf T}M)\big)=\alpha(A_1)\alpha(A_2)\,D(M);
+D(A^{\mathsf T}M)=\chi(A,I)\,D(M),\qquad D(MB)=\chi(I,B)\,D(M),
 $$
-evaluating at $M=I$ and using (N), $\alpha(A_2A_1)=\alpha(A_1)\alpha(A_2)$, and likewise $\beta(B_1B_2)=\beta(B_1)\beta(B_2)$. Each factor is nonzero: from $D(M)=D\big((A^{-1})^{\mathsf T}A^{\mathsf T}M\big)=\alpha(A^{-1})\alpha(A)D(M)$ at $M=I$, $\alpha(A^{-1})\alpha(A)=1$. Thus
+and define $\alpha(A):=\chi(A,I)$, $\beta(B):=\chi(I,B)$ (the two displayed equations are exactly (R)). Also $\chi(I,I)=1$: take $A=B=I$, $M=I$ in (R$'$) and use (N).
+
+*Factorization.* $D(A^{\mathsf T}MB)=D\big(A^{\mathsf T}(MB)\big)=\alpha(A)\,D(MB)=\alpha(A)\beta(B)\,D(M)$; comparing with (R$'$) at $M=I$,
+$$
+\chi(A,B)=\alpha(A)\,\beta(B).
+$$
+
+*Multiplicativity.* Since $(A_1A_2)^{\mathsf T}M=A_2^{\mathsf T}(A_1^{\mathsf T}M)$,
+$$
+\alpha(A_1A_2)\,D(M)=D\big(A_2^{\mathsf T}(A_1^{\mathsf T}M)\big)=\alpha(A_2)\alpha(A_1)\,D(M);
+$$
+at $M=I$, $\alpha(A_1A_2)=\alpha(A_1)\alpha(A_2)$, and likewise $\beta(B_1B_2)=\beta(B_1)\beta(B_2)$. Each is nonzero: $\alpha(A)\alpha(A^{-1})=\alpha(I)=\chi(I,I)=1$. Thus
 $$
 \alpha,\beta:GL(n,\mathbb{C})\to\mathbb{C}^{*}\ \text{ are group homomorphisms.}
 $$
 
-## Step 2: $\chi(A,B)=\det(A)\det(B)$
+## Step 3: $\chi(A,B)=\det(A)\det(B)$
 
 A homomorphism $GL(n,\mathbb{C})\to\mathbb{C}^{*}$ factors through the determinant: by the factorization theorem of [Determinant From Homomorphism](determinant_homomorphism.md),
 $$
 \alpha=g_1\circ\det,\qquad \beta=g_2\circ\det,
 $$
-for homomorphisms $g_1,g_2:\mathbb{C}^{*}\to\mathbb{C}^{*}$, where $\det$ is the explicit Leibniz polynomial. We pin $g_1,g_2$ with (H). Since $(\lambda I)^{\mathsf T}M=\lambda M$, the first equation of (R) gives $D(\lambda M)=\alpha(\lambda I)\,D(M)$; comparing with (H) at $M=I$,
+for homomorphisms $g_1,g_2:\mathbb{C}^{*}\to\mathbb{C}^{*}$, where $\det$ is the explicit Leibniz polynomial. We pin $g_1,g_2$ with (H). Since $(\lambda I)^{\mathsf T}M=\lambda M$, the first equation of Step 2 gives $D(\lambda M)=\alpha(\lambda I)\,D(M)$; comparing with (H) at $M=I$,
 $$
 \alpha(\lambda I)=\lambda^{n}.
 $$
@@ -62,9 +73,9 @@ $$
 \boxed{\,\chi(A,B)=\det(A)\,\det(B).\,}
 $$
 
-## Step 3: $D(M)=\det(M)$
+## Step 4: $D(M)=\det(M)$
 
-**Invertible $M$.** Apply the second equation of (R) with base point $I$ and multiplier $M$, using $\beta=\det$ and (N):
+**Invertible $M$.** Apply the second equation of Step 2 with base point $I$ and multiplier $M$, using $\beta=\det$ and (N):
 $$
 D(M)=D(I\cdot M)=\beta(M)\,D(I)=\det(M)\cdot 1=\det(M).
 $$
@@ -73,10 +84,10 @@ $$
 $$
 MB=M+(Mu)\,w^{\mathsf T}=M,
 $$
-so the second equation of (R) gives $D(M)=D(MB)=\beta(B)D(M)=\det(B)\,D(M)=(1+c)\,D(M)$, forcing $D(M)=0=\det(M)$.
+so the second equation of Step 2 gives $D(M)=D(MB)=\beta(B)D(M)=\det(B)\,D(M)=(1+c)\,D(M)$, forcing $D(M)=0=\det(M)$.
 
 Hence in every basis
 $$
 \boxed{\,D(M)=\det(M_{ij})=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\,M_{1\sigma(1)}\cdots M_{n\sigma(n)}.\,}
 $$
-The relative-invariance equations (R), together with the degree (H) and scale (N), force the determinant of a $(0,2)$ tensor to be the ordinary component determinant. $\qquad\blacksquare$
+The two-slot law (R$'$) — equivalently the per-slot equations (R) — together with the degree (H) and scale (N), forces the determinant of a $(0,2)$ tensor to be the ordinary component determinant. $\qquad\blacksquare$
