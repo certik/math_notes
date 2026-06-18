@@ -113,15 +113,35 @@ $$
 by the cyclic property of the trace. In particular (I) holds with $\kappa\equiv1$.
 * **Normalized:** $\operatorname{tr}_g(g)=\sum_{ij}g^{ij}G_{ij}=\sum_i\delta^i_i=n$, so (N) holds.
 
-The reason it is invariant under the *full* group, while the abstract $D$ was only assumed invariant under isometries, is index-raising. The matrix
+## Quick route: raise an index
+
+The metric trace need not be rederived from scratch. It collapses, in two lines, to the trace of a genuine endomorphism — to which [Trace From Linearity and Cyclicity](trace_linear_cyclic.md) applies verbatim, since that endomorphism is an ordinary matrix.
+
+A $(0,2)$ tensor carries no trace of its own; the metric supplies one by **raising an index**. Lowering the upper index of an endomorphism $S^{k}{}_{j}$ with $g$ produces a $(0,2)$ tensor,
 $$
-S:=G^{-1}M,\qquad S^{i}{}_{j}=\sum_k g^{ik}T_{kj},
+M_{ij}=g_{ik}\,S^{k}{}_{j},\qquad\text{that is}\qquad M=GS,
 $$
-is the **$(1,1)$ tensor** obtained by raising the first index of $T$ with the metric. Under {eq}`eq-trmet-congruence` it transforms by similarity, $S\mapsto A^{-1}SA$, so it is a genuine endomorphism of $V$, and
+and because $G$ is invertible this is a linear bijection between endomorphisms and $(0,2)$ tensors. Inverting it raises the index back:
+```{math}
+:label: eq-trmet-raise
+
+S=G^{-1}M,\qquad S^{k}{}_{j}=g^{ki}M_{ij}.
+```
+Now $S^{k}{}_{j}$ is an ordinary matrix, so [Trace From Linearity and Cyclicity](trace_linear_cyclic.md) hands us its trace at once, $\operatorname{tr}(S)=S^{i}{}_{i}$. Defining the trace of $T$ to be that of its raised form and substituting {eq}`eq-trmet-raise`,
+```{math}
+:label: eq-trmet-quick
+
+\operatorname{tr}_g(T):=\operatorname{tr}(S)=S^{i}{}_{i}=g^{ij}M_{ij}=\operatorname{tr}\!\big(G^{-1}M\big),
+```
+which reproduces {eq}`eq-trmet-covariant` — and $\sum_i M_{ii}$ when $G=I$ — with no axiomatic machinery at all.
+
+**Invariance is automatic.** Under a change of basis {eq}`eq-trmet-congruence`, $M\mapsto A^{\mathsf T}MA$ and $G^{-1}\mapsto A^{-1}G^{-1}A^{-\mathsf T}$, so the endomorphism transforms by similarity,
 $$
-\operatorname{tr}_g(T)=\operatorname{tr}(S)
+S=G^{-1}M\;\longmapsto\;A^{-1}G^{-1}A^{-\mathsf T}\,A^{\mathsf T}MA=A^{-1}SA,
 $$
-is simply its trace — the invariant of a mixed tensor characterized in [Trace From Linearity and Cyclicity](trace_linear_cyclic.md). The metric's sole job is to convert the covariant tensor $T$ into the endomorphism $S$; the trace then lives where it naturally belongs.
+and the conjugation invariance of the trace — Step 1 of [Trace From Linearity and Cyclicity](trace_linear_cyclic.md), i.e. cyclicity — makes $\operatorname{tr}_g(T)=g^{ij}M_{ij}$ a scalar under the **full** $GL(V)$, not merely the isometries.
+
+**What this does and does not give.** The shortcut yields the formula {eq}`eq-trmet-quick` and its invariance immediately, but not *uniqueness*. With the metric $G$ held fixed, the bijection {eq}`eq-trmet-raise` turns isometry invariance of $T$ into $O(g)$-conjugation invariance of $S$ — still the smaller group — so it cannot on its own exclude other linear scalars of $T$. Ruling them out is exactly the work of the signed-permutation argument in Step 3. Existence and invariance here; uniqueness there.
 
 ## Conclusion
 
