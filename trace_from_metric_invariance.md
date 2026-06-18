@@ -127,13 +127,15 @@ and because $G$ is invertible this is a linear bijection between endomorphisms a
 
 S=G^{-1}M,\qquad S^{k}{}_{j}=g^{ki}M_{ij}.
 ```
-Now $S^{k}{}_{j}$ is an ordinary matrix, so [Trace From Linearity and Cyclicity](trace_linear_cyclic.md) hands us its trace at once, $\operatorname{tr}(S)=S^{i}{}_{i}$. Defining the trace of $T$ to be that of its raised form and substituting {eq}`eq-trmet-raise`,
+Now $S^{k}{}_{j}$ is an ordinary matrix, so [Trace From Linearity and Cyclicity](trace_linear_cyclic.md) hands us its trace at once, $\operatorname{tr}(S)=S^{i}{}_{i}$. Since the trace is intrinsic only on the $(1,1)$ side, we **define** the trace of the $(0,2)$ tensor $T$ to be that of its raised form — the metric-furnished extension of the $(1,1)$ trace. Substituting {eq}`eq-trmet-raise`,
 ```{math}
 :label: eq-trmet-quick
 
 \operatorname{tr}_g(T):=\operatorname{tr}(S)=S^{i}{}_{i}=g^{ij}M_{ij}=\operatorname{tr}\!\big(G^{-1}M\big),
 ```
-which reproduces {eq}`eq-trmet-covariant` — and $\sum_i M_{ii}$ when $G=I$ — with no axiomatic machinery at all.
+which reproduces {eq}`eq-trmet-covariant` — and $\sum_i M_{ii}$ when $G=I$ — with no axiomatic machinery at all. The defining $:=$ is deliberate: {eq}`eq-trmet-quick` is a **definition**, not a consequence of (L), (I), (N). It is the constructive counterpart of the axiomatic characterization, and the two name the same scalar by the existence-and-uniqueness theorem of Steps 1–4.
+
+**The raised index may be either one.** Raising the *second* index of $T$ instead gives the endomorphism $MG^{-1}$, whose trace $\operatorname{tr}(MG^{-1})=\operatorname{tr}(G^{-1}M)$ by cyclicity; so $\operatorname{tr}_g(T)$ does not depend on which slot is raised. (As $g$ is symmetric it sees only the symmetric part of $T$ — see the Remarks.)
 
 **Invariance is automatic.** Under a change of basis {eq}`eq-trmet-congruence`, $M\mapsto A^{\mathsf T}MA$ and $G^{-1}\mapsto A^{-1}G^{-1}A^{-\mathsf T}$, so the endomorphism transforms by similarity,
 $$
@@ -141,7 +143,11 @@ S=G^{-1}M\;\longmapsto\;A^{-1}G^{-1}A^{-\mathsf T}\,A^{\mathsf T}MA=A^{-1}SA,
 $$
 and the conjugation invariance of the trace — Step 1 of [Trace From Linearity and Cyclicity](trace_linear_cyclic.md), i.e. cyclicity — makes $\operatorname{tr}_g(T)=g^{ij}M_{ij}$ a scalar under the **full** $GL(V)$, not merely the isometries.
 
-**What this does and does not give.** The shortcut yields the formula {eq}`eq-trmet-quick` and its invariance immediately, but not *uniqueness*. With the metric $G$ held fixed, the bijection {eq}`eq-trmet-raise` turns isometry invariance of $T$ into $O(g)$-conjugation invariance of $S$ — still the smaller group — so it cannot on its own exclude other linear scalars of $T$. Ruling them out is exactly the work of the signed-permutation argument in Step 3. Existence and invariance here; uniqueness there.
+**Why uniqueness still needs Step 3.** The shortcut yields the formula and its invariance, but not *uniqueness* — and the obstruction is a commutant. Every linear functional of the endomorphism $S$ has the form $\tilde D(S)=\operatorname{tr}(CS)$ for a unique matrix $C$, and invariance under conjugation by a group $H$,
+$$
+\tilde D\big(A^{-1}SA\big)=\operatorname{tr}\big(ACA^{-1}S\big)=\tilde D(S)\qquad(\forall A\in H),
+$$
+holds exactly when $C$ commutes with every $A\in H$. So the linear $H$-invariants, up to scale, form the **commutant** of $H$, and uniqueness means that commutant is only the scalars $\{\lambda I\}$. For $H=GL(V)$ this is the content of [Trace From Linearity and Cyclicity](trace_linear_cyclic.md): the standard representation is irreducible, so the commutant is scalar. But with $G$ fixed the bijection {eq}`eq-trmet-raise` turns isometry invariance of $T$ only into invariance of $S$ under $H=O(g)$, a *smaller* group with an *a priori larger* commutant — so the full-$GL$ theorem does not apply. That the commutant of $O(g)$ collapses to the scalars *anyway* is the separate fact proved elementarily in Step 3: diagonal sign matrices force $C$ diagonal, permutations force it constant. Index-raising buys existence and invariance; Step 3 buys uniqueness.
 
 ## Conclusion
 
