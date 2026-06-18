@@ -106,12 +106,34 @@ D(A)=\tilde D\big(G^{-1}A\big)=\det\!\big(G^{-1}A\big)=\det\nolimits_g(A).\qquad
 $$
 On a degenerate $A$ both sides vanish — $\det_g(A)=0$ by {eq}`eq-detir-formula`, and the explicit polynomial $\det_g$ extends the identity there by continuity — so $D=\det_g$ outright once $D$ is taken to be the everywhere-defined Leibniz extension.
 
+## Density versus scalar: reconciling with the relative-invariance derivation
+
+It is worth comparing this result with [The Determinant of a $(0,2)$ Tensor from Relative Invariance](determinant_from_relative_invariance.md), which derives a *different* object — by design. There are **two** inequivalent notions of "the determinant of a $(0,2)$ tensor," and the metric is exactly what separates them.
+
+**The component determinant is a density, not a scalar.** Under {eq}`eq-detir-transform`, $A\mapsto P^{\mathsf T}AP$, so
+$$
+\det(A_{ij})\;\longmapsto\;\det(P^{\mathsf T}AP)=\det(P)^{2}\,\det(A_{ij}).
+$$
+The bare component determinant is therefore *not* basis-independent — it rescales by $\det(P)^2$. It is a **density of weight $2$** (a relative scalar). This is the object the relative-invariance note characterizes, using **no metric**: the cost of staying metric-free is that the answer is a density, allowed to transform by that factor, rather than a true number.
+
+**Raising an index produces a genuine scalar instead.** The metric determinant $\det_g(A)=\det(G^{-1}A)$ is invariant under the *full* $GL(V)$ — weight $0$, a true scalar. The two objects differ by exactly one factor of the metric's own density:
+```{math}
+:label: eq-detir-density-scalar
+
+\det\nolimits_g(A)=\frac{\det(A_{ij})}{\det(g_{ij})}\,,\qquad\text{equivalently}\qquad \det(A_{ij})=\det(G)\,\det\nolimits_g(A).
+```
+Because $\det(g_{ij})$ is itself a weight-$2$ density — it too rescales by $\det(P)^2$ — the quotient is weight $0$: the two factors of $\det(P)^2$ cancel. Dividing the density of $A$ by the density of $g$ is the standard way a metric turns a density into a number.
+
+**Where they agree, and where they part.** In an **orthonormal basis** $\det(g_{ij})=1$, so $\det_g(A)=\det(A_{ij})$: both notes give the *same number*. In a **general basis** they differ by the factor $\det(G)$ — the relative-invariance note's $\det(A_{ij})$ keeps rescaling as a density, while $\det_g(A)$ stays fixed. The two derivations are thus consistent, not competing: one gives the determinant as a **density** (metric-free), the other as a **scalar** (metric-bound), equal up to $\det(G)$.
+
+**Why this route can only land on the scalar.** The construction is built on the $(1,1)$ determinant, which is conjugation-invariant — a genuine scalar — so anything assembled from it is a genuine scalar too. The density $\det(A_{ij})$ is not a scalar, so it cannot be the output here; the method is *forced* to deliver the weight-$0$ quotient $\det(A)/\det(G)$.
+
+**Why the determinant has two notions while the trace has one.** The component determinant survives metric-free, as a density, only because it is a true relative invariant: $\det(P^{\mathsf T}AP)=\det(P)^2\det(A)$ carries the clean character $P\mapsto\det(P)^2$. The trace enjoys no such thing — $\sum_i A_{ii}\mapsto\operatorname{tr}(P^{\mathsf T}AP)$ rescales by *no* character of $P$, so it is not even a density, only a basis-dependent number with no invariant meaning. Hence there is a "determinant from relative invariance" but no "trace from relative invariance": the trace has only its metric scalar $g^{ij}A_{ij}$, whereas the determinant has both the metric-free density and the metric scalar.
+
 ## Remarks
 
 **Existence piggybacked; uniqueness used multiplicativity.** As with the trace, existence, the component formula, and invariance came straight from the $(1,1)$ determinant by raising an index. Uniqueness, however, rested on **(M)** — multiplicativity — and reduced, through the same index-raising, to the homomorphism theorem of [Determinant From Homomorphism](determinant_homomorphism.md). It is the determinant's counterpart of the trace's pull-back of cyclicity.
 
 **Why isometry-invariance is not enough — the contrast with the trace.** For the trace, linearity together with isometry-invariance pinned $\operatorname{tr}_g$ uniquely (a signed-permutation argument). For the determinant the same geometric hypothesis is far too weak: *every* coefficient of the characteristic polynomial of $M=G^{-1}A$ — the elementary symmetric functions $\operatorname{tr}(M),\ \dots,\ \det(M)$ of its eigenvalues — is an isometry-invariant scalar built from $A$, and $\det_g$ is only the last of them. Linearity selects the first of these (the trace); multiplicativity selects the last (the determinant). This is why the determinant's uniqueness must invoke its multiplicative structure rather than a symmetry.
-
-**Relation to the density.** The formula $\det_g(A)=\det(A_{ij})/\det(g_{ij})$ exhibits $\det_g$ as the weight-$2$ density of [The Determinant of a $(0,2)$ Tensor from Relative Invariance](determinant_from_relative_invariance.md) divided by the metric's own weight-$2$ density — the standard way a metric trivializes a density into a genuine scalar.
 
 **Geometric meaning.** $M=G^{-1}A$ is the endomorphism of the generalized eigenvalue problem $A\,v=\lambda\,g\,v$, so $\det_g(A)$ is the product of the eigenvalues of $A$ relative to $g$ — the ratio of the volume form determined by $A$ to that determined by $g$. Unlike the trace, which saw only the symmetric part of $A$, the determinant sees all of it: a nonzero antisymmetric $A$ can have $\det_g(A)\neq0$.
