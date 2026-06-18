@@ -48,16 +48,13 @@ This is the extension of the $(1,1)$ trace to $(0,2)$ tensors furnished by the m
 
 \operatorname{tr}_g(A)=M^{i}{}_{i}=g^{ij}A_{ij},
 ```
-and in an orthonormal basis, where $G=I$ and $M=A$, this is the ordinary diagonal sum
-$$
-\operatorname{tr}_g(A)=\sum_i A_{ii}.
-$$
+a contraction of the upper indices of $g^{ij}$ against the lower indices of $A_{ij}$ — a genuine scalar. In an orthonormal basis, where $g^{ij}=\delta^{ij}$, its value is the diagonal sum $A_{11}+\dots+A_{nn}$. But that diagonal sum is only a coordinate number: it pairs two *lower* indices, so it is neither a contraction nor basis-independent, and it agrees with $g^{ij}A_{ij}$ only because the basis is orthonormal. This is exactly why $A$ has no trace of its own — and why an index had to be raised to define one.
 
 **It is a scalar.** Under {eq}`eq-trir-transform` the endomorphism transforms by similarity $M\mapsto P^{-1}MP$, so the conjugation invariance of the $(1,1)$ trace makes $\operatorname{tr}_g(A)$ basis-independent — for the **full** $GL(V)$, not merely the isometries. Equivalently, $g^{ij}A_{ij}$ is the complete contraction of a $(2,0)$ tensor with a $(0,2)$ tensor.
 
 **Linearity.** $\operatorname{tr}_g$ is linear in $A$, since $M=G^{-1}A$ is linear in $A$ and the trace is linear.
 
-**The raised index may be either one.** Raising the second index of $A$ instead produces the endomorphism $AG^{-1}$, whose trace $\operatorname{tr}(AG^{-1})=\operatorname{tr}(G^{-1}A)$ by cyclicity. So {eq}`eq-trir-def` does not depend on which slot is raised. And since $g^{ij}$ is symmetric, $\operatorname{tr}_g$ sees only the symmetric part of $A$ (an antisymmetric $A_{ij}=-A_{ji}$ has $\sum_iA_{ii}=0$).
+**The raised index may be either one.** Raising the second index of $A$ instead produces the endomorphism $AG^{-1}$, whose trace $\operatorname{tr}(AG^{-1})=\operatorname{tr}(G^{-1}A)$ by cyclicity. So {eq}`eq-trir-def` does not depend on which slot is raised. And since $g^{ij}$ is symmetric, $g^{ij}A_{ij}=g^{ij}A_{(ij)}$ — the contraction annihilates the antisymmetric part $A_{[ij]}$, so $\operatorname{tr}_g$ sees only the symmetric part of $A$.
 
 **Normalization.** Tracing the metric against itself, $\operatorname{tr}_g(g)=\operatorname{tr}(G^{-1}G)=\operatorname{tr}(I)=n$.
 
@@ -79,7 +76,11 @@ Two families of isometries — both **signed permutation matrices**, which satis
 
 *Permutations equate the diagonal $c_{ii}$.* A transposition matrix $P_\tau$ acts by $(P_\tau^{-1}AP_\tau)_{kl}=A_{\tau(k)\tau(l)}$, so invariance forces $c_{\tau(k)\tau(l)}=c_{kl}$; on the diagonal $c_{ii}=c_{jj}$. Write $\lambda$ for the common value.
 
-Therefore $D(A)=\lambda\sum_i A_{ii}=\lambda\operatorname{tr}_g(A)$ in the orthonormal basis, and — both sides being scalars {eq}`eq-trir-transform` — in every basis. $\qquad\blacksquare$
+Hence $c_{ij}=\lambda\,\delta_{ij}$, and since $g^{ij}=\delta^{ij}$ in the orthonormal basis,
+$$
+D(A)=\sum_{i,j}c_{ij}A_{ij}=\lambda\sum_{i,j}\delta_{ij}A_{ij}=\lambda\,g^{ij}A_{ij}=\lambda\operatorname{tr}_g(A);
+$$
+both sides are scalars {eq}`eq-trir-transform`, so the identity holds in every basis. $\qquad\blacksquare$
 
 The normalization $D(g)=n$ then fixes $\lambda=1$, singling out $\operatorname{tr}_g$ itself.
 
