@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Ondřej Čertík
 -/
 import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Topology.Instances.RealVectorSpace
 
 /-!
@@ -24,15 +26,20 @@ noncomputable section
 
 namespace MathNotesLean
 
+open MeasureTheory
+
 section CauchyAdditive
 
+-- ANCHOR: additive-rat
 /-- An additive map `ℝ → ℝ` is homogeneous for rational scalars. -/
 theorem cauchy_additive_rat_homogeneous (a : ℝ → ℝ)
     (hadd : ∀ x y, a (x + y) = a x + a y) (q : ℚ) (x : ℝ) :
     a ((q : ℝ) * x) = (q : ℝ) * a x := by
   let f : ℝ →+ ℝ := AddMonoidHom.mk' a hadd
   simpa [f, smul_eq_mul] using map_ratCast_smul f ℝ ℝ q x
+-- ANCHOR_END: additive-rat
 
+-- ANCHOR: additive-linear
 /-- A measurable solution of Cauchy's additive equation on `ℝ` is linear. -/
 theorem cauchy_additive_measurable_linear (a : ℝ → ℝ)
     (hadd : ∀ x y, a (x + y) = a x + a y) (hmeas : Measurable a) :
@@ -50,6 +57,7 @@ theorem cauchy_additive_measurable_exists (a : ℝ → ℝ)
     (hadd : ∀ x y, a (x + y) = a x + a y) (hmeas : Measurable a) :
     ∃ c : ℝ, ∀ x : ℝ, a x = c * x :=
   ⟨a 1, cauchy_additive_measurable_linear a hadd hmeas⟩
+-- ANCHOR_END: additive-linear
 
 /-- A continuous additive map `ℝ → ℂ` is complex-linear in one real variable. -/
 theorem cauchy_additive_continuous_complex_linear (a : ℝ → ℂ)
@@ -112,6 +120,7 @@ theorem measurable_rationalAgreementExample (c : ℝ) : Measurable (rationalAgre
   unfold rationalAgreementExample
   exact Measurable.ite measurableSet_isRatReal (measurable_const.mul measurable_id) measurable_const
 
+-- ANCHOR: additive-counterexample
 /--
 If `c ≠ 0`, the rational-agreement example is not additive: adding a nonzero rational to an
 irrational gives an explicit failure of Cauchy's equation.
@@ -125,6 +134,7 @@ theorem rationalAgreementExample_not_additive {c α : ℝ} {q : ℚ}
     rationalAgreementExample_rat]
   simp only [zero_add]
   exact (mul_ne_zero hc (Rat.cast_ne_zero.mpr hq)).symm
+-- ANCHOR_END: additive-counterexample
 
 end CauchyAdditive
 
@@ -224,6 +234,7 @@ theorem cauchy_multiplicative_eq_rpow_on_pos (m : ℝ → ℝ)
   rw [Real.exp_log hpos_mx] at hexp
   simpa [Real.rpow_def_of_pos hx, mul_comm] using hexp
 
+-- ANCHOR: mult-formula
 /--
 The nondegenerate measurable real multiplicative Cauchy equation on `ℝˣ`: away from zero the
 solution is a power of `|x|`, with the independent sign `m (-1) = ±1`.
@@ -251,6 +262,7 @@ theorem cauchy_multiplicative_eq_sign_rpow_on_nonzero (m : ℝ → ℝ)
     calc
       m x = x ^ c := hc hx_pos
       _ = (if x < 0 then m (-1) else 1) * |x| ^ c := by simp [hneg, habs]
+-- ANCHOR_END: mult-formula
 
 /-- A real number satisfying `a = a * a` is `0` or `1`. -/
 theorem eq_zero_or_eq_one_of_eq_mul_self {a : ℝ} (h : a = a * a) : a = 0 ∨ a = 1 := by
@@ -278,6 +290,7 @@ theorem cauchy_multiplicative_measurable_classification (m : ℝ → ℝ)
     · exact Or.inr (cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas)
     · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
 
+-- ANCHOR: mult-classification
 /--
 The same classification, with the nondegenerate branch explicitly recording the extension value
 `m 0 = 0`.
@@ -298,6 +311,7 @@ theorem cauchy_multiplicative_measurable_classification_with_zero (m : ℝ → �
         obtain ⟨c, hsign, hformula⟩ := cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas
         exact ⟨c, h0, hsign, hformula⟩)
     · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
+-- ANCHOR_END: mult-classification
 
 end CauchyMultiplicativeReal
 
@@ -330,6 +344,7 @@ theorem norm_cstarCircleUnit (w : ℂˣ) : ‖(cstarCircleUnit w : ℂ)‖ = 1 :
     have hnonneg : 0 ≤ ‖(cstarCircleUnit w : ℂ)‖ := norm_nonneg _
     linarith)
 
+-- ANCHOR: cstar-polar
 /--
 Every homomorphism `ℂˣ → ℂˣ` factors across the radial and unit-circle polar factors of its
 argument.
@@ -340,6 +355,7 @@ theorem cstar_homomorphism_polar_factorization (g : ℂˣ →* ℂˣ) (w : ℂˣ
     ext
     exact (cstar_norm_mul_circle w).symm
   exact (congrArg g hw).trans (map_mul g (cstarNormUnit w) (cstarCircleUnit w))
+-- ANCHOR_END: cstar-polar
 
 /-- The positive real path `t ↦ exp t` into `ℂˣ`. -/
 def cstarPositivePath (t : ℝ) : ℂˣ :=
@@ -357,6 +373,7 @@ theorem cstar_positive_factor_additive_parameter (g : ℂˣ →* ℂˣ) (t u : �
     g (cstarPositivePath (t + u)) = g (cstarPositivePath t) * g (cstarPositivePath u) := by
   rw [cstarPositivePath_add, map_mul]
 
+-- ANCHOR: cstar-positive
 /--
 If a continuous additive-parameter homomorphism `ℝ → ℂˣ` has a continuous additive logarithmic
 lift, then it has the form `t ↦ exp (s t)`.
@@ -374,6 +391,7 @@ theorem real_to_cstar_exp_linear_of_lift (G : ℝ →+ Additive ℂˣ) (ell : �
   congr 1
   rw [cauchy_additive_continuous_complex_linear ell hell_add hell_cont t]
   ring_nf
+-- ANCHOR_END: cstar-positive
 
 /-- The factor `|w|^s` from the `ℂˣ` homomorphism classification, as a unit of `ℂ`. -/
 def cstarNormCPow (s : ℂ) (w : ℂˣ) : ℂˣ :=
@@ -423,6 +441,7 @@ theorem cstarNormCPow_mul (s : ℂ) (w z : ℂˣ) :
     Real.log_mul (norm_ne_zero_iff.mpr w.ne_zero) (norm_ne_zero_iff.mpr z.ne_zero), mul_add,
     Complex.exp_add]
 
+-- ANCHOR: cstar-converse
 /--
 Every expression `w ↦ |w|^s (w/|w|)^k` defines a multiplicative homomorphism
 `ℂˣ → ℂˣ`.
@@ -433,6 +452,7 @@ def cstarFormulaHom (s : ℂ) (k : ℤ) : ℂˣ →* ℂˣ where
   map_mul' w z := by
     rw [cstarNormCPow_mul, cstarCircleUnit_mul, mul_zpow]
     ac_rfl
+-- ANCHOR_END: cstar-converse
 
 /-- The identity homomorphism corresponds to the parameters `s = 1` and `k = 1`. -/
 theorem cstarFormulaHom_one_one : cstarFormulaHom 1 1 = MonoidHom.id ℂˣ := by
@@ -516,6 +536,127 @@ theorem coe_circlePowerUnitsHom_apply (k : ℤ) (z : Circle) :
     ((circlePowerUnitsHom k z : ℂˣ) : ℂ) = (z : ℂ) ^ k := by
   simp [circlePowerUnitsHom, circlePowerHom]
 
+/-- A circle-valued additive character, viewed as a complex-valued continuous map. -/
+def circleValuedContinuousMap {T : ℝ} (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    C(AddCircle T, ℂ) where
+  toFun x := (ψ x : ℂ)
+  continuous_toFun := continuous_subtype_val.comp hψ
+
+/-- A continuous circle-valued function on `AddCircle` has a nonzero Fourier coefficient. -/
+theorem exists_nonzero_fourierCoeff_circleValued {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    ∃ n : ℤ, fourierCoeff (circleValuedContinuousMap ψ hψ : AddCircle T → ℂ) n ≠ 0 := by
+  by_contra hnone
+  push Not at hnone
+  let F : C(AddCircle T, ℂ) := circleValuedContinuousMap ψ hψ
+  let FLp : MeasureTheory.Lp ℂ 2 AddCircle.haarAddCircle :=
+    (ContinuousMap.toLp 2 AddCircle.haarAddCircle ℂ) F
+  have hcoeff_l2 : ∀ n : ℤ, fourierCoeff ((FLp : AddCircle T → ℂ)) n = 0 := by
+    intro n
+    rw [fourierCoeff_toLp]
+    exact hnone n
+  have hsum := tsum_sq_fourierCoeff (T := T) FLp
+  simp_rw [hcoeff_l2, norm_zero, zero_pow (by norm_num : (2 : ℕ) ≠ 0)] at hsum
+  have hright :
+      (∫ t : AddCircle T, ‖(FLp : AddCircle T → ℂ) t‖ ^ 2 ∂AddCircle.haarAddCircle) = 1 := by
+    have hae : (fun t : AddCircle T => (FLp : AddCircle T → ℂ) t)
+        =ᵐ[AddCircle.haarAddCircle] fun t => F t :=
+      ContinuousMap.coeFn_toAEEqFun AddCircle.haarAddCircle F
+    calc
+      (∫ t : AddCircle T, ‖(FLp : AddCircle T → ℂ) t‖ ^ 2 ∂AddCircle.haarAddCircle)
+          = ∫ t : AddCircle T, ‖F t‖ ^ 2 ∂AddCircle.haarAddCircle := by
+            apply integral_congr_ae
+            filter_upwards [hae] with t ht
+            rw [ht]
+      _ = ∫ _t : AddCircle T, (1 : ℝ) ∂AddCircle.haarAddCircle := by
+            apply integral_congr_ae
+            filter_upwards with t
+            simp [F, circleValuedContinuousMap]
+      _ = 1 := by simp
+  rw [hright] at hsum
+  norm_num at hsum
+
+/--
+If a continuous additive character has a nonzero `n`-th Fourier coefficient, then it is the
+`n`-th Fourier monomial.
+-/
+theorem fourierCoeff_eigen {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) {n : ℤ}
+    (hn : fourierCoeff (circleValuedContinuousMap ψ hψ : AddCircle T → ℂ) n ≠ 0) :
+    ∀ a : AddCircle T, (ψ a : ℂ) = fourier n a := by
+  let F : C(AddCircle T, ℂ) := circleValuedContinuousMap ψ hψ
+  let c : ℂ := fourierCoeff (F : AddCircle T → ℂ) n
+  have hc : c ≠ 0 := hn
+  intro a
+  have htrans : c = fourier (-n) a * (ψ a : ℂ) * c := by
+    calc
+      c = ∫ t : AddCircle T, fourier (-n) (t + a) * F (t + a) ∂AddCircle.haarAddCircle := by
+        rw [show c = fourierCoeff (F : AddCircle T → ℂ) n by rfl]
+        rw [fourierCoeff]
+        exact (MeasureTheory.integral_add_right_eq_self (μ := AddCircle.haarAddCircle)
+          (fun t : AddCircle T => fourier (-n) t * F t) a).symm
+      _ = ∫ t : AddCircle T,
+            (fourier (-n) a * (ψ a : ℂ)) * (fourier (-n) t * F t) ∂AddCircle.haarAddCircle := by
+        apply integral_congr_ae
+        filter_upwards with t
+        simp [F, circleValuedContinuousMap, AddChar.map_add_eq_mul, Circle.coe_mul,
+          fourier_apply, AddCircle.toCircle_add, mul_comm, mul_left_comm, mul_assoc]
+      _ = fourier (-n) a * (ψ a : ℂ) * c := by
+        rw [integral_const_mul]
+        rfl
+  have hfactor : fourier (-n) a * (ψ a : ℂ) = 1 := by
+    exact mul_right_cancel₀ hc (by simpa [mul_assoc] using htrans.symm)
+  have hpsi : (ψ a : ℂ) = (fourier (-n) a)⁻¹ :=
+    eq_inv_of_mul_eq_one_right hfactor
+  rw [hpsi]
+  have hmul : fourier (-n) a * fourier n a = 1 := by
+    rw [← fourier_add]
+    simp
+  exact inv_eq_of_mul_eq_one_right hmul
+
+/-- Continuous characters of the additive circle are exactly Fourier monomials. -/
+theorem continuous_addCircle_char_eq_fourier {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    ∃ n : ℤ, ∀ a : AddCircle T, (ψ a : ℂ) = fourier n a := by
+  obtain ⟨n, hn⟩ := exists_nonzero_fourierCoeff_circleValued ψ hψ
+  exact ⟨n, fourierCoeff_eigen ψ hψ hn⟩
+
+/-- The additive character on `AddCircle (2π)` associated to a circle endomorphism. -/
+def circleEndomorphismAddChar (h : Circle →* Circle) :
+    AddChar (AddCircle (2 * Real.pi)) Circle where
+  toFun x := h (AddCircle.toCircle x)
+  map_zero_eq_one' := by simp
+  map_add_eq_mul' x y := by simp [AddCircle.toCircle_add, map_mul]
+
+/-- The additive-circle character associated to a continuous circle endomorphism is continuous. -/
+theorem continuous_circleEndomorphismAddChar (h : Circle →* Circle) (hh : Continuous h) :
+    Continuous (circleEndomorphismAddChar h) := by
+  dsimp [circleEndomorphismAddChar]
+  exact hh.comp AddCircle.continuous_toCircle
+
+/--
+Every continuous endomorphism of the unit circle has an integer slope in exponential coordinates.
+-/
+theorem circle_endomorphism_exp_int_slope (h : Circle →* Circle) (hh : Continuous h) :
+    ∃ k : ℤ, ∀ t : ℝ, h (Circle.exp t) = Circle.exp ((k : ℝ) * t) := by
+  haveI : Fact (0 < 2 * Real.pi) := ⟨by positivity⟩
+  have hψcont : Continuous (circleEndomorphismAddChar h) :=
+    continuous_circleEndomorphismAddChar h hh
+  obtain ⟨k, hk⟩ :=
+    continuous_addCircle_char_eq_fourier (circleEndomorphismAddChar h) hψcont
+  refine ⟨k, ?_⟩
+  intro t
+  apply Circle.ext
+  rw [Circle.coe_exp]
+  have hk' := hk (t : AddCircle (2 * Real.pi))
+  convert hk' using 1
+  · simp [circleEndomorphismAddChar, AddCircle.toCircle_apply_mk]
+  · rw [fourier_coe_apply]
+    congr 1
+    field_simp [Real.pi_ne_zero]
+    push_cast
+    ring
+
 /-- A continuous homomorphism from a compact additive group to `ℝ` is trivial. -/
 theorem compact_additive_hom_to_real_eq_zero {G : Type*} [AddGroup G] [TopologicalSpace G]
     [CompactSpace G] (f : G →+ ℝ) (hf : Continuous f) : ∀ x, f x = 0 := by
@@ -556,6 +697,7 @@ theorem circle_hom_log_norm_eq_zero (g : Circle →* ℂˣ) (hg : Continuous g) 
   intro z
   exact compact_additive_hom_to_real_eq_zero f hf (Additive.ofMul z)
 
+-- ANCHOR: cstar-circle
 /-- A continuous homomorphism from the unit circle to `ℂˣ` has image in the unit circle. -/
 theorem circle_hom_norm_eq_one (g : Circle →* ℂˣ) (hg : Continuous g) (z : Circle) :
     ‖(g z : ℂ)‖ = 1 := by
@@ -563,6 +705,7 @@ theorem circle_hom_norm_eq_one (g : Circle →* ℂˣ) (hg : Continuous g) (z : 
   have hpos : 0 < ‖(g z : ℂ)‖ := norm_pos_iff.mpr (g z).ne_zero
   have hexp := congrArg Real.exp hlog
   rwa [Real.exp_log hpos, Real.exp_zero] at hexp
+-- ANCHOR_END: cstar-circle
 
 /-- A continuous homomorphism from the unit circle to `ℂˣ`, re-codomain-restricted to `Circle`. -/
 def circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g) : Circle →* Circle where
@@ -591,6 +734,7 @@ theorem continuous_circle_toUnits : Continuous Circle.toUnits := by
   · change Continuous fun z : Circle => ((z : ℂ))⁻¹
     exact continuous_subtype_val.inv₀ fun z => Circle.coe_ne_zero z
 
+-- ANCHOR: cstar-circle-char
 /--
 If a circle endomorphism has the exponential-coordinate formula `exp t ↦ exp (k t)`, then it is
 the power character `z ↦ z^k`.
@@ -614,6 +758,7 @@ theorem circle_to_cstar_hom_eq_zpow_of_exp_lift (g : Circle →* ℂˣ) (hg : Co
   rw [← circleHomToCircle_toUnits g hg z]
   congr 1
   exact circle_endomorphism_eq_zpow_of_exp_lift (circleHomToCircle g hg) k h_exp z
+-- ANCHOR_END: cstar-circle-char
 
 /-- A unit complex number, represented as an element of `Circle`. -/
 def cstarUnitToCircle (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) : Circle :=
@@ -628,6 +773,7 @@ theorem cstarUnitToCircle_toUnits (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) :
   ext
   rfl
 
+-- ANCHOR: cstar-assembly
 /--
 The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
 has exponent `s` and the circle factor has winding number `k`, the homomorphism has the advertised
@@ -667,6 +813,21 @@ theorem cstar_homomorphism_formula_of_radial_and_circle_lift (g : ℂˣ →* ℂ
   have hright : Circle.toUnits (cstarUnitToCircle z hz ^ k) = z ^ k := by
     rw [map_zpow, cstarUnitToCircle_toUnits]
   rwa [hright] at hpow
+
+/--
+The C-star formula with the circle factor classified automatically. It remains only to supply the
+positive-real radial exponential formula.
+-/
+theorem cstar_homomorphism_formula_of_radial (g : ℂˣ →* ℂˣ) (hg : Continuous g) (s : ℂ)
+    (hradial : ∀ t : ℝ,
+      g (cstarPositivePath t) = Units.mk0 (Complex.exp (s * (t : ℂ))) (Complex.exp_ne_zero _)) :
+    ∃ k : ℤ, ∀ w : ℂˣ, g w = cstarNormCPow s w * cstarCircleUnit w ^ k := by
+  obtain ⟨k, hk⟩ := circle_endomorphism_exp_int_slope
+    (circleHomToCircle (g.comp Circle.toUnits) (hg.comp continuous_circle_toUnits))
+    (continuous_circleHomToCircle _ _)
+  refine ⟨k, ?_⟩
+  exact cstar_homomorphism_formula_of_radial_and_circle_lift g hg s k hradial hk
+-- ANCHOR_END: cstar-assembly
 
 end CStarHomomorphism
 

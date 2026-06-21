@@ -10,6 +10,19 @@ $$
 Without regularity assumptions such homomorphisms can be highly nonconstructive.
 With continuity, or even Borel measurability, they have one simple form.
 
+:::{note} Lean formalization
+The proofs in this note are formalized in Lean 4 + Mathlib in
+[`CstarHomomorphism.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphism.lean).
+Each **Lean proof** dropdown below includes the corresponding declaration
+verbatim from the compiled source, so the displayed code cannot drift from what
+is actually checked. Continuous integration runs `lake build` (which fails on any
+error or `sorry`), so every displayed proof is guaranteed to type-check.
+
+Lean's kernel guarantees each *proof* is correct. Whether a Lean *statement*
+faithfully captures the informal claim is a human judgement, so each dropdown is
+placed next to the statement it formalizes, for direct comparison.
+:::
+
 (cauchy-additive)=
 ## Cauchy's Additive Functional Equation
 
@@ -54,6 +67,14 @@ a(q)=q\,a(1)=cq
 $$
 for rational $q$, where $c=a(1)$.
 
+:::{dropdown} Lean proof: `cauchy_additive_rat_homogeneous`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: additive-rat
+:end-before: ANCHOR_END: additive-rat
+```
+:::
+
 :::{note}
 The condition $a(q)=cq$ on rational numbers is not enough by itself. For
 example, the measurable function
@@ -73,6 +94,16 @@ a(\alpha+q)=0
 a(\alpha)+a(q)=cq.
 $$
 Thus the additive hypothesis is essential, in addition to measurability.
+:::
+
+:::{dropdown} Lean proof: `rationalAgreementExample_not_additive`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: additive-counterexample
+:end-before: ANCHOR_END: additive-counterexample
+```
+The function is also measurable (`measurable_rationalAgreementExample`) and agrees
+with `c·x` on the rationals (`rationalAgreementExample_rat`), matching the note.
 :::
 
 :::{tip} Theorem
@@ -144,6 +175,17 @@ $b$ is continuous everywhere. Since $b$ vanishes on the dense set $\mathbb Q$,
 continuity gives $b(x)=0$ for every real $x$.
 :::
 
+:::{dropdown} Lean proof: `cauchy_additive_measurable_linear` (and `cauchy_additive_measurable_exists`)
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: additive-linear
+:end-before: ANCHOR_END: additive-linear
+```
+Mathlib supplies the Steinhaus/measurable-implies-continuous step as
+`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`, which is the
+content of the boundedness-and-continuity argument written out above.
+:::
+
 :::{note}
 If measurability is not required, there are infinitely many nonlinear solutions
 to {eq}`eq-cauchy-additive`, and their graphs are dense in $\mathbb R^2$. These
@@ -202,6 +244,17 @@ m(x)=m(\operatorname{sgn}(x))m(|x|)
 $$
 with $\epsilon=0$ in the even case and $\epsilon=1$ in the odd case.
 
+:::{dropdown} Lean proof: `cauchy_multiplicative_eq_sign_rpow_on_nonzero`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: mult-formula
+:end-before: ANCHOR_END: mult-formula
+```
+The supporting steps `m(x)>0` on positives, `m(-1)²=1`, and `b(t)=log m(eᵗ)`
+additive are `cauchy_multiplicative_pos_of_pos`, `cauchy_multiplicative_neg_one_sq`,
+and `cauchy_multiplicative_log_exp_additive`.
+:::
+
 (cstar-homomorphism-formula)=
 ## Measurable Homomorphisms $\mathbb C^*\to\mathbb C^*$
 
@@ -220,6 +273,17 @@ $|w|$, so there is no branch choice.
 
 Conversely, every formula in {eq}`eq-cstar-homomorphism-formula` defines a
 continuous homomorphism $\mathbb C^*\to\mathbb C^*$.
+
+:::{dropdown} Lean proof: `cstarFormulaHom` is a homomorphism (continuity: `cstarFormulaContinuousHom`)
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-converse
+:end-before: ANCHOR_END: cstar-converse
+```
+Continuity of this formula is `continuous_cstarFormulaHom`, bundled as the
+`ContinuousMonoidHom` named `cstarFormulaContinuousHom`; the special case
+`cstarFormulaHom 1 1 = id` is `cstarFormulaHom_one_one`.
+:::
 
 :::{note} Derivation
 A Borel measurable homomorphism between these locally compact groups is
@@ -257,6 +321,63 @@ g(\zeta)=\zeta^k.
 $$
 Multiplying the positive and unit-circle parts gives
 {eq}`eq-cstar-homomorphism-formula`.
+:::
+
+The Lean formalization of this derivation is split into the steps below.
+
+:::{dropdown} Lean: polar split `g(w) = g(|w|)·g(w/|w|)` — `cstar_homomorphism_polar_factorization`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-polar
+:end-before: ANCHOR_END: cstar-polar
+```
+:::
+
+:::{dropdown} Lean: positive factor `g(eᵗ) = exp(s·t)` — `real_to_cstar_exp_linear_of_lift`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-positive
+:end-before: ANCHOR_END: cstar-positive
+```
+This takes the additive logarithmic lift `ell` as a hypothesis (the "ℝ is simply
+connected, so it lifts through exp" step) and concludes the exponent form; the
+linear part `ℓ(t)=s·t` is `cauchy_additive_continuous_complex_linear`.
+:::
+
+:::{dropdown} Lean: the circle factor has modulus one, `g(S¹) ⊆ S¹` — `circle_hom_norm_eq_one`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-circle
+:end-before: ANCHOR_END: cstar-circle
+```
+The "compact subgroup of `ℝ_{>0}` is trivial" argument is
+`compact_additive_hom_to_real_eq_zero`, applied via `circle_hom_log_norm_eq_zero`.
+:::
+
+:::{dropdown} Lean: circle characters are `ζ ↦ ζᵏ` — `circle_endomorphism_eq_zpow_of_exp_lift`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-circle-char
+:end-before: ANCHOR_END: cstar-circle-char
+```
+:::
+
+:::{warning} Status of the Lean classification
+The boxed formula is *assembled* in Lean from two analytic inputs that are taken
+as hypotheses rather than derived from continuity alone: the radial map has the
+exponential form (`hradial`) and the circle factor has integer winding number in
+exponential coordinates (`hcircle_exp`). These are exactly the "ℝ simply connected
+⇒ the positive factor lifts" and "continuous characters of $S^1$ are $\zeta\mapsto\zeta^k$"
+facts. So the forward direction is currently proven *modulo* those two ingredients,
+not yet end-to-end from "merely Borel/continuous".
+:::
+
+:::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_of_radial_and_circle`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-assembly
+:end-before: ANCHOR_END: cstar-assembly
+```
 :::
 
 This is the formula needed for the free factor $g$ in
@@ -310,3 +431,14 @@ contributes $m(-1)=\pm1$, which is $\operatorname{sgn}(x)^\epsilon$.
 Extending by $m(0)=0$ gives exactly the nondegenerate solutions listed in
 {eq}`eq-real-multiplicative-one-formula`, together with the degenerate
 solutions $m\equiv0$ and $m\equiv1$.
+
+:::{dropdown} Lean proof: `cauchy_multiplicative_measurable_classification_with_zero`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: mult-classification
+:end-before: ANCHOR_END: mult-classification
+```
+The three-way split (`m≡0`, `m≡1`, or the nondegenerate formula) follows the same
+case analysis on `m(1)` and `m(0)` used in the text; `eq_zero_or_eq_one_of_eq_mul_self`
+is the `a=a²ᵉ ⇒ a∈{0,1}` lemma.
+:::
