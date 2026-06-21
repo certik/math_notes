@@ -9,6 +9,8 @@ import Mathlib.Analysis.Convex.Contractible
 import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.Topology.Homotopy.Lifting
 import Mathlib.Topology.Instances.RealVectorSpace
 import Mathlib.Topology.Maps.OpenQuotient
@@ -144,6 +146,46 @@ theorem rationalAgreementExample_not_additive {c α : ℝ} {q : ℚ}
   simp only [zero_add]
   exact (mul_ne_zero hc (Rat.cast_ne_zero.mpr hq)).symm
 -- ANCHOR_END: additive-counterexample
+
+-- ANCHOR: additive-pathological
+/--
+**Measurability is essential.** Without a regularity hypothesis, Cauchy's additive equation has
+nonlinear solutions: there is an additive map `a : ℝ → ℝ` that is not of the form `a x = c * x` for
+any constant `c`. By `cauchy_additive_measurable_linear` any such `a` is necessarily non-measurable.
+The construction picks out one coordinate of a Hamel basis of `ℝ` over `ℚ`, so it depends on the
+axiom of choice.
+-/
+theorem exists_additive_not_linear :
+    ∃ a : ℝ → ℝ, (∀ x y, a (x + y) = a x + a y) ∧ ¬ ∃ c : ℝ, ∀ x, a x = c * x := by
+  classical
+  let B : Module.Basis (Module.Basis.ofVectorSpaceIndex ℚ ℝ) ℚ ℝ := Module.Basis.ofVectorSpace ℚ ℝ
+  haveI hnt : Nontrivial (Module.Basis.ofVectorSpaceIndex ℚ ℝ) := by
+    rw [← Cardinal.one_lt_iff_nontrivial]
+    have hmk := B.mk_eq_rank
+    rw [Real.rank_rat_real] at hmk
+    simp only [Cardinal.lift_id] at hmk
+    rw [hmk]
+    exact_mod_cast Cardinal.nat_lt_continuum 1
+  obtain ⟨i, j, hij⟩ := exists_pair_ne (Module.Basis.ofVectorSpaceIndex ℚ ℝ)
+  refine ⟨fun x => ((B.repr x i : ℚ) : ℝ), ?_, ?_⟩
+  · intro x y
+    simp only [map_add, Finsupp.add_apply, Rat.cast_add]
+  · rintro ⟨c, hc⟩
+    have hBi : ((B.repr (B i) i : ℚ) : ℝ) = 1 := by
+      rw [Module.Basis.repr_self, Finsupp.single_eq_same, Rat.cast_one]
+    have hBj : ((B.repr (B j) i : ℚ) : ℝ) = 0 := by
+      rw [Module.Basis.repr_self, Finsupp.single_apply, if_neg (Ne.symm hij), Rat.cast_zero]
+    have hci : ((B.repr (B i) i : ℚ) : ℝ) = c * B i := hc (B i)
+    have hcj : ((B.repr (B j) i : ℚ) : ℝ) = c * B j := hc (B j)
+    rw [hBi] at hci
+    rw [hBj] at hcj
+    have hc0 : c = 0 := by
+      rcases mul_eq_zero.mp hcj.symm with h | h
+      · exact h
+      · exact absurd h (B.ne_zero j)
+    rw [hc0, zero_mul] at hci
+    exact one_ne_zero hci
+-- ANCHOR_END: additive-pathological
 
 end CauchyAdditive
 
@@ -857,6 +899,16 @@ theorem circle_endomorphism_eq_zpow_of_exp_lift (h : Circle →* Circle) (k : �
   rcases Circle.exp_surjective z with ⟨t, rfl⟩
   rw [h_exp]
   exact Circle.exp_intCast_mul t k
+
+/--
+**Continuous characters of the unit circle are exactly the integer power maps.** Every continuous
+endomorphism of the circle has the form `z ↦ z ^ k` for some `k : ℤ`. (The converse, that each
+`z ↦ z ^ k` is a continuous endomorphism, is `circlePowerContinuousHom`.)
+-/
+theorem continuous_circle_endomorphism_eq_zpow (h : Circle →* Circle) (hh : Continuous h) :
+    ∃ k : ℤ, ∀ z : Circle, h z = z ^ k := by
+  obtain ⟨k, hk⟩ := circle_endomorphism_exp_int_slope h hh
+  exact ⟨k, circle_endomorphism_eq_zpow_of_exp_lift h k hk⟩
 
 /--
 The same statement for a continuous homomorphism `Circle → ℂˣ`, after restricting its codomain to

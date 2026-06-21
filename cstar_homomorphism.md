@@ -189,9 +189,24 @@ content of the boundedness-and-continuity argument written out above.
 :::
 
 :::{note}
-If measurability is not required, there are infinitely many nonlinear solutions
-to {eq}`eq-cauchy-additive`, and their graphs are dense in $\mathbb R^2$. These
-are the pathological Cauchy solutions excluded by measurability.
+Measurability is essential. Without it, Cauchy's additive equation {eq}`eq-cauchy-additive` has
+*nonlinear* solutions: additive functions $a:\mathbb R\to\mathbb R$ that are not of the form
+$a(x)=cx$ for any constant $c$ (formalized below). Any such $a$ is necessarily non-measurable, by
+the theorem above. The construction takes a single coordinate of a Hamel basis of $\mathbb R$ over
+$\mathbb Q$, and therefore depends on the axiom of choice. Classically one can say more — there are
+infinitely many such solutions and their graphs are dense in $\mathbb R^2$ — but only their
+existence is formalized here.
+:::
+
+:::{dropdown} Lean proof: `exists_additive_not_linear`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: additive-pathological
+:end-before: ANCHOR_END: additive-pathological
+```
+The Hamel basis is `Module.Basis.ofVectorSpace ℚ ℝ`; `Real.rank_rat_real` (rank `= 𝔠 > 1`) provides
+two distinct basis indices, and the additive-but-nonlinear map is the coordinate at one of them.
+`#print axioms exists_additive_not_linear` confirms the expected dependence on `Classical.choice`.
 :::
 
 (cauchy-multiplicative-real)=
@@ -357,12 +372,17 @@ The "compact subgroup of `ℝ_{>0}` is trivial" argument is
 `compact_additive_hom_to_real_eq_zero`, applied via `circle_hom_log_norm_eq_zero`.
 :::
 
-:::{dropdown} Lean: circle characters are `ζ ↦ ζᵏ` — `circle_endomorphism_eq_zpow_of_exp_lift`
+:::{dropdown} Lean: continuous circle characters are `ζ ↦ ζᵏ` — `continuous_circle_endomorphism_eq_zpow`
 ```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: cstar-circle-char
 :end-before: ANCHOR_END: cstar-circle-char
 ```
+`continuous_circle_endomorphism_eq_zpow` is the unconditional statement, combining the integer-slope
+result below with `circle_endomorphism_eq_zpow_of_exp_lift` (which turns the exponential-coordinate
+formula `exp t ↦ exp (k·t)` into `z ↦ zᵏ`); `circle_to_cstar_hom_eq_zpow_of_exp_lift` is the
+`Circle → ℂˣ` variant used by the assembly. The converse `ζ ↦ ζᵏ` direction is
+`circlePowerContinuousHom`.
 :::
 
 :::{dropdown} Lean: continuous circle characters have integer slope — `circle_endomorphism_exp_int_slope`
