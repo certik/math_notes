@@ -363,13 +363,13 @@ The "compact subgroup of `ℝ_{>0}` is trivial" argument is
 :::
 
 :::{warning} Status of the Lean classification
-The boxed formula is *assembled* in Lean from two analytic inputs that are taken
-as hypotheses rather than derived from continuity alone: the radial map has the
-exponential form (`hradial`) and the circle factor has integer winding number in
-exponential coordinates (`hcircle_exp`). These are exactly the "ℝ simply connected
-⇒ the positive factor lifts" and "continuous characters of $S^1$ are $\zeta\mapsto\zeta^k$"
-facts. So the forward direction is currently proven *modulo* those two ingredients,
-not yet end-to-end from "merely Borel/continuous".
+The circle-character input is now proved in Lean using Fourier analysis on the
+additive circle (`circle_endomorphism_exp_int_slope`). The boxed formula is
+therefore assembled from a single remaining analytic input: the positive radial
+map has the exponential form (`hradial`), i.e. the "ℝ simply connected ⇒ the
+positive factor lifts through exp" step. Thus the continuous forward direction is
+currently proven modulo this radial lifting ingredient; the "merely Borel
+measurable ⇒ continuous" reduction is also not yet formalized.
 :::
 
 :::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_of_radial_and_circle`

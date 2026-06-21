@@ -16,10 +16,10 @@ This file starts the Lean formalization of `cstar_homomorphism.md`.
 It covers the additive Cauchy equation, the real multiplicative Cauchy equation, and structural
 polar-factor lemmas for homomorphisms `ℂˣ → ℂˣ`.
 
-The full topological classification of continuous circle characters is not currently packaged here;
-the theorem `cstar_homomorphism_formula_of_radial_and_circle` isolates exactly that remaining
-ingredient by taking the radial and circle classifications as hypotheses and proving the final
-displayed formula from them.
+The continuous circle-character classification is proved below via Fourier analysis on
+`AddCircle`. The remaining unproved analytic input for the full forward `ℂˣ → ℂˣ`
+classification is the positive radial lifting step through the complex exponential; see
+`real_to_cstar_exp_linear_of_lift` and `cstar_homomorphism_formula_of_radial`.
 -/
 
 noncomputable section
