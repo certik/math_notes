@@ -469,6 +469,93 @@ def cstarFormulaContinuousHom (s : ℂ) (k : ℤ) : ContinuousMonoidHom ℂˣ �
   toMonoidHom := cstarFormulaHom s k
   continuous_toFun := continuous_cstarFormulaHom s k
 
+/-- Power characters of the unit circle. -/
+def circlePowerHom (k : ℤ) : Circle →* Circle where
+  toFun z := z ^ k
+  map_one' := by simp
+  map_mul' z w := by rw [mul_zpow]
+
+/-- Power characters of the unit circle, bundled as continuous homomorphisms. -/
+def circlePowerContinuousHom (k : ℤ) : ContinuousMonoidHom Circle Circle where
+  toMonoidHom := circlePowerHom k
+  continuous_toFun := continuous_zpow k
+
+/-- Convert a circle-valued power character to a `ℂˣ`-valued character. -/
+def circlePowerUnitsHom (k : ℤ) : Circle →* ℂˣ :=
+  Circle.toUnits.comp (circlePowerHom k)
+
+@[simp]
+theorem coe_circlePowerUnitsHom_apply (k : ℤ) (z : Circle) :
+    ((circlePowerUnitsHom k z : ℂˣ) : ℂ) = (z : ℂ) ^ k := by
+  simp [circlePowerUnitsHom, circlePowerHom]
+
+/-- A continuous homomorphism from a compact additive group to `ℝ` is trivial. -/
+theorem compact_additive_hom_to_real_eq_zero {G : Type*} [AddGroup G] [TopologicalSpace G]
+    [CompactSpace G] (f : G →+ ℝ) (hf : Continuous f) : ∀ x, f x = 0 := by
+  have hb : Bornology.IsBounded (Set.range f) := (isCompact_range hf).isBounded
+  rcases Metric.isBounded_iff.mp hb with ⟨C, hC⟩
+  intro x
+  by_contra hx
+  have hpos : 0 < |f x| := abs_pos.mpr hx
+  obtain ⟨n, hn⟩ := exists_nat_gt (C / |f x|)
+  have hdist := hC (x := f (n • x)) ⟨n • x, rfl⟩ (y := f 0) ⟨0, rfl⟩
+  rw [map_nsmul, map_zero, dist_zero_right] at hdist
+  have hn' : C < n * |f x| := by
+    have := mul_lt_mul_of_pos_right hn hpos
+    rwa [div_mul_cancel₀ _ hpos.ne'] at this
+  have : (n : ℝ) * |f x| ≤ C := by
+    simpa [Real.norm_eq_abs, abs_mul, Nat.abs_cast, nsmul_eq_mul] using hdist
+  linarith
+
+/-- The log of the modulus of a continuous circle homomorphism is zero. -/
+theorem circle_hom_log_norm_eq_zero (g : Circle →* ℂˣ) (hg : Continuous g) :
+    ∀ z : Circle, Real.log ‖(g z : ℂ)‖ = 0 := by
+  let f : Additive Circle →+ ℝ := {
+    toFun := fun z => Real.log ‖(g (Additive.toMul z) : ℂ)‖
+    map_zero' := by simp
+    map_add' := by
+      intro z w
+      change Real.log ‖(g (Additive.toMul (z + w)) : ℂ)‖ =
+        Real.log ‖(g (Additive.toMul z) : ℂ)‖ + Real.log ‖(g (Additive.toMul w) : ℂ)‖
+      rw [toMul_add, map_mul]
+      rw [Units.val_mul, norm_mul]
+      exact Real.log_mul (norm_ne_zero_iff.mpr (g (Additive.toMul z)).ne_zero)
+        (norm_ne_zero_iff.mpr (g (Additive.toMul w)).ne_zero) }
+  have hf : Continuous f := by
+    dsimp [f]
+    have hbase : Continuous fun z : Circle => Real.log ‖(g z : ℂ)‖ :=
+      continuous_log_norm_units.comp hg
+    exact hbase.comp continuous_toMul
+  intro z
+  exact compact_additive_hom_to_real_eq_zero f hf (Additive.ofMul z)
+
+/-- A continuous homomorphism from the unit circle to `ℂˣ` has image in the unit circle. -/
+theorem circle_hom_norm_eq_one (g : Circle →* ℂˣ) (hg : Continuous g) (z : Circle) :
+    ‖(g z : ℂ)‖ = 1 := by
+  have hlog := circle_hom_log_norm_eq_zero g hg z
+  have hpos : 0 < ‖(g z : ℂ)‖ := norm_pos_iff.mpr (g z).ne_zero
+  have hexp := congrArg Real.exp hlog
+  rwa [Real.exp_log hpos, Real.exp_zero] at hexp
+
+/-- A continuous homomorphism from the unit circle to `ℂˣ`, re-codomain-restricted to `Circle`. -/
+def circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g) : Circle →* Circle where
+  toFun z := ⟨(g z : ℂ), by
+    change (g z : ℂ) ∈ Metric.sphere 0 1
+    rw [mem_sphere_zero_iff_norm]
+    exact circle_hom_norm_eq_one g hg z⟩
+  map_one' := by ext; simp
+  map_mul' z w := by ext; simp [map_mul]
+
+@[simp]
+theorem circleHomToCircle_toUnits (g : Circle →* ℂˣ) (hg : Continuous g) (z : Circle) :
+    Circle.toUnits (circleHomToCircle g hg z) = g z := by
+  ext
+  rfl
+
+theorem continuous_circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g) :
+    Continuous (circleHomToCircle g hg) :=
+  Continuous.subtype_mk (Units.continuous_val.comp hg) _
+
 /--
 The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
 has exponent `s` and the circle factor has winding number `k`, the homomorphism has the advertised
