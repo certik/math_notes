@@ -11,7 +11,8 @@ import Mathlib.Topology.Instances.RealVectorSpace
 # Homomorphisms from `ℂˣ` to `ℂˣ`
 
 This file starts the Lean formalization of `cstar_homomorphism.md`.
-For now it covers only the additive Cauchy equation section.
+It covers the additive Cauchy equation, the real multiplicative Cauchy equation, and structural
+polar-factor lemmas for homomorphisms `ℂˣ → ℂˣ`.
 -/
 
 noncomputable section
@@ -254,6 +255,38 @@ theorem cstarPositivePath_add (t u : ℝ) :
 theorem cstar_positive_factor_additive_parameter (g : ℂˣ →* ℂˣ) (t u : ℝ) :
     g (cstarPositivePath (t + u)) = g (cstarPositivePath t) * g (cstarPositivePath u) := by
   rw [cstarPositivePath_add, map_mul]
+
+/-- The factor `|w|^s` from the `ℂˣ` homomorphism classification, as a unit of `ℂ`. -/
+def cstarNormCPow (s : ℂ) (w : ℂˣ) : ℂˣ :=
+  Units.mk0 (Complex.exp (s * Real.log ‖(w : ℂ)‖)) (Complex.exp_ne_zero _)
+
+/-- The radial unit `|w|` is the positive path evaluated at `log |w|`. -/
+theorem cstarNormUnit_eq_positivePath_log_norm (w : ℂˣ) :
+    cstarNormUnit w = cstarPositivePath (Real.log ‖(w : ℂ)‖) := by
+  ext
+  simp [cstarNormUnit, cstarPositivePath, Real.exp_log (norm_pos_iff.mpr w.ne_zero)]
+
+@[simp]
+theorem coe_cstarNormCPow (s : ℂ) (w : ℂˣ) :
+    ((cstarNormCPow s w : ℂˣ) : ℂ) = Complex.exp (s * Real.log ‖(w : ℂ)‖) :=
+  rfl
+
+/--
+The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
+has exponent `s` and the circle factor has winding number `k`, the homomorphism has the advertised
+polar form.
+-/
+theorem cstar_homomorphism_formula_of_radial_and_circle (g : ℂˣ →* ℂˣ) (s : ℂ) (k : ℤ)
+    (hradial : ∀ t : ℝ,
+      g (cstarPositivePath t) = Units.mk0 (Complex.exp (s * (t : ℂ))) (Complex.exp_ne_zero _))
+    (hcircle : ∀ z : ℂˣ, ‖(z : ℂ)‖ = 1 → g z = z ^ k) :
+    ∀ w : ℂˣ, g w = cstarNormCPow s w * cstarCircleUnit w ^ k := by
+  intro w
+  rw [cstar_homomorphism_polar_factorization g w]
+  rw [cstarNormUnit_eq_positivePath_log_norm, hradial,
+    hcircle (cstarCircleUnit w) (norm_cstarCircleUnit w)]
+  ext
+  simp [cstarNormCPow]
 
 end CStarHomomorphism
 

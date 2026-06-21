@@ -1,2 +1,3 @@
 import MathNotesLean.Basic
 import MathNotesLean.CstarHomomorphism
+import MathNotesLean.DeterminantHomomorphism
