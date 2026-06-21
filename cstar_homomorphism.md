@@ -376,16 +376,14 @@ supporting Fourier lemmas are `circleValuedContinuousMap`,
 :::
 
 :::{warning} Status of the Lean classification
-The circle-character input is now proved in Lean using Fourier analysis on the
-additive circle (`circle_endomorphism_exp_int_slope`). The boxed formula is
-therefore assembled from a single remaining analytic input: the positive radial
-map has the exponential form (`hradial`), i.e. the "ℝ simply connected ⇒ the
-positive factor lifts through exp" step. Thus the continuous forward direction is
-currently proven modulo this radial lifting ingredient; the "merely Borel
-measurable ⇒ continuous" reduction is also not yet formalized.
+The continuous forward direction is now proved end-to-end in Lean. The circle
+character input uses Fourier analysis on the additive circle
+(`circle_endomorphism_exp_int_slope`), and the positive radial input uses the
+covering map `Complex.exp : ℂ → ℂˣ` (`additive_cstar_exp_linear`). The "merely
+Borel measurable ⇒ continuous" reduction is not yet formalized.
 :::
 
-:::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_of_radial`
+:::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_continuous`
 ```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: cstar-assembly

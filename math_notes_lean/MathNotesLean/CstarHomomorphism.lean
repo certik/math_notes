@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Ondřej Čertík
 -/
 import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+import Mathlib.Analysis.Complex.CoveringMap
+import Mathlib.Analysis.Convex.Contractible
 import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+import Mathlib.Topology.Homotopy.Lifting
 import Mathlib.Topology.Instances.RealVectorSpace
 
 /-!
@@ -16,10 +19,10 @@ This file starts the Lean formalization of `cstar_homomorphism.md`.
 It covers the additive Cauchy equation, the real multiplicative Cauchy equation, and structural
 polar-factor lemmas for homomorphisms `ℂˣ → ℂˣ`.
 
-The continuous circle-character classification is proved below via Fourier analysis on
-`AddCircle`. The remaining unproved analytic input for the full forward `ℂˣ → ℂˣ`
-classification is the positive radial lifting step through the complex exponential; see
-`real_to_cstar_exp_linear_of_lift` and `cstar_homomorphism_formula_of_radial`.
+The continuous `ℂˣ → ℂˣ` classification is proved below. The circle-character step uses Fourier
+analysis on `AddCircle`, and the positive radial step uses the covering map
+`Complex.exp : ℂ → ℂˣ`. The remaining unproved reduction from the note is that Borel-measurable
+homomorphisms `ℂˣ → ℂˣ` are automatically continuous.
 -/
 
 noncomputable section
@@ -362,6 +365,16 @@ def cstarPositivePath (t : ℝ) : ℂˣ :=
   Units.mk0 ((Real.exp t : ℝ) : ℂ) (by
     exact_mod_cast (Real.exp_ne_zero t))
 
+/-- The positive real path `t ↦ exp t` into `ℂˣ` is continuous. -/
+theorem continuous_cstarPositivePath : Continuous cstarPositivePath := by
+  unfold cstarPositivePath
+  rw [Units.continuous_iff]
+  refine ⟨?_, ?_⟩
+  · exact Complex.continuous_ofReal.comp Real.continuous_exp
+  · simpa [Units.inv_eq_val_inv] using
+      (Complex.continuous_ofReal.comp Real.continuous_exp).inv₀ fun t => by
+        exact Complex.ofReal_ne_zero.mpr (Real.exp_ne_zero t)
+
 /-- The positive real path turns addition into multiplication. -/
 theorem cstarPositivePath_add (t u : ℝ) :
     cstarPositivePath (t + u) = cstarPositivePath t * cstarPositivePath u := by
@@ -391,6 +404,96 @@ theorem real_to_cstar_exp_linear_of_lift (G : ℝ →+ Additive ℂˣ) (ell : �
   congr 1
   rw [cauchy_additive_continuous_complex_linear ell hell_add hell_cont t]
   ring_nf
+
+/-- The map from `ℂˣ` to the nonzero complex subtype used by `Complex.isCoveringMap_exp`. -/
+def additiveCstarToNonzero (G : ℝ →+ Additive ℂˣ) : ℝ → {z : ℂ // z ≠ 0} :=
+  fun t => ⟨(Additive.toMul (α := ℂˣ) (G t) : ℂ), (Additive.toMul (α := ℂˣ) (G t)).ne_zero⟩
+
+/--
+Every continuous additive-parameter homomorphism `ℝ → ℂˣ` has a continuous logarithmic lift
+through the complex exponential, normalized to vanish at `0`.
+-/
+theorem exists_continuous_log_lift_additive_cstar (G : ℝ →+ Additive ℂˣ)
+    (hG : Continuous fun t => Additive.toMul (α := ℂˣ) (G t)) :
+    ∃ ell : C(ℝ, ℂ), ell 0 = 0 ∧
+      (fun z : ℂ => (⟨Complex.exp z, Complex.exp_ne_zero z⟩ : {z : ℂ // z ≠ 0})) ∘ ell =
+        additiveCstarToNonzero G := by
+  haveI : SimplyConnectedSpace ℝ := SimplyConnectedSpace.ofContractible ℝ
+  let f : C(ℝ, {z : ℂ // z ≠ 0}) := {
+    toFun := additiveCstarToNonzero G
+    continuous_toFun := by
+      dsimp [additiveCstarToNonzero]
+      apply Continuous.subtype_mk
+      exact Units.continuous_val.comp hG }
+  have he0 : (fun z : ℂ => (⟨Complex.exp z, Complex.exp_ne_zero z⟩ : {z : ℂ // z ≠ 0})) 0 =
+      f 0 := by
+    ext
+    simp [f, additiveCstarToNonzero]
+  rcases Complex.isCoveringMap_exp.existsUnique_continuousMap_lifts f (0 : ℝ) (0 : ℂ) he0 with
+    ⟨ell, hell0, _unique⟩
+  exact ⟨ell, hell0.1, hell0.2⟩
+
+/-- The normalized continuous logarithmic lift of an additive-parameter homomorphism is additive. -/
+theorem continuous_log_lift_additive (G : ℝ →+ Additive ℂˣ)
+    (_hG : Continuous fun t => Additive.toMul (α := ℂˣ) (G t))
+    {ell : C(ℝ, ℂ)} (hell0 : ell 0 = 0)
+    (hell_lift : (fun z : ℂ => (⟨Complex.exp z, Complex.exp_ne_zero z⟩ : {z : ℂ // z ≠ 0})) ∘ ell =
+        additiveCstarToNonzero G) :
+    ∀ x y : ℝ, ell (x + y) = ell x + ell y := by
+  let p : ℂ → {z : ℂ // z ≠ 0} := fun z => ⟨Complex.exp z, Complex.exp_ne_zero z⟩
+  let F₁ : ℝ × ℝ → ℂ := fun xy => ell (xy.1 + xy.2)
+  let F₂ : ℝ × ℝ → ℂ := fun xy => ell xy.1 + ell xy.2
+  have hcont₁ : Continuous F₁ := ell.continuous.comp (continuous_fst.add continuous_snd)
+  have hcont₂ : Continuous F₂ :=
+    (ell.continuous.comp continuous_fst).add (ell.continuous.comp continuous_snd)
+  have hcomp : p ∘ F₁ = p ∘ F₂ := by
+    ext xy
+    change Complex.exp (ell (xy.1 + xy.2)) = Complex.exp (ell xy.1 + ell xy.2)
+    have h₁ := congr_fun hell_lift (xy.1 + xy.2)
+    have hx := congr_fun hell_lift xy.1
+    have hy := congr_fun hell_lift xy.2
+    change (⟨Complex.exp (ell (xy.1 + xy.2)), Complex.exp_ne_zero _⟩ : {z : ℂ // z ≠ 0}) =
+      additiveCstarToNonzero G (xy.1 + xy.2) at h₁
+    change (⟨Complex.exp (ell xy.1), Complex.exp_ne_zero _⟩ : {z : ℂ // z ≠ 0}) =
+      additiveCstarToNonzero G xy.1 at hx
+    change (⟨Complex.exp (ell xy.2), Complex.exp_ne_zero _⟩ : {z : ℂ // z ≠ 0}) =
+      additiveCstarToNonzero G xy.2 at hy
+    have hmul : Additive.toMul (α := ℂˣ) (G (xy.1 + xy.2)) =
+        Additive.toMul (α := ℂˣ) (G xy.1) * Additive.toMul (α := ℂˣ) (G xy.2) := by
+      rw [map_add]
+      rfl
+    have hxv : Complex.exp (ell xy.1) = (Additive.toMul (α := ℂˣ) (G xy.1) : ℂ) :=
+      congrArg Subtype.val hx
+    have hyv : Complex.exp (ell xy.2) = (Additive.toMul (α := ℂˣ) (G xy.2) : ℂ) :=
+      congrArg Subtype.val hy
+    calc
+      Complex.exp (ell (xy.1 + xy.2)) =
+          (Additive.toMul (α := ℂˣ) (G (xy.1 + xy.2)) : ℂ) :=
+        congrArg Subtype.val h₁
+      _ = (Additive.toMul (α := ℂˣ) (G xy.1) : ℂ) *
+          (Additive.toMul (α := ℂˣ) (G xy.2) : ℂ) := by
+        rw [hmul]
+        rfl
+      _ = Complex.exp (ell xy.1) * Complex.exp (ell xy.2) := by
+        rw [hxv, hyv]
+      _ = Complex.exp (ell xy.1 + ell xy.2) := (Complex.exp_add _ _).symm
+  have h00 : F₁ (0, 0) = F₂ (0, 0) := by simp [F₁, F₂, hell0]
+  have heq := Complex.isCoveringMap_exp.eq_of_comp_eq hcont₁ hcont₂ hcomp (0, 0) h00
+  intro x y
+  exact congr_fun heq (x, y)
+
+/-- A continuous additive-parameter homomorphism `ℝ → ℂˣ` has the form `t ↦ exp (s t)`. -/
+theorem additive_cstar_exp_linear (G : ℝ →+ Additive ℂˣ)
+    (hG : Continuous fun t => Additive.toMul (α := ℂˣ) (G t)) :
+    ∃ s : ℂ, ∀ t : ℝ,
+      (Additive.toMul (G t) : ℂˣ) =
+        Units.mk0 (Complex.exp (s * (t : ℂ))) (Complex.exp_ne_zero _) := by
+  rcases exists_continuous_log_lift_additive_cstar G hG with ⟨ell, hell0, hell_lift⟩
+  have hell_add := continuous_log_lift_additive G hG hell0 hell_lift
+  refine real_to_cstar_exp_linear_of_lift G ell hell_add ell.continuous ?_
+  intro t
+  apply Units.ext
+  exact (congrArg Subtype.val (congr_fun hell_lift t)).symm
 -- ANCHOR_END: cstar-positive
 
 /-- The factor `|w|^s` from the `ℂˣ` homomorphism classification, as a unit of `ℂ`. -/
@@ -829,6 +932,30 @@ theorem cstar_homomorphism_formula_of_radial (g : ℂˣ →* ℂˣ) (hg : Contin
     (continuous_circleHomToCircle _ _)
   refine ⟨k, ?_⟩
   exact cstar_homomorphism_formula_of_radial_and_circle_lift g hg s k hradial hk
+
+/-- The positive-real factor of a `ℂˣ` homomorphism, as an additive-parameter homomorphism. -/
+def cstarPositiveFactorAddHom (g : ℂˣ →* ℂˣ) : ℝ →+ Additive ℂˣ where
+  toFun t := Additive.ofMul (g (cstarPositivePath t))
+  map_zero' := by
+    change Additive.ofMul (g (cstarPositivePath 0)) = Additive.ofMul 1
+    congr
+    simp [cstarPositivePath]
+  map_add' t u := by
+    rw [cstarPositivePath_add, map_mul]
+    rfl
+
+theorem continuous_cstarPositiveFactorAddHom (g : ℂˣ →* ℂˣ) (hg : Continuous g) :
+    Continuous fun t => Additive.toMul (α := ℂˣ) (cstarPositiveFactorAddHom g t) := by
+  change Continuous fun t => g (cstarPositivePath t)
+  exact hg.comp continuous_cstarPositivePath
+
+/-- Every continuous homomorphism `ℂˣ → ℂˣ` has the classified polar form. -/
+theorem cstar_homomorphism_formula_continuous (g : ℂˣ →* ℂˣ) (hg : Continuous g) :
+    ∃ s : ℂ, ∃ k : ℤ, ∀ w : ℂˣ, g w = cstarNormCPow s w * cstarCircleUnit w ^ k := by
+  obtain ⟨s, hs⟩ := additive_cstar_exp_linear (cstarPositiveFactorAddHom g)
+    (continuous_cstarPositiveFactorAddHom g hg)
+  obtain ⟨k, hk⟩ := cstar_homomorphism_formula_of_radial g hg s hs
+  exact ⟨s, k, hk⟩
 -- ANCHOR_END: cstar-assembly
 
 end CStarHomomorphism
