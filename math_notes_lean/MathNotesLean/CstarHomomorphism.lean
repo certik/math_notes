@@ -421,6 +421,54 @@ theorem cstarFormulaHom_one_one : cstarFormulaHom 1 1 = MonoidHom.id ℂˣ := by
     exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
   field_simp [hn]
 
+theorem continuousAt_log_norm_complex {z : ℂ} (hz : z ≠ 0) :
+    ContinuousAt (fun z : ℂ => Real.log ‖z‖) z := by
+  change ContinuousAt ((fun r : ℝ => Real.log r) ∘ (fun z : ℂ => ‖z‖)) z
+  exact (Real.continuousAt_log (norm_ne_zero_iff.mpr hz)).comp continuous_norm.continuousAt
+
+theorem continuous_log_norm_units : Continuous fun w : ℂˣ => Real.log ‖(w : ℂ)‖ := by
+  rw [continuous_iff_continuousAt]
+  intro w
+  exact (continuousAt_log_norm_complex w.ne_zero).comp Units.continuous_val.continuousAt
+
+theorem continuous_cstarNormCPow_val (s : ℂ) :
+    Continuous fun w : ℂˣ => (cstarNormCPow s w : ℂ) := by
+  unfold cstarNormCPow
+  apply Complex.continuous_exp.comp
+  apply Continuous.mul continuous_const
+  exact Complex.continuous_ofReal.comp continuous_log_norm_units
+
+theorem continuous_cstarNormCPow (s : ℂ) : Continuous fun w : ℂˣ => cstarNormCPow s w := by
+  rw [Units.continuous_iff]
+  refine ⟨continuous_cstarNormCPow_val s, ?_⟩
+  simpa [Units.inv_eq_val_inv] using
+    (continuous_cstarNormCPow_val s).inv₀ fun _ => Complex.exp_ne_zero _
+
+theorem continuous_cstarCircleUnit_val : Continuous fun w : ℂˣ => (cstarCircleUnit w : ℂ) := by
+  unfold cstarCircleUnit cstarNormUnit
+  change Continuous fun w : ℂˣ => (w : ℂ) / (((‖(w : ℂ)‖ : ℝ) : ℂ))
+  apply Continuous.div Units.continuous_val
+  · exact Complex.continuous_ofReal.comp (continuous_norm.comp Units.continuous_val)
+  · intro w
+    exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
+
+theorem continuous_cstarCircleUnit : Continuous fun w : ℂˣ => cstarCircleUnit w := by
+  rw [Units.continuous_iff]
+  refine ⟨continuous_cstarCircleUnit_val, ?_⟩
+  simpa [Units.inv_eq_val_inv] using
+    continuous_cstarCircleUnit_val.inv₀ fun w => (cstarCircleUnit w).ne_zero
+
+/-- The displayed formula is a continuous homomorphism `ℂˣ → ℂˣ`. -/
+theorem continuous_cstarFormulaHom (s : ℂ) (k : ℤ) :
+    Continuous fun w : ℂˣ => cstarFormulaHom s k w := by
+  change Continuous fun w : ℂˣ => cstarNormCPow s w * cstarCircleUnit w ^ k
+  exact (continuous_cstarNormCPow s).mul (continuous_cstarCircleUnit.zpow k)
+
+/-- The displayed formula, bundled as a continuous monoid homomorphism. -/
+def cstarFormulaContinuousHom (s : ℂ) (k : ℤ) : ContinuousMonoidHom ℂˣ ℂˣ where
+  toMonoidHom := cstarFormulaHom s k
+  continuous_toFun := continuous_cstarFormulaHom s k
+
 /--
 The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
 has exponent `s` and the circle factor has winding number `k`, the homomorphism has the advertised
