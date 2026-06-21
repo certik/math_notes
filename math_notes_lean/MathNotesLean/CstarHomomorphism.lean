@@ -13,6 +13,11 @@ import Mathlib.Topology.Instances.RealVectorSpace
 This file starts the Lean formalization of `cstar_homomorphism.md`.
 It covers the additive Cauchy equation, the real multiplicative Cauchy equation, and structural
 polar-factor lemmas for homomorphisms `ℂˣ → ℂˣ`.
+
+The full topological classification of continuous circle characters is not currently packaged here;
+the theorem `cstar_homomorphism_formula_of_radial_and_circle` isolates exactly that remaining
+ingredient by taking the radial and circle classifications as hypotheses and proving the final
+displayed formula from them.
 -/
 
 noncomputable section
@@ -45,6 +50,72 @@ theorem cauchy_additive_measurable_exists (a : ℝ → ℝ)
     (hadd : ∀ x y, a (x + y) = a x + a y) (hmeas : Measurable a) :
     ∃ c : ℝ, ∀ x : ℝ, a x = c * x :=
   ⟨a 1, cauchy_additive_measurable_linear a hadd hmeas⟩
+
+/-- A real number is rational if it lies in the image of `ℚ → ℝ`. -/
+def IsRatReal (x : ℝ) : Prop :=
+  ∃ q : ℚ, (q : ℝ) = x
+
+/--
+The function that agrees with `x ↦ c x` on rationals and is zero on irrationals.
+It is used in the note to show that having the right rational values is not enough.
+-/
+noncomputable def rationalAgreementExample (c : ℝ) (x : ℝ) : ℝ := by
+  classical
+  exact if IsRatReal x then c * x else 0
+
+theorem isRatReal_rat (q : ℚ) : IsRatReal (q : ℝ) :=
+  ⟨q, rfl⟩
+
+theorem not_isRatReal_add_rat {α : ℝ} (hα : ¬ IsRatReal α) {q : ℚ} :
+    ¬ IsRatReal (α + q) := by
+  intro h
+  rcases h with ⟨r, hr⟩
+  apply hα
+  refine ⟨r - q, ?_⟩
+  norm_num at hr ⊢
+  linarith
+
+theorem rationalAgreementExample_rat (c : ℝ) (q : ℚ) :
+    rationalAgreementExample c (q : ℝ) = c * q := by
+  classical
+  simp [rationalAgreementExample, isRatReal_rat]
+
+theorem rationalAgreementExample_irrational (c : ℝ) {α : ℝ} (hα : ¬ IsRatReal α) :
+    rationalAgreementExample c α = 0 := by
+  classical
+  simp [rationalAgreementExample, hα]
+
+theorem measurableSet_isRatReal : MeasurableSet {x : ℝ | IsRatReal x} := by
+  have hset : {x : ℝ | IsRatReal x} = Set.range fun q : ℚ => (q : ℝ) := by
+    ext x
+    constructor
+    · intro hx
+      rcases hx with ⟨q, hq⟩
+      exact ⟨q, hq⟩
+    · intro hx
+      rcases hx with ⟨q, hq⟩
+      exact ⟨q, hq⟩
+  rw [hset]
+  exact (Set.countable_range fun q : ℚ => (q : ℝ)).measurableSet
+
+theorem measurable_rationalAgreementExample (c : ℝ) : Measurable (rationalAgreementExample c) := by
+  classical
+  unfold rationalAgreementExample
+  exact Measurable.ite measurableSet_isRatReal (measurable_const.mul measurable_id) measurable_const
+
+/--
+If `c ≠ 0`, the rational-agreement example is not additive: adding a nonzero rational to an
+irrational gives an explicit failure of Cauchy's equation.
+-/
+theorem rationalAgreementExample_not_additive {c α : ℝ} {q : ℚ}
+    (hc : c ≠ 0) (hq : q ≠ 0) (hα : ¬ IsRatReal α) :
+    rationalAgreementExample c (α + q) ≠
+      rationalAgreementExample c α + rationalAgreementExample c (q : ℝ) := by
+  have hαq : ¬ IsRatReal (α + q) := not_isRatReal_add_rat hα
+  rw [rationalAgreementExample_irrational c hαq, rationalAgreementExample_irrational c hα,
+    rationalAgreementExample_rat]
+  simp only [zero_add]
+  exact (mul_ne_zero hc (Rat.cast_ne_zero.mpr hq)).symm
 
 end CauchyAdditive
 
@@ -198,6 +269,27 @@ theorem cauchy_multiplicative_measurable_classification (m : ℝ → ℝ)
     · exact Or.inr (cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas)
     · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
 
+/--
+The same classification, with the nondegenerate branch explicitly recording the extension value
+`m 0 = 0`.
+-/
+theorem cauchy_multiplicative_measurable_classification_with_zero (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (hmeas : Measurable m) :
+    (∀ x : ℝ, m x = 0) ∨ (∀ x : ℝ, m x = 1) ∨
+      ∃ c : ℝ,
+        m 0 = 0 ∧ (m (-1) = 1 ∨ m (-1) = -1) ∧
+          ∀ {x : ℝ}, x ≠ 0 → m x = (if x < 0 then m (-1) else 1) * |x| ^ c := by
+  have h1sq : m 1 = m 1 * m 1 := by simpa using hm 1 1
+  rcases eq_zero_or_eq_one_of_eq_mul_self h1sq with h1 | h1
+  · exact Or.inl (cauchy_multiplicative_zero_of_map_one_eq_zero m hm h1)
+  · right
+    have h0sq : m 0 = m 0 * m 0 := by simpa using hm 0 0
+    rcases eq_zero_or_eq_one_of_eq_mul_self h0sq with h0 | h0
+    · exact Or.inr (by
+        obtain ⟨c, hsign, hformula⟩ := cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas
+        exact ⟨c, h0, hsign, hformula⟩)
+    · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
+
 end CauchyMultiplicativeReal
 
 section CStarHomomorphism
@@ -270,6 +362,64 @@ theorem cstarNormUnit_eq_positivePath_log_norm (w : ℂˣ) :
 theorem coe_cstarNormCPow (s : ℂ) (w : ℂˣ) :
     ((cstarNormCPow s w : ℂˣ) : ℂ) = Complex.exp (s * Real.log ‖(w : ℂ)‖) :=
   rfl
+
+@[simp]
+theorem cstarNormUnit_one : cstarNormUnit (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarNormUnit]
+
+@[simp]
+theorem cstarCircleUnit_one : cstarCircleUnit (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarCircleUnit, cstarNormUnit]
+
+theorem cstarNormUnit_mul (w z : ℂˣ) :
+    cstarNormUnit (w * z) = cstarNormUnit w * cstarNormUnit z := by
+  ext
+  simp [cstarNormUnit]
+
+theorem cstarCircleUnit_mul (w z : ℂˣ) :
+    cstarCircleUnit (w * z) = cstarCircleUnit w * cstarCircleUnit z := by
+  ext
+  simp [cstarCircleUnit, cstarNormUnit, div_eq_mul_inv]
+  ring
+
+@[simp]
+theorem cstarNormCPow_one (s : ℂ) : cstarNormCPow s (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarNormCPow]
+
+theorem cstarNormCPow_mul (s : ℂ) (w z : ℂˣ) :
+    cstarNormCPow s (w * z) = cstarNormCPow s w * cstarNormCPow s z := by
+  ext
+  simp [cstarNormCPow,
+    Real.log_mul (norm_ne_zero_iff.mpr w.ne_zero) (norm_ne_zero_iff.mpr z.ne_zero), mul_add,
+    Complex.exp_add]
+
+/--
+Every expression `w ↦ |w|^s (w/|w|)^k` defines a multiplicative homomorphism
+`ℂˣ → ℂˣ`.
+-/
+def cstarFormulaHom (s : ℂ) (k : ℤ) : ℂˣ →* ℂˣ where
+  toFun w := cstarNormCPow s w * cstarCircleUnit w ^ k
+  map_one' := by simp
+  map_mul' w z := by
+    rw [cstarNormCPow_mul, cstarCircleUnit_mul, mul_zpow]
+    ac_rfl
+
+/-- The identity homomorphism corresponds to the parameters `s = 1` and `k = 1`. -/
+theorem cstarFormulaHom_one_one : cstarFormulaHom 1 1 = MonoidHom.id ℂˣ := by
+  ext w
+  change Complex.exp ((1 : ℂ) * ↑(Real.log ‖(w : ℂ)‖)) *
+      ↑(cstarCircleUnit w ^ (1 : ℤ)) = (w : ℂ)
+  rw [zpow_one]
+  change Complex.exp ((1 : ℂ) * ↑(Real.log ‖(w : ℂ)‖)) *
+      ((w : ℂ) * ((↑‖(w : ℂ)‖ : ℂ)⁻¹)) = (w : ℂ)
+  rw [one_mul]
+  rw [← Complex.ofReal_exp, Real.exp_log (norm_pos_iff.mpr w.ne_zero)]
+  have hn : ((‖(w : ℂ)‖ : ℝ) : ℂ) ≠ 0 := by
+    exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
+  field_simp [hn]
 
 /--
 The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
