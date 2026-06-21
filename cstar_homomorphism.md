@@ -362,6 +362,19 @@ The "compact subgroup of `ℝ_{>0}` is trivial" argument is
 ```
 :::
 
+:::{dropdown} Lean: continuous circle characters have integer slope — `circle_endomorphism_exp_int_slope`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-circle-fourier
+:end-before: ANCHOR_END: cstar-circle-fourier
+```
+This is the analytic heart of "continuous characters of $S^1$ are $\zeta\mapsto\zeta^k$":
+the character is identified with a nonzero Fourier mode on the additive circle. The
+supporting Fourier lemmas are `circleValuedContinuousMap`,
+`exists_nonzero_fourierCoeff_circleValued`, `fourierCoeff_eigen`, and
+`continuous_addCircle_char_eq_fourier`.
+:::
+
 :::{warning} Status of the Lean classification
 The circle-character input is now proved in Lean using Fourier analysis on the
 additive circle (`circle_endomorphism_exp_int_slope`). The boxed formula is
@@ -372,12 +385,17 @@ currently proven modulo this radial lifting ingredient; the "merely Borel
 measurable ⇒ continuous" reduction is also not yet formalized.
 :::
 
-:::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_of_radial_and_circle`
+:::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_of_radial`
 ```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: cstar-assembly
 :end-before: ANCHOR_END: cstar-assembly
 ```
+Three layers are shown: `cstar_homomorphism_formula_of_radial_and_circle` assembles
+the boxed formula from both factor classifications; `..._lift` discharges the circle
+factor from its exponential-coordinate slope; and `cstar_homomorphism_formula_of_radial`
+classifies the circle automatically (via `circle_endomorphism_exp_int_slope`), so only
+the radial hypothesis `hradial` remains.
 :::
 
 This is the formula needed for the free factor $g$ in

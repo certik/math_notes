@@ -634,6 +634,7 @@ theorem continuous_circleEndomorphismAddChar (h : Circle →* Circle) (hh : Cont
   dsimp [circleEndomorphismAddChar]
   exact hh.comp AddCircle.continuous_toCircle
 
+-- ANCHOR: cstar-circle-fourier
 /--
 Every continuous endomorphism of the unit circle has an integer slope in exponential coordinates.
 -/
@@ -656,6 +657,7 @@ theorem circle_endomorphism_exp_int_slope (h : Circle →* Circle) (hh : Continu
     field_simp [Real.pi_ne_zero]
     push_cast
     ring
+-- ANCHOR_END: cstar-circle-fourier
 
 /-- A continuous homomorphism from a compact additive group to `ℝ` is trivial. -/
 theorem compact_additive_hom_to_real_eq_zero {G : Type*} [AddGroup G] [TopologicalSpace G]
