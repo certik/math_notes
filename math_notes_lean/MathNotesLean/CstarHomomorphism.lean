@@ -51,6 +51,15 @@ theorem cauchy_additive_measurable_exists (a : ℝ → ℝ)
     ∃ c : ℝ, ∀ x : ℝ, a x = c * x :=
   ⟨a 1, cauchy_additive_measurable_linear a hadd hmeas⟩
 
+/-- A continuous additive map `ℝ → ℂ` is complex-linear in one real variable. -/
+theorem cauchy_additive_continuous_complex_linear (a : ℝ → ℂ)
+    (hadd : ∀ x y, a (x + y) = a x + a y) (hcont : Continuous a) :
+    ∀ x : ℝ, a x = (x : ℂ) * a 1 := by
+  let f : ℝ →+ ℂ := AddMonoidHom.mk' a hadd
+  intro x
+  have hsmul : f (x • (1 : ℝ)) = x • f (1 : ℝ) := map_real_smul f hcont x 1
+  simpa [f, smul_eq_mul, mul_comm, mul_left_comm, mul_assoc] using hsmul
+
 /-- A real number is rational if it lies in the image of `ℚ → ℝ`. -/
 def IsRatReal (x : ℝ) : Prop :=
   ∃ q : ℚ, (q : ℝ) = x
@@ -348,6 +357,24 @@ theorem cstar_positive_factor_additive_parameter (g : ℂˣ →* ℂˣ) (t u : �
     g (cstarPositivePath (t + u)) = g (cstarPositivePath t) * g (cstarPositivePath u) := by
   rw [cstarPositivePath_add, map_mul]
 
+/--
+If a continuous additive-parameter homomorphism `ℝ → ℂˣ` has a continuous additive logarithmic
+lift, then it has the form `t ↦ exp (s t)`.
+-/
+theorem real_to_cstar_exp_linear_of_lift (G : ℝ →+ Additive ℂˣ) (ell : ℝ → ℂ)
+    (hell_add : ∀ x y, ell (x + y) = ell x + ell y) (hell_cont : Continuous ell)
+    (hG : ∀ t,
+      (Additive.toMul (G t) : ℂˣ) = Units.mk0 (Complex.exp (ell t)) (Complex.exp_ne_zero _)) :
+    ∃ s : ℂ, ∀ t : ℝ,
+      (Additive.toMul (G t) : ℂˣ) =
+        Units.mk0 (Complex.exp (s * (t : ℂ))) (Complex.exp_ne_zero _) := by
+  refine ⟨ell 1, ?_⟩
+  intro t
+  rw [hG]
+  congr 1
+  rw [cauchy_additive_continuous_complex_linear ell hell_add hell_cont t]
+  ring_nf
+
 /-- The factor `|w|^s` from the `ℂˣ` homomorphism classification, as a unit of `ℂ`. -/
 def cstarNormCPow (s : ℂ) (w : ℂˣ) : ℂˣ :=
   Units.mk0 (Complex.exp (s * Real.log ‖(w : ℂ)‖)) (Complex.exp_ne_zero _)
@@ -556,6 +583,51 @@ theorem continuous_circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g)
     Continuous (circleHomToCircle g hg) :=
   Continuous.subtype_mk (Units.continuous_val.comp hg) _
 
+theorem continuous_circle_toUnits : Continuous Circle.toUnits := by
+  rw [Units.continuous_iff]
+  refine ⟨?_, ?_⟩
+  · change Continuous fun z : Circle => (z : ℂ)
+    exact continuous_subtype_val
+  · change Continuous fun z : Circle => ((z : ℂ))⁻¹
+    exact continuous_subtype_val.inv₀ fun z => Circle.coe_ne_zero z
+
+/--
+If a circle endomorphism has the exponential-coordinate formula `exp t ↦ exp (k t)`, then it is
+the power character `z ↦ z^k`.
+-/
+theorem circle_endomorphism_eq_zpow_of_exp_lift (h : Circle →* Circle) (k : ℤ)
+    (h_exp : ∀ t : ℝ, h (Circle.exp t) = Circle.exp ((k : ℝ) * t)) :
+    ∀ z : Circle, h z = z ^ k := by
+  intro z
+  rcases Circle.exp_surjective z with ⟨t, rfl⟩
+  rw [h_exp]
+  exact Circle.exp_intCast_mul t k
+
+/--
+The same statement for a continuous homomorphism `Circle → ℂˣ`, after restricting its codomain to
+`Circle`.
+-/
+theorem circle_to_cstar_hom_eq_zpow_of_exp_lift (g : Circle →* ℂˣ) (hg : Continuous g) (k : ℤ)
+    (h_exp : ∀ t : ℝ, circleHomToCircle g hg (Circle.exp t) = Circle.exp ((k : ℝ) * t)) :
+    ∀ z : Circle, g z = Circle.toUnits (z ^ k) := by
+  intro z
+  rw [← circleHomToCircle_toUnits g hg z]
+  congr 1
+  exact circle_endomorphism_eq_zpow_of_exp_lift (circleHomToCircle g hg) k h_exp z
+
+/-- A unit complex number, represented as an element of `Circle`. -/
+def cstarUnitToCircle (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) : Circle :=
+  ⟨(z : ℂ), by
+    change (z : ℂ) ∈ Metric.sphere 0 1
+    rw [mem_sphere_zero_iff_norm]
+    exact hz⟩
+
+@[simp]
+theorem cstarUnitToCircle_toUnits (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) :
+    Circle.toUnits (cstarUnitToCircle z hz) = z := by
+  ext
+  rfl
+
 /--
 The final algebraic assembly step in the `ℂˣ` homomorphism formula: once the positive-real factor
 has exponent `s` and the circle factor has winding number `k`, the homomorphism has the advertised
@@ -572,6 +644,29 @@ theorem cstar_homomorphism_formula_of_radial_and_circle (g : ℂˣ →* ℂˣ) (
     hcircle (cstarCircleUnit w) (norm_cstarCircleUnit w)]
   ext
   simp [cstarNormCPow]
+
+/--
+The C-star formula from the radial exponential formula and an integer-slope exponential-coordinate
+formula for the circle factor.
+-/
+theorem cstar_homomorphism_formula_of_radial_and_circle_lift (g : ℂˣ →* ℂˣ) (hg : Continuous g)
+    (s : ℂ) (k : ℤ)
+    (hradial : ∀ t : ℝ,
+      g (cstarPositivePath t) = Units.mk0 (Complex.exp (s * (t : ℂ))) (Complex.exp_ne_zero _))
+    (hcircle_exp : ∀ t : ℝ,
+      circleHomToCircle (g.comp Circle.toUnits) (hg.comp continuous_circle_toUnits) (Circle.exp t) =
+        Circle.exp ((k : ℝ) * t)) :
+    ∀ w : ℂˣ, g w = cstarNormCPow s w * cstarCircleUnit w ^ k := by
+  apply cstar_homomorphism_formula_of_radial_and_circle g s k hradial
+  intro z hz
+  have hpow := circle_to_cstar_hom_eq_zpow_of_exp_lift (g.comp Circle.toUnits)
+    (hg.comp continuous_circle_toUnits) k hcircle_exp (cstarUnitToCircle z hz)
+  change g (Circle.toUnits (cstarUnitToCircle z hz)) =
+    Circle.toUnits (cstarUnitToCircle z hz ^ k) at hpow
+  rw [cstarUnitToCircle_toUnits] at hpow
+  have hright : Circle.toUnits (cstarUnitToCircle z hz ^ k) = z ^ k := by
+    rw [map_zpow, cstarUnitToCircle_toUnits]
+  rwa [hright] at hpow
 
 end CStarHomomorphism
 
