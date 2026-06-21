@@ -287,8 +287,9 @@ Continuity of this formula is `continuous_cstarFormulaHom`, bundled as the
 
 :::{note} Derivation
 A Borel measurable homomorphism between these locally compact groups is
-automatically continuous, so it suffices to classify continuous homomorphisms.
-Every $w\in\mathbb C^*$ decomposes uniquely as
+automatically continuous (proved below in
+[](#cstar-automatic-continuity)), so it suffices to classify continuous
+homomorphisms. Every $w\in\mathbb C^*$ decomposes uniquely as
 $$
 w=r\zeta,\qquad r=|w|\in\mathbb R_{>0},\qquad \zeta={w\over |w|}\in S^1.
 $$
@@ -375,12 +376,14 @@ supporting Fourier lemmas are `circleValuedContinuousMap`,
 `continuous_addCircle_char_eq_fourier`.
 :::
 
-:::{warning} Status of the Lean classification
-The continuous forward direction is now proved end-to-end in Lean. The circle
-character input uses Fourier analysis on the additive circle
-(`circle_endomorphism_exp_int_slope`), and the positive radial input uses the
-covering map `Complex.exp : ℂ → ℂˣ` (`additive_cstar_exp_linear`). The "merely
-Borel measurable ⇒ continuous" reduction is not yet formalized.
+:::{tip} Status of the Lean classification
+The classification is proved end-to-end in Lean for **both** the continuous and the
+Borel-measurable case. The circle character input uses Fourier analysis on the additive
+circle (`circle_endomorphism_exp_int_slope`), the positive radial input uses the covering
+map `Complex.exp : ℂ → ℂˣ` (`additive_cstar_exp_linear`), and the "merely Borel measurable
+⇒ continuous" reduction is `cstar_homomorphism_continuous_of_measurable`. Continuous
+integration runs `lake build`, which fails on any error or `sorry`, so every displayed proof
+is guaranteed to type-check.
 :::
 
 :::{dropdown} Lean: final assembly into the boxed formula — `cstar_homomorphism_formula_continuous`
@@ -394,6 +397,58 @@ the boxed formula from both factor classifications; `..._lift` discharges the ci
 factor from its exponential-coordinate slope; and `cstar_homomorphism_formula_of_radial`
 classifies the circle automatically (via `circle_endomorphism_exp_int_slope`), so only
 the radial hypothesis `hradial` remains.
+:::
+
+(cstar-automatic-continuity)=
+### Borel measurability implies continuity
+
+The boxed formula was derived assuming continuity, but the same conclusion holds for any
+**Borel measurable** homomorphism, because such a homomorphism is automatically continuous.
+
+The analytic heart is automatic continuity for the one-parameter factors
+$(\mathbb R,+)\to\mathbb C^*$. Let $f:\mathbb R\to\mathbb C^*$ be measurable with
+$f(t+s)=f(t)f(s)$, and write $\Phi(t)=f(t)\in\mathbb C$.
+
+* **Modulus.** $\rho(t)=|\Phi(t)|$ satisfies $\rho(t+s)=\rho(t)\rho(s)$, so
+  $t\mapsto\log\rho(t)$ is additive and measurable, hence linear by the additive measurable
+  Cauchy theorem; thus $\rho(t)=e^{ct}$ is continuous. In particular $\Phi$ is locally
+  bounded, so it is integrable on every bounded interval.
+* **Phase, by the integration trick.** The primitive
+  $F(y)=\int_0^y\Phi$ is continuous. The Lebesgue differentiation theorem forces
+  $F(a)\neq0$ for some $a$ (otherwise $\Phi=0$ almost everywhere, impossible since
+  $\Phi$ never vanishes). The homomorphism property gives the sliding-window identity
+  $$
+  \Phi(s)\,F(a)=\int_0^a\Phi(s+u)\,du=\int_s^{s+a}\Phi=F(s+a)-F(s),
+  $$
+  so $\Phi(s)=\dfrac{F(s+a)-F(s)}{F(a)}$ is continuous in $s$. Hence $f$ is continuous.
+
+Applying this to the radial path $t\mapsto g(e^t)$ and, after pulling back through the
+covering quotient map $\mathtt{Circle.exp}:\mathbb R\to S^1$, to the unit circle, both polar
+factors of $g$ are continuous, so $g$ is continuous everywhere.
+
+:::{dropdown} Lean: automatic continuity for `(ℝ,+) → ℂˣ` — `measurable_addParam_to_cstar_continuous`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-automatic-continuity
+:end-before: ANCHOR_END: cstar-automatic-continuity
+```
+The modulus step is `cauchy_additive_measurable_linear`; the nonvanishing window is supplied
+by the interval form of the Lebesgue differentiation theorem
+(`LocallyIntegrable.ae_hasDerivAt_integral`); the primitive's continuity is
+`intervalIntegral.continuous_primitive`. The circle factor descends through the quotient map
+`Circle.exp` in `continuous_cstar_on_circle`.
+:::
+
+:::{dropdown} Lean: measurable ⇒ continuous and the boxed formula — `cstar_homomorphism_formula_measurable`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: cstar-measurable
+:end-before: ANCHOR_END: cstar-measurable
+```
+`cstar_homomorphism_continuous_of_measurable` assembles the radial and unit-circle factor
+continuities through the polar factorization, and
+`cstar_homomorphism_formula_measurable` feeds the resulting continuity into
+`cstar_homomorphism_formula_continuous`.
 :::
 
 This is the formula needed for the free factor $g$ in
