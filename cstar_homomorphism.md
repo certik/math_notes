@@ -12,7 +12,9 @@ With continuity, or even Borel measurability, they have one simple form.
 
 :::{note} Lean formalization
 The proofs in this note are formalized in Lean 4 + Mathlib in
-[`CstarHomomorphism.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphism.lean).
+[`CstarHomomorphism.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphism.lean),
+together with the general automatic-continuity lemmas in
+[`AutomaticContinuity.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/AutomaticContinuity.lean).
 Each **Lean proof** dropdown below includes the corresponding declaration
 verbatim from the compiled source, so the displayed code cannot drift from what
 is actually checked. Continuous integration runs `lake build` (which fails on any
@@ -426,17 +428,33 @@ Applying this to the radial path $t\mapsto g(e^t)$ and, after pulling back throu
 covering quotient map $\mathtt{Circle.exp}:\mathbb R\to S^1$, to the unit circle, both polar
 factors of $g$ are continuous, so $g$ is continuous everywhere.
 
-:::{dropdown} Lean: automatic continuity for `(ℝ,+) → ℂˣ` — `measurable_addParam_to_cstar_continuous`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+This automatic-continuity step is proved in
+[`AutomaticContinuity.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/AutomaticContinuity.lean)
+not just for $\mathbb C$ but for any field with `RCLike 𝕜` (so for both $\mathbb R$ and
+$\mathbb C$): it is the multiplicative companion of Mathlib's additive automatic-continuity
+theorem `MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`.
+
+:::{dropdown} Lean: measurable multiplicative `ℝ → 𝕜` is continuous — `continuous_of_measurable_of_mul`
+```{literalinclude} math_notes_lean/MathNotesLean/AutomaticContinuity.lean
 :language: lean
-:start-after: ANCHOR: cstar-automatic-continuity
-:end-before: ANCHOR_END: cstar-automatic-continuity
+:start-after: ANCHOR: measurable-mul-continuous
+:end-before: ANCHOR_END: measurable-mul-continuous
 ```
-The modulus step is `cauchy_additive_measurable_linear`; the nonvanishing window is supplied
+The modulus step calls Mathlib's additive theorem
+`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`; the nonvanishing window is supplied
 by the interval form of the Lebesgue differentiation theorem
 (`LocallyIntegrable.ae_hasDerivAt_integral`); the primitive's continuity is
-`intervalIntegral.continuous_primitive`. The circle factor descends through the quotient map
-`Circle.exp` in `continuous_cstar_on_circle`.
+`intervalIntegral.continuous_primitive`.
+:::
+
+:::{dropdown} Lean: measurable homomorphism `ℝ → 𝕜ˣ` is continuous — `continuous_of_measurable_of_mul_units`
+```{literalinclude} math_notes_lean/MathNotesLean/AutomaticContinuity.lean
+:language: lean
+:start-after: ANCHOR: measurable-mul-units-continuous
+:end-before: ANCHOR_END: measurable-mul-units-continuous
+```
+The unit-circle factor of $g$ descends through the quotient map `Circle.exp` in
+`continuous_cstar_on_circle`, and the radial factor uses this lemma directly.
 :::
 
 :::{dropdown} Lean: measurable ⇒ continuous and the boxed formula — `cstar_homomorphism_formula_measurable`

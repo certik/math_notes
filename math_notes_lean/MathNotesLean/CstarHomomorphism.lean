@@ -4,9 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Ondřej Čertík
 -/
 import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.LebesgueDifferentiationThm
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.Analysis.Complex.CoveringMap
 import Mathlib.Analysis.Convex.Contractible
 import Mathlib.Analysis.Fourier.AddCircle
@@ -15,6 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Topology.Homotopy.Lifting
 import Mathlib.Topology.Instances.RealVectorSpace
 import Mathlib.Topology.Maps.OpenQuotient
+import MathNotesLean.AutomaticContinuity
 
 /-!
 # Homomorphisms from `ℂˣ` to `ℂˣ`
@@ -27,9 +25,10 @@ The continuous `ℂˣ → ℂˣ` classification is proved below. The circle-char
 analysis on `AddCircle`, and the positive radial step uses the covering map
 `Complex.exp : ℂ → ℂˣ`. The reduction from the note that Borel-measurable homomorphisms
 `ℂˣ → ℂˣ` are automatically continuous is also proved
-(`cstar_homomorphism_continuous_of_measurable`), via the sliding-window integration trick, so the
-boxed formula holds for every Borel-measurable homomorphism
-(`cstar_homomorphism_formula_measurable`).
+(`cstar_homomorphism_continuous_of_measurable`); its analytic core, that a measurable homomorphism
+`(ℝ, +) → 𝕜ˣ` is continuous, is `MathNotesLean.continuous_of_measurable_of_mul_units` in
+`AutomaticContinuity.lean` (proved generally for `RCLike 𝕜`). Hence the boxed formula holds for
+every Borel-measurable homomorphism (`cstar_homomorphism_formula_measurable`).
 -/
 
 noncomputable section
@@ -969,128 +968,13 @@ theorem cstar_homomorphism_formula_continuous (g : ℂˣ →* ℂˣ) (hg : Conti
 
 The note's remaining ingredient: a Borel-measurable group homomorphism `ℂˣ → ℂˣ` is automatically
 continuous, so the continuous classification above already covers the measurable case. The analytic
-core is `measurable_addParam_to_cstar_continuous`: a measurable homomorphism `(ℝ, +) → ℂˣ` is
-continuous. Its modulus reduces to the measurable additive Cauchy equation, while its phase is
-recovered by the sliding-window integration trick `Φ s · ∫₀ᵃ Φ = ∫ₛ^{s+a} Φ`, whose right-hand
-side is continuous in `s`. Applying this to the radial path `t ↦ exp t` and (after pulling back
-through the quotient map `Circle.exp`) to the unit circle yields continuity of `g` on both polar
-factors, hence everywhere.
+core is `MathNotesLean.continuous_of_measurable_of_mul_units` (proved in `AutomaticContinuity.lean`,
+generally for `RCLike 𝕜`): a measurable homomorphism `(ℝ, +) → 𝕜ˣ` is continuous, via the
+sliding-window integration trick `f s · ∫₀ᵃ f = ∫ₛ^{s+a} f`, whose right-hand side is continuous
+in `s`. Applying its `𝕜 = ℂ` case to the radial path `t ↦ exp t` and (after pulling back through
+the quotient map `Circle.exp`) to the unit circle yields continuity of `g` on both polar factors,
+hence everywhere.
 -/
-
--- ANCHOR: cstar-automatic-continuity
-/--
-**Automatic continuity (additive parameter).** A Borel-measurable group homomorphism
-`(ℝ, +) → ℂˣ` is continuous. The modulus is handled by the measurable additive Cauchy equation,
-and the phase by the sliding-window integration trick.
--/
-theorem measurable_addParam_to_cstar_continuous (f : ℝ → ℂˣ)
-    (hmul : ∀ t s, f (t + s) = f t * f s) (hmeas : Measurable f) :
-    Continuous f := by
-  set Φ : ℝ → ℂ := fun t => (f t : ℂ) with hΦdef
-  have hval : Measurable (Units.val : ℂˣ → ℂ) := comap_measurable Units.val
-  have hΦmeas : Measurable Φ := hval.comp hmeas
-  have hΦne : ∀ t, Φ t ≠ 0 := fun t => (f t).ne_zero
-  have hΦmul : ∀ t s, Φ (t + s) = Φ t * Φ s := by
-    intro t s; simp only [hΦdef, hmul t s, Units.val_mul]
-  -- Modulus continuity via the measurable additive Cauchy equation.
-  set ρ : ℝ → ℝ := fun t => ‖Φ t‖ with hρdef
-  have hρpos : ∀ t, 0 < ρ t := fun t => norm_pos_iff.mpr (hΦne t)
-  have hρmul : ∀ x y, ρ (x + y) = ρ x * ρ y := by
-    intro x y; simp only [hρdef, hΦmul x y, norm_mul]
-  have hbadd : ∀ x y, Real.log (ρ (x + y)) = Real.log (ρ x) + Real.log (ρ y) := by
-    intro x y; rw [hρmul x y, Real.log_mul (ne_of_gt (hρpos x)) (ne_of_gt (hρpos y))]
-  have hbmeas : Measurable fun t => Real.log (ρ t) :=
-    Real.measurable_log.comp (continuous_norm.measurable.comp hΦmeas)
-  have hblin : ∀ t, Real.log (ρ t) = Real.log (ρ 1) * t :=
-    cauchy_additive_measurable_linear (fun t => Real.log (ρ t)) hbadd hbmeas
-  have hρcont : Continuous ρ := by
-    have hrw : ρ = fun t => Real.exp (Real.log (ρ 1) * t) := by
-      funext t; rw [← hblin t, Real.exp_log (hρpos t)]
-    rw [hrw]; exact Real.continuous_exp.comp (continuous_const.mul continuous_id)
-  -- `Φ` is interval integrable on every interval, dominated by the continuous modulus.
-  have hΦaesm : AEStronglyMeasurable Φ volume := hΦmeas.aestronglyMeasurable
-  have hΦii : ∀ a b : ℝ, IntervalIntegrable Φ volume a b := by
-    intro a b
-    rw [intervalIntegrable_iff]
-    exact Integrable.mono' (intervalIntegrable_iff.mp (hρcont.intervalIntegrable a b))
-      hΦaesm.restrict (ae_of_all _ fun x => (congrFun hρdef x).ge)
-  -- The primitive of `Φ` is continuous.
-  set F : ℝ → ℂ := fun y => ∫ t in (0:ℝ)..y, Φ t with hFdef
-  have hFcont : Continuous F := intervalIntegral.continuous_primitive hΦii 0
-  -- Some window `[0, a]` has a nonzero integral, by the Lebesgue differentiation theorem.
-  have hExists : ∃ a : ℝ, F a ≠ 0 := by
-    by_contra hcon
-    simp only [not_exists, not_ne_iff] at hcon
-    have hReloc : LocallyIntegrable (fun t => (Φ t).re) volume :=
-      hρcont.locallyIntegrable.mono
-        (Complex.continuous_re.measurable.comp hΦmeas).aestronglyMeasurable
-        (ae_of_all _ fun x => by
-          rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (hρpos x)]
-          exact (Complex.abs_re_le_norm (Φ x)).trans_eq (congrFun hρdef x).symm)
-    have hImloc : LocallyIntegrable (fun t => (Φ t).im) volume :=
-      hρcont.locallyIntegrable.mono
-        (Complex.continuous_im.measurable.comp hΦmeas).aestronglyMeasurable
-        (ae_of_all _ fun x => by
-          rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (hρpos x)]
-          exact (Complex.abs_im_le_norm (Φ x)).trans_eq (congrFun hρdef x).symm)
-    have hReprim : ∀ y : ℝ, (∫ t in (0:ℝ)..y, (Φ t).re) = 0 := by
-      intro y
-      have h := Complex.reCLM.intervalIntegral_comp_comm (hΦii 0 y)
-      simp only [Complex.reCLM_apply] at h
-      rw [h]
-      have hFy : (∫ t in (0:ℝ)..y, Φ t) = F y := rfl
-      rw [hFy, hcon y, Complex.zero_re]
-    have hImprim : ∀ y : ℝ, (∫ t in (0:ℝ)..y, (Φ t).im) = 0 := by
-      intro y
-      have h := Complex.imCLM.intervalIntegral_comp_comm (hΦii 0 y)
-      simp only [Complex.imCLM_apply] at h
-      rw [h]
-      have hFy : (∫ t in (0:ℝ)..y, Φ t) = F y := rfl
-      rw [hFy, hcon y, Complex.zero_im]
-    have hzeroRe : ∀ᵐ x : ℝ, (Φ x).re = 0 := by
-      filter_upwards [LocallyIntegrable.ae_hasDerivAt_integral hReloc] with x hx
-      have hd := hx 0
-      rw [funext hReprim] at hd
-      exact ((hasDerivAt_const x (0:ℝ)).unique hd).symm
-    have hzeroIm : ∀ᵐ x : ℝ, (Φ x).im = 0 := by
-      filter_upwards [LocallyIntegrable.ae_hasDerivAt_integral hImloc] with x hx
-      have hd := hx 0
-      rw [funext hImprim] at hd
-      exact ((hasDerivAt_const x (0:ℝ)).unique hd).symm
-    have hzero : ∀ᵐ x : ℝ, Φ x = 0 := by
-      filter_upwards [hzeroRe, hzeroIm] with x hre him
-      exact Complex.ext (by rw [hre, Complex.zero_re]) (by rw [him, Complex.zero_im])
-    rw [ae_iff] at hzero
-    have huniv : {x : ℝ | ¬ Φ x = 0} = Set.univ := by
-      ext x; simpa using hΦne x
-    rw [huniv, Real.volume_univ] at hzero
-    exact ENNReal.top_ne_zero hzero
-  -- The sliding-window identity `Φ s · F a = ∫ₛ^{s+a} Φ = F (s+a) - F s`.
-  obtain ⟨a, ha⟩ := hExists
-  have hwindow : ∀ s : ℝ, Φ s = (F (s + a) - F s) / F a := by
-    intro s
-    have h2 : (∫ u in (0:ℝ)..a, Φ (s + u)) = Φ s * ∫ u in (0:ℝ)..a, Φ u := by
-      have hfun : (fun u => Φ (s + u)) = fun u => Φ s * Φ u := by
-        funext u; rw [hΦmul s u]
-      rw [hfun, intervalIntegral.integral_const_mul]
-    have hsub : Φ s * F a = ∫ t in s..(s + a), Φ t := by
-      have hFa : F a = ∫ u in (0:ℝ)..a, Φ u := rfl
-      rw [hFa, ← h2, intervalIntegral.integral_comp_add_left Φ s, add_zero]
-    have hadj : F (s + a) - F s = ∫ t in s..(s + a), Φ t := by
-      have h := intervalIntegral.integral_add_adjacent_intervals (hΦii 0 s) (hΦii s (s + a))
-      have hFsa : F (s + a) = ∫ t in (0:ℝ)..(s + a), Φ t := rfl
-      have hFs : F s = ∫ t in (0:ℝ)..s, Φ t := rfl
-      rw [hFsa, hFs, ← h]; ring
-    rw [eq_div_iff ha, hsub, hadj]
-  have hΦcont : Continuous Φ := by
-    have hnum : Continuous fun s => F (s + a) - F s :=
-      (hFcont.comp (continuous_id.add continuous_const)).sub hFcont
-    exact (hnum.div_const (F a)).congr fun s => (hwindow s).symm
-  -- Continuity of the underlying `ℂ`-valued map gives continuity into `ℂˣ`.
-  rw [Units.continuous_iff]
-  refine ⟨hΦcont, ?_⟩
-  simpa [Units.inv_eq_val_inv] using hΦcont.inv₀ hΦne
--- ANCHOR_END: cstar-automatic-continuity
 
 /-- A Borel-measurable homomorphism `ℂˣ → ℂˣ` is continuous on the unit circle: the restriction
 `z ↦ g (toUnits z)` is continuous. The circle is the continuous quotient of `(ℝ, +)` by
@@ -1101,18 +985,18 @@ theorem continuous_cstar_on_circle (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
   have hquot : Topology.IsQuotientMap Circle.exp :=
     isLocalHomeomorph_circleExp.isOpenMap.isQuotientMap hcont_exp Circle.exp_surjective
   rw [hquot.continuous_iff]
-  refine measurable_addParam_to_cstar_continuous
-    (fun t => g (Circle.toUnits (Circle.exp t))) ?_ ?_
-  · intro t s
-    simp only [Circle.exp_add, map_mul]
+  refine continuous_of_measurable_of_mul_units
+    (f := fun t => g (Circle.toUnits (Circle.exp t))) ?_ ?_
   · exact hg.comp (measurable_comap_iff.mpr
       (Units.continuous_val.comp (continuous_circle_toUnits.comp hcont_exp)).measurable)
+  · intro t s
+    simp only [Circle.exp_add, map_mul]
 
 -- ANCHOR: cstar-measurable
 /--
 **Automatic continuity.** A Borel-measurable group homomorphism `ℂˣ → ℂˣ` is continuous. The polar
 factorization splits `g` into a radial part `t ↦ g (exp t)` and a unit-circle part, each continuous
-by `measurable_addParam_to_cstar_continuous`.
+by `continuous_of_measurable_of_mul_units`.
 -/
 theorem cstar_homomorphism_continuous_of_measurable (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
     Continuous g := by
@@ -1123,10 +1007,10 @@ theorem cstar_homomorphism_continuous_of_measurable (g : ℂˣ →* ℂˣ) (hg :
       simp only [Function.comp_apply, cstarNormUnit_eq_positivePath_log_norm]
     rw [heq]
     refine Continuous.comp ?_ continuous_log_norm_units
-    exact measurable_addParam_to_cstar_continuous (fun t => g (cstarPositivePath t))
-      (fun t s => by rw [cstarPositivePath_add, map_mul])
+    exact continuous_of_measurable_of_mul_units
       (hg.comp (measurable_comap_iff.mpr
         (Units.continuous_val.comp continuous_cstarPositivePath).measurable))
+      (fun t s => by rw [cstarPositivePath_add, map_mul])
   have hcirc : Continuous fun w : ℂˣ => g (cstarCircleUnit w) := by
     have heq : (fun w : ℂˣ => g (cstarCircleUnit w))
         = (fun z : Circle => g (Circle.toUnits z))
