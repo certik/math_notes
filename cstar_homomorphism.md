@@ -492,6 +492,7 @@ continuities through the polar factorization, and
 This is the formula needed for the free factor $g$ in
 [Determinant From Homomorphism](determinant_homomorphism.md).
 
+(multiplicative-cauchy-from-measurable-homomorphisms)=
 ## Multiplicative Cauchy from Measurable Homomorphisms
 
 The measurable homomorphism classification gives a shorter derivation of the
@@ -550,4 +551,59 @@ solutions $m\equiv0$ and $m\equiv1$.
 The three-way split (`m≡0`, `m≡1`, or the nondegenerate formula) follows the same
 case analysis on `m(1)` and `m(0)` used in the text; `eq_zero_or_eq_one_of_eq_mul_self`
 is the `a=a²ᵉ ⇒ a∈{0,1}` lemma.
+:::
+
+(cauchy-multiplicative-complex)=
+## Multiplicative Functions on $\mathbb C$
+
+The same argument extends the boxed homomorphism classification from $\mathbb C^*$ to all of
+$\mathbb C$, i.e. to measurable functions
+$$
+m:\mathbb C\to\mathbb C,\qquad m(zw)=m(z)m(w),
+$$
+whose domain now contains $0$. The result is the exact complex analogue of the real case in
+[](#multiplicative-cauchy-from-measurable-homomorphisms): there are two degenerate solutions and
+one nondegenerate family.
+
+First, $m(1)=m(1)^2$, so $m(1)=0$ or $m(1)=1$. If $m(1)=0$, then
+$$
+m(z)=m(z\cdot 1)=m(z)m(1)=0,
+$$
+so $m\equiv0$.
+
+Now assume $m(1)=1$. Since $m(0)=m(0)^2$, either $m(0)=0$ or $m(0)=1$. If $m(0)=1$, then
+$$
+1=m(0)=m(0\cdot z)=m(0)m(z)=m(z),
+$$
+so $m\equiv1$.
+
+It remains to handle $m(1)=1$ and $m(0)=0$. For every $z\in\mathbb C^*$,
+$$
+m(z)m(z^{-1})=m(1)=1,
+$$
+so $m(z)\in\mathbb C^*$, and the restriction $m|_{\mathbb C^*}:\mathbb C^*\to\mathbb C^*$ is a
+measurable group homomorphism. By the boxed classification
+{eq}`eq-cstar-homomorphism-formula`,
+$$
+m(z)=|z|^{\,s}\left(\frac{z}{|z|}\right)^{k},
+\qquad z\in\mathbb C^*,\qquad s\in\mathbb C,\ k\in\mathbb Z,
+$$
+and the value at $0$ is fixed by $m(0)=0$.
+
+So, in contrast with the $\mathbb C^*\to\mathbb C^*$ group homomorphisms (where $m\equiv1$ is just
+the parameter choice $s=0,\,k=0$ and $m\equiv0$ is impossible), the equation on all of $\mathbb C$
+genuinely has the two extra degenerate solutions $m\equiv0$ and $m\equiv1$, exactly because the
+codomain now includes $0$ and the domain now includes $0$.
+
+:::{dropdown} Lean proof: `cauchy_multiplicative_complex_classification`
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: mult-complex-classification
+:end-before: ANCHOR_END: mult-complex-classification
+```
+The nondegenerate branch packages `m|_{ℂ*}` as a `ℂˣ →* ℂˣ` (`m z ≠ 0` for `z ≠ 0` because
+`m(z)m(z⁻¹)=1`), checks it is measurable, and applies `cstar_homomorphism_formula_measurable`;
+the polar factors are read back to `ℂ` via `coe_cstarNormCPow` and `coe_cstarCircleUnit`. The
+shared `a=a² ⇒ a∈{0,1}` lemma `eq_zero_or_eq_one_of_eq_mul_self` is now stated for any field, so it
+serves both the real and the complex case.
 :::

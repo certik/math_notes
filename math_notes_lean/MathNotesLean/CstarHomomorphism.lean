@@ -315,9 +315,10 @@ theorem cauchy_multiplicative_eq_sign_rpow_on_nonzero (m : ℝ → ℝ)
       _ = (if x < 0 then m (-1) else 1) * |x| ^ c := by simp [hneg, habs]
 -- ANCHOR_END: mult-formula
 
-/-- A real number satisfying `a = a * a` is `0` or `1`. -/
-theorem eq_zero_or_eq_one_of_eq_mul_self {a : ℝ} (h : a = a * a) : a = 0 ∨ a = 1 := by
-  have hfac : a * (a - 1) = 0 := by nlinarith
+/-- An element `a` of a field satisfying `a = a * a` is `0` or `1`. -/
+theorem eq_zero_or_eq_one_of_eq_mul_self {F : Type*} [Field F] {a : F} (h : a = a * a) :
+    a = 0 ∨ a = 1 := by
+  have hfac : a * (a - 1) = 0 := by linear_combination -h
   rcases mul_eq_zero.mp hfac with h0 | h1
   · exact Or.inl h0
   · exact Or.inr (sub_eq_zero.mp h1)
@@ -1085,5 +1086,55 @@ theorem cstar_homomorphism_formula_measurable (g : ℂˣ →* ℂˣ) (hg : Measu
 -- ANCHOR_END: cstar-measurable
 
 end CStarHomomorphism
+
+section CauchyMultiplicativeComplex
+
+/-- The unit-circle polar factor `w / |w|`, read off at the level of `ℂ`. -/
+theorem coe_cstarCircleUnit (w : ℂˣ) :
+    (cstarCircleUnit w : ℂ) = (w : ℂ) / (‖(w : ℂ)‖ : ℂ) := by
+  unfold cstarCircleUnit cstarNormUnit
+  rfl
+
+-- ANCHOR: mult-complex-classification
+/--
+**Measurable multiplicative functions `ℂ → ℂ`.** A measurable `m : ℂ → ℂ` satisfying
+`m (z * w) = m z * m w` is exactly one of three forms: the constant `0`; the constant `1`; or, in
+the nondegenerate case `m 1 = 1` and `m 0 = 0`, the boxed `ℂ*`-homomorphism `z ↦ |z|^s (z / |z|)^k`
+(`s ∈ ℂ`, `k ∈ ℤ`) extended by `m 0 = 0`. The nondegenerate branch restricts `m` to a measurable
+group homomorphism `ℂ* → ℂ*` and invokes `cstar_homomorphism_formula_measurable`.
+-/
+theorem cauchy_multiplicative_complex_classification (m : ℂ → ℂ)
+    (hm : ∀ z w : ℂ, m (z * w) = m z * m w) (hmeas : Measurable m) :
+    (∀ z : ℂ, m z = 0) ∨ (∀ z : ℂ, m z = 1) ∨
+      ∃ (s : ℂ) (k : ℤ), m 0 = 0 ∧
+        ∀ z : ℂ, z ≠ 0 →
+          m z = Complex.exp (s * (Real.log ‖z‖ : ℂ)) * (z / (‖z‖ : ℂ)) ^ k := by
+  have h1sq : m 1 = m 1 * m 1 := by simpa using hm 1 1
+  rcases eq_zero_or_eq_one_of_eq_mul_self h1sq with h1 | h1
+  · exact Or.inl fun z => by simpa [h1] using hm z 1
+  · refine Or.inr ?_
+    have h0sq : m 0 = m 0 * m 0 := by simpa using hm 0 0
+    rcases eq_zero_or_eq_one_of_eq_mul_self h0sq with h0 | h0
+    · refine Or.inr ?_
+      have hmne : ∀ w : ℂˣ, m (w : ℂ) ≠ 0 := by
+        intro w hw
+        have h := hm (w : ℂ) ((w : ℂ)⁻¹)
+        rw [mul_inv_cancel₀ w.ne_zero, h1, hw, zero_mul] at h
+        exact one_ne_zero h
+      let M : ℂˣ →* ℂˣ :=
+        { toFun := fun w => Units.mk0 (m (w : ℂ)) (hmne w)
+          map_one' := by ext; simpa using h1
+          map_mul' := fun w z => by ext; simpa using hm (w : ℂ) (z : ℂ) }
+      have hMmeas : Measurable M :=
+        measurable_comap_iff.mpr (hmeas.comp (comap_measurable Units.val))
+      obtain ⟨s, k, hsk⟩ := cstar_homomorphism_formula_measurable M hMmeas
+      refine ⟨s, k, h0, fun z hz => ?_⟩
+      have hmz : m z = ((M (Units.mk0 z hz) : ℂˣ) : ℂ) := rfl
+      rw [hmz, hsk (Units.mk0 z hz), Units.val_mul, coe_cstarNormCPow,
+        Units.val_zpow_eq_zpow_val, coe_cstarCircleUnit, Units.val_mk0]
+    · exact Or.inl fun z => by simpa [h0] using (hm 0 z).symm
+-- ANCHOR_END: mult-complex-classification
+
+end CauchyMultiplicativeComplex
 
 end MathNotesLean
