@@ -1,0 +1,46 @@
+name: Verify Lean formalization
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: lean-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Fast, toolchain-free guards: the Lean snippets shown in the Markdown notes
+  # must resolve to real anchors, and the formalization must contain no holes.
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Check Markdown ↔ Lean anchor correspondence
+        run: python3 scripts/check_lean_anchors.py
+
+      - name: Forbid sorry / admit in the formalization
+        run: |
+          if grep -rnwE 'sorry|admit|sorryAx' math_notes_lean/MathNotesLean/; then
+            echo "::error::Found sorry/admit/sorryAx in Lean sources; proofs must be complete."
+            exit 1
+          fi
+          echo "No sorry/admit found."
+
+  # Build the Lean project. This is what actually guarantees every theorem
+  # (and therefore every proof displayed in the Markdown) type-checks.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9  # v1.5.0
+        with:
+          lake-package-directory: math_notes_lean
+          build: "true"
+          use-mathlib-cache: "true"
