@@ -365,6 +365,54 @@ theorem cauchy_multiplicative_measurable_classification_with_zero (m : ℝ → �
     · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
 -- ANCHOR_END: mult-classification
 
+-- ANCHOR: mult-uniqueness
+/--
+The real polar parametrization `(c, ε) ↦ (x ↦ ε^{[x<0]} |x|^c)` is injective on `ℝˣ`: the exponent
+`c ∈ ℝ` (read off at `x = 2`) and the sign `ε` (read off at `x = -1`) are uniquely determined. This
+is the real analogue of `cstarFormulaHom_injective`; note `ε` lives in `{±1}`, i.e. the angular
+exponent is determined only modulo `2` — `k` and `k+2` give the same sign character.
+-/
+theorem realSignRpow_injective {c c' ε ε' : ℝ}
+    (h : ∀ x : ℝ, x ≠ 0 →
+      (if x < 0 then ε else 1) * |x| ^ c = (if x < 0 then ε' else 1) * |x| ^ c') :
+    c = c' ∧ ε = ε' := by
+  have hc : c = c' := by
+    have h2 := h 2 (by norm_num)
+    rw [if_neg (by norm_num : ¬(2 : ℝ) < 0), if_neg (by norm_num : ¬(2 : ℝ) < 0),
+      one_mul, one_mul, show |(2 : ℝ)| = 2 from by norm_num] at h2
+    have hlog := congrArg Real.log h2
+    rw [Real.log_rpow (by norm_num), Real.log_rpow (by norm_num)] at hlog
+    exact mul_right_cancel₀ (Real.log_pos (by norm_num)).ne' hlog
+  have he : ε = ε' := by
+    have hm1 := h (-1) (by norm_num)
+    rw [if_pos (by norm_num : (-1 : ℝ) < 0), if_pos (by norm_num : (-1 : ℝ) < 0),
+      show |(-1 : ℝ)| = 1 from by norm_num, Real.one_rpow, Real.one_rpow, mul_one, mul_one] at hm1
+    exact hm1
+  exact ⟨hc, he⟩
+
+/--
+**Uniqueness for the real classification.** For a measurable multiplicative `m : ℝ → ℝ` with
+`m 1 = 1`, the pair `(c, m(-1)) ∈ ℝ × {±1}` in the nondegenerate form
+`m x = (if x < 0 then m(-1) else 1) · |x|^c` is *unique*. This is the real counterpart of
+`existsUnique_hom_factor_det_cstar`: the radial exponent `c` is unique in `ℝ` and the angular part
+is the single sign `m(-1) ∈ {±1}` (the circle exponent `k ∈ ℤ` collapses to `k mod 2`).
+-/
+theorem existsUnique_cauchy_multiplicative_sign_rpow (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) (hmeas : Measurable m) :
+    ∃! cε : ℝ × ℝ, (cε.2 = 1 ∨ cε.2 = -1) ∧
+      ∀ x : ℝ, x ≠ 0 → m x = (if x < 0 then cε.2 else 1) * |x| ^ cε.1 := by
+  obtain ⟨c, hsign, hform⟩ := cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas
+  refine ⟨(c, m (-1)), ⟨hsign, fun x hx => hform hx⟩, ?_⟩
+  rintro ⟨c', ε'⟩ ⟨_, hform'⟩
+  have hagree : ∀ x : ℝ, x ≠ 0 →
+      (if x < 0 then ε' else 1) * |x| ^ c' = (if x < 0 then m (-1) else 1) * |x| ^ c := by
+    intro x hx
+    rw [← hform' x hx, ← hform hx]
+  obtain ⟨hc, he⟩ := realSignRpow_injective hagree
+  simp only [Prod.mk.injEq]
+  exact ⟨hc, he⟩
+-- ANCHOR_END: mult-uniqueness
+
 end CauchyMultiplicativeReal
 
 section CStarHomomorphism
@@ -619,6 +667,119 @@ theorem cstarFormulaHom_one_one : cstarFormulaHom 1 1 = MonoidHom.id ℂˣ := by
   have hn : ((‖(w : ℂ)‖ : ℝ) : ℂ) ≠ 0 := by
     exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
   field_simp [hn]
+
+/-- A positive real number as a unit of `ℂ`. -/
+def posUnit (t : ℝ) (ht : 0 < t) : ℂˣ :=
+  Units.mk0 (t : ℂ) (by exact_mod_cast ht.ne')
+
+@[simp] theorem coe_posUnit (t : ℝ) (ht : 0 < t) : (posUnit t ht : ℂ) = t := rfl
+
+theorem norm_posUnit (t : ℝ) (ht : 0 < t) : ‖(posUnit t ht : ℂ)‖ = t := by
+  rw [coe_posUnit, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht]
+
+/-- Underlying value of the polar formula. -/
+theorem coe_cstarFormulaHom_apply (s : ℂ) (k : ℤ) (w : ℂˣ) :
+    ((cstarFormulaHom s k w : ℂˣ) : ℂ)
+      = Complex.exp (s * Real.log ‖(w : ℂ)‖) * (cstarCircleUnit w : ℂ) ^ k := by
+  change ((cstarNormCPow s w * cstarCircleUnit w ^ k : ℂˣ) : ℂ) = _
+  rw [Units.val_mul, coe_cstarNormCPow, Units.val_zpow_eq_zpow_val]
+
+theorem cstarNormUnit_of_norm_one {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) : cstarNormUnit w = 1 := by
+  apply Units.ext
+  simp [cstarNormUnit, hw]
+
+theorem cstarCircleUnit_of_norm_one {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) : cstarCircleUnit w = w := by
+  apply Units.ext
+  have h1 := cstar_norm_mul_circle w
+  rw [cstarNormUnit_of_norm_one hw] at h1
+  simpa using h1
+
+theorem cstarFormulaHom_apply_of_norm_one (s : ℂ) (k : ℤ) {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) :
+    cstarFormulaHom s k w = w ^ k := by
+  change cstarNormCPow s w * cstarCircleUnit w ^ k = w ^ k
+  rw [cstarCircleUnit_of_norm_one hw]
+  have : cstarNormCPow s w = 1 := by
+    apply Units.ext
+    simp [coe_cstarNormCPow, hw]
+  rw [this, one_mul]
+
+theorem cstarCircleUnit_posUnit (t : ℝ) (ht : 0 < t) : cstarCircleUnit (posUnit t ht) = 1 := by
+  apply Units.ext
+  have h1 := cstar_norm_mul_circle (posUnit t ht)
+  have hnu : (cstarNormUnit (posUnit t ht) : ℂ) = (t : ℂ) := by
+    change ((‖(posUnit t ht : ℂ)‖ : ℝ) : ℂ) = (t : ℂ)
+    rw [norm_posUnit t ht]
+  rw [hnu, coe_posUnit] at h1
+  have ht0 : (t : ℂ) ≠ 0 := by exact_mod_cast ht.ne'
+  have := mul_left_cancel₀ ht0 (h1.trans (mul_one (t : ℂ)).symm)
+  simpa using this
+
+/--
+**Uniqueness of the polar exponents.** The map `(s, k) ↦ (w ↦ |w|^s (w/|w|)^k)` is injective:
+the exponents `s ∈ ℂ` and `k ∈ ℤ` are uniquely determined by the homomorphism `ℂˣ → ℂˣ`. The circle
+exponent `k` is read off on the unit circle (where `|w| = 1`), and the radial exponent `s` on the
+positive reals (where `w/|w| = 1`).
+-/
+theorem cstarFormulaHom_injective {s₁ s₂ : ℂ} {k₁ k₂ : ℤ}
+    (h : cstarFormulaHom s₁ k₁ = cstarFormulaHom s₂ k₂) : s₁ = s₂ ∧ k₁ = k₂ := by
+  have hk : k₁ = k₂ := by
+    by_contra hne
+    have hm : ((k₁ - k₂ : ℤ) : ℝ) ≠ 0 := by exact_mod_cast sub_ne_zero.mpr hne
+    set θ : ℝ := Real.pi / ((k₁ - k₂ : ℤ) : ℝ) with hθ
+    set w₀ : ℂˣ := Units.mk0 (Complex.exp (↑θ * Complex.I)) (Complex.exp_ne_zero _) with hw0
+    have hnorm : ‖(w₀ : ℂ)‖ = 1 := Complex.norm_exp_ofReal_mul_I θ
+    have hK : w₀ ^ k₁ = w₀ ^ k₂ := by
+      have huni : cstarFormulaHom s₁ k₁ w₀ = cstarFormulaHom s₂ k₂ w₀ := by rw [h]
+      rwa [cstarFormulaHom_apply_of_norm_one s₁ k₁ hnorm,
+        cstarFormulaHom_apply_of_norm_one s₂ k₂ hnorm] at huni
+    have hpow : w₀ ^ (k₁ - k₂) = 1 := by
+      rw [sub_eq_add_neg, zpow_add, zpow_neg, hK, mul_inv_cancel]
+    have hreal : ((k₁ - k₂ : ℤ) : ℝ) * θ = Real.pi := by
+      rw [hθ]; field_simp
+    have hval : ((w₀ ^ (k₁ - k₂) : ℂˣ) : ℂ) = -1 := by
+      rw [Units.val_zpow_eq_zpow_val, hw0, Units.val_mk0, ← Complex.exp_int_mul]
+      have hcast : (↑(k₁ - k₂) : ℂ) * (↑θ * Complex.I) = ↑Real.pi * Complex.I := by
+        have : (↑(k₁ - k₂) : ℂ) * ↑θ = ↑Real.pi := by exact_mod_cast hreal
+        rw [show (↑(k₁ - k₂) : ℂ) * (↑θ * Complex.I) = ((↑(k₁ - k₂) : ℂ) * ↑θ) * Complex.I from by
+          ring, this]
+      rw [hcast, Complex.exp_pi_mul_I]
+    rw [hpow, Units.val_one] at hval
+    norm_num at hval
+  have hS : ∀ t : ℝ, 0 < t →
+      Complex.exp (s₁ * ↑(Real.log t)) = Complex.exp (s₂ * ↑(Real.log t)) := by
+    intro t ht
+    have huni : cstarFormulaHom s₁ k₁ (posUnit t ht) = cstarFormulaHom s₂ k₂ (posUnit t ht) := by
+      rw [h]
+    have := congrArg (fun u : ℂˣ => (u : ℂ)) huni
+    rw [coe_cstarFormulaHom_apply, coe_cstarFormulaHom_apply, cstarCircleUnit_posUnit,
+      norm_posUnit] at this
+    simpa using this
+  have hRe : s₁.re = s₂.re := by
+    have h1 := hS (Real.exp 1) (Real.exp_pos 1)
+    rw [Real.log_exp] at h1
+    simp only [Complex.ofReal_one, mul_one] at h1
+    have h2 : ‖Complex.exp s₁‖ = ‖Complex.exp s₂‖ := by rw [h1]
+    rw [Complex.norm_exp, Complex.norm_exp] at h2
+    exact Real.exp_injective h2
+  have hIm : s₁.im = s₂.im := by
+    by_contra hd
+    set d : ℝ := s₁.im - s₂.im with hdval
+    have hd0 : d ≠ 0 := sub_ne_zero.mpr hd
+    have h1 := hS (Real.exp (Real.pi / d)) (Real.exp_pos _)
+    rw [Real.log_exp] at h1
+    have h2 : Complex.exp ((s₁ - s₂) * ↑(Real.pi / d)) = 1 := by
+      rw [sub_mul, Complex.exp_sub, h1, div_self (Complex.exp_ne_zero _)]
+    have hsub : s₁ - s₂ = ↑d * Complex.I := by
+      apply Complex.ext
+      · simp [Complex.sub_re, hRe]
+      · simp [Complex.sub_im, hdval]
+    rw [hsub] at h2
+    have hd0C : (d : ℂ) ≠ 0 := by exact_mod_cast hd0
+    rw [show (↑d * Complex.I) * ↑(Real.pi / d) = ↑Real.pi * Complex.I from by
+      push_cast; field_simp] at h2
+    rw [Complex.exp_pi_mul_I] at h2
+    norm_num at h2
+  exact ⟨Complex.ext hRe hIm, hk⟩
 
 theorem continuousAt_log_norm_complex {z : ℂ} (hz : z ≠ 0) :
     ContinuousAt (fun z : ℂ => Real.log ‖z‖) z := by

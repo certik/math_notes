@@ -656,6 +656,32 @@ theorem hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i
       f A = cstarNormCPow s (detGL A) * cstarCircleUnit (detGL A) ^ k := by
   obtain ⟨s, k, hsk⟩ := cstar_homomorphism_formula_measurable (diagonalFactorOfHom i0 f) hg
   exact ⟨s, k, fun A => by rw [hom_factor_det f i0, hsk]⟩
+
+/--
+**Uniqueness of the polar exponents.** If `g = diagonalFactorOfHom i0 f` is Borel measurable, the
+exponents `s ∈ ℂ`, `k ∈ ℤ` in `f(A) = |det A|ˢ (det A/|det A|)ᵏ` are *uniquely* determined by `f`:
+the determinant is surjective onto `ℂˣ`, so the formula pins down `g`, and the polar parametrization
+is injective (`cstarFormulaHom_injective`).
+-/
+theorem existsUnique_hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (hg : Measurable (diagonalFactorOfHom i0 f)) :
+    ∃! sk : ℂ × ℤ, ∀ A : Matrix.GeneralLinearGroup n ℂ,
+      f A = cstarNormCPow sk.1 (detGL A) * cstarCircleUnit (detGL A) ^ sk.2 := by
+  obtain ⟨s, k, hsk⟩ := cstar_homomorphism_formula_measurable (diagonalFactorOfHom i0 f) hg
+  refine ⟨(s, k), fun A => by rw [hom_factor_det f i0, hsk], ?_⟩
+  rintro ⟨s', k'⟩ hf'
+  have hg' : ∀ w : ℂˣ, diagonalFactorOfHom i0 f w = cstarFormulaHom s' k' w := by
+    intro w
+    have hw := hf' (oneSlotDiagonalGL i0 w)
+    rw [hom_factor_det f i0, detGL_oneSlotDiagonalGL] at hw
+    exact hw
+  have hkey : cstarFormulaHom s k = cstarFormulaHom s' k' := by
+    refine MonoidHom.ext fun w => ?_
+    rw [← hg' w]
+    exact (hsk w).symm
+  obtain ⟨hs, hk⟩ := cstarFormulaHom_injective hkey
+  simp only [Prod.mk.injEq]
+  exact ⟨hs.symm, hk.symm⟩
 -- ANCHOR_END: dethom-cstar
 
 end GeneralLinear
