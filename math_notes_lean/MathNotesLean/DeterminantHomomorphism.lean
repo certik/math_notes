@@ -548,6 +548,20 @@ explicit one-variable factor `g = diagonalFactorOfHom i0 f`.
 theorem exists_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) :
     ∃ g : ℂˣ →* ℂˣ, ∀ A : Matrix.GeneralLinearGroup n ℂ, f A = g (detGL A) :=
   ⟨diagonalFactorOfHom i0 f, hom_factor_det f i0⟩
+
+/--
+**Uniqueness of the factor `g`.** Given `f`, the homomorphism `g : ℂˣ → ℂˣ` with `f = g ∘ det` is
+*unique*: since the determinant is surjective onto `ℂˣ` (every unit `w` is `det(diag(w,1,…,1))`),
+any two factors agree on all of `ℂˣ`. The unique factor is `g = diagonalFactorOfHom i0 f`.
+-/
+theorem existsUnique_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) :
+    ∃! g : ℂˣ →* ℂˣ, ∀ A : Matrix.GeneralLinearGroup n ℂ, f A = g (detGL A) := by
+  refine ⟨diagonalFactorOfHom i0 f, hom_factor_det f i0, ?_⟩
+  intro g hg
+  refine MonoidHom.ext fun w => ?_
+  have hA := hg (oneSlotDiagonalGL i0 w)
+  rw [detGL_oneSlotDiagonalGL] at hA
+  exact hA.symm
 -- ANCHOR_END: dethom-factorization
 
 -- ANCHOR: dethom-g-hom

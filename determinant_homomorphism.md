@@ -260,7 +260,7 @@ For a general $f$, this is the **factorization theorem**:
 $$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^n A_{i,\sigma(i)} \equiv \det A \qquad(A\in GL(n,\mathbb C)),\,}$$
 for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $\prod_i d_i=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
 
-:::{dropdown} Lean proof: `hom_factor_det` / `exists_hom_factor_det` (the boxed $f=g\circ\det$)
+:::{dropdown} Lean proof: `hom_factor_det` / `existsUnique_hom_factor_det` (the boxed $f=g\circ\det$, with $g$ unique)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: dethom-factorization
