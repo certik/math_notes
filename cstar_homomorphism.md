@@ -553,6 +553,22 @@ case analysis on `m(1)` and `m(0)` used in the text; `eq_zero_or_eq_one_of_eq_mu
 is the `a=a²ᵉ ⇒ a∈{0,1}` lemma.
 :::
 
+The parameters in {eq}`eq-rstar-homomorphism-formula` are **unique**: the radial exponent
+$c\in\mathbb R$ is read off at $x=2$ (so $2^c=2^{c'}\Rightarrow c=c'$), and the sign $m(-1)\in\{\pm1\}$
+at $x=-1$. This is the real counterpart of the complex uniqueness
+[](#cstar-homomorphism-formula): there the angular exponent is a full integer $k\in\mathbb Z$,
+because the circle $U(1)$ has characters $\widehat{U(1)}=\mathbb Z$; here the angular group is
+$\{\pm1\}$, whose character group is $\mathbb Z/2$, so the integer $k$ collapses to
+$\epsilon=k\bmod 2$ — $k=1$ and $k=3$ give the same real sign character $\operatorname{sgn}$.
+
+:::{dropdown} Lean proof: `existsUnique_cauchy_multiplicative_sign_rpow` (and `realSignRpow_injective`)
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: mult-uniqueness
+:end-before: ANCHOR_END: mult-uniqueness
+```
+:::
+
 (cauchy-multiplicative-complex)=
 ## Multiplicative Functions on $\mathbb C$
 

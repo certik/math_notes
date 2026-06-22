@@ -288,7 +288,7 @@ with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.
 ```
 :::
 
-:::{dropdown} Lean proof: `hom_factor_det_cstar` (measurable $g$ gives the polar form; $\det$ is $s=1,k=1$)
+:::{dropdown} Lean proof: `hom_factor_det_cstar` / `existsUnique_hom_factor_det_cstar` (measurable $g$ gives the polar form, with $(s,k)$ unique; $\det$ is $s=1,k=1$)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: dethom-cstar
