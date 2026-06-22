@@ -79,6 +79,7 @@ theorem detGL_diagonalGL (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
   rw [detGL_diagonal, Units.coe_prod]
   simp [Units.val_mk0]
 
+-- ANCHOR: dethom-postcompose
 /-- Post-composing determinant with a homomorphism `ℂˣ → ℂˣ`. -/
 def postcomposeDetGL (g : ℂˣ →* ℂˣ) : Matrix.GeneralLinearGroup n ℂ →* ℂˣ :=
   g.comp detGL
@@ -88,10 +89,11 @@ theorem postcomposeDetGL_apply (g : ℂˣ →* ℂˣ) (A : Matrix.GeneralLinearG
     postcomposeDetGL g A = g (detGL A) :=
   rfl
 
-/-- Every `g ∘ det` is a homomorphism `GLₙ(ℂ) → ℂˣ`. -/
+/-- **Converse.** Every `g ∘ det` is a homomorphism `GLₙ(ℂ) → ℂˣ`. -/
 theorem postcomposeDetGL_mul (g : ℂˣ →* ℂˣ) (A B : Matrix.GeneralLinearGroup n ℂ) :
     postcomposeDetGL g (A * B) = postcomposeDetGL g A * postcomposeDetGL g B :=
   map_mul (postcomposeDetGL g) A B
+-- ANCHOR_END: dethom-postcompose
 
 /-- The elementary transvection matrix `I + c Eᵢⱼ`, in mathlib's notation. -/
 def transvectionMatrix (i j : n) (c : ℂ) : Matrix n n ℂ :=
@@ -114,10 +116,12 @@ theorem detGL_transvection_value {i j : n} (hij : i ≠ j) (c : ℂ) :
   detGL_specialLinear (Matrix.SpecialLinearGroup.transvection hij c)
 
 -- ANCHOR: dethom-leibniz-formula
-/-- The Leibniz formula used by mathlib's determinant. -/
+/-- The Leibniz formula used by mathlib's determinant, in the note's index convention
+`L(A) = ∑_σ sgn(σ) ∏_i A_{i,σ(i)}`. -/
 theorem determinant_leibniz_formula (A : Matrix n n ℂ) :
-    Matrix.det A = ∑ σ : Equiv.Perm n, Equiv.Perm.sign σ • ∏ i, A (σ i) i :=
-  Matrix.det_apply A
+    Matrix.det A = ∑ σ : Equiv.Perm n, Equiv.Perm.sign σ • ∏ i, A i (σ i) := by
+  rw [← Matrix.det_transpose, Matrix.det_apply]
+  simp only [Matrix.transpose_apply]
 -- ANCHOR_END: dethom-leibniz-formula
 
 /-- Diagonal `GLₙ(ℂ)` matrix with `x` in one chosen slot and `1` elsewhere. -/
@@ -198,6 +202,10 @@ theorem factor_of_trivial_on_specialLinear (i0 : n) (f : Matrix.GeneralLinearGro
     _ = diagonalFactorOfHom i0 f (detGL A) := rfl
 
 -- ANCHOR: dethom-conjugation
+/-- **Step 1 (`f(I) = 1`).** A homomorphism `GLₙ(ℂ) → ℂˣ` sends the identity matrix to `1`. -/
+theorem hom_one_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) : f 1 = 1 :=
+  map_one f
+
 /--
 **Step 1 (conjugation invariance).** A homomorphism `GLₙ(ℂ) → ℂˣ` is invariant under conjugation,
 because its target `ℂˣ` is commutative: `f (P A P⁻¹) = f A`.
