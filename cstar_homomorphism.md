@@ -70,10 +70,10 @@ $$
 for rational $q$, where $c=a(1)$.
 
 :::{dropdown} Lean proof: `cauchy_additive_rat_homogeneous`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: additive-rat
-:end-before: ANCHOR_END: additive-rat
+:start-after: ANCHOR: flow-additive-rat
+:end-before: ANCHOR_END: flow-additive-rat
 ```
 :::
 
@@ -177,15 +177,39 @@ $b$ is continuous everywhere. Since $b$ vanishes on the dense set $\mathbb Q$,
 continuity gives $b(x)=0$ for every real $x$.
 :::
 
-:::{dropdown} Lean proof: `cauchy_additive_measurable_linear` (and `cauchy_additive_measurable_exists`)
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+:::{dropdown} Lean proof: `cauchy_additive_measurable_linear` (the boundedness-and-continuity argument, step by step)
+The flow-faithful formalization in `CstarHomomorphismFlow.lean` writes out the argument above using
+only the Steinhaus theorem (`MeasureTheory.Measure.sub_mem_nhds_zero_of_addHaar_pos`) as its
+measure-theoretic input, rather than calling Mathlib's packaged
+`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`.
+
+*Step 1 — Steinhaus gives boundedness on a neighbourhood of `0`:*
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: additive-linear
-:end-before: ANCHOR_END: additive-linear
+:start-after: ANCHOR: flow-additive-steinhaus
+:end-before: ANCHOR_END: flow-additive-steinhaus
 ```
-Mathlib supplies the Steinhaus/measurable-implies-continuous step as
-`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`, which is the
-content of the boundedness-and-continuity argument written out above.
+
+*Step 2 — the `n·x` scaling upgrades boundedness near `0` to a Lipschitz bound at `0`:*
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-additive-scaling
+:end-before: ANCHOR_END: flow-additive-scaling
+```
+
+*Step 3 — continuity at `0`, propagated everywhere by additivity:*
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-additive-continuous
+:end-before: ANCHOR_END: flow-additive-continuous
+```
+
+*Conclusion — linearity `a(x)=a(1)·x` (and the existence form `cauchy_additive_measurable_exists`):*
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-additive-linear
+:end-before: ANCHOR_END: flow-additive-linear
+```
 :::
 
 :::{note}
@@ -262,10 +286,10 @@ $$
 with $\epsilon=0$ in the even case and $\epsilon=1$ in the odd case.
 
 :::{dropdown} Lean proof: `cauchy_multiplicative_eq_sign_rpow_on_nonzero`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: mult-formula
-:end-before: ANCHOR_END: mult-formula
+:start-after: ANCHOR: flow-mult-formula
+:end-before: ANCHOR_END: flow-mult-formula
 ```
 The supporting steps `m(x)>0` on positives, `m(-1)²=1`, and `b(t)=log m(eᵗ)`
 additive are `cauchy_multiplicative_pos_of_pos`, `cauchy_multiplicative_neg_one_sq`,
@@ -448,40 +472,42 @@ Applying this to the radial path $t\mapsto g(e^t)$ and, after pulling back throu
 covering quotient map $\mathtt{Circle.exp}:\mathbb R\to S^1$, to the unit circle, both polar
 factors of $g$ are continuous, so $g$ is continuous everywhere.
 
-This automatic-continuity step is proved in
-[`AutomaticContinuity.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/AutomaticContinuity.lean)
+This automatic-continuity step is formalized in
+[`CstarHomomorphismFlow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean)
 not just for $\mathbb C$ but for any field with `RCLike 𝕜` (so for both $\mathbb R$ and
-$\mathbb C$): it is the multiplicative companion of Mathlib's additive automatic-continuity
-theorem `MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`.
+$\mathbb C$): it is the multiplicative companion of the additive automatic-continuity theorem
+`continuous_of_additive_measurable`, which is re-derived above directly from the Steinhaus theorem
+rather than calling Mathlib's packaged
+`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`.
 
 :::{dropdown} Lean: measurable multiplicative `ℝ → 𝕜` is continuous — `continuous_of_measurable_of_mul`
-```{literalinclude} math_notes_lean/MathNotesLean/AutomaticContinuity.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: measurable-mul-continuous
-:end-before: ANCHOR_END: measurable-mul-continuous
+:start-after: ANCHOR: flow-measurable-mul-continuous
+:end-before: ANCHOR_END: flow-measurable-mul-continuous
 ```
-The modulus step calls Mathlib's additive theorem
-`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`; the nonvanishing window is supplied
+The modulus step uses the re-derived `continuous_of_additive_measurable` (additive measurable ⇒
+continuous, from the Steinhaus theorem); the nonvanishing window is supplied
 by the interval form of the Lebesgue differentiation theorem
 (`LocallyIntegrable.ae_hasDerivAt_integral`); the primitive's continuity is
 `intervalIntegral.continuous_primitive`.
 :::
 
 :::{dropdown} Lean: measurable homomorphism `ℝ → 𝕜ˣ` is continuous — `continuous_of_measurable_of_mul_units`
-```{literalinclude} math_notes_lean/MathNotesLean/AutomaticContinuity.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: measurable-mul-units-continuous
-:end-before: ANCHOR_END: measurable-mul-units-continuous
+:start-after: ANCHOR: flow-measurable-mul-units-continuous
+:end-before: ANCHOR_END: flow-measurable-mul-units-continuous
 ```
 The unit-circle factor of $g$ descends through the quotient map `Circle.exp` in
 `continuous_cstar_on_circle`, and the radial factor uses this lemma directly.
 :::
 
 :::{dropdown} Lean: measurable ⇒ continuous and the boxed formula — `cstar_homomorphism_formula_measurable`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: cstar-measurable
-:end-before: ANCHOR_END: cstar-measurable
+:start-after: ANCHOR: flow-cstar-measurable
+:end-before: ANCHOR_END: flow-cstar-measurable
 ```
 `cstar_homomorphism_continuous_of_measurable` assembles the radial and unit-circle factor
 continuities through the polar factorization, and
@@ -543,10 +569,10 @@ Extending by $m(0)=0$ gives exactly the nondegenerate solutions listed in
 solutions $m\equiv0$ and $m\equiv1$.
 
 :::{dropdown} Lean proof: `cauchy_multiplicative_measurable_classification_with_zero`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: mult-classification
-:end-before: ANCHOR_END: mult-classification
+:start-after: ANCHOR: flow-mult-classification
+:end-before: ANCHOR_END: flow-mult-classification
 ```
 The three-way split (`m≡0`, `m≡1`, or the nondegenerate formula) follows the same
 case analysis on `m(1)` and `m(0)` used in the text; `eq_zero_or_eq_one_of_eq_mul_self`
@@ -612,10 +638,10 @@ genuinely has the two extra degenerate solutions $m\equiv0$ and $m\equiv1$, exac
 codomain now includes $0$ and the domain now includes $0$.
 
 :::{dropdown} Lean proof: `cauchy_multiplicative_complex_classification`
-```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: mult-complex-classification
-:end-before: ANCHOR_END: mult-complex-classification
+:start-after: ANCHOR: flow-mult-complex-classification
+:end-before: ANCHOR_END: flow-mult-complex-classification
 ```
 The nondegenerate branch packages `m|_{ℂ*}` as a `ℂˣ →* ℂˣ` (`m z ≠ 0` for `z ≠ 0` because
 `m(z)m(z⁻¹)=1`), checks it is measurable, and applies `cstar_homomorphism_formula_measurable`;
