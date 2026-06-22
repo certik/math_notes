@@ -595,6 +595,22 @@ theorem detUnit_one : detUnit (1 : Matrix.GeneralLinearGroup n ℂ) = 1 := by
   apply Units.ext
   simp [detUnit, Units.val_one, L_one]
 
+/--
+**§3 well-definedness.** For *any* transvection–diagonal factorization `A = E · D`, the diagonal
+product equals `det A`. Since the single-valued `L` is what computes it, the product does not depend
+on the chosen factorization (the note's point 3). -/
+theorem detUnit_eq_prod_of_factorization (A : Matrix.GeneralLinearGroup n ℂ)
+    (E : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
+    (hA : A = (E.map transvecStructGL).prod * diagonalGL D hD) :
+    detUnit A = ∏ j, Units.mk0 (D j) (hD j) := by
+  apply Units.ext
+  rw [coe_detUnit, Units.coe_prod]
+  have hco : (A : Matrix n n ℂ)
+      = (E.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D := by
+    rw [hA, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
+  rw [hco, L_factorization]
+  simp [Units.val_mk0]
+
 /-- Matrix-level diagonal conjugation of a transvection product (the coercion of `conjGL_prod`). -/
 theorem coe_conjGL_prod (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
     (L : List (Matrix.TransvectionStruct n ℂ)) :
