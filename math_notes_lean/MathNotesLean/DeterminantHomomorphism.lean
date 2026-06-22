@@ -539,6 +539,15 @@ theorem hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
     (A : Matrix.GeneralLinearGroup n ℂ) :
     f A = diagonalFactorOfHom i0 f (detGL A) :=
   factor_of_trivial_on_specialLinear i0 f (hom_special_eq_one f i0) A
+
+/--
+The note's boxed statement in existential form: every homomorphism `f : GLₙ(ℂ) → ℂˣ` equals
+`g ∘ det` **for some** group homomorphism `g : ℂˣ → ℂˣ` (here `ℂˣ = ℂ*`). The witness is the
+explicit one-variable factor `g = diagonalFactorOfHom i0 f`.
+-/
+theorem exists_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) :
+    ∃ g : ℂˣ →* ℂˣ, ∀ A : Matrix.GeneralLinearGroup n ℂ, f A = g (detGL A) :=
+  ⟨diagonalFactorOfHom i0 f, hom_factor_det f i0⟩
 -- ANCHOR_END: dethom-factorization
 
 -- ANCHOR: dethom-g-hom
