@@ -46,7 +46,7 @@ f(PAP^{-1})=f(P)f(A)f(P^{-1})=f(P)f(P^{-1})f(A)=f(PP^{-1})f(A)=f(A).
 ```
 So $f$ is invariant under conjugation.
 
-:::{dropdown} Lean proof: `hom_conj_eq`
+:::{dropdown} Lean proof: `hom_one_eq_one` (so $f(I)=1$) and `hom_conj_eq`
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: dethom-conjugation
@@ -280,7 +280,15 @@ Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb 
 $$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
 with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.
 
-:::{dropdown} Lean proof: `hom_eq_postcomposeDetGL` (converse: every $g\circ\det$ is a homomorphism)
+:::{dropdown} Lean proof: `postcomposeDetGL_mul` (converse: every $g\circ\det$ is a homomorphism)
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+:language: lean
+:start-after: ANCHOR: dethom-postcompose
+:end-before: ANCHOR_END: dethom-postcompose
+```
+:::
+
+:::{dropdown} Lean proof: `hom_eq_postcomposeDetGL` (every homomorphism *is* a $g\circ\det$, so these are exactly all of them)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
 :language: lean
 :start-after: ANCHOR: dethom-converse
