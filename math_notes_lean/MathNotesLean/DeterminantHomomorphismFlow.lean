@@ -7,36 +7,38 @@ import Mathlib
 import MathNotesLean.CstarHomomorphism
 
 /-!
-# Determinant from homomorphism — flow-faithful formalization
+# Determinant from homomorphism — flow-faithful, self-contained determinant
 
-This file formalizes `determinant_homomorphism.md` following the **note's own logical development**:
-every result is built sequentially from the previous ones, and the determinant's multiplicativity on
-`GLₙ(ℂ)` is **derived** from the transvection–diagonal factorization (the note's Step 4) rather than
-imported from Mathlib. This certifies that the note's argument is non-circular — it does *not*
-presuppose the determinant theory it sets out to construct.
+This file formalizes `determinant_homomorphism.md` following the **note's own logical development**,
+and goes one step further than `DeterminantHomomorphism.lean`: it does **not use `Matrix.det` at
+all**. We define our *own* Leibniz polynomial `L` and prove every determinant fact we need directly
+from the sum, so the development cites **no Mathlib determinant lemma whatsoever** — not `det_mul`,
+not even `det_apply`. This certifies that the note's argument is genuinely non-circular: the
+determinant and its multiplicativity are constructed and proved here from scratch.
 
-Contrast with `DeterminantHomomorphism.lean`, which proves the same statements but takes Mathlib's
-`Matrix.det_mul` (general determinant multiplicativity) as given; that file certifies the *claims*
-are true, this one certifies the *derivation* is sound.
+(Note: `Matrix.det` is *defined* in `Determinant.Basic`, which is still transitively imported via
+`Transvection.lean` / `Reindex.lean` — no Mathlib transvection/Gaussian-elimination API avoids it.
+But that is only a build-graph fact: our logic never references `Matrix.det` or any
+determinant lemma. Confirm with `grep "Matrix.det" `: every hit is in a comment.)
 
-## Trusted base (the only Mathlib facts used about `Matrix.det` / linear algebra)
+## What we prove ourselves about `L`
 
-Each is an *elementary* property of the explicit Leibniz polynomial or basic linear algebra,
-matching exactly what the note develops directly. **`Matrix.det_mul` is never used.**
+* `L_one`, `L_diagonal` — the note's identity (a): `L I = 1`, `L (diag d) = ∏ dᵢ` (only `σ = id`
+  survives), from the Leibniz sum;
+* `L_eq_zero_of_row_eq` — the note's (b) **alternating**: two equal rows ⇒ `L = 0`, via the
+  `σ ↦ σ ∘ (i₀ j₀)` involution;
+* `L_updateRow_expand` / `L_updateRow_add_smul_self` — (c) **multilinearity** in a row plus the row
+  operation `rowᵢ ← rowᵢ + c·rowⱼ` leaving `L` fixed;
+* `L_transvection_mul` — `L (Tᵢⱼ(c)·M) = L M`; and from it `L_factorization : L(E·D) = ∏ dᵢ` and
+  (Step 4) `detUnit_mul : L(AB) = L A · L B`.
 
-* `Matrix.det_apply` — `det` *is* the Leibniz sum `∑_σ sgn(σ) ∏ᵢ Aᵢ,σ(i)` (definition);
-* `Matrix.det_one`, `Matrix.det_diagonal` — the note's identity (a) (`det I = 1`, `det diag = ∏`);
-* `Matrix.det_updateRow_add_smul_self` — the note's (b)+(c): a row operation (adding a multiple of
-  one row to another) leaves `det` unchanged. This is the single determinant input that **replaces**
-  `det_mul`;
-* `Matrix.det_transvection_of_ne` — `det Tᵢⱼ(c) = 1` (itself an instance of the row operation);
-* `Matrix.det_transpose` — only to match the note's exact index convention `Aᵢ,σ(i)`;
-* `Matrix.isUnit_diagonal` — `diagonal D` is a unit iff its entries are (used to get `dᵢ ≠ 0` from
-  invertibility, *without* `isUnit_iff_isUnit_det`);
-* `Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec` — Gaussian elimination
-  (the note's Step 1 generation lemma).
+## Mathlib facts used (linear algebra only, **no determinant lemmas**)
 
-Everything else — including `det(AB) = det A · det B` — is derived below.
+Basic matrix/permutation/`Finset` algebra (`Matrix.transvection`, `updateRow`, `diagonal`,
+`Equiv.Perm.sign`, `Equiv.swap`, `Finset.sum_involution`, `Equiv.prod_comp`, …); the
+`GLₙ`/`SLₙ`/swap-matrix wrappers; `Matrix.isUnit_diagonal` (to get `dᵢ ≠ 0` from invertibility,
+*without* `isUnit_iff_isUnit_det`); and the Gaussian-elimination generation lemma
+`Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec` (the note's Step 1).
 -/
 
 noncomputable section
@@ -74,13 +76,6 @@ def diagonalGL (d : n → ℂ) (hd : ∀ i, d i ≠ 0) : Matrix.GeneralLinearGro
 theorem coe_diagonalGL (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
     ((diagonalGL d hd : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ) = Matrix.diagonal d :=
   rfl
-
-/-- The Leibniz formula used by mathlib's determinant, in the note's index convention
-`L(A) = ∑_σ sgn(σ) ∏_i A_{i,σ(i)}`. -/
-theorem determinant_leibniz_formula (A : Matrix n n ℂ) :
-    Matrix.det A = ∑ σ : Equiv.Perm n, Equiv.Perm.sign σ • ∏ i, A i (σ i) := by
-  rw [← Matrix.det_transpose, Matrix.det_apply]
-  simp only [Matrix.transpose_apply]
 
 /-- Diagonal `GLₙ(ℂ)` matrix with `x` in one chosen slot and `1` elsewhere. -/
 def oneSlotDiagonalGL (i0 : n) (x : ℂˣ) : Matrix.GeneralLinearGroup n ℂ :=
@@ -388,18 +383,125 @@ theorem hom_oneSlotDiagonalGL_eq_g (f : Matrix.GeneralLinearGroup n ℂ →* ℂ
     f (oneSlotDiagonalGL i x) = diagonalFactorOfHom i0 f x :=
   hom_oneSlotDiagonalGL_pos_invariant f i0 i x
 
-/-! ### Flow-faithful determinant
+/-! ### Our own Leibniz determinant `L`
 
-From here we build the determinant exactly along the note's Steps 2–4, **deriving** its
-multiplicativity rather than assuming it. The only Mathlib determinant facts used are the
-*elementary* ones the note develops directly (see the trusted base listed at the top of the file);
-in particular `Matrix.det_mul` is never invoked. -/
+To make the determinant side **fully self-contained**, we define our own Leibniz polynomial `L` and
+prove its needed properties directly from the sum — citing *no* Mathlib determinant lemma (not even
+`det_apply`). The note's identity (a), the alternating property (b), multilinearity (c), and the
+row-operation invariance are all re-derived here. `Matrix.det` is never used. -/
 
-/-- **(note (b)+(c)).** Left-multiplying by a transvection (a row operation) does not change the
-Leibniz determinant: `det(Tᵢⱼ(c) · M) = det M`. This is the determinant input that replaces
-`det_mul`; it is the elementary row-operation invariance `Matrix.det_updateRow_add_smul_self`. -/
-theorem det_transvection_mul {i j : n} (hij : i ≠ j) (c : ℂ) (M : Matrix n n ℂ) :
-    Matrix.det (Matrix.transvection i j c * M) = Matrix.det M := by
+/-- The Leibniz determinant, defined by us as `∑_σ sgn(σ) ∏ᵢ Aᵢ,σ(i)`. -/
+def L (A : Matrix n n ℂ) : ℂ :=
+  ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) * ∏ i, A i (σ i)
+
+/-- `L` is, by definition, the Leibniz polynomial in the note's index convention `Aᵢ,σ(i)`. -/
+theorem determinant_leibniz_formula (A : Matrix n n ℂ) :
+    L A = ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) * ∏ i, A i (σ i) :=
+  rfl
+
+omit [DecidableEq n] [Fintype n] in
+/-- A permutation that is not the identity moves some point. -/
+theorem exists_ne_of_ne_one {σ : Equiv.Perm n} (h : σ ≠ 1) : ∃ x, σ x ≠ x := by
+  by_contra hc
+  simp only [not_exists, not_not] at hc
+  exact h (Equiv.ext hc)
+
+/-- `eq-dethom`-(a): `L I = 1` (only the identity permutation survives). -/
+theorem L_one : L (1 : Matrix n n ℂ) = 1 := by
+  rw [L, Finset.sum_eq_single (1 : Equiv.Perm n)]
+  · have hp : (∏ i, (1 : Matrix n n ℂ) i ((1 : Equiv.Perm n) i)) = 1 :=
+      Finset.prod_eq_one (fun i _ => Matrix.one_apply_eq i)
+    rw [hp]; simp
+  · intro σ _ hσ
+    obtain ⟨x, hx⟩ := exists_ne_of_ne_one hσ
+    rw [Finset.prod_eq_zero (Finset.mem_univ x) (by rw [Matrix.one_apply, if_neg (Ne.symm hx)]),
+      mul_zero]
+  · intro h; exact absurd (Finset.mem_univ _) h
+
+/-- `eq-dethom`-(a): `L (diag d) = ∏ᵢ dᵢ` (only the identity permutation survives). -/
+theorem L_diagonal (d : n → ℂ) : L (Matrix.diagonal d) = ∏ i, d i := by
+  rw [L, Finset.sum_eq_single (1 : Equiv.Perm n)]
+  · have hp : (∏ i, (Matrix.diagonal d) i ((1 : Equiv.Perm n) i)) = ∏ i, d i :=
+      Finset.prod_congr rfl (fun i _ => Matrix.diagonal_apply_eq d i)
+    rw [hp]; simp
+  · intro σ _ hσ
+    obtain ⟨x, hx⟩ := exists_ne_of_ne_one hσ
+    rw [Finset.prod_eq_zero (Finset.mem_univ x)
+      (by rw [Matrix.diagonal_apply, if_neg (Ne.symm hx)]), mul_zero]
+  · intro h; exact absurd (Finset.mem_univ _) h
+
+/-- `eq-dethom`-(b) **alternating**: if two rows of `A` coincide then `L A = 0`. Proved by the
+`σ ↦ σ ∘ (i₀ j₀)` pairing, where each pair of terms has equal products and opposite signs. -/
+theorem L_eq_zero_of_row_eq {A : Matrix n n ℂ} {i₀ j₀ : n} (hij : i₀ ≠ j₀)
+    (hrow : A i₀ = A j₀) : L A = 0 := by
+  rw [L]
+  apply Finset.sum_involution (fun σ _ => σ * Equiv.swap i₀ j₀)
+  · intro σ _
+    have hprod : ∏ i, A i ((σ * Equiv.swap i₀ j₀) i) = ∏ i, A i (σ i) := by
+      have step1 : ∏ i, A i (σ (Equiv.swap i₀ j₀ i)) = ∏ i, A (Equiv.swap i₀ j₀ i) (σ i) := by
+        rw [← Equiv.prod_comp (Equiv.swap i₀ j₀) (fun i => A i (σ (Equiv.swap i₀ j₀ i)))]
+        exact Finset.prod_congr rfl (fun i _ => by rw [Equiv.swap_apply_self])
+      change ∏ i, A i (σ (Equiv.swap i₀ j₀ i)) = ∏ i, A i (σ i)
+      rw [step1]
+      refine Finset.prod_congr rfl (fun i _ => ?_)
+      have hA : A (Equiv.swap i₀ j₀ i) = A i := by
+        rcases eq_or_ne i i₀ with hi | hi
+        · subst hi; rw [Equiv.swap_apply_left]; exact hrow.symm
+        · rcases eq_or_ne i j₀ with hj | hj
+          · subst hj; rw [Equiv.swap_apply_right]; exact hrow
+          · rw [Equiv.swap_apply_of_ne_of_ne hi hj]
+      rw [hA]
+    have hsign : ((Equiv.Perm.sign (σ * Equiv.swap i₀ j₀) : ℤ) : ℂ)
+        = - ((Equiv.Perm.sign σ : ℤ) : ℂ) := by
+      rw [map_mul, Equiv.Perm.sign_swap hij]; push_cast; ring
+    rw [hsign, hprod]; ring
+  · intro σ _ _ h
+    have hswap : Equiv.swap i₀ j₀ = 1 := mul_left_cancel (a := σ) (by rw [h, mul_one])
+    have h2 : Equiv.swap i₀ j₀ i₀ = i₀ := by rw [hswap]; rfl
+    rw [Equiv.swap_apply_left] at h2
+    exact hij h2.symm
+  · intro σ _; exact Finset.mem_univ _
+  · intro σ _; rw [mul_assoc, Equiv.swap_mul_self, mul_one]
+
+/-- Expanding `L` along row `i`: factor out the (unique) entry in row `i`. -/
+theorem L_updateRow_expand (A : Matrix n n ℂ) (i : n) (w : n → ℂ) :
+    L (A.updateRow i w) = ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) *
+      (w (σ i) * ∏ k ∈ Finset.univ.erase i, A k (σ k)) := by
+  rw [L]
+  refine Finset.sum_congr rfl (fun σ _ => ?_)
+  congr 1
+  rw [← Finset.mul_prod_erase Finset.univ (fun k => (A.updateRow i w) k (σ k)) (Finset.mem_univ i),
+    Matrix.updateRow_self]
+  congr 1
+  exact Finset.prod_congr rfl (fun k hk => by rw [Matrix.updateRow_ne (Finset.ne_of_mem_erase hk)])
+
+/-- `eq-dethom`-(b)+(c): the row operation `rowᵢ ← rowᵢ + c·rowⱼ` (`i ≠ j`) leaves `L` unchanged.
+This is multilinearity (split the row) plus the alternating property (the extra term has two equal
+rows). -/
+theorem L_updateRow_add_smul_self (A : Matrix n n ℂ) {i j : n} (hij : i ≠ j) (c : ℂ) :
+    L (A.updateRow i (A i + c • A j)) = L A := by
+  have hz : L (A.updateRow i (A j)) = 0 := by
+    apply L_eq_zero_of_row_eq hij
+    rw [Matrix.updateRow_self, Matrix.updateRow_ne (Ne.symm hij)]
+  have hLA : L A = ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) *
+      (A i (σ i) * ∏ k ∈ Finset.univ.erase i, A k (σ k)) := by
+    rw [L]
+    exact Finset.sum_congr rfl (fun σ _ => by
+      rw [Finset.mul_prod_erase Finset.univ (fun k => A k (σ k)) (Finset.mem_univ i)])
+  rw [L_updateRow_expand]
+  have key : (∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) *
+        ((A i + c • A j) (σ i) * ∏ k ∈ Finset.univ.erase i, A k (σ k)))
+      = L A + c * L (A.updateRow i (A j)) := by
+    rw [hLA, L_updateRow_expand, Finset.mul_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl (fun σ _ => ?_)
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    ring
+  rw [key, hz, mul_zero, add_zero]
+
+/-- **(note (b)+(c)).** Left-multiplying by a transvection (a row operation) does not change `L`:
+`L(Tᵢⱼ(c) · M) = L M`. -/
+theorem L_transvection_mul {i j : n} (hij : i ≠ j) (c : ℂ) (M : Matrix n n ℂ) :
+    L (Matrix.transvection i j c * M) = L M := by
   have hrow : Matrix.transvection i j c * M = M.updateRow i (M i + c • M j) := by
     ext a b
     rcases eq_or_ne a i with ha | ha
@@ -408,24 +510,25 @@ theorem det_transvection_mul {i j : n} (hij : i ≠ j) (c : ℂ) (M : Matrix n n
       simp [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     · rw [Matrix.updateRow_ne ha]
       simp [Matrix.transvection, Matrix.add_mul, ha]
-  rw [hrow, Matrix.det_updateRow_add_smul_self M hij c]
+  rw [hrow, L_updateRow_add_smul_self M hij c]
 
-/-- `det((product of transvections) · M) = det M`, by peeling transvections one at a time. -/
-theorem det_transvecList_mul (L : List (Matrix.TransvectionStruct n ℂ)) (M : Matrix n n ℂ) :
-    Matrix.det ((L.map Matrix.TransvectionStruct.toMatrix).prod * M) = Matrix.det M := by
-  induction L with
+
+/-- `L((product of transvections) · M) = L M`, by peeling transvections one at a time. -/
+theorem L_transvecList_mul (ts : List (Matrix.TransvectionStruct n ℂ)) (M : Matrix n n ℂ) :
+    L ((ts.map Matrix.TransvectionStruct.toMatrix).prod * M) = L M := by
+  induction ts with
   | nil => simp
-  | cons t L ih =>
+  | cons t ts ih =>
     rw [List.map_cons, List.prod_cons, Matrix.mul_assoc]
     simp only [Matrix.TransvectionStruct.toMatrix]
-    rw [det_transvection_mul t.hij t.c, ih]
+    rw [L_transvection_mul t.hij t.c, ih]
 
-/-- **`eq-dethom-leibniz-factorization` (derived, no `det_mul`).** The determinant of a
-transvection–diagonal factorization is the product of the diagonal entries. -/
-theorem det_factorization (L : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) :
-    Matrix.det ((L.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D)
+/-- **`eq-dethom-leibniz-factorization` (derived).** The determinant of a transvection–diagonal
+factorization is the product of the diagonal entries. -/
+theorem L_factorization (ts : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) :
+    L ((ts.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D)
       = ∏ i, D i := by
-  rw [det_transvecList_mul, Matrix.det_diagonal]
+  rw [L_transvecList_mul, L_diagonal]
 
 /--
 `eq-dethom-transvection-diagonal-factorization`. **Generation.** Every `A ∈ GLₙ(ℂ)` factors as
@@ -473,24 +576,24 @@ theorem exists_transvec_diagonal_factorization (A : Matrix.GeneralLinearGroup n 
 /-- The determinant of a `GLₙ(ℂ)` element is nonzero — derived from the factorization
 `A = E · D` and `∏ dᵢ ≠ 0`, with no appeal to `det_mul` or `isUnit_iff_isUnit_det`. -/
 theorem det_ne_zero (A : Matrix.GeneralLinearGroup n ℂ) :
-    Matrix.det (A : Matrix n n ℂ) ≠ 0 := by
+    L (A : Matrix n n ℂ) ≠ 0 := by
   obtain ⟨E, D, hD, hA⟩ := exists_transvec_diagonal_factorization A
   have hAm : (A : Matrix n n ℂ)
       = (E.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D := by
     rw [hA, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
-  rw [hAm, det_factorization]
+  rw [hAm, L_factorization]
   exact Finset.prod_ne_zero_iff.mpr (fun i _ => hD i)
 
 /-- The determinant of a `GLₙ(ℂ)` element, as a unit of `ℂ` (i.e. an element of `ℂ*`). -/
 def detUnit (A : Matrix.GeneralLinearGroup n ℂ) : ℂˣ :=
-  Units.mk0 (Matrix.det (A : Matrix n n ℂ)) (det_ne_zero A)
+  Units.mk0 (L (A : Matrix n n ℂ)) (det_ne_zero A)
 
 @[simp] theorem coe_detUnit (A : Matrix.GeneralLinearGroup n ℂ) :
-    (detUnit A : ℂ) = Matrix.det (A : Matrix n n ℂ) := rfl
+    (detUnit A : ℂ) = L (A : Matrix n n ℂ) := rfl
 
 theorem detUnit_one : detUnit (1 : Matrix.GeneralLinearGroup n ℂ) = 1 := by
   apply Units.ext
-  simp [detUnit, Units.val_one, Matrix.det_one]
+  simp [detUnit, Units.val_one, L_one]
 
 /-- Matrix-level diagonal conjugation of a transvection product (the coercion of `conjGL_prod`). -/
 theorem coe_conjGL_prod (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
@@ -518,8 +621,8 @@ theorem detUnit_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
   have hBm : (B : Matrix n n ℂ)
       = (LB.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DB := by
     rw [hB, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
-  have hdetA : Matrix.det (A : Matrix n n ℂ) = ∏ i, DA i := by rw [hAm, det_factorization]
-  have hdetB : Matrix.det (B : Matrix n n ℂ) = ∏ i, DB i := by rw [hBm, det_factorization]
+  have hdetA : L (A : Matrix n n ℂ) = ∏ i, DA i := by rw [hAm, L_factorization]
+  have hdetB : L (B : Matrix n n ℂ) = ∏ i, DB i := by rw [hBm, L_factorization]
   have hdd : Matrix.diagonal (fun i => (DA i)⁻¹) * Matrix.diagonal DA = 1 := by
     rw [Matrix.diagonal_mul_diagonal]
     have h1 : (fun i => (DA i)⁻¹ * DA i) = (1 : n → ℂ) :=
@@ -549,7 +652,7 @@ theorem detUnit_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
           * Matrix.diagonal (fun i => DA i * DB i) := by
     rw [Units.val_mul, hAm, hBm, key, coe_conjGL_prod DA hDA LB, Matrix.diagonal_mul_diagonal,
       List.map_append, List.prod_append]
-  rw [hABm, det_factorization, hdetA, hdetB, Finset.prod_mul_distrib]
+  rw [hABm, L_factorization, hdetA, hdetB, Finset.prod_mul_distrib]
 
 /-- **The determinant homomorphism** `GLₙ(ℂ) →* ℂˣ`, with multiplicativity **derived** (Step 4),
 not imported from Mathlib's `det_mul`. -/
@@ -559,7 +662,7 @@ def detGL : Matrix.GeneralLinearGroup n ℂ →* ℂˣ where
   map_mul' := detUnit_mul
 
 @[simp] theorem coe_detGL (A : Matrix.GeneralLinearGroup n ℂ) :
-    (detGL A : ℂ) = Matrix.det (A : Matrix n n ℂ) := rfl
+    (detGL A : ℂ) = L (A : Matrix n n ℂ) := rfl
 
 /-- `eq-dethom-leibniz-multiplicativity`, packaged: `det(AB) = det A · det B`. -/
 theorem detGL_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
@@ -568,7 +671,7 @@ theorem detGL_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
 
 theorem detGL_oneSlotDiagonalGL (i0 : n) (x : ℂˣ) : detGL (oneSlotDiagonalGL i0 x) = x := by
   apply Units.ext
-  rw [coe_detGL, coe_oneSlotDiagonalGL, Matrix.det_diagonal]
+  rw [coe_detGL, coe_oneSlotDiagonalGL, L_diagonal]
   simp
 
 /--
@@ -586,7 +689,7 @@ theorem hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
   have hco : (↑((E.map transvecStructGL).prod * diagonalGL D hD) : Matrix n n ℂ)
       = (E.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D := by
     rw [Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
-  rw [hco, det_factorization, Units.coe_prod]
+  rw [hco, L_factorization, Units.coe_prod]
   simp [Units.val_mk0]
 
 /-- The boxed statement in existential form: `f = g ∘ det` for some homomorphism `g : ℂˣ → ℂˣ`. -/
