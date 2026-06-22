@@ -1,0 +1,672 @@
+/-
+Copyright (c) 2026 Ondřej Čertík. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Ondřej Čertík
+-/
+import Mathlib
+import MathNotesLean.CstarHomomorphism
+
+/-!
+# Determinant from homomorphism — flow-faithful formalization
+
+This file formalizes `determinant_homomorphism.md` following the **note's own logical development**:
+every result is built sequentially from the previous ones, and the determinant's multiplicativity on
+`GLₙ(ℂ)` is **derived** from the transvection–diagonal factorization (the note's Step 4) rather than
+imported from Mathlib. This certifies that the note's argument is non-circular — it does *not*
+presuppose the determinant theory it sets out to construct.
+
+Contrast with `DeterminantHomomorphism.lean`, which proves the same statements but takes Mathlib's
+`Matrix.det_mul` (general determinant multiplicativity) as given; that file certifies the *claims*
+are true, this one certifies the *derivation* is sound.
+
+## Trusted base (the only Mathlib facts used about `Matrix.det` / linear algebra)
+
+Each is an *elementary* property of the explicit Leibniz polynomial or basic linear algebra,
+matching exactly what the note develops directly. **`Matrix.det_mul` is never used.**
+
+* `Matrix.det_apply` — `det` *is* the Leibniz sum `∑_σ sgn(σ) ∏ᵢ Aᵢ,σ(i)` (definition);
+* `Matrix.det_one`, `Matrix.det_diagonal` — the note's identity (a) (`det I = 1`, `det diag = ∏`);
+* `Matrix.det_updateRow_add_smul_self` — the note's (b)+(c): a row operation (adding a multiple of
+  one row to another) leaves `det` unchanged. This is the single determinant input that **replaces**
+  `det_mul`;
+* `Matrix.det_transvection_of_ne` — `det Tᵢⱼ(c) = 1` (itself an instance of the row operation);
+* `Matrix.det_transpose` — only to match the note's exact index convention `Aᵢ,σ(i)`;
+* `Matrix.isUnit_diagonal` — `diagonal D` is a unit iff its entries are (used to get `dᵢ ≠ 0` from
+  invertibility, *without* `isUnit_iff_isUnit_det`);
+* `Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec` — Gaussian elimination
+  (the note's Step 1 generation lemma).
+
+Everything else — including `det(AB) = det A · det B` — is derived below.
+-/
+
+noncomputable section
+
+namespace MathNotesLean
+
+namespace Flow
+
+open Matrix
+
+section GeneralLinear
+
+variable {n : Type*} [DecidableEq n] [Fintype n]
+
+/-- An invertible diagonal matrix as an element of `GLₙ(ℂ)`. -/
+def diagonalGL (d : n → ℂ) (hd : ∀ i, d i ≠ 0) : Matrix.GeneralLinearGroup n ℂ where
+  val := Matrix.diagonal d
+  inv := Matrix.diagonal fun i => (d i)⁻¹
+  val_inv := by
+    rw [Matrix.diagonal_mul_diagonal]
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp [Matrix.diagonal, hd]
+    · simp [Matrix.diagonal, hij]
+  inv_val := by
+    rw [Matrix.diagonal_mul_diagonal]
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp [Matrix.diagonal, hd]
+    · simp [Matrix.diagonal, hij]
+
+@[simp]
+theorem coe_diagonalGL (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
+    ((diagonalGL d hd : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ) = Matrix.diagonal d :=
+  rfl
+
+/-- The Leibniz formula used by mathlib's determinant, in the note's index convention
+`L(A) = ∑_σ sgn(σ) ∏_i A_{i,σ(i)}`. -/
+theorem determinant_leibniz_formula (A : Matrix n n ℂ) :
+    Matrix.det A = ∑ σ : Equiv.Perm n, Equiv.Perm.sign σ • ∏ i, A i (σ i) := by
+  rw [← Matrix.det_transpose, Matrix.det_apply]
+  simp only [Matrix.transpose_apply]
+
+/-- Diagonal `GLₙ(ℂ)` matrix with `x` in one chosen slot and `1` elsewhere. -/
+def oneSlotDiagonalGL (i0 : n) (x : ℂˣ) : Matrix.GeneralLinearGroup n ℂ :=
+  diagonalGL (fun i => if i = i0 then (x : ℂ) else 1) (by
+    intro i
+    by_cases hi : i = i0
+    · simp [hi, x.ne_zero]
+    · simp [hi])
+
+/-- Multiplication of one-slot diagonal matrices follows multiplication in the chosen slot. -/
+theorem oneSlotDiagonalGL_mul (i0 : n) (x y : ℂˣ) :
+    oneSlotDiagonalGL i0 (x * y) = oneSlotDiagonalGL i0 x * oneSlotDiagonalGL i0 y := by
+  apply Units.ext
+  change Matrix.diagonal (fun i => if i = i0 then ((x * y : ℂˣ) : ℂ) else 1) =
+    Matrix.diagonal (fun i => if i = i0 then (x : ℂ) else 1) *
+      Matrix.diagonal (fun i => if i = i0 then (y : ℂ) else 1)
+  rw [Matrix.diagonal_mul_diagonal]
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    by_cases hi : i = i0 <;> simp [Matrix.diagonal, hi]
+  · by_cases hi : i = i0 <;> by_cases hj : j = i0 <;> simp [Matrix.diagonal, hij, hi, hj]
+
+@[simp]
+theorem oneSlotDiagonalGL_one (i0 : n) : oneSlotDiagonalGL i0 1 = 1 := by
+  ext i j
+  simp [oneSlotDiagonalGL, diagonalGL]
+
+/-- The one-variable factor read off from a homomorphism on one diagonal slot. -/
+def diagonalFactorOfHom (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) : ℂˣ →* ℂˣ where
+  toFun x := f (oneSlotDiagonalGL i0 x)
+  map_one' := by simp
+  map_mul' x y := by rw [oneSlotDiagonalGL_mul i0 x y, map_mul]
+
+/-- **Step 1 (`f(I) = 1`).** A homomorphism `GLₙ(ℂ) → ℂˣ` sends the identity matrix to `1`. -/
+theorem hom_one_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) : f 1 = 1 :=
+  map_one f
+
+/--
+**Step 1 (conjugation invariance).** A homomorphism `GLₙ(ℂ) → ℂˣ` is invariant under conjugation,
+because its target `ℂˣ` is commutative: `f (P A P⁻¹) = f A`.
+-/
+theorem hom_conj_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (P A : Matrix.GeneralLinearGroup n ℂ) : f (P * A * P⁻¹) = f A := by
+  rw [map_mul, map_mul, map_inv, mul_comm (f P) (f A), mul_assoc, mul_inv_cancel, mul_one]
+
+/-- A transvection `I + c Eᵢⱼ` (with `i ≠ j`) as an element of `GLₙ(ℂ)`. -/
+def transvectionGL {i j : n} (hij : i ≠ j) (c : ℂ) : Matrix.GeneralLinearGroup n ℂ :=
+  Matrix.SpecialLinearGroup.toGL (Matrix.SpecialLinearGroup.transvection hij c)
+
+@[simp]
+theorem coe_transvectionGL {i j : n} (hij : i ≠ j) (c : ℂ) :
+    ((transvectionGL hij c : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = Matrix.transvection i j c := by
+  rw [transvectionGL]
+  rfl
+
+/--
+**Step 2 (diagonal conjugation).** Conjugating a transvection by an invertible diagonal matrix
+rescales the off-diagonal entry: `D Tᵢⱼ(c) D⁻¹ = Tᵢⱼ((dᵢ/dⱼ) c)`.
+-/
+theorem diagonal_conj_transvection (d : n → ℂ) (hd : ∀ k, d k ≠ 0) {i j : n} (hij : i ≠ j)
+    (c : ℂ) :
+    Matrix.diagonal d * Matrix.transvection i j c * Matrix.diagonal (fun k => (d k)⁻¹)
+      = Matrix.transvection i j (d i * (d j)⁻¹ * c) := by
+  ext k l
+  rw [Matrix.mul_diagonal, Matrix.diagonal_mul]
+  simp only [Matrix.transvection, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply]
+  by_cases h1 : k = l
+  · by_cases h2 : i = k ∧ j = l
+    · exact absurd (h2.1.trans (h1.trans h2.2.symm)) hij
+    · simp only [if_pos h1, if_neg h2, add_zero, mul_one]
+      rw [h1]; exact mul_inv_cancel₀ (hd l)
+  · by_cases h2 : i = k ∧ j = l
+    · simp only [if_neg h1, if_pos h2, zero_add]
+      obtain ⟨rfl, rfl⟩ := h2
+      ring
+    · simp only [if_neg h1, if_neg h2, mul_zero, zero_mul, add_zero]
+
+@[simp]
+theorem coe_diagonalGL_inv (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
+    (((diagonalGL d hd)⁻¹ : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = Matrix.diagonal (fun i => (d i)⁻¹) :=
+  rfl
+
+/--
+**Step 2 (transvections have trivial image).** Any homomorphism `GLₙ(ℂ) → ℂˣ` sends every
+transvection to `1`. Conjugating `Tᵢⱼ(c)` by `diag(2 at i, 1 else)` doubles the parameter
+(`D Tᵢⱼ(c) D⁻¹ = Tᵢⱼ(2c) = Tᵢⱼ(c)²`), so by conjugation invariance `f(Tᵢⱼ(c))² = f(Tᵢⱼ(c))`, and a
+value of `ℂˣ` with `t² = t` is `1`.
+-/
+theorem hom_transvection_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) {i j : n} (hij : i ≠ j)
+    (c : ℂ) : f (transvectionGL hij c) = 1 := by
+  set d : n → ℂ := fun k => if k = i then 2 else 1 with hd_def
+  have hd : ∀ k, d k ≠ 0 := fun k => by by_cases hk : k = i <;> simp [hd_def, hk]
+  have hdi : d i = 2 := by simp [hd_def]
+  have hdj : d j = 1 := by simp only [hd_def]; rw [if_neg (Ne.symm hij)]
+  have hadd : transvectionGL hij (c + c) = transvectionGL hij c * transvectionGL hij c := by
+    change Matrix.SpecialLinearGroup.toGL (Matrix.SpecialLinearGroup.transvection hij (c + c))
+      = Matrix.SpecialLinearGroup.toGL (Matrix.SpecialLinearGroup.transvection hij c)
+        * Matrix.SpecialLinearGroup.toGL (Matrix.SpecialLinearGroup.transvection hij c)
+    rw [Matrix.SpecialLinearGroup.transvection_add, map_mul]
+  have hconj : diagonalGL d hd * transvectionGL hij c * (diagonalGL d hd)⁻¹
+      = transvectionGL hij (c + c) := by
+    apply Units.ext
+    simp only [Units.val_mul, coe_diagonalGL, coe_transvectionGL, coe_diagonalGL_inv]
+    rw [diagonal_conj_transvection d hd hij c, hdi, hdj]
+    congr 1
+    rw [inv_one, mul_one]
+    ring
+  have ht2 : f (transvectionGL hij c) * f (transvectionGL hij c) = f (transvectionGL hij c) := by
+    rw [← map_mul, ← hadd, ← hconj, hom_conj_eq]
+  have ht1 : f (transvectionGL hij c) * f (transvectionGL hij c)
+      = f (transvectionGL hij c) * 1 := by rw [mul_one]; exact ht2
+  exact mul_left_cancel ht1
+
+/-- The underlying matrix of a one-slot diagonal `GLₙ(ℂ)` element. -/
+@[simp]
+theorem coe_oneSlotDiagonalGL (i0 : n) (x : ℂˣ) :
+    ((oneSlotDiagonalGL i0 x : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = Matrix.diagonal (fun k => if k = i0 then (x : ℂ) else 1) :=
+  rfl
+
+/-- Conjugating a diagonal matrix by a swap matrix permutes its diagonal entries. -/
+theorem swap_conj_diagonal (d : n → ℂ) (i0 i : n) :
+    Matrix.swap ℂ i0 i * Matrix.diagonal d * Matrix.swap ℂ i0 i
+      = Matrix.diagonal (fun k => d (Equiv.swap i0 i k)) := by
+  change (Equiv.swap i0 i).toPEquiv.toMatrix * Matrix.diagonal d
+      * (Equiv.swap i0 i).toPEquiv.toMatrix = _
+  rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv,
+    Matrix.submatrix_submatrix, Function.comp_id, Function.id_comp,
+    Equiv.symm_swap, Matrix.submatrix_diagonal_equiv]
+  rfl
+
+/--
+**Step 3 (position invariance).** The value of a homomorphism `f` on a one-slot diagonal matrix
+does not depend on which slot carries the entry: `f(oneSlotDiagonalGL i x) = f(oneSlotDiagonalGL i0
+x)`. The swap matrix `Pᵢ` conjugates one to the other, and `f` is conjugation invariant.
+-/
+theorem hom_oneSlotDiagonalGL_pos_invariant (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (i0 i : n) (x : ℂˣ) :
+    f (oneSlotDiagonalGL i x) = f (oneSlotDiagonalGL i0 x) := by
+  have key : Matrix.GeneralLinearGroup.swap ℂ i0 i * oneSlotDiagonalGL i0 x
+      * (Matrix.GeneralLinearGroup.swap ℂ i0 i)⁻¹ = oneSlotDiagonalGL i x := by
+    apply Units.ext
+    have hv : ((Matrix.GeneralLinearGroup.swap ℂ i0 i : Matrix.GeneralLinearGroup n ℂ)
+        : Matrix n n ℂ) = Matrix.swap ℂ i0 i := rfl
+    have hi : (((Matrix.GeneralLinearGroup.swap ℂ i0 i)⁻¹ : Matrix.GeneralLinearGroup n ℂ)
+        : Matrix n n ℂ) = Matrix.swap ℂ i0 i := rfl
+    simp only [Units.val_mul, coe_oneSlotDiagonalGL, hv, hi]
+    rw [swap_conj_diagonal]
+    congr 1
+    funext k
+    by_cases hk : k = i
+    · subst hk
+      simp [Equiv.swap_apply_right]
+    · have hne : Equiv.swap i0 i k ≠ i0 := by
+        intro h
+        exact hk ((Equiv.swap i0 i).injective (by rw [h, Equiv.swap_apply_right]))
+      simp [hk, hne]
+  rw [← key, hom_conj_eq]
+
+/-- The diagonal `GLₙ(ℂ)` matrix carrying the entries of `D` on the slots in `s`, and `1`
+elsewhere. -/
+def diagOnGL (D : n → ℂ) (hD : ∀ i, D i ≠ 0) (s : Finset n) :
+    Matrix.GeneralLinearGroup n ℂ :=
+  diagonalGL (fun j => if j ∈ s then D j else 1) (fun j => by
+    by_cases h : j ∈ s <;> simp [h, hD j])
+
+@[simp]
+theorem coe_diagOnGL (D : n → ℂ) (hD : ∀ i, D i ≠ 0) (s : Finset n) :
+    ((diagOnGL D hD s : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = Matrix.diagonal (fun j => if j ∈ s then D j else 1) :=
+  rfl
+
+@[simp]
+theorem diagOnGL_univ (D : n → ℂ) (hD : ∀ i, D i ≠ 0) :
+    diagOnGL D hD Finset.univ = diagonalGL D hD := by
+  apply Units.ext
+  simp [coe_diagOnGL, coe_diagonalGL]
+
+theorem diagOnGL_empty (D : n → ℂ) (hD : ∀ i, D i ≠ 0) : diagOnGL D hD ∅ = 1 := by
+  apply Units.ext
+  simp [coe_diagOnGL]
+
+/-- Inserting a slot multiplies in the corresponding one-slot diagonal factor. -/
+theorem diagOnGL_insert (D : n → ℂ) (hD : ∀ i, D i ≠ 0) {a : n} {s : Finset n} (ha : a ∉ s) :
+    diagOnGL D hD (insert a s)
+      = oneSlotDiagonalGL a (Units.mk0 (D a) (hD a)) * diagOnGL D hD s := by
+  apply Units.ext
+  rw [Units.val_mul, coe_oneSlotDiagonalGL, coe_diagOnGL, coe_diagOnGL,
+    Matrix.diagonal_mul_diagonal]
+  congr 1
+  funext j
+  simp only [Units.val_mk0, Finset.mem_insert]
+  by_cases hja : j = a
+  · subst hja
+    simp [ha]
+  · by_cases hjs : j ∈ s <;> simp [hja, hjs]
+
+/--
+**Step 3 (product over the diagonal, finset form).** A homomorphism `f` evaluated on the diagonal
+matrix supported on the slots `s` is the product over `s` of the one-slot factor
+`g = diagonalFactorOfHom i0 f`.
+-/
+theorem hom_diagOnGL_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (D : n → ℂ) (hD : ∀ i, D i ≠ 0) (s : Finset n) :
+    f (diagOnGL D hD s)
+      = ∏ j ∈ s, diagonalFactorOfHom i0 f (Units.mk0 (D j) (hD j)) := by
+  refine Finset.induction_on s ?_ (fun a s ha ih => ?_)
+  · rw [diagOnGL_empty, map_one, Finset.prod_empty]
+  · rw [diagOnGL_insert D hD ha, map_mul, Finset.prod_insert ha, ih]
+    congr 1
+    rw [hom_oneSlotDiagonalGL_pos_invariant f i0 a (Units.mk0 (D a) (hD a))]
+    rfl
+
+/--
+**Step 3 (product over the diagonal).** Evaluating a homomorphism `f` on a diagonal matrix gives the
+product over the slots of the single-slot factor `g = diagonalFactorOfHom i0 f`, equivalently `g`
+applied to the product of the diagonal entries: `f(diag D) = ∏ⱼ g(Dⱼ) = g(∏ⱼ Dⱼ)`.
+-/
+theorem hom_diagonalGL_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (D : n → ℂ) (hD : ∀ i, D i ≠ 0) :
+    f (diagonalGL D hD)
+      = diagonalFactorOfHom i0 f (∏ j : n, Units.mk0 (D j) (hD j)) := by
+  rw [← diagOnGL_univ D hD, hom_diagOnGL_eq f i0 D hD Finset.univ,
+    ← map_prod (diagonalFactorOfHom i0 f)]
+
+/-- A `TransvectionStruct` as an element of `GLₙ(ℂ)`. -/
+def transvecStructGL (t : Matrix.TransvectionStruct n ℂ) : Matrix.GeneralLinearGroup n ℂ :=
+  transvectionGL t.hij t.c
+
+@[simp]
+theorem coe_transvecStructGL (t : Matrix.TransvectionStruct n ℂ) :
+    ((transvecStructGL t : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ) = t.toMatrix := by
+  rw [transvecStructGL, coe_transvectionGL]
+  rfl
+
+theorem hom_transvecStructGL_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (t : Matrix.TransvectionStruct n ℂ) : f (transvecStructGL t) = 1 :=
+  hom_transvection_eq_one f t.hij t.c
+
+/-- The underlying matrix of a `GLₙ(ℂ)` product of transvections is the product of the transvection
+matrices. -/
+theorem coe_prod_transvecStructGL (L : List (Matrix.TransvectionStruct n ℂ)) :
+    (((L.map transvecStructGL).prod : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = (L.map Matrix.TransvectionStruct.toMatrix).prod := by
+  induction L with
+  | nil => simp
+  | cons t L ih =>
+    simp only [List.map_cons, List.prod_cons, Units.val_mul, coe_transvecStructGL, ih]
+
+/-- A homomorphism `f : GLₙ(ℂ) → ℂˣ` kills every product of transvections. -/
+theorem hom_prod_transvecStructGL_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (L : List (Matrix.TransvectionStruct n ℂ)) : f (L.map transvecStructGL).prod = 1 := by
+  induction L with
+  | nil => simp
+  | cons t L ih =>
+    simp only [List.map_cons, List.prod_cons, map_mul, hom_transvecStructGL_eq_one, ih, one_mul]
+
+/-- The transvection obtained by conjugating `t` by an invertible diagonal `D`: it has the same
+positions `i, j` and the rescaled parameter `(dᵢ/dⱼ) · c`. -/
+def conjDiagStruct (D : n → ℂ) (t : Matrix.TransvectionStruct n ℂ) :
+    Matrix.TransvectionStruct n ℂ :=
+  ⟨t.i, t.j, t.hij, D t.i * (D t.j)⁻¹ * t.c⟩
+
+/-- Conjugating a transvection (as a `GLₙ(ℂ)` element) by an invertible diagonal yields the
+conjugated transvection. -/
+theorem conjGL_transvecStructGL (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
+    (t : Matrix.TransvectionStruct n ℂ) :
+    diagonalGL D hD * transvecStructGL t * (diagonalGL D hD)⁻¹
+      = transvecStructGL (conjDiagStruct D t) := by
+  apply Units.ext
+  rw [Units.val_mul, Units.val_mul, coe_diagonalGL, coe_transvecStructGL, coe_diagonalGL_inv,
+    coe_transvecStructGL]
+  simp only [Matrix.TransvectionStruct.toMatrix, conjDiagStruct]
+  rw [diagonal_conj_transvection D hD t.hij t.c]
+
+/-- Conjugating a product of transvections by an invertible diagonal conjugates it term by term. -/
+theorem conjGL_prod (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
+    (L : List (Matrix.TransvectionStruct n ℂ)) :
+    diagonalGL D hD * (L.map transvecStructGL).prod * (diagonalGL D hD)⁻¹
+      = ((L.map (conjDiagStruct D)).map transvecStructGL).prod := by
+  induction L with
+  | nil => simp
+  | cons t L ih =>
+    rw [List.map_cons, List.prod_cons, List.map_cons, List.map_cons, List.prod_cons,
+      ← conjGL_transvecStructGL D hD t, ← ih]
+    group
+
+/--
+`eq-dethom-g-homomorphism`. The one-variable factor `g = diagonalFactorOfHom i0 f` is a
+homomorphism `ℂˣ → ℂˣ`: `g(xy) = g(x) g(y)`.
+-/
+theorem diagonalFactorOfHom_mul (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (x y : ℂˣ) :
+    diagonalFactorOfHom i0 f (x * y)
+      = diagonalFactorOfHom i0 f x * diagonalFactorOfHom i0 f y :=
+  map_mul _ x y
+
+/--
+`eq-dethom-diagonal-slot`. The value of `f` on a single populated diagonal slot is exactly the
+one-variable factor `g`: `f(diag(1,…,x at i,…,1)) = g(x)`.
+-/
+theorem hom_oneSlotDiagonalGL_eq_g (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 i : n) (x : ℂˣ) :
+    f (oneSlotDiagonalGL i x) = diagonalFactorOfHom i0 f x :=
+  hom_oneSlotDiagonalGL_pos_invariant f i0 i x
+
+/-! ### Flow-faithful determinant
+
+From here we build the determinant exactly along the note's Steps 2–4, **deriving** its
+multiplicativity rather than assuming it. The only Mathlib determinant facts used are the
+*elementary* ones the note develops directly (see the trusted base listed at the top of the file);
+in particular `Matrix.det_mul` is never invoked. -/
+
+/-- **(note (b)+(c)).** Left-multiplying by a transvection (a row operation) does not change the
+Leibniz determinant: `det(Tᵢⱼ(c) · M) = det M`. This is the determinant input that replaces
+`det_mul`; it is the elementary row-operation invariance `Matrix.det_updateRow_add_smul_self`. -/
+theorem det_transvection_mul {i j : n} (hij : i ≠ j) (c : ℂ) (M : Matrix n n ℂ) :
+    Matrix.det (Matrix.transvection i j c * M) = Matrix.det M := by
+  have hrow : Matrix.transvection i j c * M = M.updateRow i (M i + c • M j) := by
+    ext a b
+    rcases eq_or_ne a i with ha | ha
+    · subst ha
+      rw [Matrix.transvection_mul_apply_same, Matrix.updateRow_self]
+      simp [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    · rw [Matrix.updateRow_ne ha]
+      simp [Matrix.transvection, Matrix.add_mul, ha]
+  rw [hrow, Matrix.det_updateRow_add_smul_self M hij c]
+
+/-- `det((product of transvections) · M) = det M`, by peeling transvections one at a time. -/
+theorem det_transvecList_mul (L : List (Matrix.TransvectionStruct n ℂ)) (M : Matrix n n ℂ) :
+    Matrix.det ((L.map Matrix.TransvectionStruct.toMatrix).prod * M) = Matrix.det M := by
+  induction L with
+  | nil => simp
+  | cons t L ih =>
+    rw [List.map_cons, List.prod_cons, Matrix.mul_assoc]
+    simp only [Matrix.TransvectionStruct.toMatrix]
+    rw [det_transvection_mul t.hij t.c, ih]
+
+/-- **`eq-dethom-leibniz-factorization` (derived, no `det_mul`).** The determinant of a
+transvection–diagonal factorization is the product of the diagonal entries. -/
+theorem det_factorization (L : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) :
+    Matrix.det ((L.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D)
+      = ∏ i, D i := by
+  rw [det_transvecList_mul, Matrix.det_diagonal]
+
+/--
+`eq-dethom-transvection-diagonal-factorization`. **Generation.** Every `A ∈ GLₙ(ℂ)` factors as
+`A = E · D` with `E` a product of transvections and `D` invertible diagonal. The nonvanishing of the
+`dᵢ` is obtained *without* the determinant: `diagonal D` is a product of invertible matrices, hence
+a unit, so its entries are units (`Matrix.isUnit_diagonal`). -/
+theorem exists_transvec_diagonal_factorization (A : Matrix.GeneralLinearGroup n ℂ) :
+    ∃ (E : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) (hD : ∀ i, D i ≠ 0),
+      A = (E.map transvecStructGL).prod * diagonalGL D hD := by
+  obtain ⟨L, L', D, hLDL'⟩ :=
+    Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec (A : Matrix n n ℂ)
+  set P := (L.map transvecStructGL).prod with hPdef
+  set Q := (L'.map transvecStructGL).prod with hQdef
+  have hPco : (↑P : Matrix n n ℂ) = (L.map Matrix.TransvectionStruct.toMatrix).prod := by
+    rw [hPdef]; exact coe_prod_transvecStructGL L
+  have hQco : (↑Q : Matrix n n ℂ) = (L'.map Matrix.TransvectionStruct.toMatrix).prod := by
+    rw [hQdef]; exact coe_prod_transvecStructGL L'
+  have hAeq : (A : Matrix n n ℂ) = (P : Matrix n n ℂ) * Matrix.diagonal D * (Q : Matrix n n ℂ) := by
+    rw [hPco, hQco]; exact hLDL'
+  have hPinv : (↑(P⁻¹) : Matrix n n ℂ) * (P : Matrix n n ℂ) = 1 := by
+    rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
+  have hQinv : (Q : Matrix n n ℂ) * (↑(Q⁻¹) : Matrix n n ℂ) = 1 := by
+    rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
+  have hDeq : (↑(P⁻¹ * A * Q⁻¹) : Matrix n n ℂ) = Matrix.diagonal D := by
+    rw [Units.val_mul, Units.val_mul, hAeq]
+    calc (↑(P⁻¹) : Matrix n n ℂ) * ((P : Matrix n n ℂ) * Matrix.diagonal D * (Q : Matrix n n ℂ))
+          * (↑(Q⁻¹) : Matrix n n ℂ)
+        = ((↑(P⁻¹) : Matrix n n ℂ) * (P : Matrix n n ℂ)) * Matrix.diagonal D
+            * ((Q : Matrix n n ℂ) * (↑(Q⁻¹) : Matrix n n ℂ)) := by simp only [Matrix.mul_assoc]
+      _ = Matrix.diagonal D := by rw [hPinv, hQinv, Matrix.one_mul, Matrix.mul_one]
+  have hDunit : IsUnit (Matrix.diagonal D) := hDeq ▸ (P⁻¹ * A * Q⁻¹).isUnit
+  have hD : ∀ i, D i ≠ 0 := by
+    intro i
+    have hu := Matrix.isUnit_diagonal.mp hDunit
+    rw [Pi.isUnit_iff] at hu
+    exact (hu i).ne_zero
+  have hAtwo : A = P * diagonalGL D hD * Q := by
+    apply Units.ext
+    rw [Units.val_mul, Units.val_mul, hPco, coe_diagonalGL, hQco]
+    exact hLDL'
+  refine ⟨L ++ L'.map (conjDiagStruct D), D, hD, ?_⟩
+  rw [List.map_append, List.prod_append, ← conjGL_prod D hD L', hAtwo, hPdef, hQdef]
+  group
+
+/-- The determinant of a `GLₙ(ℂ)` element is nonzero — derived from the factorization
+`A = E · D` and `∏ dᵢ ≠ 0`, with no appeal to `det_mul` or `isUnit_iff_isUnit_det`. -/
+theorem det_ne_zero (A : Matrix.GeneralLinearGroup n ℂ) :
+    Matrix.det (A : Matrix n n ℂ) ≠ 0 := by
+  obtain ⟨E, D, hD, hA⟩ := exists_transvec_diagonal_factorization A
+  have hAm : (A : Matrix n n ℂ)
+      = (E.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D := by
+    rw [hA, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
+  rw [hAm, det_factorization]
+  exact Finset.prod_ne_zero_iff.mpr (fun i _ => hD i)
+
+/-- The determinant of a `GLₙ(ℂ)` element, as a unit of `ℂ` (i.e. an element of `ℂ*`). -/
+def detUnit (A : Matrix.GeneralLinearGroup n ℂ) : ℂˣ :=
+  Units.mk0 (Matrix.det (A : Matrix n n ℂ)) (det_ne_zero A)
+
+@[simp] theorem coe_detUnit (A : Matrix.GeneralLinearGroup n ℂ) :
+    (detUnit A : ℂ) = Matrix.det (A : Matrix n n ℂ) := rfl
+
+theorem detUnit_one : detUnit (1 : Matrix.GeneralLinearGroup n ℂ) = 1 := by
+  apply Units.ext
+  simp [detUnit, Units.val_one, Matrix.det_one]
+
+/-- Matrix-level diagonal conjugation of a transvection product (the coercion of `conjGL_prod`). -/
+theorem coe_conjGL_prod (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
+    (L : List (Matrix.TransvectionStruct n ℂ)) :
+    Matrix.diagonal D * (L.map Matrix.TransvectionStruct.toMatrix).prod
+        * Matrix.diagonal (fun i => (D i)⁻¹)
+      = ((L.map (conjDiagStruct D)).map Matrix.TransvectionStruct.toMatrix).prod := by
+  have h := congrArg Units.val (conjGL_prod D hD L)
+  rw [Units.val_mul, Units.val_mul, coe_diagonalGL, coe_prod_transvecStructGL,
+    coe_diagonalGL_inv, coe_prod_transvecStructGL] at h
+  exact h
+
+/--
+**`eq-dethom-leibniz-multiplicativity` (Step 4, derived).** The determinant is multiplicative on
+`GLₙ(ℂ)`. Following the note: factor `A = E_A D_A`, `B = E_B D_B`; then
+`AB = E_A (D_A E_B D_A⁻¹) D_A D_B` is again a transvection–diagonal factorization with diagonal
+`D_A D_B`, so `det(AB) = ∏ (aᵢbᵢ) = (∏ aᵢ)(∏ bᵢ) = det A · det B`. **No `det_mul` is used.** -/
+theorem detUnit_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
+    detUnit (A * B) = detUnit A * detUnit B := by
+  obtain ⟨LA, DA, hDA, hA⟩ := exists_transvec_diagonal_factorization A
+  obtain ⟨LB, DB, hDB, hB⟩ := exists_transvec_diagonal_factorization B
+  have hAm : (A : Matrix n n ℂ)
+      = (LA.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DA := by
+    rw [hA, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
+  have hBm : (B : Matrix n n ℂ)
+      = (LB.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DB := by
+    rw [hB, Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
+  have hdetA : Matrix.det (A : Matrix n n ℂ) = ∏ i, DA i := by rw [hAm, det_factorization]
+  have hdetB : Matrix.det (B : Matrix n n ℂ) = ∏ i, DB i := by rw [hBm, det_factorization]
+  have hdd : Matrix.diagonal (fun i => (DA i)⁻¹) * Matrix.diagonal DA = 1 := by
+    rw [Matrix.diagonal_mul_diagonal]
+    have h1 : (fun i => (DA i)⁻¹ * DA i) = (1 : n → ℂ) :=
+      funext fun i => inv_mul_cancel₀ (hDA i)
+    rw [h1]
+    exact Matrix.diagonal_one
+  have key : (LA.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DA
+        * ((LB.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DB)
+      = (LA.map Matrix.TransvectionStruct.toMatrix).prod
+          * (Matrix.diagonal DA * (LB.map Matrix.TransvectionStruct.toMatrix).prod
+              * Matrix.diagonal (fun i => (DA i)⁻¹))
+          * (Matrix.diagonal DA * Matrix.diagonal DB) := by
+    have e : (LA.map Matrix.TransvectionStruct.toMatrix).prod
+          * (Matrix.diagonal DA * (LB.map Matrix.TransvectionStruct.toMatrix).prod
+              * Matrix.diagonal (fun i => (DA i)⁻¹))
+          * (Matrix.diagonal DA * Matrix.diagonal DB)
+        = (LA.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal DA
+            * (LB.map Matrix.TransvectionStruct.toMatrix).prod
+            * (Matrix.diagonal (fun i => (DA i)⁻¹) * Matrix.diagonal DA)
+            * Matrix.diagonal DB := by simp only [Matrix.mul_assoc]
+    rw [e, hdd, Matrix.mul_one]
+    simp only [Matrix.mul_assoc]
+  apply Units.ext
+  rw [Units.val_mul, coe_detUnit, coe_detUnit, coe_detUnit]
+  have hABm : (↑(A * B) : Matrix n n ℂ)
+      = ((LA ++ LB.map (conjDiagStruct DA)).map Matrix.TransvectionStruct.toMatrix).prod
+          * Matrix.diagonal (fun i => DA i * DB i) := by
+    rw [Units.val_mul, hAm, hBm, key, coe_conjGL_prod DA hDA LB, Matrix.diagonal_mul_diagonal,
+      List.map_append, List.prod_append]
+  rw [hABm, det_factorization, hdetA, hdetB, Finset.prod_mul_distrib]
+
+/-- **The determinant homomorphism** `GLₙ(ℂ) →* ℂˣ`, with multiplicativity **derived** (Step 4),
+not imported from Mathlib's `det_mul`. -/
+def detGL : Matrix.GeneralLinearGroup n ℂ →* ℂˣ where
+  toFun := detUnit
+  map_one' := detUnit_one
+  map_mul' := detUnit_mul
+
+@[simp] theorem coe_detGL (A : Matrix.GeneralLinearGroup n ℂ) :
+    (detGL A : ℂ) = Matrix.det (A : Matrix n n ℂ) := rfl
+
+/-- `eq-dethom-leibniz-multiplicativity`, packaged: `det(AB) = det A · det B`. -/
+theorem detGL_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
+    detGL (A * B) = detGL A * detGL B :=
+  map_mul detGL A B
+
+theorem detGL_oneSlotDiagonalGL (i0 : n) (x : ℂˣ) : detGL (oneSlotDiagonalGL i0 x) = x := by
+  apply Units.ext
+  rw [coe_detGL, coe_oneSlotDiagonalGL, Matrix.det_diagonal]
+  simp
+
+/--
+**Factorization theorem `f = g ∘ det`** (the note's Step 5, derived directly). Every homomorphism
+`f : GLₙ(ℂ) → ℂˣ` factors as `f(A) = f(E)·f(D) = 1·g(∏ dᵢ) = g(det A)` along a factorization
+`A = E·D`, with `g = diagonalFactorOfHom i0 f`. -/
+theorem hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (A : Matrix.GeneralLinearGroup n ℂ) :
+    f A = diagonalFactorOfHom i0 f (detGL A) := by
+  obtain ⟨E, D, hD, hA⟩ := exists_transvec_diagonal_factorization A
+  rw [hA, map_mul, hom_prod_transvecStructGL_eq_one, one_mul, hom_diagonalGL_eq f i0 D hD]
+  congr 1
+  apply Units.ext
+  rw [coe_detGL]
+  have hco : (↑((E.map transvecStructGL).prod * diagonalGL D hD) : Matrix n n ℂ)
+      = (E.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D := by
+    rw [Units.val_mul, coe_prod_transvecStructGL, coe_diagonalGL]
+  rw [hco, det_factorization, Units.coe_prod]
+  simp [Units.val_mk0]
+
+/-- The boxed statement in existential form: `f = g ∘ det` for some homomorphism `g : ℂˣ → ℂˣ`. -/
+theorem exists_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) :
+    ∃ g : ℂˣ →* ℂˣ, ∀ A : Matrix.GeneralLinearGroup n ℂ, f A = g (detGL A) :=
+  ⟨diagonalFactorOfHom i0 f, hom_factor_det f i0⟩
+
+/-- The factor `g` is unique (the determinant is surjective onto `ℂˣ`). -/
+theorem existsUnique_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) :
+    ∃! g : ℂˣ →* ℂˣ, ∀ A : Matrix.GeneralLinearGroup n ℂ, f A = g (detGL A) := by
+  refine ⟨diagonalFactorOfHom i0 f, hom_factor_det f i0, ?_⟩
+  intro g hg
+  refine MonoidHom.ext fun w => ?_
+  have hA := hg (oneSlotDiagonalGL i0 w)
+  rw [hom_factor_det f i0, detGL_oneSlotDiagonalGL] at hA
+  exact hA.symm
+
+/-- **Uniqueness.** Two homomorphisms agreeing on the diagonal slots agree everywhere. -/
+theorem hom_eq_of_eq_on_oneSlot (i0 : n) (f₁ f₂ : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (h : ∀ x, f₁ (oneSlotDiagonalGL i0 x) = f₂ (oneSlotDiagonalGL i0 x))
+    (A : Matrix.GeneralLinearGroup n ℂ) : f₁ A = f₂ A := by
+  rw [hom_factor_det f₁ i0, hom_factor_det f₂ i0]
+  exact h (detGL A)
+
+/-- **Characterization of the determinant.** A homomorphism normalized so that `g = id` is `det`. -/
+theorem hom_eq_detGL_of_normalized (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
+    (h : ∀ x, f (oneSlotDiagonalGL i0 x) = x) (A : Matrix.GeneralLinearGroup n ℂ) :
+    f A = detGL A := by
+  rw [hom_factor_det f i0]
+  exact h (detGL A)
+
+/-- Post-composing determinant with a homomorphism `ℂˣ → ℂˣ`. -/
+def postcomposeDetGL (g : ℂˣ →* ℂˣ) : Matrix.GeneralLinearGroup n ℂ →* ℂˣ :=
+  g.comp detGL
+
+@[simp] theorem postcomposeDetGL_apply (g : ℂˣ →* ℂˣ) (A : Matrix.GeneralLinearGroup n ℂ) :
+    postcomposeDetGL g A = g (detGL A) := rfl
+
+/-- **Converse.** Every `g ∘ det` is a homomorphism `GLₙ(ℂ) → ℂˣ`. -/
+theorem postcomposeDetGL_mul (g : ℂˣ →* ℂˣ) (A B : Matrix.GeneralLinearGroup n ℂ) :
+    postcomposeDetGL g (A * B) = postcomposeDetGL g A * postcomposeDetGL g B :=
+  map_mul (postcomposeDetGL g) A B
+
+/-- Every homomorphism is some `g ∘ det`; together with the converse, these are exactly all of
+them. -/
+theorem hom_eq_postcomposeDetGL (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) :
+    f = postcomposeDetGL (diagonalFactorOfHom i0 f) := by
+  ext A
+  rw [postcomposeDetGL_apply, hom_factor_det f i0]
+
+/-- The determinant's own factor is the identity (`det` is `s = 1`, `k = 1`). -/
+theorem diagonalFactorOfHom_detGL (i0 : n) :
+    diagonalFactorOfHom i0 detGL = MonoidHom.id ℂˣ := by
+  ext x
+  simp [diagonalFactorOfHom, detGL_oneSlotDiagonalGL]
+
+/-- **Link to the `ℂ* → ℂ*` classification.** If `g` is measurable, `f(A) = |det A|ˢ (det A/|det
+A|)ᵏ` with `(s, k)` unique. -/
+theorem existsUnique_hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (hg : Measurable (diagonalFactorOfHom i0 f)) :
+    ∃! sk : ℂ × ℤ, ∀ A : Matrix.GeneralLinearGroup n ℂ,
+      f A = cstarNormCPow sk.1 (detGL A) * cstarCircleUnit (detGL A) ^ sk.2 := by
+  obtain ⟨s, k, hsk⟩ := cstar_homomorphism_formula_measurable (diagonalFactorOfHom i0 f) hg
+  refine ⟨(s, k), fun A => by rw [hom_factor_det f i0, hsk], ?_⟩
+  rintro ⟨s', k'⟩ hf'
+  have hg' : ∀ w : ℂˣ, diagonalFactorOfHom i0 f w = cstarFormulaHom s' k' w := by
+    intro w
+    have hw := hf' (oneSlotDiagonalGL i0 w)
+    rw [hom_factor_det f i0, detGL_oneSlotDiagonalGL] at hw
+    exact hw
+  have hkey : cstarFormulaHom s k = cstarFormulaHom s' k' := by
+    refine MonoidHom.ext fun w => ?_
+    rw [← hg' w]
+    exact (hsk w).symm
+  obtain ⟨hs, hk⟩ := cstarFormulaHom_injective hkey
+  simp only [Prod.mk.injEq]
+  exact ⟨hs.symm, hk.symm⟩
+
+end GeneralLinear
+
+end Flow
+
+end MathNotesLean
