@@ -1,5 +1,6 @@
 import MathNotesLean.Basic
 import MathNotesLean.AutomaticContinuity
+import MathNotesLean.CircleCharacters
 import MathNotesLean.CstarHomomorphism
 import MathNotesLean.CstarHomomorphismFlow
 import MathNotesLean.DeterminantHomomorphism
