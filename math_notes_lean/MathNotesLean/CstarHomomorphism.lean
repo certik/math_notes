@@ -19,6 +19,15 @@ import MathNotesLean.AutomaticContinuity
 /-!
 # Homomorphisms from `ℂˣ` to `ℂˣ`
 
+> **Alternative (non-flow) formalization.** This file is the *standard* Lean formalization of
+> `cstar_homomorphism.md`: it proves the note's results using Mathlib results directly (e.g. it
+> takes "measurable additive `ℝ → ℝ` is continuous" from the library black box
+> `MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`). The note `cstar_homomorphism.md`
+> itself is wired to the **flow-faithful, self-contained** companion
+> `CstarHomomorphismFlow.lean`, which re-derives that step from the Steinhaus theorem and reproduces
+> every definition the note relies on. This file is kept as an alternative formalization and is no
+> longer referenced by the Markdown note; prefer `CstarHomomorphismFlow.lean` when in doubt.
+
 This file starts the Lean formalization of `cstar_homomorphism.md`.
 It covers the additive Cauchy equation, the real multiplicative Cauchy equation, and structural
 polar-factor lemmas for homomorphisms `ℂˣ → ℂˣ`.
