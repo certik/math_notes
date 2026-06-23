@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Ondřej Čertík
 -/
 import Mathlib
-import MathNotesLean.CstarHomomorphism
+import MathNotesLean.CstarHomomorphismFlow
 
 /-!
 # Determinant from homomorphism — flow-faithful, self-contained determinant
@@ -48,6 +48,8 @@ namespace MathNotesLean
 namespace Flow
 
 open Matrix
+
+open CstarFlow
 
 section GeneralLinear
 
@@ -110,6 +112,7 @@ def diagonalFactorOfHom (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ
   map_one' := by simp
   map_mul' x y := by rw [oneSlotDiagonalGL_mul i0 x y, map_mul]
 
+-- ANCHOR: flow-dethom-conjugation
 /-- **Step 1 (`f(I) = 1`).** A homomorphism `GLₙ(ℂ) → ℂˣ` sends the identity matrix to `1`. -/
 theorem hom_one_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) : f 1 = 1 :=
   map_one f
@@ -121,6 +124,7 @@ because its target `ℂˣ` is commutative: `f (P A P⁻¹) = f A`.
 theorem hom_conj_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
     (P A : Matrix.GeneralLinearGroup n ℂ) : f (P * A * P⁻¹) = f A := by
   rw [map_mul, map_mul, map_inv, mul_comm (f P) (f A), mul_assoc, mul_inv_cancel, mul_one]
+-- ANCHOR_END: flow-dethom-conjugation
 
 /-- A transvection `I + c Eᵢⱼ` (with `i ≠ j`) as an element of `GLₙ(ℂ)`. -/
 def transvectionGL {i j : n} (hij : i ≠ j) (c : ℂ) : Matrix.GeneralLinearGroup n ℂ :=
@@ -133,6 +137,7 @@ theorem coe_transvectionGL {i j : n} (hij : i ≠ j) (c : ℂ) :
   rw [transvectionGL]
   rfl
 
+-- ANCHOR: flow-dethom-diag-conj
 /--
 **Step 2 (diagonal conjugation).** Conjugating a transvection by an invertible diagonal matrix
 rescales the off-diagonal entry: `D Tᵢⱼ(c) D⁻¹ = Tᵢⱼ((dᵢ/dⱼ) c)`.
@@ -154,6 +159,7 @@ theorem diagonal_conj_transvection (d : n → ℂ) (hd : ∀ k, d k ≠ 0) {i j 
       obtain ⟨rfl, rfl⟩ := h2
       ring
     · simp only [if_neg h1, if_neg h2, mul_zero, zero_mul, add_zero]
+-- ANCHOR_END: flow-dethom-diag-conj
 
 @[simp]
 theorem coe_diagonalGL_inv (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
@@ -161,6 +167,7 @@ theorem coe_diagonalGL_inv (d : n → ℂ) (hd : ∀ i, d i ≠ 0) :
       = Matrix.diagonal (fun i => (d i)⁻¹) :=
   rfl
 
+-- ANCHOR: flow-dethom-transvection-value
 /--
 **Step 2 (transvections have trivial image).** Any homomorphism `GLₙ(ℂ) → ℂˣ` sends every
 transvection to `1`. Conjugating `Tᵢⱼ(c)` by `diag(2 at i, 1 else)` doubles the parameter
@@ -191,6 +198,7 @@ theorem hom_transvection_eq_one (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
   have ht1 : f (transvectionGL hij c) * f (transvectionGL hij c)
       = f (transvectionGL hij c) * 1 := by rw [mul_one]; exact ht2
   exact mul_left_cancel ht1
+-- ANCHOR_END: flow-dethom-transvection-value
 
 /-- The underlying matrix of a one-slot diagonal `GLₙ(ℂ)` element. -/
 @[simp]
@@ -292,6 +300,7 @@ theorem hom_diagOnGL_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n
     rw [hom_oneSlotDiagonalGL_pos_invariant f i0 a (Units.mk0 (D a) (hD a))]
     rfl
 
+-- ANCHOR: flow-dethom-diagonal-product
 /--
 **Step 3 (product over the diagonal).** Evaluating a homomorphism `f` on a diagonal matrix gives the
 product over the slots of the single-slot factor `g = diagonalFactorOfHom i0 f`, equivalently `g`
@@ -303,6 +312,7 @@ theorem hom_diagonalGL_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 :
       = diagonalFactorOfHom i0 f (∏ j : n, Units.mk0 (D j) (hD j)) := by
   rw [← diagOnGL_univ D hD, hom_diagOnGL_eq f i0 D hD Finset.univ,
     ← map_prod (diagonalFactorOfHom i0 f)]
+-- ANCHOR_END: flow-dethom-diagonal-product
 
 /-- A `TransvectionStruct` as an element of `GLₙ(ℂ)`. -/
 def transvecStructGL (t : Matrix.TransvectionStruct n ℂ) : Matrix.GeneralLinearGroup n ℂ :=
@@ -366,6 +376,7 @@ theorem conjGL_prod (D : n → ℂ) (hD : ∀ i, D i ≠ 0)
       ← conjGL_transvecStructGL D hD t, ← ih]
     group
 
+-- ANCHOR: flow-dethom-g-hom
 /--
 `eq-dethom-g-homomorphism`. The one-variable factor `g = diagonalFactorOfHom i0 f` is a
 homomorphism `ℂˣ → ℂˣ`: `g(xy) = g(x) g(y)`.
@@ -374,7 +385,9 @@ theorem diagonalFactorOfHom_mul (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ �
     diagonalFactorOfHom i0 f (x * y)
       = diagonalFactorOfHom i0 f x * diagonalFactorOfHom i0 f y :=
   map_mul _ x y
+-- ANCHOR_END: flow-dethom-g-hom
 
+-- ANCHOR: flow-dethom-diagonal-slot
 /--
 `eq-dethom-diagonal-slot`. The value of `f` on a single populated diagonal slot is exactly the
 one-variable factor `g`: `f(diag(1,…,x at i,…,1)) = g(x)`.
@@ -382,6 +395,7 @@ one-variable factor `g`: `f(diag(1,…,x at i,…,1)) = g(x)`.
 theorem hom_oneSlotDiagonalGL_eq_g (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 i : n) (x : ℂˣ) :
     f (oneSlotDiagonalGL i x) = diagonalFactorOfHom i0 f x :=
   hom_oneSlotDiagonalGL_pos_invariant f i0 i x
+-- ANCHOR_END: flow-dethom-diagonal-slot
 
 /-! ### Our own Leibniz determinant `L`
 
@@ -394,10 +408,12 @@ row-operation invariance are all re-derived here. `Matrix.det` is never used. -/
 def L (A : Matrix n n ℂ) : ℂ :=
   ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) * ∏ i, A i (σ i)
 
+-- ANCHOR: flow-dethom-leibniz-formula
 /-- `L` is, by definition, the Leibniz polynomial in the note's index convention `Aᵢ,σ(i)`. -/
 theorem determinant_leibniz_formula (A : Matrix n n ℂ) :
     L A = ∑ σ : Equiv.Perm n, ((Equiv.Perm.sign σ : ℤ) : ℂ) * ∏ i, A i (σ i) :=
   rfl
+-- ANCHOR_END: flow-dethom-leibniz-formula
 
 omit [DecidableEq n] [Fintype n] in
 /-- A permutation that is not the identity moves some point. -/
@@ -523,13 +539,16 @@ theorem L_transvecList_mul (ts : List (Matrix.TransvectionStruct n ℂ)) (M : Ma
     simp only [Matrix.TransvectionStruct.toMatrix]
     rw [L_transvection_mul t.hij t.c, ih]
 
+-- ANCHOR: flow-dethom-leibniz-factorization
 /-- **`eq-dethom-leibniz-factorization` (derived).** The determinant of a transvection–diagonal
 factorization is the product of the diagonal entries. -/
 theorem L_factorization (ts : List (Matrix.TransvectionStruct n ℂ)) (D : n → ℂ) :
     L ((ts.map Matrix.TransvectionStruct.toMatrix).prod * Matrix.diagonal D)
       = ∏ i, D i := by
   rw [L_transvecList_mul, L_diagonal]
+-- ANCHOR_END: flow-dethom-leibniz-factorization
 
+-- ANCHOR: flow-dethom-generation
 /--
 `eq-dethom-transvection-diagonal-factorization`. **Generation.** Every `A ∈ GLₙ(ℂ)` factors as
 `A = E · D` with `E` a product of transvections and `D` invertible diagonal. The nonvanishing of the
@@ -572,6 +591,7 @@ theorem exists_transvec_diagonal_factorization (A : Matrix.GeneralLinearGroup n 
   refine ⟨L ++ L'.map (conjDiagStruct D), D, hD, ?_⟩
   rw [List.map_append, List.prod_append, ← conjGL_prod D hD L', hAtwo, hPdef, hQdef]
   group
+-- ANCHOR_END: flow-dethom-generation
 
 /-- The determinant of a `GLₙ(ℂ)` element is nonzero — derived from the factorization
 `A = E · D` and `∏ dᵢ ≠ 0`, with no appeal to `det_mul` or `isUnit_iff_isUnit_det`. -/
@@ -680,16 +700,19 @@ def detGL : Matrix.GeneralLinearGroup n ℂ →* ℂˣ where
 @[simp] theorem coe_detGL (A : Matrix.GeneralLinearGroup n ℂ) :
     (detGL A : ℂ) = L (A : Matrix n n ℂ) := rfl
 
+-- ANCHOR: flow-dethom-leibniz-mult
 /-- `eq-dethom-leibniz-multiplicativity`, packaged: `det(AB) = det A · det B`. -/
 theorem detGL_mul (A B : Matrix.GeneralLinearGroup n ℂ) :
     detGL (A * B) = detGL A * detGL B :=
   map_mul detGL A B
+-- ANCHOR_END: flow-dethom-leibniz-mult
 
 theorem detGL_oneSlotDiagonalGL (i0 : n) (x : ℂˣ) : detGL (oneSlotDiagonalGL i0 x) = x := by
   apply Units.ext
   rw [coe_detGL, coe_oneSlotDiagonalGL, L_diagonal]
   simp
 
+-- ANCHOR: flow-dethom-factorization
 /--
 **Factorization theorem `f = g ∘ det`** (the note's Step 5, derived directly). Every homomorphism
 `f : GLₙ(ℂ) → ℂˣ` factors as `f(A) = f(E)·f(D) = 1·g(∏ dᵢ) = g(det A)` along a factorization
@@ -722,7 +745,9 @@ theorem existsUnique_hom_factor_det (f : Matrix.GeneralLinearGroup n ℂ →* �
   have hA := hg (oneSlotDiagonalGL i0 w)
   rw [hom_factor_det f i0, detGL_oneSlotDiagonalGL] at hA
   exact hA.symm
+-- ANCHOR_END: flow-dethom-factorization
 
+-- ANCHOR: flow-dethom-uniqueness
 /-- **Uniqueness.** Two homomorphisms agreeing on the diagonal slots agree everywhere. -/
 theorem hom_eq_of_eq_on_oneSlot (i0 : n) (f₁ f₂ : Matrix.GeneralLinearGroup n ℂ →* ℂˣ)
     (h : ∀ x, f₁ (oneSlotDiagonalGL i0 x) = f₂ (oneSlotDiagonalGL i0 x))
@@ -736,7 +761,9 @@ theorem hom_eq_detGL_of_normalized (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ
     f A = detGL A := by
   rw [hom_factor_det f i0]
   exact h (detGL A)
+-- ANCHOR_END: flow-dethom-uniqueness
 
+-- ANCHOR: flow-dethom-postcompose
 /-- Post-composing determinant with a homomorphism `ℂˣ → ℂˣ`. -/
 def postcomposeDetGL (g : ℂˣ →* ℂˣ) : Matrix.GeneralLinearGroup n ℂ →* ℂˣ :=
   g.comp detGL
@@ -748,19 +775,37 @@ def postcomposeDetGL (g : ℂˣ →* ℂˣ) : Matrix.GeneralLinearGroup n ℂ �
 theorem postcomposeDetGL_mul (g : ℂˣ →* ℂˣ) (A B : Matrix.GeneralLinearGroup n ℂ) :
     postcomposeDetGL g (A * B) = postcomposeDetGL g A * postcomposeDetGL g B :=
   map_mul (postcomposeDetGL g) A B
+-- ANCHOR_END: flow-dethom-postcompose
 
+-- ANCHOR: flow-dethom-converse
 /-- Every homomorphism is some `g ∘ det`; together with the converse, these are exactly all of
 them. -/
 theorem hom_eq_postcomposeDetGL (i0 : n) (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) :
     f = postcomposeDetGL (diagonalFactorOfHom i0 f) := by
   ext A
   rw [postcomposeDetGL_apply, hom_factor_det f i0]
+-- ANCHOR_END: flow-dethom-converse
 
+-- ANCHOR: flow-dethom-cstar
 /-- The determinant's own factor is the identity (`det` is `s = 1`, `k = 1`). -/
 theorem diagonalFactorOfHom_detGL (i0 : n) :
     diagonalFactorOfHom i0 detGL = MonoidHom.id ℂˣ := by
   ext x
   simp [diagonalFactorOfHom, detGL_oneSlotDiagonalGL]
+
+/--
+**Link to `ℂ* → ℂ*` classification.** If the one-variable factor `g = diagonalFactorOfHom i0 f`
+is Borel measurable (in particular if it is continuous), then `f` has the closed form
+`f(A) = |det A|ˢ · (det A / |det A|)ᵏ` for some `s ∈ ℂ`, `k ∈ ℤ`, by the flow-faithful
+classification `CstarFlow.cstar_homomorphism_formula_measurable`. The determinant itself is the
+case `s = 1`, `k = 1` (`diagonalFactorOfHom_detGL`).
+-/
+theorem hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (hg : Measurable (diagonalFactorOfHom i0 f)) :
+    ∃ s : ℂ, ∃ k : ℤ, ∀ A : Matrix.GeneralLinearGroup n ℂ,
+      f A = cstarNormCPow s (detGL A) * cstarCircleUnit (detGL A) ^ k := by
+  obtain ⟨s, k, hsk⟩ := cstar_homomorphism_formula_measurable (diagonalFactorOfHom i0 f) hg
+  exact ⟨s, k, fun A => by rw [hom_factor_det f i0, hsk]⟩
 
 /-- **Link to the `ℂ* → ℂ*` classification.** If `g` is measurable, `f(A) = |det A|ˢ (det A/|det
 A|)ᵏ` with `(s, k)` unique. -/
@@ -783,6 +828,7 @@ theorem existsUnique_hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ �
   obtain ⟨hs, hk⟩ := cstarFormulaHom_injective hkey
   simp only [Prod.mk.injEq]
   exact ⟨hs.symm, hk.symm⟩
+-- ANCHOR_END: flow-dethom-cstar
 
 end GeneralLinear
 

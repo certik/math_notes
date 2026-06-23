@@ -9,6 +9,14 @@ import MathNotesLean.CstarHomomorphism
 /-!
 # Determinant from homomorphism
 
+> **Alternative (non-flow) formalization.** This file is the *standard* Lean formalization of
+> `determinant_homomorphism.md`: it records the determinant side using Mathlib's Leibniz determinant
+> `Matrix.det` and its library lemmas (e.g. `det_mul`). The note itself is wired to the
+> **flow-faithful, self-contained** companion `DeterminantHomomorphismFlow.lean`, which instead
+> defines its own Leibniz polynomial `L`, proves multiplicativity from scratch, and cites no Mathlib
+> determinant lemma. This file is kept as an alternative formalization and is no longer referenced
+> by the Markdown note; prefer `DeterminantHomomorphismFlow.lean` when in doubt.
+
 This file starts the Lean formalization of `determinant_homomorphism.md`.
 
 It records the checked determinant side of the note using mathlib's Leibniz determinant

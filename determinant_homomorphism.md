@@ -2,9 +2,11 @@
 
 :::{note} Lean formalization
 The results in this note are formalized in Lean 4 + Mathlib in
-[`DeterminantHomomorphism.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean),
-reusing the $\mathbb C^*\to\mathbb C^*$ classification from
-[`CstarHomomorphism.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphism.lean).
+[`DeterminantHomomorphismFlow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean),
+the flow-faithful development that follows this note's own construction (it defines its own Leibniz
+polynomial `L` and cites no Mathlib determinant lemma), reusing the $\mathbb C^*\to\mathbb C^*$
+classification from
+[`CstarHomomorphismFlow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/CstarHomomorphismFlow.lean).
 Each **Lean proof** dropdown below includes the corresponding declaration verbatim from the compiled
 source, so the displayed code cannot drift from what is actually checked. Continuous integration runs
 `lake build` (which fails on any error or `sorry`), so every displayed proof is guaranteed to
@@ -47,10 +49,10 @@ f(PAP^{-1})=f(P)f(A)f(P^{-1})=f(P)f(P^{-1})f(A)=f(PP^{-1})f(A)=f(A).
 So $f$ is invariant under conjugation.
 
 :::{dropdown} Lean proof: `hom_one_eq_one` (so $f(I)=1$) and `hom_conj_eq`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-conjugation
-:end-before: ANCHOR_END: dethom-conjugation
+:start-after: ANCHOR: flow-dethom-conjugation
+:end-before: ANCHOR_END: flow-dethom-conjugation
 ```
 :::
 
@@ -63,10 +65,10 @@ Fix $i\neq j$. Two observations.
 **All nonzero $c$ give conjugate transvections.** For an invertible diagonal $D=\operatorname{diag}(d_1,\dots,d_n)$ one computes $D\,T_{ij}(c)\,D^{-1}=T_{ij}\!\big(c\,d_i/d_j\big)$. Choosing $d_i/d_j$ freely, the factor $c\,d_i/d_j$ ranges over all of $\mathbb C^*$. Hence all $T_{ij}(c)$ with $c\neq 0$ are conjugate, so by {eq}`eq-dethom-conjugation-invariance` the value $f(T_{ij}(c))=:t$ is the same for every $c\neq 0$.
 
 :::{dropdown} Lean proof: `diagonal_conj_transvection`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-diag-conj
-:end-before: ANCHOR_END: dethom-diag-conj
+:start-after: ANCHOR: flow-dethom-diag-conj
+:end-before: ANCHOR_END: flow-dethom-diag-conj
 ```
 :::
 
@@ -79,10 +81,10 @@ f\big(T_{ij}(c)\big)=1\qquad\text{for all }c.
 In particular, by (H1), **left- or right-multiplying by a transvection does not change $f$** — i.e. adding a multiple of one row (or column) to another leaves $f$ unchanged.
 
 :::{dropdown} Lean proof: `hom_transvection_eq_one`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-transvection-value
-:end-before: ANCHOR_END: dethom-transvection-value
+:start-after: ANCHOR: flow-dethom-transvection-value
+:end-before: ANCHOR_END: flow-dethom-transvection-value
 ```
 :::
 
@@ -101,10 +103,10 @@ g(xy)=g(x)g(y).
 ```
 
 :::{dropdown} Lean proof: `diagonalFactorOfHom_mul`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-g-hom
-:end-before: ANCHOR_END: dethom-g-hom
+:start-after: ANCHOR: flow-dethom-g-hom
+:end-before: ANCHOR_END: flow-dethom-g-hom
 ```
 :::
 
@@ -118,10 +120,10 @@ f\big(\operatorname{diag}(1,\dots,\underset{i}{x},\dots,1)\big)=g(x).
 ```
 
 :::{dropdown} Lean proof: `hom_oneSlotDiagonalGL_eq_g`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-diagonal-slot
-:end-before: ANCHOR_END: dethom-diagonal-slot
+:start-after: ANCHOR: flow-dethom-diagonal-slot
+:end-before: ANCHOR_END: flow-dethom-diagonal-slot
 ```
 :::
 
@@ -133,10 +135,10 @@ f\big(\operatorname{diag}(d_1,\dots,d_n)\big)=\prod_{i=1}^n g(d_i)=g\!\Big(\prod
 ```
 
 :::{dropdown} Lean proof: `hom_diagonalGL_eq`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-diagonal-product
-:end-before: ANCHOR_END: dethom-diagonal-product
+:start-after: ANCHOR: flow-dethom-diagonal-product
+:end-before: ANCHOR_END: flow-dethom-diagonal-product
 ```
 :::
 
@@ -170,10 +172,10 @@ $$A=T_1^{-1}\cdots T_m^{-1}\,D$$
 is a factorization of the required form. $\square$
 
 :::{dropdown} Lean proof: `exists_transvec_diagonal_factorization`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-generation
-:end-before: ANCHOR_END: dethom-generation
+:start-after: ANCHOR: flow-dethom-generation
+:end-before: ANCHOR_END: flow-dethom-generation
 ```
 :::
 
@@ -205,11 +207,11 @@ L(A)=L(E\,D)=L(D)=\prod_i d_i.
 ```
 In particular, $L(A)\in \mathbb C^*$ for $A\in GL(n,\mathbb C)$.
 
-:::{dropdown} Lean proof: `detGL_factorization`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+:::{dropdown} Lean proof: `L_factorization`
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-leibniz-factorization
-:end-before: ANCHOR_END: dethom-leibniz-factorization
+:start-after: ANCHOR: flow-dethom-leibniz-factorization
+:end-before: ANCHOR_END: flow-dethom-leibniz-factorization
 ```
 :::
 
@@ -233,10 +235,10 @@ L(AB)=\prod_i a_i b_i=\Big(\prod_i a_i\Big)\Big(\prod_i b_i\Big)=L(A)L(B).
 Thus the Leibniz polynomial is multiplicative on $GL(n,\mathbb C)$. This note deliberately restricts the determinant derivation to $GL(n,\mathbb C)$, not all matrices, to keep the foundational factorization theorem completely internal to invertible matrices. Multiplicativity and other determinant facts on singular matrices can be developed separately when needed; the rock-solid $GL(n,\mathbb C)$ factorization theorem is the piece used in many applications in separate notes.
 
 :::{dropdown} Lean proof: `detGL_mul`
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-leibniz-mult
-:end-before: ANCHOR_END: dethom-leibniz-mult
+:start-after: ANCHOR: flow-dethom-leibniz-mult
+:end-before: ANCHOR_END: flow-dethom-leibniz-mult
 ```
 :::
 
@@ -245,10 +247,10 @@ $$f(A)=f(E)\,f(D)=f(D)=g\!\Big(\prod_i d_i\Big)=g\big(L(A)\big),$$
 the last equality by {eq}`eq-dethom-leibniz-factorization`. This forces the value of $f$ at **every** $A\in GL(n,\mathbb C)$: it must equal $g(L(A))$, where $g$ is read off from $f$ on the matrices $\operatorname{diag}(x,1,\dots,1)$ (Step 3). So a homomorphism has no freedom beyond its values on diagonal matrices — two homomorphisms $GL(n,\mathbb C)\to\mathbb C^*$ that agree on the invertible diagonal matrices agree everywhere — and every homomorphism factors as $f=g\circ L$.
 
 :::{dropdown} Lean proof: `hom_eq_of_eq_on_oneSlot` (and `hom_eq_detGL_of_normalized`)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-uniqueness
-:end-before: ANCHOR_END: dethom-uniqueness
+:start-after: ANCHOR: flow-dethom-uniqueness
+:end-before: ANCHOR_END: flow-dethom-uniqueness
 ```
 :::
 
@@ -261,18 +263,18 @@ $$\boxed{\,f(A)=g(L(A)),\qquad L(A):=\sum_{\sigma\in S_n}\operatorname{sgn}(\sig
 for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multiplicativity alone**, with no continuity, measurability, or Zariski density. The single-valued determinant is the explicit polynomial $L$, the well-definedness of $\prod_i d_i=\det A$ is anchored on $L$, and the factorization is $f=g\circ\det$.
 
 :::{dropdown} Lean proof: `hom_factor_det` / `existsUnique_hom_factor_det` (the boxed $f=g\circ\det$, with $g$ unique)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-factorization
-:end-before: ANCHOR_END: dethom-factorization
+:start-after: ANCHOR: flow-dethom-factorization
+:end-before: ANCHOR_END: flow-dethom-factorization
 ```
 :::
 
 :::{dropdown} Lean proof: `determinant_leibniz_formula` ($L\equiv\det$ is the Leibniz polynomial)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-leibniz-formula
-:end-before: ANCHOR_END: dethom-leibniz-formula
+:start-after: ANCHOR: flow-dethom-leibniz-formula
+:end-before: ANCHOR_END: flow-dethom-leibniz-formula
 ```
 :::
 
@@ -281,25 +283,25 @@ $$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb 
 with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.
 
 :::{dropdown} Lean proof: `postcomposeDetGL_mul` (converse: every $g\circ\det$ is a homomorphism)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-postcompose
-:end-before: ANCHOR_END: dethom-postcompose
+:start-after: ANCHOR: flow-dethom-postcompose
+:end-before: ANCHOR_END: flow-dethom-postcompose
 ```
 :::
 
 :::{dropdown} Lean proof: `hom_eq_postcomposeDetGL` (every homomorphism *is* a $g\circ\det$, so these are exactly all of them)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-converse
-:end-before: ANCHOR_END: dethom-converse
+:start-after: ANCHOR: flow-dethom-converse
+:end-before: ANCHOR_END: flow-dethom-converse
 ```
 :::
 
 :::{dropdown} Lean proof: `hom_factor_det_cstar` / `existsUnique_hom_factor_det_cstar` (measurable $g$ gives the polar form, with $(s,k)$ unique; $\det$ is $s=1,k=1$)
-```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphism.lean
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
-:start-after: ANCHOR: dethom-cstar
-:end-before: ANCHOR_END: dethom-cstar
+:start-after: ANCHOR: flow-dethom-cstar
+:end-before: ANCHOR_END: flow-dethom-cstar
 ```
 :::

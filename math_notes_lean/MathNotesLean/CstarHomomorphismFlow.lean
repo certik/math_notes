@@ -4,18 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Ondřej Čertík
 -/
 import Mathlib
-import MathNotesLean.CstarHomomorphism
 import MathNotesLean.AutomaticContinuity
 
 /-!
 # `cstar_homomorphism.md`, derived in the note's own logical order
 
-This file is the *flow-faithful* companion of `MathNotesLean/CstarHomomorphism.lean`.  It
-reproduces the construction of `cstar_homomorphism.md` step by step, in the note's order, so
-that each named theorem is built from the previous ones rather than from an opaque library
-result.
+This file is the *flow-faithful* formalization of `cstar_homomorphism.md`.  It reproduces the
+construction of the note step by step, in the note's order, so that each named theorem is built
+from the previous ones rather than from an opaque library result.
 
-## What is re-derived here (the one place the original takes a Mathlib shortcut)
+It is **self-contained**: apart from Mathlib and the general automatic-continuity lemmas in
+`MathNotesLean.AutomaticContinuity`, it depends on nothing else in this project.  In particular it
+does *not* use `CstarHomomorphism.lean`; every definition and lemma the note relies on is
+reproduced here (in `namespace MathNotesLean.CstarFlow`).
+
+## What is re-derived here (the one place the standard development takes a Mathlib shortcut)
 
 The whole measurable theory of `cstar_homomorphism.md` rests on a single automatic-continuity
 input: *a measurable additive `a : ℝ → ℝ` is continuous*.  The note proves this by hand
@@ -28,35 +31,28 @@ input: *a measurable additive `a : ℝ → ℝ` is continuous*.  The note proves
 3. additivity propagates continuity at `0` to continuity everywhere; the dense rationals then
    pin down the linear value.
 
-The original `CstarHomomorphism.lean` instead invokes the library black box
-`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`.  Here we re-derive it as
+Rather than invoke the library black box
+`MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`, we re-derive it as
 `continuous_of_additive_measurable`, using only the Steinhaus theorem
 (`MeasureTheory.Measure.sub_mem_nhds_zero_of_addHaar_pos`) as the cited measure-theoretic input
-— exactly the note's "By the Steinhaus theorem" step.  That single re-derivation is substituted
-into the two leaves where the black box was used (the additive Cauchy theorem and the modulus
-step of the multiplicative automatic-continuity theorem); every downstream theorem is then
-re-threaded through it.
+— exactly the note's "By the Steinhaus theorem" step.  That re-derivation is the additive
+foundation; the real multiplicative classification is then threaded through it.
 
-## What is reused from `CstarHomomorphism.lean` (standard analysis the note cites, not derives)
+## What is taken as standard (cited by the note, not re-derived from the additive theorem)
 
-The note presents these as standard results, so they are reused verbatim:
+The note presents these as standard results, and they are formalized here without reduction to the
+Steinhaus step:
 
 * the continuous classification `cstar_homomorphism_formula_continuous` and all its inputs —
   the polar split, the positive radial factor through the `Complex.exp` covering map, and the
   circle characters `ζ ↦ ζ ^ k` obtained from Fourier analysis on `AddCircle` (the note: "Continuous
   characters of `S¹` are exactly `ζ ↦ ζ ^ k`"); these depend only on the *continuous* additive
-  linearity, never on the measurable shortcut;
-* the sliding-window integration argument inside the multiplicative automatic-continuity theorem
-  (Lebesgue differentiation + interval integrals); only its modulus step used the shortcut, which
-  we replace;
-* the auxiliary multiplicative lemmas (`cauchy_multiplicative_pos_of_pos`,
-  `cauchy_multiplicative_log_exp_additive`, `cauchy_multiplicative_neg_one_cases`, …) and the
-  `ℂˣ → ℂˣ` polar bookkeeping (`cstarNormCPow`, `cstarCircleUnit`, …), none of which touch the
-  shortcut.
-
-Unqualified references inside `namespace MathNotesLean.CstarFlow` resolve to the re-derived
-`CstarFlow` version when one exists, and otherwise fall through to the reused
-`MathNotesLean` version.
+  linearity (`cauchy_additive_continuous_complex_linear`), never on the measurable shortcut;
+* the sliding-window integration argument behind multiplicative automatic continuity lives in
+  `AutomaticContinuity.lean` (`continuous_of_measurable_of_mul[_units]`) and is imported and used
+  from there; its modulus step is the one place that still calls Mathlib's
+  `AddMonoidHom.continuous_of_measurable`, so the `ℂˣ → ℂˣ` *measurable*-case continuity rests on
+  that Mathlib lemma rather than on the Steinhaus re-derivation above.
 -/
 
 open MeasureTheory Pointwise Topology Metric Filter
@@ -192,9 +188,9 @@ theorem continuous_of_additive_measurable (a : ℝ → ℝ)
 
 -- ANCHOR: flow-additive-linear
 /-- **The note's additive theorem, re-derived.** A measurable solution of Cauchy's additive
-equation on `ℝ` is linear, `a x = a 1 * x`.  Identical to `cauchy_additive_measurable_linear` in
-`CstarHomomorphism.lean`, except continuity comes from `continuous_of_additive_measurable` above
-instead of the library black box. -/
+equation on `ℝ` is linear, `a x = a 1 * x`.  Continuity comes from
+`continuous_of_additive_measurable` above (the Steinhaus re-derivation), not from the library
+black box `MeasureTheory.Measure.AddMonoidHom.continuous_of_measurable`. -/
 theorem cauchy_additive_measurable_linear (a : ℝ → ℝ)
     (hadd : ∀ x y, a (x + y) = a x + a y) (hmeas : Measurable a) :
     ∀ x : ℝ, a x = a 1 * x := by
@@ -211,12 +207,66 @@ theorem cauchy_additive_measurable_exists (a : ℝ → ℝ)
   ⟨a 1, cauchy_additive_measurable_linear a hadd hmeas⟩
 -- ANCHOR_END: flow-additive-linear
 
-/-! ### Measurability is essential: a non-measurable additive map
+/-- A continuous additive map `ℝ → ℂ` is complex-linear in one real variable. -/
+theorem cauchy_additive_continuous_complex_linear (a : ℝ → ℂ)
+    (hadd : ∀ x y, a (x + y) = a x + a y) (hcont : Continuous a) :
+    ∀ x : ℝ, a x = (x : ℂ) * a 1 := by
+  let f : ℝ →+ ℂ := AddMonoidHom.mk' a hadd
+  intro x
+  have hsmul : f (x • (1 : ℝ)) = x • f (1 : ℝ) := map_real_smul f hcont x 1
+  simpa [f, smul_eq_mul, mul_comm, mul_left_comm, mul_assoc] using hsmul
 
-`cstar_homomorphism.md`, the note following the additive theorem: without measurability Cauchy's
-equation has nonlinear (necessarily non-measurable) solutions.  The Hamel-basis construction is
-reproduced here; the supporting `rationalAgreementExample` helpers are reused from
-`CstarHomomorphism.lean`. -/
+/-- A real number is rational if it lies in the image of `ℚ → ℝ`. -/
+def IsRatReal (x : ℝ) : Prop :=
+  ∃ q : ℚ, (q : ℝ) = x
+
+/--
+The function that agrees with `x ↦ c x` on rationals and is zero on irrationals.
+It is used in the note to show that having the right rational values is not enough.
+-/
+noncomputable def rationalAgreementExample (c : ℝ) (x : ℝ) : ℝ := by
+  classical
+  exact if IsRatReal x then c * x else 0
+
+theorem isRatReal_rat (q : ℚ) : IsRatReal (q : ℝ) :=
+  ⟨q, rfl⟩
+
+theorem not_isRatReal_add_rat {α : ℝ} (hα : ¬ IsRatReal α) {q : ℚ} :
+    ¬ IsRatReal (α + q) := by
+  intro h
+  rcases h with ⟨r, hr⟩
+  apply hα
+  refine ⟨r - q, ?_⟩
+  norm_num at hr ⊢
+  linarith
+
+theorem rationalAgreementExample_rat (c : ℝ) (q : ℚ) :
+    rationalAgreementExample c (q : ℝ) = c * q := by
+  classical
+  simp [rationalAgreementExample, isRatReal_rat]
+
+theorem rationalAgreementExample_irrational (c : ℝ) {α : ℝ} (hα : ¬ IsRatReal α) :
+    rationalAgreementExample c α = 0 := by
+  classical
+  simp [rationalAgreementExample, hα]
+
+theorem measurableSet_isRatReal : MeasurableSet {x : ℝ | IsRatReal x} := by
+  have hset : {x : ℝ | IsRatReal x} = Set.range fun q : ℚ => (q : ℝ) := by
+    ext x
+    constructor
+    · intro hx
+      rcases hx with ⟨q, hq⟩
+      exact ⟨q, hq⟩
+    · intro hx
+      rcases hx with ⟨q, hq⟩
+      exact ⟨q, hq⟩
+  rw [hset]
+  exact (Set.countable_range fun q : ℚ => (q : ℝ)).measurableSet
+
+theorem measurable_rationalAgreementExample (c : ℝ) : Measurable (rationalAgreementExample c) := by
+  classical
+  unfold rationalAgreementExample
+  exact Measurable.ite measurableSet_isRatReal (measurable_const.mul measurable_id) measurable_const
 
 -- ANCHOR: flow-additive-counterexample
 /--
@@ -274,17 +324,82 @@ theorem exists_additive_not_linear :
     exact one_ne_zero hci
 -- ANCHOR_END: flow-additive-pathological
 
-/-! ## Cauchy's multiplicative functional equation on `ℝ`
 
-`cstar_homomorphism.md`, section "Cauchy's Multiplicative Functional Equation".  The positive part
-is reduced to the additive theorem above by `log ∘ m ∘ exp`; the only new dependency is the
-re-derived `cauchy_additive_measurable_linear`.  The sign bookkeeping and degenerate cases reuse
-the shortcut-free helpers from `CstarHomomorphism.lean`. -/
 
--- ANCHOR: flow-mult-pos
-/-- On positive inputs, a measurable multiplicative real function is a power function.  Re-thread
-of `cauchy_multiplicative_eq_rpow_on_pos`: the additive theorem applied to `t ↦ log (m (exp t))`
-is the re-derived `cauchy_additive_measurable_linear`. -/
+/-- If a multiplicative real function sends `1` to `0`, then it is identically zero. -/
+theorem cauchy_multiplicative_zero_of_map_one_eq_zero (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 0) :
+    ∀ x : ℝ, m x = 0 := by
+  intro x
+  have h := hm x 1
+  simpa [h1] using h
+
+/-- If a multiplicative real function sends `0` to `1`, then it is identically one. -/
+theorem cauchy_multiplicative_one_of_map_zero_eq_one (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h0 : m 0 = 1) :
+    ∀ x : ℝ, m x = 1 := by
+  intro x
+  have h := hm 0 x
+  simpa [h0] using h.symm
+
+/-- A multiplicative real function with `m 1 = 1` is nonzero away from zero. -/
+theorem cauchy_multiplicative_ne_zero_on_nonzero (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) {x : ℝ}
+    (hx : x ≠ 0) :
+    m x ≠ 0 := by
+  have h := hm x x⁻¹
+  have hprod : m x * m x⁻¹ = 1 := by
+    simpa [mul_inv_cancel₀ hx, h1] using h.symm
+  intro hmx
+  simp [hmx] at hprod
+
+/-- For a multiplicative real function with `m 1 = 1`, the value at `-1` squares to one. -/
+theorem cauchy_multiplicative_neg_one_sq (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) :
+    m (-1) ^ 2 = 1 := by
+  have h := hm (-1) (-1)
+  simpa [h1, sq] using h.symm
+
+/-- For a multiplicative real function with `m 1 = 1`, the value at `-1` is `±1`. -/
+theorem cauchy_multiplicative_neg_one_cases (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) :
+    m (-1) = 1 ∨ m (-1) = -1 :=
+  sq_eq_one_iff.mp (cauchy_multiplicative_neg_one_sq m hm h1)
+
+/-- On positive inputs, a multiplicative real function with `m 1 = 1` is positive. -/
+theorem cauchy_multiplicative_pos_of_pos (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) {x : ℝ}
+    (hx : 0 < x) :
+    0 < m x := by
+  have hne : m x ≠ 0 := cauchy_multiplicative_ne_zero_on_nonzero m hm h1 (ne_of_gt hx)
+  have hsquare : Real.sqrt x * Real.sqrt x = x := by
+    rw [← sq]
+    exact Real.sq_sqrt (le_of_lt hx)
+  have hmap : m x = m (Real.sqrt x) * m (Real.sqrt x) := by
+    simpa [hsquare] using hm (Real.sqrt x) (Real.sqrt x)
+  have hnonneg : 0 ≤ m x := by
+    rw [hmap]
+    exact mul_self_nonneg _
+  exact lt_of_le_of_ne' hnonneg hne
+
+/-- Taking logs after precomposing by `exp` turns the positive multiplicative part additive. -/
+theorem cauchy_multiplicative_log_exp_additive (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) :
+    ∀ t u : ℝ,
+      Real.log (m (Real.exp (t + u))) =
+        Real.log (m (Real.exp t)) + Real.log (m (Real.exp u)) := by
+  intro t u
+  have ht : 0 < m (Real.exp t) := cauchy_multiplicative_pos_of_pos m hm h1 (Real.exp_pos t)
+  have hu : 0 < m (Real.exp u) := cauchy_multiplicative_pos_of_pos m hm h1 (Real.exp_pos u)
+  calc
+    Real.log (m (Real.exp (t + u))) = Real.log (m (Real.exp t * Real.exp u)) := by
+      rw [Real.exp_add]
+    _ = Real.log (m (Real.exp t) * m (Real.exp u)) := by
+      rw [hm]
+    _ = Real.log (m (Real.exp t)) + Real.log (m (Real.exp u)) := by
+      exact Real.log_mul ht.ne' hu.ne'
+
+/-- On positive inputs, a measurable multiplicative real function is a power function. -/
 theorem cauchy_multiplicative_eq_rpow_on_pos (m : ℝ → ℝ)
     (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) (hmeas : Measurable m) :
     ∃ c : ℝ, ∀ {x : ℝ}, 0 < x → m x = x ^ c := by
@@ -304,11 +419,12 @@ theorem cauchy_multiplicative_eq_rpow_on_pos (m : ℝ → ℝ)
   rw [hlogx] at hexp
   rw [Real.exp_log hpos_mx] at hexp
   simpa [Real.rpow_def_of_pos hx, mul_comm] using hexp
--- ANCHOR_END: flow-mult-pos
 
 -- ANCHOR: flow-mult-formula
-/-- The nondegenerate measurable real multiplicative Cauchy equation on `ℝˣ`: away from zero the
-solution is a power of `|x|`, with the independent sign `m (-1) = ±1`. -/
+/--
+The nondegenerate measurable real multiplicative Cauchy equation on `ℝˣ`: away from zero the
+solution is a power of `|x|`, with the independent sign `m (-1) = ±1`.
+-/
 theorem cauchy_multiplicative_eq_sign_rpow_on_nonzero (m : ℝ → ℝ)
     (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (h1 : m 1 = 1) (hmeas : Measurable m) :
     ∃ c : ℝ,
@@ -319,7 +435,9 @@ theorem cauchy_multiplicative_eq_sign_rpow_on_nonzero (m : ℝ → ℝ)
   intro x hx
   by_cases hneg : x < 0
   · have habs_pos : 0 < |x| := abs_pos.mpr hx
-    have hx_eq : x = (-1) * |x| := by rw [abs_of_neg hneg]; ring
+    have hx_eq : x = (-1) * |x| := by
+      rw [abs_of_neg hneg]
+      ring
     calc
       m x = m ((-1) * |x|) := congrArg m hx_eq
       _ = m (-1) * m |x| := hm (-1) |x|
@@ -332,9 +450,38 @@ theorem cauchy_multiplicative_eq_sign_rpow_on_nonzero (m : ℝ → ℝ)
       _ = (if x < 0 then m (-1) else 1) * |x| ^ c := by simp [hneg, habs]
 -- ANCHOR_END: flow-mult-formula
 
+/-- An element `a` of a field satisfying `a = a * a` is `0` or `1`. -/
+theorem eq_zero_or_eq_one_of_eq_mul_self {F : Type*} [Field F] {a : F} (h : a = a * a) :
+    a = 0 ∨ a = 1 := by
+  have hfac : a * (a - 1) = 0 := by linear_combination -h
+  rcases mul_eq_zero.mp hfac with h0 | h1
+  · exact Or.inl h0
+  · exact Or.inr (sub_eq_zero.mp h1)
+
+/--
+The measurable real multiplicative Cauchy equation consists of two degenerate cases, `0` and `1`,
+and the nondegenerate formula on `ℝˣ`.
+-/
+theorem cauchy_multiplicative_measurable_classification (m : ℝ → ℝ)
+    (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (hmeas : Measurable m) :
+    (∀ x : ℝ, m x = 0) ∨ (∀ x : ℝ, m x = 1) ∨
+      ∃ c : ℝ,
+        (m (-1) = 1 ∨ m (-1) = -1) ∧
+          ∀ {x : ℝ}, x ≠ 0 → m x = (if x < 0 then m (-1) else 1) * |x| ^ c := by
+  have h1sq : m 1 = m 1 * m 1 := by simpa using hm 1 1
+  rcases eq_zero_or_eq_one_of_eq_mul_self h1sq with h1 | h1
+  · exact Or.inl (cauchy_multiplicative_zero_of_map_one_eq_zero m hm h1)
+  · right
+    have h0sq : m 0 = m 0 * m 0 := by simpa using hm 0 0
+    rcases eq_zero_or_eq_one_of_eq_mul_self h0sq with h0 | h0
+    · exact Or.inr (cauchy_multiplicative_eq_sign_rpow_on_nonzero m hm h1 hmeas)
+    · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
+
 -- ANCHOR: flow-mult-classification
-/-- The measurable real multiplicative Cauchy equation: the two degenerate cases `0` and `1`, and
-the nondegenerate formula on `ℝˣ` (recording `m 0 = 0`). -/
+/--
+The same classification, with the nondegenerate branch explicitly recording the extension value
+`m 0 = 0`.
+-/
 theorem cauchy_multiplicative_measurable_classification_with_zero (m : ℝ → ℝ)
     (hm : ∀ x y : ℝ, m (x * y) = m x * m y) (hmeas : Measurable m) :
     (∀ x : ℝ, m x = 0) ∨ (∀ x : ℝ, m x = 1) ∨
@@ -352,11 +499,6 @@ theorem cauchy_multiplicative_measurable_classification_with_zero (m : ℝ → �
         exact ⟨c, h0, hsign, hformula⟩)
     · exact Or.inl (cauchy_multiplicative_one_of_map_zero_eq_one m hm h0)
 -- ANCHOR_END: flow-mult-classification
-
-/-! ### Uniqueness of the real exponent and sign
-
-`cstar_homomorphism.md`, the uniqueness remark for the real multiplicative formula: the radial
-exponent is read off at `x = 2` and the sign at `x = -1`. -/
 
 -- ANCHOR: flow-mult-uniqueness
 /--
@@ -406,21 +548,34 @@ theorem existsUnique_cauchy_multiplicative_sign_rpow (m : ℝ → ℝ)
   exact ⟨hc, he⟩
 -- ANCHOR_END: flow-mult-uniqueness
 
-/-! ## Borel measurability implies continuity (multiplicative case)
 
-`cstar_homomorphism.md`, section "Borel measurability implies continuity".  The general
-`RCLike` automatic-continuity theorems `continuous_of_measurable_of_mul` and
-`continuous_of_measurable_of_mul_units` live in `AutomaticContinuity.lean` and are used from
-there (their sliding-window integration argument is independent of the additive shortcut). -/
 
-/-! ## The continuous classification `ℂˣ → ℂˣ`
+/-- The positive real radial factor of a nonzero complex number, as a unit of `ℂ`. -/
+def cstarNormUnit (w : ℂˣ) : ℂˣ :=
+  Units.mk0 ((‖(w : ℂ)‖ : ℝ) : ℂ) (by
+    exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero))
 
-`cstar_homomorphism.md`, the derivation of the boxed formula assuming continuity: the polar split,
-the positive radial factor through the `Complex.exp` covering map, the circle factor's modulus, the
-circle characters `ζ ↦ ζ ^ k` (Fourier analysis on `AddCircle`, which the note cites as a standard
-result), and the final assembly.  Deep helpers not shown as note dropdowns (the `cstar*`
-definitions, the continuity lemmas, and the Fourier lemmas) are reused from
-`CstarHomomorphism.lean`. -/
+/-- The unit-circle factor `w / |w|` of a nonzero complex number, as a unit of `ℂ`. -/
+def cstarCircleUnit (w : ℂˣ) : ℂˣ :=
+  w / cstarNormUnit w
+
+/-- The radial and unit-circle factors multiply back to the original element. -/
+theorem cstar_norm_mul_circle (w : ℂˣ) :
+    (cstarNormUnit w : ℂ) * (cstarCircleUnit w : ℂ) = (w : ℂ) := by
+  unfold cstarCircleUnit cstarNormUnit
+  simp [div_eq_mul_inv, mul_left_comm]
+
+/-- The second polar factor `w / |w|` has complex norm one. -/
+theorem norm_cstarCircleUnit (w : ℂˣ) : ‖(cstarCircleUnit w : ℂ)‖ = 1 := by
+  have hden : ‖(w : ℂ)‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr w.ne_zero)
+  have hsq : ‖(cstarCircleUnit w : ℂ)‖ ^ 2 = (1 : ℝ) ^ 2 := by
+    rw [← Complex.normSq_eq_norm_sq]
+    unfold cstarCircleUnit cstarNormUnit
+    simp [div_eq_mul_inv, Complex.normSq_eq_norm_sq]
+  exact (sq_eq_sq_iff_eq_or_eq_neg.mp hsq).resolve_right (by
+    intro hneg
+    have hnonneg : 0 ≤ ‖(cstarCircleUnit w : ℂ)‖ := norm_nonneg _
+    linarith)
 
 -- ANCHOR: flow-cstar-polar
 /--
@@ -434,6 +589,32 @@ theorem cstar_homomorphism_polar_factorization (g : ℂˣ →* ℂˣ) (w : ℂˣ
     exact (cstar_norm_mul_circle w).symm
   exact (congrArg g hw).trans (map_mul g (cstarNormUnit w) (cstarCircleUnit w))
 -- ANCHOR_END: flow-cstar-polar
+
+/-- The positive real path `t ↦ exp t` into `ℂˣ`. -/
+def cstarPositivePath (t : ℝ) : ℂˣ :=
+  Units.mk0 ((Real.exp t : ℝ) : ℂ) (by
+    exact_mod_cast (Real.exp_ne_zero t))
+
+/-- The positive real path `t ↦ exp t` into `ℂˣ` is continuous. -/
+theorem continuous_cstarPositivePath : Continuous cstarPositivePath := by
+  unfold cstarPositivePath
+  rw [Units.continuous_iff]
+  refine ⟨?_, ?_⟩
+  · exact Complex.continuous_ofReal.comp Real.continuous_exp
+  · simpa [Units.inv_eq_val_inv] using
+      (Complex.continuous_ofReal.comp Real.continuous_exp).inv₀ fun t => by
+        exact Complex.ofReal_ne_zero.mpr (Real.exp_ne_zero t)
+
+/-- The positive real path turns addition into multiplication. -/
+theorem cstarPositivePath_add (t u : ℝ) :
+    cstarPositivePath (t + u) = cstarPositivePath t * cstarPositivePath u := by
+  ext
+  simp [cstarPositivePath, Real.exp_add]
+
+/-- Composing a `ℂˣ` homomorphism with `t ↦ exp t` gives an additive-parameter homomorphism. -/
+theorem cstar_positive_factor_additive_parameter (g : ℂˣ →* ℂˣ) (t u : ℝ) :
+    g (cstarPositivePath (t + u)) = g (cstarPositivePath t) * g (cstarPositivePath u) := by
+  rw [cstarPositivePath_add, map_mul]
 
 -- ANCHOR: flow-cstar-positive
 /--
@@ -545,6 +726,54 @@ theorem additive_cstar_exp_linear (G : ℝ →+ Additive ℂˣ)
   exact (congrArg Subtype.val (congr_fun hell_lift t)).symm
 -- ANCHOR_END: flow-cstar-positive
 
+/-- The factor `|w|^s` from the `ℂˣ` homomorphism classification, as a unit of `ℂ`. -/
+def cstarNormCPow (s : ℂ) (w : ℂˣ) : ℂˣ :=
+  Units.mk0 (Complex.exp (s * Real.log ‖(w : ℂ)‖)) (Complex.exp_ne_zero _)
+
+/-- The radial unit `|w|` is the positive path evaluated at `log |w|`. -/
+theorem cstarNormUnit_eq_positivePath_log_norm (w : ℂˣ) :
+    cstarNormUnit w = cstarPositivePath (Real.log ‖(w : ℂ)‖) := by
+  ext
+  simp [cstarNormUnit, cstarPositivePath, Real.exp_log (norm_pos_iff.mpr w.ne_zero)]
+
+@[simp]
+theorem coe_cstarNormCPow (s : ℂ) (w : ℂˣ) :
+    ((cstarNormCPow s w : ℂˣ) : ℂ) = Complex.exp (s * Real.log ‖(w : ℂ)‖) :=
+  rfl
+
+@[simp]
+theorem cstarNormUnit_one : cstarNormUnit (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarNormUnit]
+
+@[simp]
+theorem cstarCircleUnit_one : cstarCircleUnit (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarCircleUnit, cstarNormUnit]
+
+theorem cstarNormUnit_mul (w z : ℂˣ) :
+    cstarNormUnit (w * z) = cstarNormUnit w * cstarNormUnit z := by
+  ext
+  simp [cstarNormUnit]
+
+theorem cstarCircleUnit_mul (w z : ℂˣ) :
+    cstarCircleUnit (w * z) = cstarCircleUnit w * cstarCircleUnit z := by
+  ext
+  simp [cstarCircleUnit, cstarNormUnit, div_eq_mul_inv]
+  ring
+
+@[simp]
+theorem cstarNormCPow_one (s : ℂ) : cstarNormCPow s (1 : ℂˣ) = 1 := by
+  ext
+  simp [cstarNormCPow]
+
+theorem cstarNormCPow_mul (s : ℂ) (w z : ℂˣ) :
+    cstarNormCPow s (w * z) = cstarNormCPow s w * cstarNormCPow s z := by
+  ext
+  simp [cstarNormCPow,
+    Real.log_mul (norm_ne_zero_iff.mpr w.ne_zero) (norm_ne_zero_iff.mpr z.ne_zero), mul_add,
+    Complex.exp_add]
+
 -- ANCHOR: flow-cstar-converse
 /--
 Every expression `w ↦ |w|^s (w/|w|)^k` defines a multiplicative homomorphism
@@ -557,6 +786,299 @@ def cstarFormulaHom (s : ℂ) (k : ℤ) : ℂˣ →* ℂˣ where
     rw [cstarNormCPow_mul, cstarCircleUnit_mul, mul_zpow]
     ac_rfl
 -- ANCHOR_END: flow-cstar-converse
+
+/-- The identity homomorphism corresponds to the parameters `s = 1` and `k = 1`. -/
+theorem cstarFormulaHom_one_one : cstarFormulaHom 1 1 = MonoidHom.id ℂˣ := by
+  ext w
+  change Complex.exp ((1 : ℂ) * ↑(Real.log ‖(w : ℂ)‖)) *
+      ↑(cstarCircleUnit w ^ (1 : ℤ)) = (w : ℂ)
+  rw [zpow_one]
+  change Complex.exp ((1 : ℂ) * ↑(Real.log ‖(w : ℂ)‖)) *
+      ((w : ℂ) * ((↑‖(w : ℂ)‖ : ℂ)⁻¹)) = (w : ℂ)
+  rw [one_mul]
+  rw [← Complex.ofReal_exp, Real.exp_log (norm_pos_iff.mpr w.ne_zero)]
+  have hn : ((‖(w : ℂ)‖ : ℝ) : ℂ) ≠ 0 := by
+    exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
+  field_simp [hn]
+
+/-- A positive real number as a unit of `ℂ`. -/
+def posUnit (t : ℝ) (ht : 0 < t) : ℂˣ :=
+  Units.mk0 (t : ℂ) (by exact_mod_cast ht.ne')
+
+@[simp] theorem coe_posUnit (t : ℝ) (ht : 0 < t) : (posUnit t ht : ℂ) = t := rfl
+
+theorem norm_posUnit (t : ℝ) (ht : 0 < t) : ‖(posUnit t ht : ℂ)‖ = t := by
+  rw [coe_posUnit, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht]
+
+/-- Underlying value of the polar formula. -/
+theorem coe_cstarFormulaHom_apply (s : ℂ) (k : ℤ) (w : ℂˣ) :
+    ((cstarFormulaHom s k w : ℂˣ) : ℂ)
+      = Complex.exp (s * Real.log ‖(w : ℂ)‖) * (cstarCircleUnit w : ℂ) ^ k := by
+  change ((cstarNormCPow s w * cstarCircleUnit w ^ k : ℂˣ) : ℂ) = _
+  rw [Units.val_mul, coe_cstarNormCPow, Units.val_zpow_eq_zpow_val]
+
+theorem cstarNormUnit_of_norm_one {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) : cstarNormUnit w = 1 := by
+  apply Units.ext
+  simp [cstarNormUnit, hw]
+
+theorem cstarCircleUnit_of_norm_one {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) : cstarCircleUnit w = w := by
+  apply Units.ext
+  have h1 := cstar_norm_mul_circle w
+  rw [cstarNormUnit_of_norm_one hw] at h1
+  simpa using h1
+
+theorem cstarFormulaHom_apply_of_norm_one (s : ℂ) (k : ℤ) {w : ℂˣ} (hw : ‖(w : ℂ)‖ = 1) :
+    cstarFormulaHom s k w = w ^ k := by
+  change cstarNormCPow s w * cstarCircleUnit w ^ k = w ^ k
+  rw [cstarCircleUnit_of_norm_one hw]
+  have : cstarNormCPow s w = 1 := by
+    apply Units.ext
+    simp [coe_cstarNormCPow, hw]
+  rw [this, one_mul]
+
+theorem cstarCircleUnit_posUnit (t : ℝ) (ht : 0 < t) : cstarCircleUnit (posUnit t ht) = 1 := by
+  apply Units.ext
+  have h1 := cstar_norm_mul_circle (posUnit t ht)
+  have hnu : (cstarNormUnit (posUnit t ht) : ℂ) = (t : ℂ) := by
+    change ((‖(posUnit t ht : ℂ)‖ : ℝ) : ℂ) = (t : ℂ)
+    rw [norm_posUnit t ht]
+  rw [hnu, coe_posUnit] at h1
+  have ht0 : (t : ℂ) ≠ 0 := by exact_mod_cast ht.ne'
+  have := mul_left_cancel₀ ht0 (h1.trans (mul_one (t : ℂ)).symm)
+  simpa using this
+
+/--
+**Uniqueness of the polar exponents.** The map `(s, k) ↦ (w ↦ |w|^s (w/|w|)^k)` is injective:
+the exponents `s ∈ ℂ` and `k ∈ ℤ` are uniquely determined by the homomorphism `ℂˣ → ℂˣ`. The circle
+exponent `k` is read off on the unit circle (where `|w| = 1`), and the radial exponent `s` on the
+positive reals (where `w/|w| = 1`).
+-/
+theorem cstarFormulaHom_injective {s₁ s₂ : ℂ} {k₁ k₂ : ℤ}
+    (h : cstarFormulaHom s₁ k₁ = cstarFormulaHom s₂ k₂) : s₁ = s₂ ∧ k₁ = k₂ := by
+  have hk : k₁ = k₂ := by
+    by_contra hne
+    have hm : ((k₁ - k₂ : ℤ) : ℝ) ≠ 0 := by exact_mod_cast sub_ne_zero.mpr hne
+    set θ : ℝ := Real.pi / ((k₁ - k₂ : ℤ) : ℝ) with hθ
+    set w₀ : ℂˣ := Units.mk0 (Complex.exp (↑θ * Complex.I)) (Complex.exp_ne_zero _) with hw0
+    have hnorm : ‖(w₀ : ℂ)‖ = 1 := Complex.norm_exp_ofReal_mul_I θ
+    have hK : w₀ ^ k₁ = w₀ ^ k₂ := by
+      have huni : cstarFormulaHom s₁ k₁ w₀ = cstarFormulaHom s₂ k₂ w₀ := by rw [h]
+      rwa [cstarFormulaHom_apply_of_norm_one s₁ k₁ hnorm,
+        cstarFormulaHom_apply_of_norm_one s₂ k₂ hnorm] at huni
+    have hpow : w₀ ^ (k₁ - k₂) = 1 := by
+      rw [sub_eq_add_neg, zpow_add, zpow_neg, hK, mul_inv_cancel]
+    have hreal : ((k₁ - k₂ : ℤ) : ℝ) * θ = Real.pi := by
+      rw [hθ]; field_simp
+    have hval : ((w₀ ^ (k₁ - k₂) : ℂˣ) : ℂ) = -1 := by
+      rw [Units.val_zpow_eq_zpow_val, hw0, Units.val_mk0, ← Complex.exp_int_mul]
+      have hcast : (↑(k₁ - k₂) : ℂ) * (↑θ * Complex.I) = ↑Real.pi * Complex.I := by
+        have : (↑(k₁ - k₂) : ℂ) * ↑θ = ↑Real.pi := by exact_mod_cast hreal
+        rw [show (↑(k₁ - k₂) : ℂ) * (↑θ * Complex.I) = ((↑(k₁ - k₂) : ℂ) * ↑θ) * Complex.I from by
+          ring, this]
+      rw [hcast, Complex.exp_pi_mul_I]
+    rw [hpow, Units.val_one] at hval
+    norm_num at hval
+  have hS : ∀ t : ℝ, 0 < t →
+      Complex.exp (s₁ * ↑(Real.log t)) = Complex.exp (s₂ * ↑(Real.log t)) := by
+    intro t ht
+    have huni : cstarFormulaHom s₁ k₁ (posUnit t ht) = cstarFormulaHom s₂ k₂ (posUnit t ht) := by
+      rw [h]
+    have := congrArg (fun u : ℂˣ => (u : ℂ)) huni
+    rw [coe_cstarFormulaHom_apply, coe_cstarFormulaHom_apply, cstarCircleUnit_posUnit,
+      norm_posUnit] at this
+    simpa using this
+  have hRe : s₁.re = s₂.re := by
+    have h1 := hS (Real.exp 1) (Real.exp_pos 1)
+    rw [Real.log_exp] at h1
+    simp only [Complex.ofReal_one, mul_one] at h1
+    have h2 : ‖Complex.exp s₁‖ = ‖Complex.exp s₂‖ := by rw [h1]
+    rw [Complex.norm_exp, Complex.norm_exp] at h2
+    exact Real.exp_injective h2
+  have hIm : s₁.im = s₂.im := by
+    by_contra hd
+    set d : ℝ := s₁.im - s₂.im with hdval
+    have hd0 : d ≠ 0 := sub_ne_zero.mpr hd
+    have h1 := hS (Real.exp (Real.pi / d)) (Real.exp_pos _)
+    rw [Real.log_exp] at h1
+    have h2 : Complex.exp ((s₁ - s₂) * ↑(Real.pi / d)) = 1 := by
+      rw [sub_mul, Complex.exp_sub, h1, div_self (Complex.exp_ne_zero _)]
+    have hsub : s₁ - s₂ = ↑d * Complex.I := by
+      apply Complex.ext
+      · simp [Complex.sub_re, hRe]
+      · simp [Complex.sub_im, hdval]
+    rw [hsub] at h2
+    have hd0C : (d : ℂ) ≠ 0 := by exact_mod_cast hd0
+    rw [show (↑d * Complex.I) * ↑(Real.pi / d) = ↑Real.pi * Complex.I from by
+      push_cast; field_simp] at h2
+    rw [Complex.exp_pi_mul_I] at h2
+    norm_num at h2
+  exact ⟨Complex.ext hRe hIm, hk⟩
+
+theorem continuousAt_log_norm_complex {z : ℂ} (hz : z ≠ 0) :
+    ContinuousAt (fun z : ℂ => Real.log ‖z‖) z := by
+  change ContinuousAt ((fun r : ℝ => Real.log r) ∘ (fun z : ℂ => ‖z‖)) z
+  exact (Real.continuousAt_log (norm_ne_zero_iff.mpr hz)).comp continuous_norm.continuousAt
+
+theorem continuous_log_norm_units : Continuous fun w : ℂˣ => Real.log ‖(w : ℂ)‖ := by
+  rw [continuous_iff_continuousAt]
+  intro w
+  exact (continuousAt_log_norm_complex w.ne_zero).comp Units.continuous_val.continuousAt
+
+theorem continuous_cstarNormCPow_val (s : ℂ) :
+    Continuous fun w : ℂˣ => (cstarNormCPow s w : ℂ) := by
+  unfold cstarNormCPow
+  apply Complex.continuous_exp.comp
+  apply Continuous.mul continuous_const
+  exact Complex.continuous_ofReal.comp continuous_log_norm_units
+
+theorem continuous_cstarNormCPow (s : ℂ) : Continuous fun w : ℂˣ => cstarNormCPow s w := by
+  rw [Units.continuous_iff]
+  refine ⟨continuous_cstarNormCPow_val s, ?_⟩
+  simpa [Units.inv_eq_val_inv] using
+    (continuous_cstarNormCPow_val s).inv₀ fun _ => Complex.exp_ne_zero _
+
+theorem continuous_cstarCircleUnit_val : Continuous fun w : ℂˣ => (cstarCircleUnit w : ℂ) := by
+  unfold cstarCircleUnit cstarNormUnit
+  change Continuous fun w : ℂˣ => (w : ℂ) / (((‖(w : ℂ)‖ : ℝ) : ℂ))
+  apply Continuous.div Units.continuous_val
+  · exact Complex.continuous_ofReal.comp (continuous_norm.comp Units.continuous_val)
+  · intro w
+    exact_mod_cast (norm_ne_zero_iff.mpr w.ne_zero)
+
+theorem continuous_cstarCircleUnit : Continuous fun w : ℂˣ => cstarCircleUnit w := by
+  rw [Units.continuous_iff]
+  refine ⟨continuous_cstarCircleUnit_val, ?_⟩
+  simpa [Units.inv_eq_val_inv] using
+    continuous_cstarCircleUnit_val.inv₀ fun w => (cstarCircleUnit w).ne_zero
+
+/-- The displayed formula is a continuous homomorphism `ℂˣ → ℂˣ`. -/
+theorem continuous_cstarFormulaHom (s : ℂ) (k : ℤ) :
+    Continuous fun w : ℂˣ => cstarFormulaHom s k w := by
+  change Continuous fun w : ℂˣ => cstarNormCPow s w * cstarCircleUnit w ^ k
+  exact (continuous_cstarNormCPow s).mul (continuous_cstarCircleUnit.zpow k)
+
+/-- The displayed formula, bundled as a continuous monoid homomorphism. -/
+def cstarFormulaContinuousHom (s : ℂ) (k : ℤ) : ContinuousMonoidHom ℂˣ ℂˣ where
+  toMonoidHom := cstarFormulaHom s k
+  continuous_toFun := continuous_cstarFormulaHom s k
+
+/-- Power characters of the unit circle. -/
+def circlePowerHom (k : ℤ) : Circle →* Circle where
+  toFun z := z ^ k
+  map_one' := by simp
+  map_mul' z w := by rw [mul_zpow]
+
+/-- Power characters of the unit circle, bundled as continuous homomorphisms. -/
+def circlePowerContinuousHom (k : ℤ) : ContinuousMonoidHom Circle Circle where
+  toMonoidHom := circlePowerHom k
+  continuous_toFun := continuous_zpow k
+
+/-- Convert a circle-valued power character to a `ℂˣ`-valued character. -/
+def circlePowerUnitsHom (k : ℤ) : Circle →* ℂˣ :=
+  Circle.toUnits.comp (circlePowerHom k)
+
+@[simp]
+theorem coe_circlePowerUnitsHom_apply (k : ℤ) (z : Circle) :
+    ((circlePowerUnitsHom k z : ℂˣ) : ℂ) = (z : ℂ) ^ k := by
+  simp [circlePowerUnitsHom, circlePowerHom]
+
+/-- A circle-valued additive character, viewed as a complex-valued continuous map. -/
+def circleValuedContinuousMap {T : ℝ} (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    C(AddCircle T, ℂ) where
+  toFun x := (ψ x : ℂ)
+  continuous_toFun := continuous_subtype_val.comp hψ
+
+/-- A continuous circle-valued function on `AddCircle` has a nonzero Fourier coefficient. -/
+theorem exists_nonzero_fourierCoeff_circleValued {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    ∃ n : ℤ, fourierCoeff (circleValuedContinuousMap ψ hψ : AddCircle T → ℂ) n ≠ 0 := by
+  by_contra hnone
+  push Not at hnone
+  let F : C(AddCircle T, ℂ) := circleValuedContinuousMap ψ hψ
+  let FLp : MeasureTheory.Lp ℂ 2 AddCircle.haarAddCircle :=
+    (ContinuousMap.toLp 2 AddCircle.haarAddCircle ℂ) F
+  have hcoeff_l2 : ∀ n : ℤ, fourierCoeff ((FLp : AddCircle T → ℂ)) n = 0 := by
+    intro n
+    rw [fourierCoeff_toLp]
+    exact hnone n
+  have hsum := tsum_sq_fourierCoeff (T := T) FLp
+  simp_rw [hcoeff_l2, norm_zero, zero_pow (by norm_num : (2 : ℕ) ≠ 0)] at hsum
+  have hright :
+      (∫ t : AddCircle T, ‖(FLp : AddCircle T → ℂ) t‖ ^ 2 ∂AddCircle.haarAddCircle) = 1 := by
+    have hae : (fun t : AddCircle T => (FLp : AddCircle T → ℂ) t)
+        =ᵐ[AddCircle.haarAddCircle] fun t => F t :=
+      ContinuousMap.coeFn_toAEEqFun AddCircle.haarAddCircle F
+    calc
+      (∫ t : AddCircle T, ‖(FLp : AddCircle T → ℂ) t‖ ^ 2 ∂AddCircle.haarAddCircle)
+          = ∫ t : AddCircle T, ‖F t‖ ^ 2 ∂AddCircle.haarAddCircle := by
+            apply integral_congr_ae
+            filter_upwards [hae] with t ht
+            rw [ht]
+      _ = ∫ _t : AddCircle T, (1 : ℝ) ∂AddCircle.haarAddCircle := by
+            apply integral_congr_ae
+            filter_upwards with t
+            simp [F, circleValuedContinuousMap]
+      _ = 1 := by simp
+  rw [hright] at hsum
+  norm_num at hsum
+
+/--
+If a continuous additive character has a nonzero `n`-th Fourier coefficient, then it is the
+`n`-th Fourier monomial.
+-/
+theorem fourierCoeff_eigen {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) {n : ℤ}
+    (hn : fourierCoeff (circleValuedContinuousMap ψ hψ : AddCircle T → ℂ) n ≠ 0) :
+    ∀ a : AddCircle T, (ψ a : ℂ) = fourier n a := by
+  let F : C(AddCircle T, ℂ) := circleValuedContinuousMap ψ hψ
+  let c : ℂ := fourierCoeff (F : AddCircle T → ℂ) n
+  have hc : c ≠ 0 := hn
+  intro a
+  have htrans : c = fourier (-n) a * (ψ a : ℂ) * c := by
+    calc
+      c = ∫ t : AddCircle T, fourier (-n) (t + a) * F (t + a) ∂AddCircle.haarAddCircle := by
+        rw [show c = fourierCoeff (F : AddCircle T → ℂ) n by rfl]
+        rw [fourierCoeff]
+        exact (MeasureTheory.integral_add_right_eq_self (μ := AddCircle.haarAddCircle)
+          (fun t : AddCircle T => fourier (-n) t * F t) a).symm
+      _ = ∫ t : AddCircle T,
+            (fourier (-n) a * (ψ a : ℂ)) * (fourier (-n) t * F t) ∂AddCircle.haarAddCircle := by
+        apply integral_congr_ae
+        filter_upwards with t
+        simp [F, circleValuedContinuousMap, AddChar.map_add_eq_mul, Circle.coe_mul,
+          fourier_apply, AddCircle.toCircle_add, mul_comm, mul_left_comm, mul_assoc]
+      _ = fourier (-n) a * (ψ a : ℂ) * c := by
+        rw [integral_const_mul]
+        rfl
+  have hfactor : fourier (-n) a * (ψ a : ℂ) = 1 := by
+    exact mul_right_cancel₀ hc (by simpa [mul_assoc] using htrans.symm)
+  have hpsi : (ψ a : ℂ) = (fourier (-n) a)⁻¹ :=
+    eq_inv_of_mul_eq_one_right hfactor
+  rw [hpsi]
+  have hmul : fourier (-n) a * fourier n a = 1 := by
+    rw [← fourier_add]
+    simp
+  exact inv_eq_of_mul_eq_one_right hmul
+
+/-- Continuous characters of the additive circle are exactly Fourier monomials. -/
+theorem continuous_addCircle_char_eq_fourier {T : ℝ} [Fact (0 < T)]
+    (ψ : AddChar (AddCircle T) Circle) (hψ : Continuous ψ) :
+    ∃ n : ℤ, ∀ a : AddCircle T, (ψ a : ℂ) = fourier n a := by
+  obtain ⟨n, hn⟩ := exists_nonzero_fourierCoeff_circleValued ψ hψ
+  exact ⟨n, fourierCoeff_eigen ψ hψ hn⟩
+
+/-- The additive character on `AddCircle (2π)` associated to a circle endomorphism. -/
+def circleEndomorphismAddChar (h : Circle →* Circle) :
+    AddChar (AddCircle (2 * Real.pi)) Circle where
+  toFun x := h (AddCircle.toCircle x)
+  map_zero_eq_one' := by simp
+  map_add_eq_mul' x y := by simp [AddCircle.toCircle_add, map_mul]
+
+/-- The additive-circle character associated to a continuous circle endomorphism is continuous. -/
+theorem continuous_circleEndomorphismAddChar (h : Circle →* Circle) (hh : Continuous h) :
+    Continuous (circleEndomorphismAddChar h) := by
+  dsimp [circleEndomorphismAddChar]
+  exact hh.comp AddCircle.continuous_toCircle
 
 -- ANCHOR: flow-cstar-circle-fourier
 /--
@@ -583,6 +1105,46 @@ theorem circle_endomorphism_exp_int_slope (h : Circle →* Circle) (hh : Continu
     ring
 -- ANCHOR_END: flow-cstar-circle-fourier
 
+/-- A continuous homomorphism from a compact additive group to `ℝ` is trivial. -/
+theorem compact_additive_hom_to_real_eq_zero {G : Type*} [AddGroup G] [TopologicalSpace G]
+    [CompactSpace G] (f : G →+ ℝ) (hf : Continuous f) : ∀ x, f x = 0 := by
+  have hb : Bornology.IsBounded (Set.range f) := (isCompact_range hf).isBounded
+  rcases Metric.isBounded_iff.mp hb with ⟨C, hC⟩
+  intro x
+  by_contra hx
+  have hpos : 0 < |f x| := abs_pos.mpr hx
+  obtain ⟨n, hn⟩ := exists_nat_gt (C / |f x|)
+  have hdist := hC (x := f (n • x)) ⟨n • x, rfl⟩ (y := f 0) ⟨0, rfl⟩
+  rw [map_nsmul, map_zero, dist_zero_right] at hdist
+  have hn' : C < n * |f x| := by
+    have := mul_lt_mul_of_pos_right hn hpos
+    rwa [div_mul_cancel₀ _ hpos.ne'] at this
+  have : (n : ℝ) * |f x| ≤ C := by
+    simpa [Real.norm_eq_abs, abs_mul, Nat.abs_cast, nsmul_eq_mul] using hdist
+  linarith
+
+/-- The log of the modulus of a continuous circle homomorphism is zero. -/
+theorem circle_hom_log_norm_eq_zero (g : Circle →* ℂˣ) (hg : Continuous g) :
+    ∀ z : Circle, Real.log ‖(g z : ℂ)‖ = 0 := by
+  let f : Additive Circle →+ ℝ := {
+    toFun := fun z => Real.log ‖(g (Additive.toMul z) : ℂ)‖
+    map_zero' := by simp
+    map_add' := by
+      intro z w
+      change Real.log ‖(g (Additive.toMul (z + w)) : ℂ)‖ =
+        Real.log ‖(g (Additive.toMul z) : ℂ)‖ + Real.log ‖(g (Additive.toMul w) : ℂ)‖
+      rw [toMul_add, map_mul]
+      rw [Units.val_mul, norm_mul]
+      exact Real.log_mul (norm_ne_zero_iff.mpr (g (Additive.toMul z)).ne_zero)
+        (norm_ne_zero_iff.mpr (g (Additive.toMul w)).ne_zero) }
+  have hf : Continuous f := by
+    dsimp [f]
+    have hbase : Continuous fun z : Circle => Real.log ‖(g z : ℂ)‖ :=
+      continuous_log_norm_units.comp hg
+    exact hbase.comp continuous_toMul
+  intro z
+  exact compact_additive_hom_to_real_eq_zero f hf (Additive.ofMul z)
+
 -- ANCHOR: flow-cstar-circle
 /-- A continuous homomorphism from the unit circle to `ℂˣ` has image in the unit circle. -/
 theorem circle_hom_norm_eq_one (g : Circle →* ℂˣ) (hg : Continuous g) (z : Circle) :
@@ -592,6 +1154,33 @@ theorem circle_hom_norm_eq_one (g : Circle →* ℂˣ) (hg : Continuous g) (z : 
   have hexp := congrArg Real.exp hlog
   rwa [Real.exp_log hpos, Real.exp_zero] at hexp
 -- ANCHOR_END: flow-cstar-circle
+
+/-- A continuous homomorphism from the unit circle to `ℂˣ`, re-codomain-restricted to `Circle`. -/
+def circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g) : Circle →* Circle where
+  toFun z := ⟨(g z : ℂ), by
+    change (g z : ℂ) ∈ Metric.sphere 0 1
+    rw [mem_sphere_zero_iff_norm]
+    exact circle_hom_norm_eq_one g hg z⟩
+  map_one' := by ext; simp
+  map_mul' z w := by ext; simp [map_mul]
+
+@[simp]
+theorem circleHomToCircle_toUnits (g : Circle →* ℂˣ) (hg : Continuous g) (z : Circle) :
+    Circle.toUnits (circleHomToCircle g hg z) = g z := by
+  ext
+  rfl
+
+theorem continuous_circleHomToCircle (g : Circle →* ℂˣ) (hg : Continuous g) :
+    Continuous (circleHomToCircle g hg) :=
+  Continuous.subtype_mk (Units.continuous_val.comp hg) _
+
+theorem continuous_circle_toUnits : Continuous Circle.toUnits := by
+  rw [Units.continuous_iff]
+  refine ⟨?_, ?_⟩
+  · change Continuous fun z : Circle => (z : ℂ)
+    exact continuous_subtype_val
+  · change Continuous fun z : Circle => ((z : ℂ))⁻¹
+    exact continuous_subtype_val.inv₀ fun z => Circle.coe_ne_zero z
 
 -- ANCHOR: flow-cstar-circle-char
 /--
@@ -628,6 +1217,19 @@ theorem circle_to_cstar_hom_eq_zpow_of_exp_lift (g : Circle →* ℂˣ) (hg : Co
   congr 1
   exact circle_endomorphism_eq_zpow_of_exp_lift (circleHomToCircle g hg) k h_exp z
 -- ANCHOR_END: flow-cstar-circle-char
+
+/-- A unit complex number, represented as an element of `Circle`. -/
+def cstarUnitToCircle (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) : Circle :=
+  ⟨(z : ℂ), by
+    change (z : ℂ) ∈ Metric.sphere 0 1
+    rw [mem_sphere_zero_iff_norm]
+    exact hz⟩
+
+@[simp]
+theorem cstarUnitToCircle_toUnits (z : ℂˣ) (hz : ‖(z : ℂ)‖ = 1) :
+    Circle.toUnits (cstarUnitToCircle z hz) = z := by
+  ext
+  rfl
 
 -- ANCHOR: flow-cstar-assembly
 /--
@@ -709,14 +1311,21 @@ theorem cstar_homomorphism_formula_continuous (g : ℂˣ →* ℂˣ) (hg : Conti
   exact ⟨s, k, hk⟩
 -- ANCHOR_END: flow-cstar-assembly
 
-/-! ## Measurable homomorphisms `ℂˣ → ℂˣ`
+/-! ### Borel-measurable homomorphisms `ℂˣ → ℂˣ` are continuous
 
-`cstar_homomorphism.md`, section "Measurable Homomorphisms `ℂ*→ℂ*`".  The continuous classification
-`cstar_homomorphism_formula_continuous` (polar split, positive radial factor, Fourier circle
-characters) is reused unchanged; the measurable-to-continuous reduction uses
-`continuous_of_measurable_of_mul_units` from `AutomaticContinuity.lean`. -/
+The note's remaining ingredient: a Borel-measurable group homomorphism `ℂˣ → ℂˣ` is automatically
+continuous, so the continuous classification above already covers the measurable case. The analytic
+core is `MathNotesLean.continuous_of_measurable_of_mul_units` (proved in `AutomaticContinuity.lean`,
+generally for `RCLike 𝕜`): a measurable homomorphism `(ℝ, +) → 𝕜ˣ` is continuous, via the
+sliding-window integration trick `f s · ∫₀ᵃ f = ∫ₛ^{s+a} f`, whose right-hand side is continuous
+in `s`. Applying its `𝕜 = ℂ` case to the radial path `t ↦ exp t` and (after pulling back through
+the quotient map `Circle.exp`) to the unit circle yields continuity of `g` on both polar factors,
+hence everywhere.
+-/
 
-/-- A Borel-measurable homomorphism `ℂˣ → ℂˣ` is continuous on the unit circle. -/
+/-- A Borel-measurable homomorphism `ℂˣ → ℂˣ` is continuous on the unit circle: the restriction
+`z ↦ g (toUnits z)` is continuous. The circle is the continuous quotient of `(ℝ, +)` by
+`Circle.exp`, so this reduces to the additive-parameter automatic-continuity theorem. -/
 theorem continuous_cstar_on_circle (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
     Continuous fun z : Circle => g (Circle.toUnits z) := by
   have hcont_exp : Continuous Circle.exp := isLocalHomeomorph_circleExp.continuous
@@ -731,9 +1340,11 @@ theorem continuous_cstar_on_circle (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
     simp only [Circle.exp_add, map_mul]
 
 -- ANCHOR: flow-cstar-measurable
-/-- **Automatic continuity.** A Borel-measurable group homomorphism `ℂˣ → ℂˣ` is continuous. The
-polar factorization splits `g` into a radial part and a unit-circle part, each continuous by
-`continuous_of_measurable_of_mul_units` (from `AutomaticContinuity.lean`). -/
+/--
+**Automatic continuity.** A Borel-measurable group homomorphism `ℂˣ → ℂˣ` is continuous. The polar
+factorization splits `g` into a radial part `t ↦ g (exp t)` and a unit-circle part, each continuous
+by `continuous_of_measurable_of_mul_units`.
+-/
 theorem cstar_homomorphism_continuous_of_measurable (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
     Continuous g := by
   have hrad : Continuous fun w : ℂˣ => g (cstarNormUnit w) := by
@@ -758,23 +1369,32 @@ theorem cstar_homomorphism_continuous_of_measurable (g : ℂˣ →* ℂˣ) (hg :
       (continuous_cstarCircleUnit_val.subtype_mk _)
   exact (hrad.mul hcirc).congr fun w => (cstar_homomorphism_polar_factorization g w).symm
 
-/-- A Borel-measurable homomorphism `ℂˣ → ℂˣ` has the boxed polar form `g w = |w|^s (w/|w|)^k`.
-Automatic continuity reduces it to the reused `cstar_homomorphism_formula_continuous`. -/
+/--
+A Borel-measurable homomorphism `ℂˣ → ℂˣ` has the boxed polar form `g w = |w|^s (w/|w|)^k`. This is
+the measurable case of the classification: automatic continuity reduces it to
+`cstar_homomorphism_formula_continuous`.
+-/
 theorem cstar_homomorphism_formula_measurable (g : ℂˣ →* ℂˣ) (hg : Measurable g) :
     ∃ s : ℂ, ∃ k : ℤ, ∀ w : ℂˣ, g w = cstarNormCPow s w * cstarCircleUnit w ^ k :=
   cstar_homomorphism_formula_continuous g (cstar_homomorphism_continuous_of_measurable g hg)
 -- ANCHOR_END: flow-cstar-measurable
 
-/-! ## Multiplicative functions on `ℂ`
 
-`cstar_homomorphism.md`, section "Multiplicative Functions on `ℂ`".  The nondegenerate branch
-restricts `m` to a measurable `ℂˣ → ℂˣ` and applies the re-threaded
-`cstar_homomorphism_formula_measurable`. -/
+
+/-- The unit-circle polar factor `w / |w|`, read off at the level of `ℂ`. -/
+theorem coe_cstarCircleUnit (w : ℂˣ) :
+    (cstarCircleUnit w : ℂ) = (w : ℂ) / (‖(w : ℂ)‖ : ℂ) := by
+  unfold cstarCircleUnit cstarNormUnit
+  rfl
 
 -- ANCHOR: flow-mult-complex-classification
-/-- **Measurable multiplicative functions `ℂ → ℂ`.** A measurable `m : ℂ → ℂ` with
-`m (z * w) = m z * m w` is `0`, `1`, or (when `m 1 = 1`, `m 0 = 0`) the boxed `ℂ*`-homomorphism
-`z ↦ |z|^s (z / |z|)^k` extended by `m 0 = 0`. -/
+/--
+**Measurable multiplicative functions `ℂ → ℂ`.** A measurable `m : ℂ → ℂ` satisfying
+`m (z * w) = m z * m w` is exactly one of three forms: the constant `0`; the constant `1`; or, in
+the nondegenerate case `m 1 = 1` and `m 0 = 0`, the boxed `ℂ*`-homomorphism `z ↦ |z|^s (z / |z|)^k`
+(`s ∈ ℂ`, `k ∈ ℤ`) extended by `m 0 = 0`. The nondegenerate branch restricts `m` to a measurable
+group homomorphism `ℂ* → ℂ*` and invokes `cstar_homomorphism_formula_measurable`.
+-/
 theorem cauchy_multiplicative_complex_classification (m : ℂ → ℂ)
     (hm : ∀ z w : ℂ, m (z * w) = m z * m w) (hmeas : Measurable m) :
     (∀ z : ℂ, m z = 0) ∨ (∀ z : ℂ, m z = 1) ∨
