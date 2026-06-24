@@ -270,17 +270,17 @@ results above, self-contained in `n : ℕ` (the abstract index type is replaced 
 
 section Fin
 
-variable {n : ℕ} [NeZero n]
-
 /--
 **(H1) + (H2) ⇒ `f = det` on `Fin n` matrices**, with the scalar normalization written `f(λ•I) = λⁿ`
 using the literal exponent `n`. A bare function `f : Mₙ(ℂ) → ℂ` (no bundling) that is multiplicative
-on all matrices and sends `λ • I` to `λⁿ` is the determinant. -/
-theorem eq_det_of_mul_of_scalar_pow_fin
+on all matrices and sends `λ • I` to `λⁿ` is the determinant. The dimension `n : ℕ` is a parameter
+of the theorem itself, the matrix type is written once, and `1` is the inferred `n × n` identity. -/
+theorem eq_det_of_mul_of_scalar_pow_fin {n : ℕ} [NeZero n]
     (f : Matrix (Fin n) (Fin n) ℂ → ℂ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
-    (H2 : ∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ n)
-    (A : Matrix (Fin n) (Fin n) ℂ) : f A = A.det := by
+    (H2 : ∀ x : ℂˣ, f (x • 1) = x ^ n) :
+    ∀ A, f A = A.det := by
+  intro A
   have H2' : ∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ Fintype.card (Fin n) := by
     simpa [Fintype.card_fin] using H2
   rw [← L_eq_det]
@@ -291,10 +291,9 @@ theorem eq_det_of_mul_of_scalar_pow_fin
 `f : Matrix (Fin n) (Fin n) ℂ → ℂ` satisfying (H1) `f(AB) = f(A)f(B)` (all matrices) and (H2)
 `f(λ•I) = λⁿ`, and it is `Matrix.det`. This is the note's characterization stated for ordinary
 `n × n` matrices, with the exponent the literal dimension `n`. -/
-theorem det_characterization_fin :
+theorem det_characterization_fin {n : ℕ} [NeZero n] :
     ∃! f : Matrix (Fin n) (Fin n) ℂ → ℂ,
-      (∀ A B, f (A * B) = f A * f B) ∧
-        (∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ n) := by
+      (∀ A B, f (A * B) = f A * f B) ∧ (∀ x : ℂˣ, f (x • 1) = x ^ n) := by
   refine ⟨Matrix.det, ⟨fun A B => Matrix.det_mul A B, fun x => ?_⟩, ?_⟩
   · rw [Units.smul_def, Matrix.det_smul, Matrix.det_one, mul_one, Fintype.card_fin]
   · rintro g ⟨hg1, hg2⟩
