@@ -260,4 +260,47 @@ theorem mul_scalar_pow_characterizes_leibniz [Nonempty n] :
       ∀ A, f A = Flow.L A) :=
   ⟨leibniz_mul, leibniz_scalar, eq_leibniz_of_mul_of_scalar_pow⟩
 
+/-! ### `Fin n` corollaries: the exponent is literally `n`
+
+For the standard `n × n` matrices indexed by `Fin n` — with `n : ℕ` a genuine number — the dimension
+`Fintype.card (Fin n)` *is* `n` (`Fintype.card_fin`), so the scalar normalization reads exactly
+`f(λ • I) = λⁿ` with the literal exponent `n`. These are direct specializations of the general
+results above, self-contained in `n : ℕ` (the abstract index type is replaced by `Fin n`, and
+`[NeZero n]`, i.e. `n ≥ 1`, supplies `Nonempty (Fin n)`). -/
+
+section Fin
+
+variable {n : ℕ} [NeZero n]
+
+/--
+**(H1) + (H2) ⇒ `f = det` on `Fin n` matrices**, with the scalar normalization written `f(λ•I) = λⁿ`
+using the literal exponent `n`. A bare function `f : Mₙ(ℂ) → ℂ` (no bundling) that is multiplicative
+on all matrices and sends `λ • I` to `λⁿ` is the determinant. -/
+theorem eq_det_of_mul_of_scalar_pow_fin
+    (f : Matrix (Fin n) (Fin n) ℂ → ℂ)
+    (H1 : ∀ A B, f (A * B) = f A * f B)
+    (H2 : ∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ n)
+    (A : Matrix (Fin n) (Fin n) ℂ) : f A = A.det := by
+  have H2' : ∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ Fintype.card (Fin n) := by
+    simpa [Fintype.card_fin] using H2
+  rw [← L_eq_det]
+  exact eq_leibniz_of_mul_of_scalar_pow f H1 H2' A
+
+/--
+**The determinant on `Fin n` matrices, defined by (H1) and (H2).** There is a *unique* bare function
+`f : Matrix (Fin n) (Fin n) ℂ → ℂ` satisfying (H1) `f(AB) = f(A)f(B)` (all matrices) and (H2)
+`f(λ•I) = λⁿ`, and it is `Matrix.det`. This is the note's characterization stated for ordinary
+`n × n` matrices, with the exponent the literal dimension `n`. -/
+theorem det_characterization_fin :
+    ∃! f : Matrix (Fin n) (Fin n) ℂ → ℂ,
+      (∀ A B, f (A * B) = f A * f B) ∧
+        (∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ n) := by
+  refine ⟨Matrix.det, ⟨fun A B => Matrix.det_mul A B, fun x => ?_⟩, ?_⟩
+  · rw [Units.smul_def, Matrix.det_smul, Matrix.det_one, mul_one, Fintype.card_fin]
+  · rintro g ⟨hg1, hg2⟩
+    funext A
+    exact eq_det_of_mul_of_scalar_pow_fin g hg1 hg2 A
+
+end Fin
+
 end MathNotesLean
