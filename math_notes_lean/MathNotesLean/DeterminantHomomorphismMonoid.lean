@@ -64,14 +64,15 @@ assumption, using only multiplicativity on the whole monoid (which forces `f = 0
 matrices) and the existence of `n`-th roots in `ℂ`. -/
 theorem monoidHom_eq_det_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ →* ℂ) (i0 : n)
-    (h : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n)
+    (h : ∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n)
     (A : Matrix n n ℂ) : f A = A.det := by
   -- (i) On units, `f = det` via the flow result applied to `Units.map f : GLₙ(ℂ) →* ℂˣ`.
   have hf_unit : ∀ U : (Matrix n n ℂ)ˣ, f (U : Matrix n n ℂ) = (U : Matrix n n ℂ).det := by
     have hg : ∀ x : ℂˣ, (Units.map f) (Flow.scalarGL x) = x ^ Fintype.card n := by
       intro x
       apply Units.ext
-      rw [Units.coe_map, Flow.coe_scalarGL, h x, Units.val_pow_eq_pow_val]
+      rw [Units.coe_map, Flow.coe_scalarGL, ← Matrix.smul_one_eq_diagonal, h x,
+        Units.val_pow_eq_pow_val]
     intro U
     have hmain := Flow.hom_eq_detGL_of_scalar_pow (Units.map f) i0 hg U
     have hco := congrArg Units.val hmain
@@ -134,7 +135,7 @@ theorem monoidHom_eq_det_of_scalar_pow [Nonempty n]
 /-- The bundled form of `monoidHom_eq_det_of_scalar_pow`: such an `f` *is* `Matrix.detMonoidHom`. -/
 theorem eq_detMonoidHom_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ →* ℂ) (i0 : n)
-    (h : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) :
+    (h : ∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n) :
     f = Matrix.detMonoidHom :=
   MonoidHom.ext (monoidHom_eq_det_of_scalar_pow f i0 h)
 
@@ -147,11 +148,10 @@ the determinant on `ℂ`: "the determinant is the unique multiplicative map on m
 to `λⁿ`." -/
 theorem existsUnique_monoidHom_scalar_pow [Nonempty n] :
     ∃! f : Matrix n n ℂ →* ℂ,
-      ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n := by
+      ∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n := by
   refine ⟨Matrix.detMonoidHom, fun x => ?_, fun g hg => ?_⟩
-  · change (Matrix.diagonal fun _ => (x : ℂ)).det = (x : ℂ) ^ Fintype.card n
-    rw [Matrix.det_diagonal]
-    simp [Finset.prod_const, Finset.card_univ]
+  · change ((x : ℂ) • (1 : Matrix n n ℂ)).det = (x : ℂ) ^ Fintype.card n
+    rw [Matrix.det_smul, Matrix.det_one, mul_one]
   · exact eq_detMonoidHom_of_scalar_pow g (Classical.arbitrary n) hg
 
 /--
@@ -179,7 +179,7 @@ We restate everything over **bare** functions `f : Mₙ(ℂ) → ℂ`, with the 
 written out explicitly — and no `Classical.choice`:
 
 * **(H1)** `f (A * B) = f A * f B` for *all* matrices `A, B` (singular included);
-* **(H2)** `f (diagonal (λ,…,λ)) = λⁿ`.
+* **(H2)** `f (λ • I) = λⁿ` (the scalar matrix `λ • 1`).
 
 Existence is witnessed by the explicit Leibniz polynomial `Flow.L` (a concrete finite sum, defined
 from scratch in the flow file); uniqueness shows every such `f` equals `Flow.L`. This certifies,
@@ -190,10 +190,10 @@ beyond any doubt, that the determinant can be *defined* by (H1) and (H2). -/
 theorem leibniz_mul (A B : Matrix n n ℂ) : Flow.L (A * B) = Flow.L A * Flow.L B := by
   simp only [L_eq_det, Matrix.det_mul]
 
-/-- **(H2) holds for `L`**: `L (diagonal (λ,…,λ)) = λⁿ`. -/
+/-- **(H2) holds for `L`**: `L (λ • I) = λⁿ`. -/
 theorem leibniz_scalar (x : ℂˣ) :
-    Flow.L (Matrix.diagonal fun _ : n => (x : ℂ)) = (x : ℂ) ^ Fintype.card n := by
-  rw [Flow.L_diagonal]
+    Flow.L ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n := by
+  rw [Matrix.smul_one_eq_diagonal, Flow.L_diagonal]
   simp [Finset.prod_const, Finset.card_univ]
 
 /--
@@ -203,12 +203,12 @@ polynomial `L`. (We bundle `f` into a `MonoidHom` — `f 1 = 1` is (H2) at `λ =
 theorem eq_leibniz_of_mul_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ → ℂ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
-    (H2 : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n)
+    (H2 : ∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n)
     (A : Matrix n n ℂ) : f A = Flow.L A := by
   have hf1 : f 1 = 1 := by
     have h := H2 1
-    simp only [Units.val_one, one_pow] at h
-    rwa [show (Matrix.diagonal fun _ : n => (1 : ℂ)) = 1 from Matrix.diagonal_one] at h
+    simp only [Units.val_one, one_pow, one_smul] at h
+    exact h
   let fHom : Matrix n n ℂ →* ℂ := { toFun := f, map_one' := hf1, map_mul' := H1 }
   have hdet := monoidHom_eq_det_of_scalar_pow fHom (Classical.arbitrary n) H2 A
   rw [L_eq_det]
@@ -218,9 +218,9 @@ theorem eq_leibniz_of_mul_of_scalar_pow [Nonempty n]
 are equal — because each one equals `L`. -/
 theorem eq_of_mul_of_scalar_pow [Nonempty n] (f g : Matrix n n ℂ → ℂ)
     (Hf1 : ∀ A B, f (A * B) = f A * f B)
-    (Hf2 : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n)
+    (Hf2 : ∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n)
     (Hg1 : ∀ A B, g (A * B) = g A * g B)
-    (Hg2 : ∀ x : ℂˣ, g (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) :
+    (Hg2 : ∀ x : ℂˣ, g ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n) :
     f = g := by
   funext A
   rw [eq_leibniz_of_mul_of_scalar_pow f Hf1 Hf2 A, eq_leibniz_of_mul_of_scalar_pow g Hg1 Hg2 A]
@@ -234,7 +234,7 @@ multiplicative axioms. -/
 theorem leibniz_det_characterization [Nonempty n] :
     ∃! f : Matrix n n ℂ → ℂ,
       (∀ A B, f (A * B) = f A * f B) ∧
-        (∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) := by
+        (∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n) := by
   refine ⟨Flow.L, ⟨leibniz_mul, leibniz_scalar⟩, ?_⟩
   rintro g ⟨hg1, hg2⟩
   funext A
@@ -253,10 +253,10 @@ Reading the third clause at `f := L` recovers existence, so this single statemen
 "the unique multiplicative, `λI ↦ λⁿ` function is `L`, pointwise." -/
 theorem mul_scalar_pow_characterizes_leibniz [Nonempty n] :
     (∀ A B : Matrix n n ℂ, Flow.L (A * B) = Flow.L A * Flow.L B) ∧
-    (∀ x : ℂˣ, Flow.L (Matrix.diagonal fun _ : n => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) ∧
+    (∀ x : ℂˣ, Flow.L ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n) ∧
     (∀ f : Matrix n n ℂ → ℂ,
       (∀ A B, f (A * B) = f A * f B) →
-      (∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) →
+      (∀ x : ℂˣ, f ((x : ℂ) • (1 : Matrix n n ℂ)) = (x : ℂ) ^ Fintype.card n) →
       ∀ A, f A = Flow.L A) :=
   ⟨leibniz_mul, leibniz_scalar, eq_leibniz_of_mul_of_scalar_pow⟩
 
