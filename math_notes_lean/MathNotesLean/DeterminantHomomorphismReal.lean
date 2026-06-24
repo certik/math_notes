@@ -556,6 +556,40 @@ theorem not_characterization_real_even [Nonempty n] (hn : Even (Fintype.card n))
   rw [show (absDetHom (Matrix.diagonal d)) = |(Matrix.diagonal d).det| from rfl, hdet] at hbad
   norm_num at hbad
 
+/-! ### `Fin n` corollary: the exponent is literally `n`, with (H1), (H2), (H3) spelled out -/
+
+section Fin
+
+/--
+**Determinant from (H1), (H2), (H3) on `Fin n` matrices.** A bare function
+`f : Matrix (Fin n) (Fin n) ℝ → ℝ` with
+
+* **(H1)** `f (A * B) = f A * f B`  (multiplicative on all matrices),
+* **(H2)** `f (μ • 1) = μⁿ`  for every `μ ∈ ℝˣ`  (scalar normalization),
+* **(H3)** `f (diag(-1, 1, …, 1)) = -1`  (the reflection at slot `0` has value `-1`),
+
+equals the determinant: `f A = det A` for every `A`. The dimension `n : ℕ` is a parameter of the
+theorem itself and the exponent is the literal `n`. (H3) is what makes this hold for **every** `n`,
+including even `n` where it would otherwise fail (`not_characterization_real_even`). -/
+theorem eq_det_of_mul_of_scalar_pow_of_reflection_fin {n : ℕ} [NeZero n]
+    (f : Matrix (Fin n) (Fin n) ℝ → ℝ)
+    (H1 : ∀ A B, f (A * B) = f A * f B)
+    (H2 : ∀ μ : ℝˣ, f (μ • 1) = μ ^ n)
+    (H3 : f (Matrix.diagonal (fun i => if i = 0 then -1 else 1)) = -1) :
+    ∀ A, f A = A.det := by
+  intro A
+  have hf1 : f 1 = 1 := by
+    have h := H2 1
+    simp only [Units.val_one, one_pow, one_smul] at h
+    exact h
+  let fHom : Matrix (Fin n) (Fin n) ℝ →* ℝ := { toFun := f, map_one' := hf1, map_mul' := H1 }
+  have H2' : ∀ μ : ℝˣ, fHom (μ • 1) = (μ : ℝ) ^ Fintype.card (Fin n) := by
+    intro μ; rw [Fintype.card_fin]; exact H2 μ
+  have H3' : fHom (Matrix.diagonal (fun i => if i = (0 : Fin n) then (-1 : ℝ) else 1)) = -1 := H3
+  exact monoidHom_eq_det_of_real fHom 0 H2' H3' A
+
+end Fin
+
 end Real
 
 end MathNotesLean
