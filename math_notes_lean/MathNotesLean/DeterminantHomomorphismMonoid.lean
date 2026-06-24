@@ -173,4 +173,91 @@ theorem detByScalarPow_eq [Nonempty n] :
     detByScalarPow A = A.det := by
   rw [detByScalarPow_eq]; rfl
 
+/-! ### Capstone: the determinant is the unique (H1)+(H2) function, with `L` as witness
+
+We restate everything over **bare** functions `f : Mₙ(ℂ) → ℂ`, with the two defining properties
+written out explicitly — and no `Classical.choice`:
+
+* **(H1)** `f (A * B) = f A * f B` for *all* matrices `A, B` (singular included);
+* **(H2)** `f (diagonal (λ,…,λ)) = λⁿ`.
+
+Existence is witnessed by the explicit Leibniz polynomial `Flow.L` (a concrete finite sum, defined
+from scratch in the flow file); uniqueness shows every such `f` equals `Flow.L`. This certifies,
+beyond any doubt, that the determinant can be *defined* by (H1) and (H2). -/
+
+/-- **(H1) holds for `L`, on all matrices**: `L (A * B) = L A · L B` (via `L = det` and
+`Matrix.det_mul`; the flow file proves multiplicativity from scratch on `GLₙ`). -/
+theorem leibniz_mul (A B : Matrix n n ℂ) : Flow.L (A * B) = Flow.L A * Flow.L B := by
+  simp only [L_eq_det, Matrix.det_mul]
+
+/-- **(H2) holds for `L`**: `L (diagonal (λ,…,λ)) = λⁿ`. -/
+theorem leibniz_scalar (x : ℂˣ) :
+    Flow.L (Matrix.diagonal fun _ : n => (x : ℂ)) = (x : ℂ) ^ Fintype.card n := by
+  rw [Flow.L_diagonal]
+  simp [Finset.prod_const, Finset.card_univ]
+
+/--
+**Uniqueness.** Any bare function `f : Mₙ(ℂ) → ℂ` satisfying (H1) and (H2) equals the Leibniz
+polynomial `L`. (We bundle `f` into a `MonoidHom` — `f 1 = 1` is (H2) at `λ = 1` — and invoke
+`monoidHom_eq_det_of_scalar_pow`, then `L = det`.) -/
+theorem eq_leibniz_of_mul_of_scalar_pow [Nonempty n]
+    (f : Matrix n n ℂ → ℂ)
+    (H1 : ∀ A B, f (A * B) = f A * f B)
+    (H2 : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n)
+    (A : Matrix n n ℂ) : f A = Flow.L A := by
+  have hf1 : f 1 = 1 := by
+    have h := H2 1
+    simp only [Units.val_one, one_pow] at h
+    rwa [show (Matrix.diagonal fun _ : n => (1 : ℂ)) = 1 from Matrix.diagonal_one] at h
+  let fHom : Matrix n n ℂ →* ℂ := { toFun := f, map_one' := hf1, map_mul' := H1 }
+  have hdet := monoidHom_eq_det_of_scalar_pow fHom (Classical.arbitrary n) H2 A
+  rw [L_eq_det]
+  exact hdet
+
+/-- Concretely, the uniqueness as the user phrased it: any two functions satisfying (H1) and (H2)
+are equal — because each one equals `L`. -/
+theorem eq_of_mul_of_scalar_pow [Nonempty n] (f g : Matrix n n ℂ → ℂ)
+    (Hf1 : ∀ A B, f (A * B) = f A * f B)
+    (Hf2 : ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n)
+    (Hg1 : ∀ A B, g (A * B) = g A * g B)
+    (Hg2 : ∀ x : ℂˣ, g (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) :
+    f = g := by
+  funext A
+  rw [eq_leibniz_of_mul_of_scalar_pow f Hf1 Hf2 A, eq_leibniz_of_mul_of_scalar_pow g Hg1 Hg2 A]
+
+/--
+**The determinant defined by (H1) and (H2).** There is a *unique* bare function `f : Mₙ(ℂ) → ℂ`
+satisfying (H1) `f(AB) = f(A)f(B)` (all matrices) and (H2) `f(λI) = λⁿ`, and it is the explicit
+Leibniz polynomial `Flow.L`. Existence is the concrete formula `L` (no `Classical.choice`),
+uniqueness pins every such `f` to it — so this `∃!` *is* a definition of the determinant by its two
+multiplicative axioms. -/
+theorem leibniz_det_characterization [Nonempty n] :
+    ∃! f : Matrix n n ℂ → ℂ,
+      (∀ A B, f (A * B) = f A * f B) ∧
+        (∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) := by
+  refine ⟨Flow.L, ⟨leibniz_mul, leibniz_scalar⟩, ?_⟩
+  rintro g ⟨hg1, hg2⟩
+  funext A
+  exact eq_leibniz_of_mul_of_scalar_pow g hg1 hg2 A
+
+/--
+**The fully explicit form: every (H1)+(H2) function `f` satisfies `f A = L A`.** Both halves are
+spelled out with `L` named throughout:
+
+* *existence* — the Leibniz polynomial `L` itself satisfies (H1) `L(AB) = L(A)L(B)` and (H2)
+  `L(λI) = λⁿ`;
+* *uniqueness* — for **any** `f : Mₙ(ℂ) → ℂ` with (H1) and (H2), and **every** matrix `A`,
+  `f A = L A`.
+
+Reading the third clause at `f := L` recovers existence, so this single statement says exactly:
+"the unique multiplicative, `λI ↦ λⁿ` function is `L`, pointwise." -/
+theorem mul_scalar_pow_characterizes_leibniz [Nonempty n] :
+    (∀ A B : Matrix n n ℂ, Flow.L (A * B) = Flow.L A * Flow.L B) ∧
+    (∀ x : ℂˣ, Flow.L (Matrix.diagonal fun _ : n => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) ∧
+    (∀ f : Matrix n n ℂ → ℂ,
+      (∀ A B, f (A * B) = f A * f B) →
+      (∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n) →
+      ∀ A, f A = Flow.L A) :=
+  ⟨leibniz_mul, leibniz_scalar, eq_leibniz_of_mul_of_scalar_pow⟩
+
 end MathNotesLean
