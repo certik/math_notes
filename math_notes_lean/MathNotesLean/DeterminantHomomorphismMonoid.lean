@@ -64,15 +64,15 @@ assumption, using only multiplicativity on the whole monoid (which forces `f = 0
 matrices) and the existence of `n`-th roots in `ℂ`. -/
 theorem monoidHom_eq_det_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ →* ℂ) (i0 : n)
-    (h : ∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n)
+    (h : ∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n)
     (A : Matrix n n ℂ) : f A = A.det := by
   -- (i) On units, `f = det` via the flow result applied to `Units.map f : GLₙ(ℂ) →* ℂˣ`.
   have hf_unit : ∀ U : (Matrix n n ℂ)ˣ, f (U : Matrix n n ℂ) = (U : Matrix n n ℂ).det := by
-    have hg : ∀ x : ℂˣ, (Units.map f) (Flow.scalarGL x) = x ^ Fintype.card n := by
-      intro x
+    have hg : ∀ μ : ℂˣ, (Units.map f) (Flow.scalarGL μ) = μ ^ Fintype.card n := by
+      intro μ
       apply Units.ext
       rw [Units.coe_map, Flow.coe_scalarGL, ← Matrix.smul_one_eq_diagonal, ← Units.smul_def,
-        h x, Units.val_pow_eq_pow_val]
+        h μ, Units.val_pow_eq_pow_val]
     intro U
     have hmain := Flow.hom_eq_detGL_of_scalar_pow (Units.map f) i0 hg U
     have hco := congrArg Units.val hmain
@@ -135,7 +135,7 @@ theorem monoidHom_eq_det_of_scalar_pow [Nonempty n]
 /-- The bundled form of `monoidHom_eq_det_of_scalar_pow`: such an `f` *is* `Matrix.detMonoidHom`. -/
 theorem eq_detMonoidHom_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ →* ℂ) (i0 : n)
-    (h : ∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n) :
+    (h : ∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n) :
     f = Matrix.detMonoidHom :=
   MonoidHom.ext (monoidHom_eq_det_of_scalar_pow f i0 h)
 
@@ -148,9 +148,9 @@ the determinant on `ℂ`: "the determinant is the unique multiplicative map on m
 to `λⁿ`." -/
 theorem existsUnique_monoidHom_scalar_pow [Nonempty n] :
     ∃! f : Matrix n n ℂ →* ℂ,
-      ∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n := by
-  refine ⟨Matrix.detMonoidHom, fun x => ?_, fun g hg => ?_⟩
-  · change ((x : ℂ) • (1 : Matrix n n ℂ)).det = (x : ℂ) ^ Fintype.card n
+      ∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n := by
+  refine ⟨Matrix.detMonoidHom, fun μ => ?_, fun g hg => ?_⟩
+  · change ((μ : ℂ) • (1 : Matrix n n ℂ)).det = (μ : ℂ) ^ Fintype.card n
     rw [Matrix.det_smul, Matrix.det_one, mul_one]
   · exact eq_detMonoidHom_of_scalar_pow g (Classical.arbitrary n) hg
 
@@ -191,8 +191,8 @@ theorem leibniz_mul (A B : Matrix n n ℂ) : Flow.L (A * B) = Flow.L A * Flow.L 
   simp only [L_eq_det, Matrix.det_mul]
 
 /-- **(H2) holds for `L`**: `L (λ • I) = λⁿ`. -/
-theorem leibniz_scalar (x : ℂˣ) :
-    Flow.L (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n := by
+theorem leibniz_scalar (μ : ℂˣ) :
+    Flow.L (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n := by
   rw [Units.smul_def, Matrix.smul_one_eq_diagonal, Flow.L_diagonal]
   simp [Finset.prod_const, Finset.card_univ]
 
@@ -203,7 +203,7 @@ polynomial `L`. (We bundle `f` into a `MonoidHom` — `f 1 = 1` is (H2) at `λ =
 theorem eq_leibniz_of_mul_of_scalar_pow [Nonempty n]
     (f : Matrix n n ℂ → ℂ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
-    (H2 : ∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n)
+    (H2 : ∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n)
     (A : Matrix n n ℂ) : f A = Flow.L A := by
   have hf1 : f 1 = 1 := by
     have h := H2 1
@@ -218,9 +218,9 @@ theorem eq_leibniz_of_mul_of_scalar_pow [Nonempty n]
 are equal — because each one equals `L`. -/
 theorem eq_of_mul_of_scalar_pow [Nonempty n] (f g : Matrix n n ℂ → ℂ)
     (Hf1 : ∀ A B, f (A * B) = f A * f B)
-    (Hf2 : ∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n)
+    (Hf2 : ∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n)
     (Hg1 : ∀ A B, g (A * B) = g A * g B)
-    (Hg2 : ∀ x : ℂˣ, g (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n) :
+    (Hg2 : ∀ μ : ℂˣ, g (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n) :
     f = g := by
   funext A
   rw [eq_leibniz_of_mul_of_scalar_pow f Hf1 Hf2 A, eq_leibniz_of_mul_of_scalar_pow g Hg1 Hg2 A]
@@ -234,7 +234,7 @@ multiplicative axioms. -/
 theorem leibniz_det_characterization [Nonempty n] :
     ∃! f : Matrix n n ℂ → ℂ,
       (∀ A B, f (A * B) = f A * f B) ∧
-        (∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n) := by
+        (∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n) := by
   refine ⟨Flow.L, ⟨leibniz_mul, leibniz_scalar⟩, ?_⟩
   rintro g ⟨hg1, hg2⟩
   funext A
@@ -253,10 +253,10 @@ Reading the third clause at `f := L` recovers existence, so this single statemen
 "the unique multiplicative, `λI ↦ λⁿ` function is `L`, pointwise." -/
 theorem mul_scalar_pow_characterizes_leibniz [Nonempty n] :
     (∀ A B : Matrix n n ℂ, Flow.L (A * B) = Flow.L A * Flow.L B) ∧
-    (∀ x : ℂˣ, Flow.L (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n) ∧
+    (∀ μ : ℂˣ, Flow.L (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n) ∧
     (∀ f : Matrix n n ℂ → ℂ,
       (∀ A B, f (A * B) = f A * f B) →
-      (∀ x : ℂˣ, f (x • (1 : Matrix n n ℂ)) = x ^ Fintype.card n) →
+      (∀ μ : ℂˣ, f (μ • (1 : Matrix n n ℂ)) = μ ^ Fintype.card n) →
       ∀ A, f A = Flow.L A) :=
   ⟨leibniz_mul, leibniz_scalar, eq_leibniz_of_mul_of_scalar_pow⟩
 
@@ -278,10 +278,10 @@ of the theorem itself, the matrix type is written once, and `1` is the inferred 
 theorem eq_det_of_mul_of_scalar_pow_fin {n : ℕ} [NeZero n]
     (f : Matrix (Fin n) (Fin n) ℂ → ℂ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
-    (H2 : ∀ x : ℂˣ, f (x • 1) = x ^ n) :
+    (H2 : ∀ μ : ℂˣ, f (μ • 1) = μ ^ n) :
     ∀ A, f A = A.det := by
   intro A
-  have H2' : ∀ x : ℂˣ, f (x • (1 : Matrix (Fin n) (Fin n) ℂ)) = x ^ Fintype.card (Fin n) := by
+  have H2' : ∀ μ : ℂˣ, f (μ • (1 : Matrix (Fin n) (Fin n) ℂ)) = μ ^ Fintype.card (Fin n) := by
     simpa [Fintype.card_fin] using H2
   rw [← L_eq_det]
   exact eq_leibniz_of_mul_of_scalar_pow f H1 H2' A
@@ -293,8 +293,8 @@ theorem eq_det_of_mul_of_scalar_pow_fin {n : ℕ} [NeZero n]
 `n × n` matrices, with the exponent the literal dimension `n`. -/
 theorem det_characterization_fin {n : ℕ} [NeZero n] :
     ∃! f : Matrix (Fin n) (Fin n) ℂ → ℂ,
-      (∀ A B, f (A * B) = f A * f B) ∧ (∀ x : ℂˣ, f (x • 1) = x ^ n) := by
-  refine ⟨Matrix.det, ⟨fun A B => Matrix.det_mul A B, fun x => ?_⟩, ?_⟩
+      (∀ A B, f (A * B) = f A * f B) ∧ (∀ μ : ℂˣ, f (μ • 1) = μ ^ n) := by
+  refine ⟨Matrix.det, ⟨fun A B => Matrix.det_mul A B, fun μ => ?_⟩, ?_⟩
   · rw [Units.smul_def, Matrix.det_smul, Matrix.det_one, mul_one, Fintype.card_fin]
   · rintro g ⟨hg1, hg2⟩
     funext A
