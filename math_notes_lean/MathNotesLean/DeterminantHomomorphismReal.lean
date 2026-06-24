@@ -537,9 +537,12 @@ def absDetHom : Matrix n n ℝ →* ℝ where
 **(H3) is genuinely needed.** For **even** `n`, dropping (H3) breaks the characterization: a
 homomorphism (namely `|det|`) satisfies (H1) and (H2) yet is not `det`. So the even-`n` statement
 with only (H1) and (H2) is false — exactly the `|det|` loophole that (H3) closes. -/
+-- ANCHOR: dethom-real-counterexample
 theorem not_characterization_real_even [Nonempty n] (hn : Even (Fintype.card n)) :
     ¬ ∀ (f : Matrix n n ℝ →* ℝ),
-        (∀ μ : ℝˣ, f (μ • 1) = (μ : ℝ) ^ Fintype.card n) → ∀ A, f A = A.det := by
+        (∀ μ : ℝˣ, f (μ • 1) = (μ : ℝ) ^ Fintype.card n) → ∀ A, f A = A.det
+-- ANCHOR_END: dethom-real-counterexample
+    := by
   intro H
   have hH2 : ∀ μ : ℝˣ,
       (absDetHom : Matrix n n ℝ →* ℝ) (μ • 1) = (μ : ℝ) ^ Fintype.card n := by
@@ -571,12 +574,15 @@ section Fin
 equals the determinant: `f A = det A` for every `A`. The dimension `n : ℕ` is a parameter of the
 theorem itself and the exponent is the literal `n`. (H3) is what makes this hold for **every** `n`,
 including even `n` where it would otherwise fail (`not_characterization_real_even`). -/
+-- ANCHOR: dethom-real-fin
 theorem eq_det_of_mul_of_scalar_pow_of_reflection_fin {n : ℕ} [NeZero n]
     (f : Matrix (Fin n) (Fin n) ℝ → ℝ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
     (H2 : ∀ μ : ℝˣ, f (μ • 1) = μ ^ n)
     (H3 : f (Matrix.diagonal (fun i => if i = 0 then -1 else 1)) = -1) :
-    ∀ A, f A = A.det := by
+    ∀ A, f A = A.det
+-- ANCHOR_END: dethom-real-fin
+    := by
   intro A
   have hf1 : f 1 = 1 := by
     have h := H2 1
