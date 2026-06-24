@@ -6,3 +6,4 @@ import MathNotesLean.CstarHomomorphismFlow
 import MathNotesLean.DeterminantHomomorphism
 import MathNotesLean.DeterminantHomomorphismFlow
 import MathNotesLean.DeterminantHomomorphismMonoid
+import MathNotesLean.DeterminantHomomorphismReal
