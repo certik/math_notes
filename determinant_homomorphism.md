@@ -298,17 +298,15 @@ Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb 
 ```
 :::
 
-## Singling out the determinant: two ways to fix $g$
+## The complete classification of the homomorphisms $f$
 
-The factor $g$ is genuinely free, so among all homomorphisms $f=g\circ\det$ the determinant itself is the single choice $g=\operatorname{id}$. We give two **independent** criteria that force $g=\operatorname{id}$: one analytic (a regularity hypothesis on $g$), one purely algebraic (a normalization of $f$ on scalar matrices, needing no regularity at all).
-
-Both start from the value of $f$ on a **scalar matrix** $\lambda I=\operatorname{diag}(\lambda,\dots,\lambda)$, which uses *only* multiplicativity. Taking $d_1=\dots=d_n=\lambda$ in {eq}`eq-dethom-diagonal-product`,
+Everything so far used only that $f$ is a homomorphism, and one further computation in that same spirit will be needed below. Evaluating $f$ on a **scalar matrix** $\lambda I=\operatorname{diag}(\lambda,\dots,\lambda)$ requires no new hypothesis: putting $d_1=\dots=d_n=\lambda$ in {eq}`eq-dethom-diagonal-product`,
 ```{math}
 :label: eq-dethom-scalar
 
 f(\lambda I)=g\!\Big(\prod_{i=1}^n\lambda\Big)=g\big(\lambda^{\,n}\big),\qquad \lambda\in\mathbb C^*.
 ```
-So the values of $f$ on scalar matrices run through $g(\lambda^n)$ as $g$ varies, and the determinant — the case $g=\operatorname{id}$ — is exactly $f(\lambda I)=\lambda^n$, which one also reads off directly from {eq}`eq-dethom-leibniz-factorization` as $\det(\lambda I)=\prod_i\lambda=\lambda^n$.
+In particular the determinant — the case $g=\operatorname{id}$ — satisfies $\det(\lambda I)=\prod_i\lambda=\lambda^n$, read off directly from {eq}`eq-dethom-leibniz-factorization`. We return to this in the final section.
 
 :::{dropdown} Lean proof: `hom_scalarGL_eq` (the $f(\lambda I)=g(\lambda^n)$ above) and `detGL_scalarGL` ($\det(\lambda I)=\lambda^n$)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
@@ -318,11 +316,15 @@ So the values of $f$ on scalar matrices run through $g(\lambda^n)$ as $g$ varies
 ```
 :::
 
-### (a) Regularity: a measurable $g$ gives the polar form
+The factorization theorem already collapsed all freedom in $f$ onto the single homomorphism $g:\mathbb C^*\to\mathbb C^*$, so classifying the homomorphisms $f$ is exactly classifying the group homomorphisms $g$. Assuming **nothing further**, these split into precisely two kinds:
 
-If one additionally requires $g$ to be continuous, or merely Borel measurable, then as derived in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md),
+- **$g$ is not measurable.** Already the radial factor misbehaves: $\mathbb R_{>0}\cong(\mathbb R,+)$ via $\log$, and the additive self-maps of $\mathbb R$ include wildly discontinuous, non-measurable ones built from a Hamel basis of $\mathbb R$ over $\mathbb Q$ (existing only through the axiom of choice). Extending such a map by the trivial map on the circle factor $S^1$ yields a non-measurable homomorphism $g:\mathbb C^*\to\mathbb C^*$ with no closed form. These are pathological and irrelevant to every application, so we do not investigate them further. (The same Hamel-basis pathology, for the additive Cauchy equation, is treated in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md).)
+- **$g$ is measurable.** Then — not even continuity is required; mere Borel measurability suffices — $g$ is forced into the closed form
 $$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
-so that $f(A)=|\det A|^s\,(\det A/|\det A|)^k$. This is a two-parameter family, and the determinant is its single member $g(w)=w$, i.e. $s=1$ and $k=1$.
+with the pair $(s,k)$ **unique**, as derived in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md). **There is no other option.**
+
+We assumed nothing, so this is the complete classification: every homomorphism is $f=g\circ\det$ with $g$ either a (useless) non-measurable solution or the polar form, in which case
+$$f(A)=|\det A|^s\left(\frac{\det A}{|\det A|}\right)^k.$$
 
 :::{dropdown} Lean proof: `hom_factor_det_cstar` / `existsUnique_hom_factor_det_cstar` (measurable $g$ gives the polar form, with $(s,k)$ unique; $\det$ is $s=1,k=1$)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
@@ -332,21 +334,19 @@ so that $f(A)=|\det A|^s\,(\det A/|\det A|)^k$. This is a two-parameter family, 
 ```
 :::
 
-### (b) Normalization: $f(\lambda I)=\lambda^n$ forces $g=\operatorname{id}$
+## Selecting the determinant by $f(\lambda I)=\lambda^n$
 
-No regularity is in fact needed: a single *algebraic* normalization already pins $g$ down. Impose
+Within the measurable family the determinant is the regular member $s=1,\,k=1$ (i.e. $g(w)=w$). Remarkably, it can be singled out of the **entire** classification above — bypassing the measurable/non-measurable split altogether — by one purely algebraic condition, with **no regularity assumed at all**:
 
 **(H2) Scalar normalization.** $f(\lambda I)=\lambda^n$ for all $\lambda\in\mathbb C^*$.
 
-By {eq}`eq-dethom-scalar`, (H2) says precisely that
-$$g\big(\lambda^{\,n}\big)=\lambda^{\,n}\qquad\text{for all }\lambda\in\mathbb C^*.$$
-Now the $n$-th power map $\lambda\mapsto\lambda^n$ is **surjective** onto $\mathbb C^*$: since $\mathbb C$ is algebraically closed, every $w\in\mathbb C^*$ has an $n$-th root $\lambda$, and $\lambda\neq 0$ because $w=\lambda^n\neq 0$. Hence for **every** $w\in\mathbb C^*$, writing $w=\lambda^n$,
+By {eq}`eq-dethom-scalar`, (H2) says precisely that $g(\lambda^n)=\lambda^n$ for all $\lambda\in\mathbb C^*$. Now $\lambda\mapsto\lambda^n$ is **surjective** onto $\mathbb C^*$: since $\mathbb C$ is algebraically closed, every $w\in\mathbb C^*$ has an $n$-th root $\lambda$, nonzero because $w=\lambda^n\neq0$. Hence for **every** $w=\lambda^n$,
 ```{math}
 :label: eq-dethom-g-id
 
 g(w)=g\big(\lambda^{\,n}\big)=\lambda^{\,n}=w,
 ```
-so $g=\operatorname{id}$ — with **no continuity, measurability, or Zariski density**, using only the existence of $n$-th roots. This is the simplest non-trivial way to single out $g$: a single closed condition selects $g=\operatorname{id}$ outright, where criterion (a) reached the same $g=\operatorname{id}$ as the lone point $(s,k)=(1,1)$ of its two-parameter family. Substituting $g=\operatorname{id}$ into the factorization theorem $f=g\circ\det$ gives the determinant on the nose:
+so $g=\operatorname{id}$, that is $s=1,\,k=1$. The single condition (H2) thus reaches into the full classification and fixes the regular solution outright — excluding every other measurable $(s,k)$ **and** every non-measurable Hamel-basis solution — using only the existence of $n$-th roots, with **no continuity, measurability, or Zariski density**. Substituting $g=\operatorname{id}$ into $f=g\circ\det$,
 ```{math}
 :label: eq-dethom-scalar-determinant
 
