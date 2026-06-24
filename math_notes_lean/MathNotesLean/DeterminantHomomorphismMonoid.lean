@@ -138,4 +138,39 @@ theorem eq_detMonoidHom_of_scalar_pow [Nonempty n]
     f = Matrix.detMonoidHom :=
   MonoidHom.ext (monoidHom_eq_det_of_scalar_pow f i0 h)
 
+/--
+**Existence *and* uniqueness — a definition-grade characterization.** Over `ℂ` there is a *unique*
+monoid homomorphism `f : Mₙ(ℂ) →* ℂ` satisfying the scalar normalization `f(λI) = λⁿ`. Existence is
+witnessed by the determinant (`Matrix.detMonoidHom`); uniqueness is
+`monoidHom_eq_det_of_scalar_pow`. This `∃!` is exactly what licenses an *axiomatic definition* of
+the determinant on `ℂ`: "the determinant is the unique multiplicative map on matrices sending `λI`
+to `λⁿ`." -/
+theorem existsUnique_monoidHom_scalar_pow [Nonempty n] :
+    ∃! f : Matrix n n ℂ →* ℂ,
+      ∀ x : ℂˣ, f (Matrix.diagonal fun _ => (x : ℂ)) = (x : ℂ) ^ Fintype.card n := by
+  refine ⟨Matrix.detMonoidHom, fun x => ?_, fun g hg => ?_⟩
+  · change (Matrix.diagonal fun _ => (x : ℂ)).det = (x : ℂ) ^ Fintype.card n
+    rw [Matrix.det_diagonal]
+    simp [Finset.prod_const, Finset.card_univ]
+  · exact eq_detMonoidHom_of_scalar_pow g (Classical.arbitrary n) hg
+
+/--
+The determinant on `ℂ`, *defined* purely by its characterization: the unique monoid homomorphism
+`Mₙ(ℂ) →* ℂ` sending `λI` to `λⁿ`, with no reference to any determinant formula. (Its
+well-definedness rests on the existence half of `existsUnique_monoidHom_scalar_pow`, witnessed by
+the Leibniz determinant — one cannot escape constructing *some* determinant to supply existence.) -/
+def detByScalarPow [Nonempty n] : Matrix n n ℂ →* ℂ :=
+  existsUnique_monoidHom_scalar_pow.choose
+
+/-- The characterization-defined determinant coincides with Mathlib's `Matrix.detMonoidHom`. -/
+theorem detByScalarPow_eq [Nonempty n] :
+    (detByScalarPow : Matrix n n ℂ →* ℂ) = Matrix.detMonoidHom :=
+  eq_detMonoidHom_of_scalar_pow _ (Classical.arbitrary n)
+    existsUnique_monoidHom_scalar_pow.choose_spec.1
+
+/-- ...and hence agrees pointwise with `Matrix.det`. -/
+@[simp] theorem detByScalarPow_apply [Nonempty n] (A : Matrix n n ℂ) :
+    detByScalarPow A = A.det := by
+  rw [detByScalarPow_eq]; rfl
+
 end MathNotesLean
