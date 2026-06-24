@@ -830,6 +830,90 @@ theorem existsUnique_hom_factor_det_cstar (f : Matrix.GeneralLinearGroup n ℂ �
   exact ⟨hs.symm, hk.symm⟩
 -- ANCHOR_END: flow-dethom-cstar
 
+/-! ### Singling out the determinant by the normalization `f(λI) = λⁿ`
+
+The factor `g = diagonalFactorOfHom i0 f` is free, so `f = g ∘ det` is the determinant exactly when
+`g = id`. The measurability route above pins `g` to the polar family and selects `det` at
+`s = 1, k = 1`. Here is a second, purely **algebraic** criterion that forces `g = id` with *no*
+regularity assumption: requiring `f(λI) = λⁿ` on the scalar matrices.
+
+We record the value of an arbitrary homomorphism on a scalar matrix `λI` (Step 3 gives
+`f(λI) = g(λⁿ)`), note the determinant realizes the normalization (`det(λI) = λⁿ`, the `g = id`
+case), and finally show the normalization forces `g = id`. The only new ingredient is that
+`λ ↦ λⁿ` is surjective on `ℂ*`, because `ℂ` is algebraically closed. -/
+
+/-- The scalar matrix `λI` (here `x I`) as an element of `GLₙ(ℂ)`. -/
+def scalarGL (x : ℂˣ) : Matrix.GeneralLinearGroup n ℂ :=
+  diagonalGL (fun _ => (x : ℂ)) (fun _ => x.ne_zero)
+
+@[simp]
+theorem coe_scalarGL (x : ℂˣ) :
+    ((scalarGL x : Matrix.GeneralLinearGroup n ℂ) : Matrix n n ℂ)
+      = Matrix.diagonal (fun _ => (x : ℂ)) :=
+  rfl
+
+-- ANCHOR: flow-dethom-scalar
+/--
+**`eq-dethom-scalar` (from multiplicativity alone).** Evaluating any homomorphism `f` on the scalar
+matrix `λI` gives `g(λⁿ)`, where `g = diagonalFactorOfHom i0 f` and `n = Fintype.card n`: by Step 3
+(`eq-dethom-diagonal-product`), `f(λI) = g(∏ᵢ λ) = g(λⁿ)`. -/
+theorem hom_scalarGL_eq (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n) (x : ℂˣ) :
+    f (scalarGL x) = diagonalFactorOfHom i0 f (x ^ Fintype.card n) := by
+  rw [scalarGL, hom_diagonalGL_eq f i0 (fun _ => (x : ℂ)) (fun _ => x.ne_zero)]
+  congr 1
+  simp [Finset.prod_const, Finset.card_univ, Units.mk0_val]
+
+/-- The determinant realizes the normalization (it is the `g = id` case): `det(λI) = λⁿ`, directly
+from the Leibniz identity `L(diag d) = ∏ᵢ dᵢ`. -/
+theorem detGL_scalarGL (x : ℂˣ) :
+    detGL (scalarGL x : Matrix.GeneralLinearGroup n ℂ) = x ^ Fintype.card n := by
+  apply Units.ext
+  rw [coe_detGL, coe_scalarGL, L_diagonal]
+  simp [Finset.prod_const, Finset.card_univ, Units.val_pow_eq_pow_val]
+-- ANCHOR_END: flow-dethom-scalar
+
+/-- The `N`-th power map is **surjective** on `ℂ*` for `N ≥ 1`: every unit `w` has an `N`-th root,
+since `ℂ` is algebraically closed (`IsAlgClosed.exists_pow_nat_eq`) and any such root is nonzero. -/
+theorem exists_unit_pow_eq (N : ℕ) (hN : 0 < N) (w : ℂˣ) :
+    ∃ z : ℂˣ, z ^ N = w := by
+  obtain ⟨z, hz⟩ := IsAlgClosed.exists_pow_nat_eq (w : ℂ) hN
+  have hz0 : z ≠ 0 := by
+    rintro rfl
+    rw [zero_pow hN.ne'] at hz
+    exact w.ne_zero hz.symm
+  refine ⟨Units.mk0 z hz0, ?_⟩
+  apply Units.ext
+  rw [Units.val_pow_eq_pow_val, Units.val_mk0]
+  exact hz
+
+-- ANCHOR: flow-dethom-scalar-normalization
+/--
+**The normalization forces `g = id`.** If `f(λI) = λⁿ` for every `λ ∈ ℂ*`, then the one-variable
+factor `g = diagonalFactorOfHom i0 f` is the identity: by `eq-dethom-scalar`, `g(λⁿ) = λⁿ` for all
+`λ`, and since `λ ↦ λⁿ` is surjective on `ℂ*`, every `w` is some `λⁿ`, so `g(w) = g(λⁿ) = λⁿ = w`.
+**No continuity or measurability is used.** -/
+theorem diagonalFactorOfHom_eq_id_of_scalar_pow [Nonempty n]
+    (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (h : ∀ x : ℂˣ, f (scalarGL x) = x ^ Fintype.card n) :
+    diagonalFactorOfHom i0 f = MonoidHom.id ℂˣ := by
+  refine MonoidHom.ext fun w => ?_
+  obtain ⟨z, hz⟩ := exists_unit_pow_eq (Fintype.card n) Fintype.card_pos w
+  have hx := h z
+  rw [hom_scalarGL_eq f i0 z, hz] at hx
+  rw [MonoidHom.id_apply]
+  exact hx
+
+/--
+**Determinant from the scalar normalization.** A homomorphism with `f(λI) = λⁿ` on every scalar
+matrix *is* the determinant: `f(A) = det A` for all `A ∈ GLₙ(ℂ)` — derived purely algebraically,
+with no continuity, measurability, or other regularity assumption. -/
+theorem hom_eq_detGL_of_scalar_pow [Nonempty n]
+    (f : Matrix.GeneralLinearGroup n ℂ →* ℂˣ) (i0 : n)
+    (h : ∀ x : ℂˣ, f (scalarGL x) = x ^ Fintype.card n)
+    (A : Matrix.GeneralLinearGroup n ℂ) : f A = detGL A := by
+  rw [hom_factor_det f i0, diagonalFactorOfHom_eq_id_of_scalar_pow f i0 h, MonoidHom.id_apply]
+-- ANCHOR_END: flow-dethom-scalar-normalization
+
 end GeneralLinear
 
 end Flow

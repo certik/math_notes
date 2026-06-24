@@ -15,8 +15,10 @@ type-check.
 The Lean statements are slightly more general than the note: they hold for every finite index type
 `n` (the homomorphism is `f : GLₙ(ℂ) →* ℂˣ`, with `ℂˣ` mathlib's group of units of `ℂ`, i.e.
 $\mathbb C^*$), and the one-variable factor `g` is read off at an arbitrary chosen diagonal slot
-`i0 : n` rather than slot $1$. The single-valued determinant is mathlib's Leibniz determinant
-`Matrix.det`.
+`i0 : n` rather than slot $1$. The single-valued determinant is the self-contained Leibniz polynomial
+`L` defined in the file. In the scalar-normalization route below ((H2)), the exponent is
+$n=\operatorname{Fintype.card}$ of the index type, and Lean additionally assumes it nonempty (so
+$n\ge 1$, which makes $\lambda\mapsto\lambda^n$ surjective on $\mathbb C^*$).
 :::
 
 ## Assumptions
@@ -278,9 +280,7 @@ for some homomorphism $g:\mathbb C^*\to \mathbb C^*$ — **derived from multipli
 ```
 :::
 
-Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb C^*)$ *is* a homomorphism $GL(n,\mathbb C)\to \mathbb C^*$: by {eq}`eq-dethom-leibniz-multiplicativity`, $L(AB)=L(A)L(B)$ on $GL(n,\mathbb C)$, and then $g(L(AB))=g(L(A))g(L(B))$. Hence these are **exactly** all of them: the determinant is the universal homomorphism, and every other homomorphism is obtained by post-composing it with an arbitrary group homomorphism $g:\mathbb C^*\to\mathbb C^*$. The factor $g$ is genuinely free; as derived in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md), if one additionally requires continuity, or merely Borel measurability, then
-$$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
-with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.
+Conversely, every $g\circ\det$ with $g\in\operatorname{Hom}(\mathbb C^*,\mathbb C^*)$ *is* a homomorphism $GL(n,\mathbb C)\to \mathbb C^*$: by {eq}`eq-dethom-leibniz-multiplicativity`, $L(AB)=L(A)L(B)$ on $GL(n,\mathbb C)$, and then $g(L(AB))=g(L(A))g(L(B))$. Hence these are **exactly** all of them: the determinant is the universal homomorphism, and every other homomorphism is obtained by post-composing it with an arbitrary group homomorphism $g:\mathbb C^*\to\mathbb C^*$.
 
 :::{dropdown} Lean proof: `postcomposeDetGL_mul` (converse: every $g\circ\det$ is a homomorphism)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
@@ -298,10 +298,65 @@ with the determinant itself corresponding to $g(w)=w$, i.e. $s=1$ and $k=1$.
 ```
 :::
 
+## Singling out the determinant: two ways to fix $g$
+
+The factor $g$ is genuinely free, so among all homomorphisms $f=g\circ\det$ the determinant itself is the single choice $g=\operatorname{id}$. We give two **independent** criteria that force $g=\operatorname{id}$: one analytic (a regularity hypothesis on $g$), one purely algebraic (a normalization of $f$ on scalar matrices, needing no regularity at all).
+
+Both start from the value of $f$ on a **scalar matrix** $\lambda I=\operatorname{diag}(\lambda,\dots,\lambda)$, which uses *only* multiplicativity. Taking $d_1=\dots=d_n=\lambda$ in {eq}`eq-dethom-diagonal-product`,
+```{math}
+:label: eq-dethom-scalar
+
+f(\lambda I)=g\!\Big(\prod_{i=1}^n\lambda\Big)=g\big(\lambda^{\,n}\big),\qquad \lambda\in\mathbb C^*.
+```
+So the values of $f$ on scalar matrices run through $g(\lambda^n)$ as $g$ varies, and the determinant — the case $g=\operatorname{id}$ — is exactly $f(\lambda I)=\lambda^n$, which one also reads off directly from {eq}`eq-dethom-leibniz-factorization` as $\det(\lambda I)=\prod_i\lambda=\lambda^n$.
+
+:::{dropdown} Lean proof: `hom_scalarGL_eq` (the $f(\lambda I)=g(\lambda^n)$ above) and `detGL_scalarGL` ($\det(\lambda I)=\lambda^n$)
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-dethom-scalar
+:end-before: ANCHOR_END: flow-dethom-scalar
+```
+:::
+
+### (a) Regularity: a measurable $g$ gives the polar form
+
+If one additionally requires $g$ to be continuous, or merely Borel measurable, then as derived in [Homomorphisms $\mathbb C^*\to\mathbb C^*$](cstar_homomorphism.md),
+$$g(w)=|w|^s\left(\frac{w}{|w|}\right)^k,\qquad s\in\mathbb C,\quad k\in\mathbb Z,$$
+so that $f(A)=|\det A|^s\,(\det A/|\det A|)^k$. This is a two-parameter family, and the determinant is its single member $g(w)=w$, i.e. $s=1$ and $k=1$.
+
 :::{dropdown} Lean proof: `hom_factor_det_cstar` / `existsUnique_hom_factor_det_cstar` (measurable $g$ gives the polar form, with $(s,k)$ unique; $\det$ is $s=1,k=1$)
 ```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
 :language: lean
 :start-after: ANCHOR: flow-dethom-cstar
 :end-before: ANCHOR_END: flow-dethom-cstar
+```
+:::
+
+### (b) Normalization: $f(\lambda I)=\lambda^n$ forces $g=\operatorname{id}$
+
+No regularity is in fact needed: a single *algebraic* normalization already pins $g$ down. Impose
+
+**(H2) Scalar normalization.** $f(\lambda I)=\lambda^n$ for all $\lambda\in\mathbb C^*$.
+
+By {eq}`eq-dethom-scalar`, (H2) says precisely that
+$$g\big(\lambda^{\,n}\big)=\lambda^{\,n}\qquad\text{for all }\lambda\in\mathbb C^*.$$
+Now the $n$-th power map $\lambda\mapsto\lambda^n$ is **surjective** onto $\mathbb C^*$: since $\mathbb C$ is algebraically closed, every $w\in\mathbb C^*$ has an $n$-th root $\lambda$, and $\lambda\neq 0$ because $w=\lambda^n\neq 0$. Hence for **every** $w\in\mathbb C^*$, writing $w=\lambda^n$,
+```{math}
+:label: eq-dethom-g-id
+
+g(w)=g\big(\lambda^{\,n}\big)=\lambda^{\,n}=w,
+```
+so $g=\operatorname{id}$ — with **no continuity, measurability, or Zariski density**, using only the existence of $n$-th roots. This is the simplest non-trivial way to single out $g$: a single closed condition selects $g=\operatorname{id}$ outright, where criterion (a) reached the same $g=\operatorname{id}$ as the lone point $(s,k)=(1,1)$ of its two-parameter family. Substituting $g=\operatorname{id}$ into the factorization theorem $f=g\circ\det$ gives the determinant on the nose:
+```{math}
+:label: eq-dethom-scalar-determinant
+
+\boxed{\,f(\lambda I)=\lambda^n\ \ (\forall\lambda\in\mathbb C^*)\quad\Longrightarrow\quad f(A)=\det A\ \ (\forall A\in GL(n,\mathbb C)).\,}
+```
+
+:::{dropdown} Lean proof: `diagonalFactorOfHom_eq_id_of_scalar_pow` (so $g=\operatorname{id}$) and `hom_eq_detGL_of_scalar_pow` (so $f=\det$)
+```{literalinclude} math_notes_lean/MathNotesLean/DeterminantHomomorphismFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-dethom-scalar-normalization
+:end-before: ANCHOR_END: flow-dethom-scalar-normalization
 ```
 :::
