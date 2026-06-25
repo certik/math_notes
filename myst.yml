@@ -2,6 +2,9 @@
 version: 1
 project:
   id: eca22f00-9592-4d3b-8164-c14be052194c
+  exclude:
+    - ukol5_5.tex
+    - ukol5_6.tex
   # title:
   # description:
   # keywords: []
