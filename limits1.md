@@ -1,8 +1,37 @@
+# Product Rule for Limits
+
+:::{note} Lean formalization
+This note's $\varepsilon$-$\delta$ proof is formalized in Lean 4 + Mathlib in
+[`Limits1Flow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/Limits1Flow.lean),
+a flow-faithful development: it defines its **own** $\varepsilon$-$\delta$ limit predicate `Limit` and
+proves the product rule from scratch in the same three steps used below, **without** calling Mathlib's
+`Filter.Tendsto.mul`. To certify the statement really concerns the limit, it also proves `Limit f a L`
+is equivalent to Mathlib's punctured-neighbourhood limit `Tendsto f (𝓝[≠] a) (𝓝 L)`
+(`limit_iff_tendsto`); that bridge is never used inside the product-rule proof. Each **Lean proof**
+dropdown below splices the corresponding declaration verbatim from the compiled source. Continuous
+integration runs `lake build` (which fails on any error or `sorry`), and the file is axiom-clean
+(`propext`, `Classical.choice`, `Quot.sound`).
+:::
+
 **Theorem (Product Rule for Limits).**  
 If $\lim_{x \to a} f(x) = L$ and $\lim_{x \to a} g(x) = M$ (where $L, M \in \mathbb{R}$), then  
 $$
 \lim_{x \to a} [f(x) g(x)] = LM.
 $$
+
+:::{dropdown} Lean: the $\varepsilon$-$\delta$ definition `Limit` and its faithfulness `limit_iff_tendsto`
+```{literalinclude} math_notes_lean/MathNotesLean/Limits1Flow.lean
+:language: lean
+:start-after: ANCHOR: flow-limits-def
+:end-before: ANCHOR_END: flow-limits-def
+```
+```{literalinclude} math_notes_lean/MathNotesLean/Limits1Flow.lean
+:language: lean
+:start-after: ANCHOR: flow-limits-faithful
+:end-before: ANCHOR_END: flow-limits-faithful
+```
+:::
+
 
 **Proof (using the $\varepsilon$-$\delta$ definition).**
 
@@ -21,6 +50,15 @@ $$
 |f(x)| = |f(x) - L + L| \leq |f(x) - L| + |L| < 1 + |L|.
 $$  
 Let $B := |L| + 1 > 0$. Then $|f(x)| < B$ whenever $0 < |x - a| < \delta_1$.
+
+:::{dropdown} Lean proof: `exists_bound_near` (Step 1 — bounding $|f|$ near $a$)
+```{literalinclude} math_notes_lean/MathNotesLean/Limits1Flow.lean
+:language: lean
+:start-after: ANCHOR: flow-limits-bound
+:end-before: ANCHOR_END: flow-limits-bound
+```
+:::
+
 
 **Step 2: Control the two terms in the product difference.**  
 Rewrite the expression we want to bound:  
@@ -66,5 +104,14 @@ $$
 $$
 
 This completes the proof. (The case $M = 0$ is covered automatically, since the second term vanishes or is even smaller.)
+
+:::{dropdown} Lean proof: `limit_mul` (the product rule, Steps 1–3)
+```{literalinclude} math_notes_lean/MathNotesLean/Limits1Flow.lean
+:language: lean
+:start-after: ANCHOR: flow-limits-mul
+:end-before: ANCHOR_END: flow-limits-mul
+```
+:::
+
 
 **Note:** The same technique works for one-sided limits and for limits at $\pm \infty$ (with appropriate modifications to the definition).
