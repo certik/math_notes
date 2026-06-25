@@ -19,6 +19,8 @@
 
 ---
 
+(id-1-introduction)=
+
 ## 1. Introduction
 
 The concept of the **determinant** is one of the most fundamental in linear algebra. For an $n \times n$ matrix $A$, $\det(A)$ is a scalar that encodes critical information: it tells us whether $A$ is invertible, measures the signed volume scaling factor of the linear transformation represented by $A$, and appears in countless formulas (Cramer's rule, characteristic polynomial, change of variables in integration, etc.).
@@ -35,6 +37,8 @@ This document provides a complete, self-contained explanation, starting from the
 All constructions are presented step-by-step, with explicit formulas, geometric interpretations, and proofs of key properties where feasible.
 
 ---
+
+(id-2-the-determinant-for-matrices-rank-2-endomorphisms)=
 
 ## 2. The Determinant for Matrices (Rank-2 Endomorphisms)
 
@@ -114,6 +118,8 @@ This is the definition that generalizes most naturally and will serve as our mod
 
 ---
 
+(id-3-higher-order-tensors-and-the-hyperdeterminant)=
+
 ## 3. Higher-Order Tensors and the Hyperdeterminant
 
 ### 3.1 The Problem with Higher Order
@@ -174,6 +180,8 @@ Higher-order hyperdeterminants (e.g., for $2\times2\times2\times2$) exist but be
 
 ---
 
+(id-4-rank-2-covariant-tensors-bilinear-forms-of-type-0-2)=
+
 ## 4. Rank-2 Covariant Tensors: Bilinear Forms of Type (0,2)
 
 ### 4.1 Definition
@@ -211,6 +219,8 @@ $$
 
 ---
 
+(id-5-basis-independent-constructions-for-0-2-tensors)=
+
 ## 5. Basis-Independent Constructions for (0,2) Tensors
 
 ### 5.1 The Induced Linear Map $\phi_T$
@@ -247,6 +257,8 @@ Thus the "determinant" of a pure (0,2) tensor lives naturally in the weight-2 de
 
 ---
 
+(id-6-weight-2-densities-and-transformation-laws)=
+
 ## 6. Weight-2 Densities and Transformation Laws
 
 A **density of weight $w$** on $V$ is an object that, under basis change with matrix $P$, transforms by the factor $[\det(P)]^w$.
@@ -263,6 +275,8 @@ This confirms that the exterior-algebra construction automatically produces an o
 In Riemannian geometry, when $T = g$ is a metric, one uses $g$ itself to define a canonical volume form $\mathrm{vol}_g$. Then $\sqrt{|\det(g_{ij})|}$ appears as the coefficient that makes $\mathrm{vol}_g$ have the proper normalization with respect to $g$-orthonormal frames. The raw $\det(g_{ij})$ is recovered squared in the density.
 
 ---
+
+(id-7-axiomatic-characterization-uniquely-deriving-the-determinant)=
 
 ## 7. Axiomatic Characterization: Uniquely Deriving the Determinant
 
@@ -552,6 +566,8 @@ so the induced map $\bigwedge^n\phi_T:\bigwedge^n V\to\bigwedge^n V^*$ automatic
 
 ---
 
+(id-8-special-cases-and-geometric-applications)=
+
 ## 8. Special Cases and Geometric Applications
 
 ### 8.1 Symmetric Bilinear Forms / Quadratic Forms
@@ -580,6 +596,8 @@ If we have an endomorphism $f$ and a fixed volume form $\mathrm{vol}$, we can de
 
 ---
 
+(id-9-conclusion-and-further-directions)=
+
 ## 9. Conclusion and Further Directions
 
 - **Endomorphisms ((1,1) tensors)**: The determinant is a canonical scalar, uniquely characterized via the exterior algebra $\bigwedge^n f : L \to L$.
@@ -594,6 +612,8 @@ In practice:
 - Always keep track of transformation weights when changing coordinates or bases.
 
 ---
+
+(id-10-references-and-further-reading)=
 
 ## 10. References and Further Reading
 
