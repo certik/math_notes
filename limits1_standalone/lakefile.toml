@@ -1,0 +1,58 @@
+name = "limits1_standalone"
+version = "0.1.0"
+defaultTargets = ["MathNotesLean"]
+
+# Self-contained build of MathNotesLean/Limits1Flow.lean.
+#
+# This project deliberately does NOT depend on the `mathlib` package. The Mathlib `.lean`
+# source files transitively required by `Limits1Flow.lean` are vendored under `Mathlib/`
+# and built from source by the `Mathlib` lean_lib below. The requires here are exactly the
+# upstream tactic/util packages that those vendored Mathlib files import (Lean core —
+# `Init`/`Lean`/`Std` — needs no require). Revisions are pinned to the same commits used by
+# the original `math_notes_lean` project so the vendored sources build unchanged.
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "batteries"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "Qq"
+scope = "leanprover-community"
+rev = "master"
+
+[[require]]
+name = "aesop"
+scope = "leanprover-community"
+rev = "master"
+
+[[require]]
+name = "proofwidgets"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "importGraph"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "LeanSearchClient"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "plausible"
+scope = "leanprover-community"
+rev = "main"
+
+[[lean_lib]]
+name = "Mathlib"
+
+[[lean_lib]]
+name = "MathNotesLean"
