@@ -275,11 +275,14 @@ section Fin
 using the literal exponent `n`. A bare function `f : Mₙ(ℂ) → ℂ` (no bundling) that is multiplicative
 on all matrices and sends `λ • I` to `λⁿ` is the determinant. The dimension `n : ℕ` is a parameter
 of the theorem itself, the matrix type is written once, and `1` is the inferred `n × n` identity. -/
+-- ANCHOR: dethom-complex-fin
 theorem eq_det_of_mul_of_scalar_pow_fin {n : ℕ} [NeZero n]
     (f : Matrix (Fin n) (Fin n) ℂ → ℂ)
     (H1 : ∀ A B, f (A * B) = f A * f B)
     (H2 : ∀ μ : ℂˣ, f (μ • 1) = μ ^ n) :
-    ∀ A, f A = A.det := by
+    ∀ A, f A = A.det
+-- ANCHOR_END: dethom-complex-fin
+    := by
   intro A
   have H2' : ∀ μ : ℂˣ, f (μ • (1 : Matrix (Fin n) (Fin n) ℂ)) = μ ^ Fintype.card (Fin n) := by
     simpa [Fintype.card_fin] using H2
