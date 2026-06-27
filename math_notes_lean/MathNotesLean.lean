@@ -8,3 +8,4 @@ import MathNotesLean.DeterminantHomomorphismFlow
 import MathNotesLean.DeterminantHomomorphismMonoid
 import MathNotesLean.DeterminantHomomorphismReal
 import MathNotesLean.Limits1Flow
+import MathNotesLean.ScalingFunctionalEquationFlow
