@@ -340,12 +340,25 @@ with $E(\cdot)=\|\cdot\|^2$. The associated symmetric form
 $$
 B(x,y):=\tfrac14\bigl(E(x+y)-E(x-y)\bigr)
 $$
-is biadditive, and $E(x)=B(x,x)$; this is the polarization identity. In other
-words, the physics says that kinetic energy is a quadratic form in velocity. In
-one dimension every quadratic form is $cv^2$; in three dimensions the same
+is **biadditive** — additive in each slot, which the parallelogram law guarantees on its own — and
+$E(x)=B(x,x)$, the polarization identity. So the physics says that kinetic energy is a *quadratic
+form* in velocity.
+
+There is a subtlety here, and it is the same regularity assumption as before. Biadditivity makes $B$
+bilinear only over $\mathbb Q$: $B(qx,y)=q\,B(x,y)$ for *rational* $q$. Concluding $B(x,y)=c\,xy$
+(hence $E(v)=cv^2$ in one dimension) needs bilinearity over $\mathbb R$, i.e.
+$B(\lambda x,y)=\lambda\,B(x,y)$ for *real* $\lambda$, and upgrading $\mathbb Q$-homogeneity to
+$\mathbb R$-homogeneity is exactly the Cauchy/Steinhaus step — it requires the regularity (P6).
+Without it there are wild $\mathbb Q$-bilinear forms: the non-measurable solution $E(x)=a(x)\,x$ of
+[](#ke-regularity) has polarization $B(x,y)=\tfrac12\bigl(a(x)\,y+a(y)\,x\bigr)$, which is symmetric
+and biadditive with $B(x,x)=E(x)$, yet is **not** $c\,xy$. So "every quadratic form is $cv^2$" holds
+only for the *measurable* (equivalently, $\mathbb R$-bilinear) ones.
+
+With that regularity in hand, the one-dimensional form is $cv^2$; in three dimensions the same
 argument applied componentwise, together with isotropy (P1), gives
-$E(\mathbf v)=c\,\lVert\mathbf v\rVert^2$. The fact that a norm obeying the
-parallelogram law comes from an inner product is the Jordan–von Neumann theorem.
+$E(\mathbf v)=c\,\lVert\mathbf v\rVert^2$. For a genuine norm the regularity is automatic — a norm is
+continuous — and the statement that a norm obeying the parallelogram law comes from an inner product
+is the Jordan–von Neumann theorem.
 
 (ke-summary)=
 ## Summary
