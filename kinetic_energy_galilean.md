@@ -22,8 +22,18 @@ This is the "complete" companion to
 There we saw that the doubling relation alone, even with continuity, leaves a free
 log-periodic factor, because iterating it only reaches the discrete set of scales
 $\{2^n:n\in\mathbb Z\}$. Here we show what extra physics removes that freedom:
-boosting the collision by an *arbitrary* velocity $b$, not just by $b=v$. A Lean
-formalization will be added after the derivation is reviewed.
+boosting the collision by an *arbitrary* velocity $b$, not just by $b=v$.
+:::
+
+:::{note} Lean formalization
+The derivations in this note are formalized in Lean 4 + Mathlib in
+[`KineticEnergyGalileanFlow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean).
+It takes the parallelogram law {eq}`eq-ke-parallelogram` as the hypothesis (the physics input) and
+proves that its continuous — and even merely *measurable* — solutions are exactly the quadratics
+$E(v)=E(1)\,v^2$, together with the converse and the non-measurable Hamel-basis pathology. Each
+**Lean proof** dropdown below splices the corresponding declaration verbatim from the compiled
+source. Continuous integration runs `lake build` (which fails on any error or `sorry`), so every
+displayed proof is guaranteed to type-check.
 :::
 
 (ke-what-is-E)=
@@ -137,6 +147,22 @@ $2m(-b)=-2mb$; they agree, as they must by (P3). So the only nontrivial content 
 the boosted description is the energy balance {eq}`eq-ke-balance-S`.
 :::
 
+:::{dropdown} Lean: the parallelogram law and its basic consequences
+The hypothesis is the predicate `Parallelogram E`.
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-def
+:end-before: ANCHOR_END: flow-ke-def
+```
+From it one reads off $E(0)=0$, evenness, and the doubling slice $E(2v)=4E(v)$, which is exactly
+the equation of the companion note (`parallelogram_isSolution`).
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-basic
+:end-before: ANCHOR_END: flow-ke-basic
+```
+:::
+
 (ke-doubling)=
 ## The doubling relation is just one slice
 
@@ -195,6 +221,14 @@ E(r)=r^2E(1)=c\,r^2\qquad\text{for every rational }r,
 ```
 using evenness for $r<0$.
 
+:::{dropdown} Lean: Steps 1–2 — integer and rational scaling
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-scaling
+:end-before: ANCHOR_END: flow-ke-scaling
+```
+:::
+
 **Step 3 — all real speeds, by regularity.** The rationals are **dense** in
 $\mathbb R$. By the regularity assumption (P6), $E$ is continuous (the measurable
 case is discussed in [](#ke-regularity)). The two continuous functions $E(x)$ and
@@ -208,6 +242,22 @@ everywhere:
 
 This is the kinetic energy law. The constant $c$ is fixed by a choice of units;
 the Newtonian convention $E(v)=\tfrac12 v^2$ corresponds to $c=\tfrac12$.
+
+:::{dropdown} Lean: Step 3 — continuity forces the quadratic, and the converse
+The continuous solution agrees with $E(1)\,v^2$ on the dense set $\mathbb Q$, hence everywhere.
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-continuous
+:end-before: ANCHOR_END: flow-ke-continuous
+```
+Conversely, every quadratic $E(v)=c\,v^2$ satisfies the parallelogram law, so the description is
+exact.
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-converse
+:end-before: ANCHOR_END: flow-ke-converse
+```
+:::
 
 (ke-why-works)=
 ## Why the density argument is legitimate here
@@ -237,6 +287,16 @@ over $\mathbb Q$ (the same mechanism that produces nonlinear solutions of Cauchy
 additive equation). These are physically irrelevant but mathematically real, so
 *some* hypothesis must exclude them.
 
+:::{dropdown} Lean: a non-measurable, non-quadratic solution exists
+For a non-linear additive $a$ (a Hamel-basis solution of Cauchy's equation), $E(x)=a(x)\,x$ satisfies
+the parallelogram law but is not $c x^2$.
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-pathological
+:end-before: ANCHOR_END: flow-ke-pathological
+```
+:::
+
 Continuity is the most transparent choice and is what we used in Step 3. However,
 the much weaker assumption of **Lebesgue measurability** already suffices:
 measurable solutions of the quadratic functional equation
@@ -245,6 +305,29 @@ exactly as for the additive Cauchy equation), after which Step 3 applies
 unchanged. Physically, measurability is an extremely mild requirement — it merely
 says that the heat produced is a measurable function of the impact speed — so the
 quadratic law $E(v)=cv^2$ is forced under any reasonable regularity at all.
+
+In the Lean development the measurable case is handled directly through the **polarization**
+$\operatorname{pol}(x,y)=\tfrac14\bigl(E(x+y)-E(x-y)\bigr)$, which the parallelogram law makes
+symmetric and biadditive. Each slice $x\mapsto\operatorname{pol}(x,y)$ is therefore a measurable
+additive map, hence linear (reusing the measurable additive Cauchy theorem from
+[the companion C\*-note](cstar_homomorphism.md)); evaluating on the diagonal,
+$E(x)=\operatorname{pol}(x,x)=E(1)\,x^2$.
+
+:::{dropdown} Lean: the polarization is symmetric, biadditive, and measurable-linear
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-polar
+:end-before: ANCHOR_END: flow-ke-polar
+```
+:::
+
+:::{dropdown} Lean: measurability forces the quadratic
+```{literalinclude} math_notes_lean/MathNotesLean/KineticEnergyGalileanFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-ke-measurable
+:end-before: ANCHOR_END: flow-ke-measurable
+```
+:::
 
 (ke-remark-inner-product)=
 ## Remark: the name "parallelogram law"
