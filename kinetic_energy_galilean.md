@@ -372,3 +372,169 @@ is the Jordan–von Neumann theorem.
 - The single doubling relation $E(2v)=4E(v)$ is only the $b=v$ slice and is too
   weak on its own; the full quadratic law needs the relations coming from all
   boosts $b$, which together constrain $E$ at a dense set of scales.
+- Replacing Galilean boosts by Lorentz boosts turns the parallelogram law into
+  **d'Alembert's equation**, whose solution is the Lorentz factor and whose
+  kinetic energy is the relativistic $E_{\text{kin}}=(\gamma-1)mc^2$; see
+  [](#ke-relativistic).
+
+(ke-relativistic)=
+## Relativistic kinetic energy: replacing Galilean by Lorentz boosts
+
+The derivation above used relativity at only one point: "view the *same* collision
+from a frame moving at velocity $b$." Special relativity changes that one ingredient
+— and forces exactly one more, mass–energy equivalence. Remarkably, the rest of the
+scaffolding (one symmetric inelastic collision, energy conservation in every frame, a
+frame-invariant internal quantity, mild regularity) carries over unchanged, and the
+functional equation it now produces is **d'Alembert's equation**, whose solution is
+the Lorentz factor. The result is the relativistic kinetic energy
+$E_{\text{kin}}=(\gamma-1)mc^2$.
+
+### Two changes, then the same collision
+
+**(i) Boosts add rapidity, not velocity.** Collinear velocities no longer add;
+instead the **rapidity** $\phi:=\operatorname{artanh}(v/c)$ adds. A boost by rapidity
+$\beta$ sends $\phi\mapsto\phi-\beta$, exactly as a Galilean boost sent
+$v\mapsto v-b$. *In rapidity variables, Lorentz boosts look Galilean.* We use the
+standard dictionary
+$$
+\frac{v}{c}=\tanh\phi,\qquad
+\gamma:=\frac{1}{\sqrt{1-v^2/c^2}}=\cosh\phi,\qquad
+\frac{\gamma v}{c}=\sinh\phi.
+$$
+
+**(ii) Heat has mass.** In an inelastic collision the dissipated energy does not
+vanish into heat at fixed mass; by $E=mc^2$ it **raises the rest mass** of the
+combined blob. The internal quantity that is the same in every frame is therefore the
+**invariant rest mass**, playing precisely the role the frame-invariant heat played
+in the Galilean argument.
+
+Because rest energy now takes part in the balance, the natural unknown is the **total
+energy per unit rest mass** $\mathcal E(v)$, with $\mathcal E(0)=c^2$ (the rest energy)
+rather than $0$; the kinetic energy is $\mathcal E(v)-c^2$. Equivalently the unknown is
+the Lorentz factor $\gamma(\phi):=\mathcal E/c^2$, with $\gamma(0)=1$.
+
+### Assumptions, checked against special relativity
+
+- **(P1′)** Energy is a state function, **extensive in rest mass** and isotropic: a
+  body of rest mass $m$ at rapidity $\phi$ has total energy $m\,\mathcal E(\phi)$,
+  with $\mathcal E$ even and $\mathcal E(0)=c^2$. *(As (P1), but the constant is the
+  nonzero rest energy, not $0$.)*
+- **(P2′)** **Special relativity:** inertial frames are related by Lorentz boosts, so
+  rapidity is additive, $\phi\mapsto\phi-\beta$. *(The one substantive change.)*
+- **(P3′)** **Momentum conservation,** now with the relativistic momentum
+  $p=\gamma m v=mc\sinh\phi$. *(Same law; used only through the symmetry that brings
+  the blob to rest.)*
+- **(P4′)** **Energy conservation** holds in every inertial frame. *(Same; the heat
+  is no longer a separate term — see (P5′).)*
+- **(P5′)** **Invariant rest mass.** The internal energy generated raises the blob's
+  rest mass through $E=mc^2$, and rest mass is a Lorentz scalar — the same in every
+  frame. *(This is the Galilean "frame-invariant heat" (P5), now realized as invariant
+  mass.)*
+- **(P6′)** **Regularity:** $\mathcal E$ is measurable (or continuous). *(Same; like
+  the parallelogram law, d'Alembert's equation has Hamel-basis pathologies without
+  it.)*
+
+So only **(P2′)** is genuinely new physics, with the mass–energy reading of
+(P4′)/(P5′) the single extra ingredient; (P1), (P3), (P6) are unchanged in spirit.
+
+### The collision, in rapidity variables
+
+Take the same symmetric collision: rest-mass-$m$ balls at rapidities $+\phi$ and
+$-\phi$ (velocities $\pm v$). Their momenta $mc\sinh(\pm\phi)$ cancel, so by (P3′) the
+blob is at rest (rapidity $0$). Energy conservation in the **lab** frame fixes the
+blob's rest mass $M$ (a body of rest mass $M$ at rest has energy $M\,\mathcal E(0)=Mc^2$):
+$$
+Mc^2=m\,\mathcal E(\phi)+m\,\mathcal E(-\phi)=2m\,\mathcal E(\phi).
+$$
+
+Now view the collision from a frame **boosted by rapidity $\beta$**. Rapidities add,
+so ball A has rapidity $\phi-\beta$, ball B has $-\phi-\beta$, and the blob has
+$-\beta$; its rest mass $M$ is unchanged by (P5′). Energy conservation (P4′) in this
+frame reads
+$$
+m\,\mathcal E(\phi-\beta)+m\,\mathcal E(-\phi-\beta)=M\,\mathcal E(-\beta).
+$$
+Substituting $M=2m\,\mathcal E(\phi)/c^2$, dividing by $m$, and using that
+$\mathcal E$ is even gives the central identity.
+
+:::{tip} d'Alembert's equation
+For all real rapidities $\phi$ and boosts $\beta$,
+```{math}
+:label: eq-ke-dalembert
+
+\boxed{\,\mathcal E(\phi+\beta)+\mathcal E(\phi-\beta)
+=\frac{2}{c^2}\,\mathcal E(\phi)\,\mathcal E(\beta)\,.}
+```
+Equivalently, for the Lorentz factor $\gamma=\mathcal E/c^2$ with $\gamma(0)=1$,
+$$
+\gamma(\phi+\beta)+\gamma(\phi-\beta)=2\,\gamma(\phi)\,\gamma(\beta).
+$$
+:::
+
+This is the multiplicative cousin of the parallelogram law: the additive right-hand
+side $2\mathcal E(\phi)+2\mathcal E(\beta)$ has become the **product**
+$\tfrac{2}{c^2}\mathcal E(\phi)\mathcal E(\beta)$, precisely because the conserved
+mass on the right is now itself energy — the blob's rest mass
+$M\propto\mathcal E(\phi)$ grows with the collision energy.
+
+### Solving d'Alembert's equation
+
+The measurable (equivalently, continuous) solutions of d'Alembert's equation with
+$\gamma(0)=1$ are
+$$
+\gamma(\phi)=\cosh(a\phi),\qquad \gamma(\phi)=\cos(a\phi),\qquad\text{or}\qquad
+\gamma\equiv 1,
+$$
+for a constant $a$. (Without regularity there are again Hamel-basis pathologies.) The
+physics selects one branch: the energy must satisfy $\gamma\ge 1$ and increase with
+speed, which rules out $\cos(a\phi)$ — it dips below $1$ — and the constant. Hence
+$$
+\gamma(\phi)=\cosh(a\phi).
+$$
+The constant $a$ merely sets the scale of rapidity; it is pinned to $a=1$ by the
+non-relativistic limit below (matching $E_{\text{kin}}\to\tfrac12 mv^2$), just as the
+free constant in the Galilean law $E=cv^2$ was fixed by the Newtonian unit
+convention. Therefore
+```{math}
+:label: eq-ke-gamma
+
+\gamma(\phi)=\cosh\phi=\frac{1}{\sqrt{1-v^2/c^2}},
+```
+and the total and kinetic energies are
+```{math}
+:label: eq-ke-rel-kinetic
+
+\mathcal E=\gamma\,mc^2,\qquad
+\boxed{\,E_{\text{kin}}=(\gamma-1)\,mc^2\,.}
+```
+
+### Non-relativistic limit: the parallelogram law reappears
+
+Write $\mathcal E=c^2+\varepsilon$, with $\varepsilon$ the kinetic energy per unit
+mass. Substituting into {eq}`eq-ke-dalembert` and cancelling the common $2c^2$,
+$$
+\varepsilon(\phi+\beta)+\varepsilon(\phi-\beta)
+=2\varepsilon(\phi)+2\varepsilon(\beta)+\frac{2}{c^2}\,\varepsilon(\phi)\,\varepsilon(\beta).
+$$
+As $c\to\infty$ the last term vanishes and the rapidity
+$\phi=\operatorname{artanh}(v/c)\to v/c$ becomes proportional to $v$, so $\varepsilon$
+— as a function of the rescaled velocity — satisfies the **parallelogram law**
+{eq}`eq-ke-parallelogram` of the previous sections, returning a quadratic
+$\varepsilon\propto v^2$. Quantitatively, $\gamma=\cosh(a\phi)$ gives
+$\varepsilon=c^2\bigl(\cosh(a\phi)-1\bigr)\approx\tfrac12 a^2 v^2$; matching the
+Newtonian $\tfrac12 v^2$ fixes $a=1$, and then
+$E_{\text{kin}}=(\gamma-1)mc^2\approx\tfrac12 mv^2$. The relativistic d'Alembert law
+contains the Galilean parallelogram law as its $c\to\infty$ shadow.
+
+### Remark: the heat weighs something
+
+The Galilean and relativistic stories meet at the blob's rest mass. We found
+$M=2m\,\mathcal E(\phi)/c^2=2\gamma m$, so the rest mass gained in the collision is
+$$
+M-2m=2(\gamma-1)m=\frac{2(\gamma-1)mc^2}{c^2}=\frac{Q}{c^2},
+$$
+where $Q=2(\gamma-1)mc^2$ is exactly the heat — the total kinetic energy lost in the
+lab frame. The "frame-invariant heat" of the Galilean derivation is, relativistically,
+the **increase in invariant rest mass**: the same internal scalar, now visibly
+carrying its own weight $Q/c^2$. That is why the conserved object on the right of
+{eq}`eq-ke-dalembert` is multiplicative rather than additive.
