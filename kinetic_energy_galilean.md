@@ -374,9 +374,10 @@ is the Jordan–von Neumann theorem.
   boosts $b$, which together constrain $E$ at a dense set of scales.
 - Replacing Galilean boosts by Lorentz boosts turns the parallelogram law into
   **d'Alembert's equation**. Assuming only Lorentz symmetry plus the same collision
-  symmetries — and *not* $E=mc^2$ — this yields the Lorentz factor, derives $E=mc^2$
-  from the non-relativistic limit, and gives the relativistic
-  $E_{\text{kin}}=(\gamma-1)mc^2$; see [](#ke-relativistic).
+  symmetries — and *not* $E=mc^2$ or the form of the momentum — this yields the
+  Lorentz factor, derives $E=mc^2$ and the relativistic momentum $p=\gamma mv$ from
+  the non-relativistic limit, and gives $E_{\text{kin}}=(\gamma-1)mc^2$; see
+  [](#ke-relativistic).
 
 (ke-relativistic)=
 ## Relativistic kinetic energy: replacing Galilean by Lorentz boosts
@@ -615,19 +616,91 @@ $\mathcal E(0)=c^2$, not an additional hypothesis. That is why the conserved obj
 on the right of {eq}`eq-ke-dalembert` is multiplicative rather than additive.
 
 (ke-derived-momentum)=
-### Remark: the form of relativistic momentum is also derived
+### The relativistic momentum
 
-We never assumed the relativistic momentum $p=m\gamma v$ — only momentum conservation
-(P3′), used through the cancellation that brings the blob to rest. The form itself
-follows once $E=mc^2$ is known. Energy and momentum are the time and space
-components of the **energy–momentum** $P^\mu$, the conserved Noether charge of
-spacetime translations; Lorentz covariance makes $P^\mu$ a 4-vector, so boosting the
-rest-frame value $P^\mu=(mc,0)$ by rapidity $\phi$ gives
+The collision has so far been mined only for the **energy**: writing energy balance in
+two frames gave d'Alembert's equation, hence $\mathcal E(\phi)=c^2\cosh\phi$. We now
+extract the **momentum** $p$ from the *same* collision — again without assuming its
+form, only that it is conserved (P3′) and extensive in rest mass.
+
+Like energy, momentum is extensive in the amount of matter: a body of rest mass $\mu$
+at rapidity $\phi$ carries momentum $\mu\,\pi(\phi)$ for a single function $\pi$,
+which is **odd** ($\pi(-\phi)=-\pi(\phi)$) by parity/isotropy. This is the momentum
+analog of (P1′), and it follows from momentum additivity over co-moving constituents.
+We do **not** assume $\pi(\phi)=c\sinh\phi$; we derive it.
+
+**The lab frame is trivial.** By the $v\leftrightarrow -v$ symmetry of the setup the
+incoming momenta $m\,\pi(\phi)+m\,\pi(-\phi)=0$ cancel, so the blob is at rest. This
+is everything (P3′) gave us in the energy derivation, and it determines nothing about
+$\pi$. The information sits in a **boosted** frame, where the cancellation is no longer
+trivial.
+
+**Boosted frame.** View the collision from a frame boosted by rapidity $\beta$.
+Rapidities add: the particles are at $\phi-\beta$ and $-\phi-\beta$, the blob at
+$-\beta$, and its mass is still $M=2m\cosh\phi$ (a Lorentz scalar, already fixed by
+the energy balance). Momentum conservation (P3′), valid in this frame by Lorentz
+covariance of the conservation law, reads
+```{math}
+:label: eq-ke-mom-balance
+
+m\,\pi(\phi-\beta)+m\,\pi(-\phi-\beta)=M\,\pi(-\beta).
+```
+Using oddness on both sides and substituting $M=2m\cosh\phi$,
+```{math}
+:label: eq-ke-mom-diff
+
+\pi(\phi+\beta)-\pi(\phi-\beta)=2\cosh\phi\,\pi(\beta).
+```
+This holds for *all* $\phi,\beta$. Since they are arbitrary we may swap them; using
+oddness once more gives the companion identity
+```{math}
+:label: eq-ke-mom-sum
+
+\pi(\phi+\beta)+\pi(\phi-\beta)=2\cosh\beta\,\pi(\phi).
+```
+Adding {eq}`eq-ke-mom-diff` and {eq}`eq-ke-mom-sum`,
+```{math}
+:label: eq-ke-mom-addform
+
+\boxed{\,\pi(\phi+\beta)=\cosh\phi\,\pi(\beta)+\cosh\beta\,\pi(\phi)\,.}
+```
+This is precisely the **addition formula for $\sinh$**, the momentum cousin of
+d'Alembert's equation. With the regularity assumption (P6′) its unique odd solution is
+$\pi(\phi)=A\sinh\phi$ for a constant $A$: differentiating in $\beta$ at $\beta=0$
+gives $\pi'(\phi)=\pi'(0)\cosh\phi$, hence $\pi=A\sinh\phi$; and (as for the energy
+equation) measurability excludes Hamel-type pathologies, since an additive perturbation
+$h$ would have to satisfy
+$h(\phi+\beta)=\cosh\phi\,h(\beta)+\cosh\beta\,h(\phi)$, which forces $h\equiv0$.
+
+**Fixing the constant.** At small rapidity $\sinh\phi\approx\phi\approx v/c$, so
+$p=m\,\pi(\phi)\approx mA\,v/c$. The relativistic theory must reduce to the Galilean
+one, whose momentum is $p=mv$ (the collision axiom (P3) of the first half of this
+note). Matching gives $A=c$, hence
+```{math}
+:label: eq-ke-mom-result
+
+\pi(\phi)=c\sinh\phi,\qquad p=mc\sinh\phi=m\gamma v,
+```
+using $\sinh(\operatorname{artanh}(v/c))=\gamma v/c$.
+
+:::{note} The 4-vector is derived, not assumed
+The energy derivation gave $\mathcal E(\phi)=c^2\cosh\phi$; the momentum derivation
+gives $\pi(\phi)=c\sinh\phi$. Together
 $$
-P^\mu=(mc\cosh\phi,\;mc\sinh\phi)=(m\gamma c,\;m\gamma v),
+(E/c,\;p)=mc\,(\cosh\phi,\;\sinh\phi),
 $$
-hence $p=m\gamma v$ and the invariant $E^2-(pc)^2=(mc^2)^2$. These are consequences
-of Lorentz symmetry plus the derived $E=mc^2$, not extra assumptions.
+which **is** a Lorentz 4-vector — the output of the two collision functional equations
+(d'Alembert for $\cosh$, {eq}`eq-ke-mom-addform` for $\sinh$), not a postulate. The
+invariant follows for free,
+$E^2-(pc)^2=(mc^2)^2(\cosh^2\phi-\sinh^2\phi)=(mc^2)^2$. The 4-vector / Noether
+structure that one often *postulates* at the start of a relativity course is, in this
+bottom-up approach, a theorem of the collision axioms.
+:::
+
+The two derivations are exact twins: d'Alembert's equation fixes the "time" component
+$\cosh\phi$ (the energy); the addition formula {eq}`eq-ke-mom-addform` fixes the
+"space" component $\sinh\phi$ (the momentum); and the two non-relativistic limits fix
+the overall scales to $c^2$ and $c$.
 
 ### Why mass–energy equivalence is a relativistic phenomenon
 
@@ -646,4 +719,7 @@ rest energy $\mathcal E(0)$.
 So $E=mc^2$ is precisely the statement "$\mathcal E(0)\ne0$": rest energy is a nonzero
 physical scale, energy conservation alone accounts for the mass of composite bodies,
 and the entire relativistic energy structure follows from Lorentz symmetry plus this
-one derived constant.
+one derived constant. The momentum structure is its exact twin
+([](#ke-derived-momentum)): together the two collision functional equations produce
+the energy–momentum 4-vector $(E/c,\,p)=mc(\cosh\phi,\sinh\phi)$ as a *derived*
+object, with invariant $E^2-(pc)^2=(mc^2)^2$.

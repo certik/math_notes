@@ -19,14 +19,17 @@ fixed with no free constants.
 :::{note} Prerequisites
 This note builds on [the relativistic section of the kinetic-energy note](kinetic_energy_galilean.md),
 which derives — from Lorentz symmetry plus collision symmetries, and *without*
-assuming $E=mc^2$ — the total energy, kinetic energy, and momentum of a free
-particle:
+assuming $E=mc^2$ or the form of the momentum — the total energy, kinetic energy,
+and momentum of a free particle:
 $$
 E = \gamma\, m c^2, \qquad E_{\text{kin}} = (\gamma-1)\,m c^2, \qquad p = \gamma\, m v,
 $$
-with $\gamma = 1/\sqrt{1-v^2/c^2} = \cosh\phi$ and rest energy $mc^2$. We re-use
-these as inputs to Route 1. The single new ingredient of the present note is the
-action principle stated in [](#rl-action-principle).
+with $\gamma = 1/\sqrt{1-v^2/c^2} = \cosh\phi$ and rest energy $mc^2$. In particular
+$p=\gamma m v$ is itself a *theorem* of the collision axioms, not an assumption: it
+follows from momentum conservation in the boosted frame via the $\sinh$ addition
+formula (see [the momentum section](kinetic_energy_galilean.md#ke-derived-momentum)).
+We re-use these as inputs to Route 1. The single new ingredient of the present note
+is the action principle stated in [](#rl-action-principle).
 :::
 
 (rl-action-principle)=
