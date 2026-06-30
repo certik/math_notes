@@ -185,14 +185,15 @@ $P^\mu=(E/c,p)=(\gamma mc,\gamma mv)$.
 ## Four-momentum and the conservation law
 
 The momentum derived above is not an isolated three-vector. In both spacetimes it is the
-spatial part of a **four-momentum** $P^\mu=m\,u^\mu$ (mass times four-velocity), and the
-conservation law becomes a single, frame-independent statement. The relativistic time
-slot is $E/c$; the Galilean time slot is $m$. Thus the Galilean object is more precisely
-a **mass-momentum** four-vector, not an energy-momentum four-vector.
+spatial part of a **four-momentum** $P^\mu=m\,u^\mu$ (mass times four-velocity). The
+relativistic time slot is $E/c$; the Galilean time slot is $m$. Thus the Galilean object
+is more precisely a **mass-momentum** four-vector, not an energy-momentum four-vector.
 
 This section builds that object in full for both theories and proves a key structural
-fact: frame-independence *couples* the components, so momentum conservation cannot hold
-without the time component (mass, or energy) being conserved too.
+fact: once the appropriate components are conserved, they assemble into a single
+frame-independent conservation law; conversely, frame-independence *couples* the
+components, so momentum conservation cannot hold without the time component (mass, or
+energy) being conserved too.
 
 ### What "four-vector" means here
 
@@ -215,6 +216,26 @@ general tensorial statement.
 
 Also, tensorial means **covariant**, not invariant. Components may change from one frame
 to another; what matters is that they change by the correct transformation law.
+
+### Definition versus conservation
+
+Two claims must be kept separate.
+
+First, $P^\mu=m u^\mu$ is the **definition** of four-momentum. Since $u^\mu$ is the
+worldline tangent and $m$ is a scalar, this also proves that $P^\mu$ is a vector. This is
+a kinematic/geometric statement: it determines how $P^\mu$ transforms between frames, but
+it does **not** by itself say that $P^\mu$ is conserved.
+
+Second, conservation is an additional **dynamical** statement:
+$$
+\sum_{\rm in}P^\mu=\sum_{\rm out}P^\mu.
+$$
+The earlier collision setup supplies or assumes the component conservation laws: in
+Galilean mechanics, mass conservation plus momentum conservation; in relativity, energy
+conservation plus momentum conservation. Once these components are conserved in one
+inertial frame, the vector character of $P^\mu$ packages them into one law and makes that
+law frame-independent. Thus $P^\mu=m u^\mu$ proves tensoriality, while the
+collision/symmetry argument supplies conservation.
 
 ### The four-velocity
 
