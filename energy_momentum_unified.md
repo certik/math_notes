@@ -180,6 +180,159 @@ p=\gamma mv\}$, distinguished only by the package. The energy equation fixes the
 ($\sinh$ or linear); together they assemble the Galilean pair $(mv,\tfrac12mv^2)$ or
 the relativistic 4-vector $(\gamma mv,\,\gamma mc^2)$.
 
+(ue-fourvector)=
+## Four-momentum and the conservation law
+
+The energy and momentum derived above are not loose numbers: in both spacetimes they
+assemble into a **four-momentum** $P^\mu=m\,u^\mu$ (mass times four-velocity), and the
+conservation law becomes a single, frame-independent statement. This section builds
+that object in full for both theories and proves a key structural fact —
+frame-independence *couples* the components, so momentum conservation cannot hold
+without the time component (mass, or energy) being conserved too.
+
+### The four-velocity
+
+Parametrize a particle's worldline by the time natural to each spacetime.
+
+**Relativistic — Minkowski spacetime.** The invariant parameter is the **proper time**
+$\tau$, related to coordinate time by $d\tau=dt/\gamma$. The four-velocity is
+$$
+u^\mu:=\frac{dx^\mu}{d\tau}=\gamma\frac{dx^\mu}{dt}=(\gamma c,\ \gamma\mathbf v),
+\qquad \gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
+$$
+It is a four-vector ($u'^\mu=\Lambda^\mu{}_\nu u^\nu$), with constant Minkowski norm
+$\eta_{\mu\nu}u^\mu u^\nu=\gamma^2(c^2-v^2)=c^2$.
+
+**Galilean — absolute time.** Time is absolute, so the natural parameter is coordinate
+time $t$. The four-velocity is
+$$
+u^\mu:=\frac{dx^\mu}{dt}=(1,\ \mathbf v).
+$$
+Under a Galilean boost ($\mathbf x'=\mathbf x-\mathbf b\,t$, $t'=t$),
+$$
+u'^\mu=(1,\ \mathbf v-\mathbf b),
+$$
+i.e. $u'^{0}=u^{0}=1$ and $\mathbf u'=\mathbf u-\mathbf b\,u^{0}$ — precisely the
+transformation law of a Galilean four-vector.
+
+### The four-momentum $P^\mu=m\,u^\mu$
+
+Multiply by the rest mass $m$ (a frame-invariant scalar in both theories):
+
+| | four-velocity $u^\mu$ | four-momentum $P^\mu=m\,u^\mu$ |
+| --- | --- | --- |
+| relativistic | $(\gamma c,\ \gamma\mathbf v)$ | $(\gamma mc,\ \gamma m\mathbf v)=(E/c,\ \mathbf p)$ |
+| Galilean | $(1,\ \mathbf v)$ | $(m,\ m\mathbf v)=(m,\ \mathbf p)$ |
+
+The *same* formula $P^\mu=m\,u^\mu$ holds in both. The only difference is what occupies
+the time slot — $E/c$ (relativistic) or $m$ (Galilean). Since $m$ is a scalar and
+$u^\mu$ a four-vector, $P^\mu$ is a four-vector in both spacetimes.
+
+The metric then reads off the "mass-shell":
+
+- **Relativistic**, non-degenerate $\eta_{\mu\nu}=\mathrm{diag}(1,-1,-1,-1)$:
+  $$
+  \eta_{\mu\nu}P^\mu P^\nu=(E/c)^2-|\mathbf p|^2=m^2c^2
+  \quad\Longleftrightarrow\quad E^2=p^2c^2+m^2c^4.
+  $$
+- **Galilean**, the degenerate pair $\tau_\mu=(1,0,0,0)$ (temporal) and
+  $h^{\mu\nu}=\mathrm{diag}(0,1,1,1)$ (spatial), with $\tau_\mu h^{\mu\nu}=0$: the
+  temporal one-form reads off the mass,
+  $$
+  \tau_\mu P^\mu=m,
+  $$
+  and the spatial part is $\mathbf p$. There is *no* non-degenerate quadratic form in
+  $P^\mu$ yielding an energy; instead
+  $E=|\mathbf p|^2/(2m)=|\mathbf p|^2/\bigl(2\,\tau_\mu P^\mu\bigr)$, a ratio — the
+  algebraic fingerprint of the degenerate metric.
+
+### Conservation, and a one-line proof of frame-independence
+
+For a collision with incoming momenta $P_i^\mu$ and outgoing $P_j^\mu$, **conservation
+of four-momentum** is the single statement
+```{math}
+:label: eq-ue-Pcons
+
+\sum_{\rm in}P^\mu=\sum_{\rm out}P^\mu.
+```
+Because $P^\mu$ is a four-vector it transforms linearly, $P'^\mu=\Lambda^\mu{}_\nu
+P^\nu$, so {eq}`eq-ue-Pcons` holds in *every* inertial frame:
+$$
+\sum_{\rm in}P'^\mu=\Lambda^\mu{}_\nu\sum_{\rm in}P^\nu
+=\Lambda^\mu{}_\nu\sum_{\rm out}P^\nu=\sum_{\rm out}P'^\mu.
+$$
+Linearity of $\Lambda$ is the whole proof. Reading off components gives the conservation
+laws:
+
+- **relativistic:** $\sum_{\rm in}E=\sum_{\rm out}E$ (energy) and
+  $\sum_{\rm in}\mathbf p=\sum_{\rm out}\mathbf p$ (momentum);
+- **Galilean:** $\sum_{\rm in}m=\sum_{\rm out}m$ (mass) and
+  $\sum_{\rm in}\mathbf p=\sum_{\rm out}\mathbf p$ (momentum).
+
+### The components are coupled (the heart of the matter)
+
+The frame-independence proof conceals the key point: a boost *mixes* the time and space
+components, so conserving one component alone does **not** survive a change of frame.
+The components are locked together.
+
+**Galilean — momentum conservation forces mass conservation.** Assume only that
+momentum is conserved in the lab, $\sum_{\rm in}\mathbf p=\sum_{\rm out}\mathbf p$, and
+ask whether it holds in a frame boosted by $\mathbf b$. Since $\mathbf p'=\mathbf
+p-m\mathbf b$,
+$$
+\sum_{\rm in}\mathbf p'=\sum_{\rm in}\mathbf p-\mathbf b\!\sum_{\rm in}m,\qquad
+\sum_{\rm out}\mathbf p'=\sum_{\rm out}\mathbf p-\mathbf b\!\sum_{\rm out}m.
+$$
+Subtracting,
+$$
+\sum_{\rm in}\mathbf p'-\sum_{\rm out}\mathbf p'
+=\underbrace{\bigl(\sum_{\rm in}\mathbf p-\sum_{\rm out}\mathbf p\bigr)}_{=\,0\text{ (assumption)}}
+\;-\;\mathbf b\bigl(\sum_{\rm in}m-\sum_{\rm out}m\bigr).
+$$
+For this to vanish for *every* boost $\mathbf b$,
+```{math}
+:label: eq-ue-masscons
+
+\sum_{\rm in}m=\sum_{\rm out}m.
+```
+So **frame-independent momentum conservation entails mass conservation**. The two are
+inseparable: they are the time and space slots of one four-vector, and the boost couples
+them.
+
+**Relativistic — momentum conservation forces energy conservation.** Take a Lorentz
+boost of rapidity $\beta$ along $x$,
+$$
+E'=\gamma_\beta(E-\beta c\,p_x),\qquad
+p'_x=\gamma_\beta\!\left(p_x-\frac{\beta}{c}E\right),
+$$
+and assume only $\sum_{\rm in}p_x=\sum_{\rm out}p_x$. Then
+$$
+\sum_{\rm in}p'_x-\sum_{\rm out}p'_x
+=\gamma_\beta\!\left[\underbrace{\bigl(\sum_{\rm in}p_x-\sum_{\rm out}p_x\bigr)}_{=\,0}
+\;-\;\frac{\beta}{c}\bigl(\sum_{\rm in}E-\sum_{\rm out}E\bigr)\right],
+$$
+which vanishes for every $\beta$ only if $\sum_{\rm in}E=\sum_{\rm out}E$. So in
+relativity **frame-independent momentum conservation entails energy conservation**, and
+conversely. The invariant $E^2-p^2c^2=m^2c^4$ is the same coupling in static form.
+
+### What this explains, and the Galilean asymmetry
+
+The coupling is exactly what the package demanded and what our derivations produced,
+now seen geometrically. In the **Galilean package** the companion axiom was mass
+conservation; the four-vector shows it is *forced* on us by frame-independent momentum
+conservation — the two come as one. In the **relativistic package** the companion axiom
+was total-energy conservation; the four-vector shows it is *forced* by frame-independent
+momentum conservation just the same.
+
+The asymmetry, now sharp: the Galilean four-momentum $(m,\mathbf p)$ contains **mass and
+momentum**, not energy. Energy conservation in Galilean mechanics is therefore a
+*separate* law — outside the four-vector — and (as derived in
+[kinetic_energy_galilean.md](kinetic_energy_galilean.md)) it follows from the
+frame-invariance of heat, not from four-vector structure. Relativity needs no such extra
+law: its four-momentum already carries the energy in the time slot, so the single
+statement {eq}`eq-ue-Pcons` covers everything. One conservation law (relativistic)
+versus one plus an extra (Galilean) — that is the precise cost of the degenerate metric.
+
 (ue-limit)=
 ## The Galilean theory is the $c\to\infty$ limit
 
