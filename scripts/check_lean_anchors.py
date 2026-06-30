@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 DIRECTIVE_RE = re.compile(r"^\s*```\{literalinclude\}\s+(\S+)\s*$")
 FENCE_RE = re.compile(r"^\s*```\s*$")
+CODE_FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 OPTION_RE = re.compile(r"^\s*:(start-after|end-before):\s*(.*\S)\s*$")
 ANCHOR_START_RE = re.compile(r"^\s*--\s*ANCHOR:\s*(\S+)\s*$")
 ANCHOR_END_RE = re.compile(r"^\s*--\s*ANCHOR_END:\s*(\S+)\s*$")
@@ -56,9 +57,26 @@ def iter_literalincludes(md_path: Path):
     lines = md_path.read_text(encoding="utf-8").splitlines()
     i = 0
     n = len(lines)
+    skip_fence: tuple[str, int] | None = None
     while i < n:
+        if skip_fence is not None:
+            fence_char, fence_len = skip_fence
+            fm = CODE_FENCE_RE.match(lines[i])
+            if (
+                fm
+                and fm.group(1)[0] == fence_char
+                and len(fm.group(1)) >= fence_len
+                and fm.group(2).strip() == ""
+            ):
+                skip_fence = None
+            i += 1
+            continue
+
         m = DIRECTIVE_RE.match(lines[i])
         if not m:
+            fm = CODE_FENCE_RE.match(lines[i])
+            if fm:
+                skip_fence = (fm.group(1)[0], len(fm.group(1)))
             i += 1
             continue
         target = m.group(1)
