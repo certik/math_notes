@@ -177,18 +177,44 @@ So the same two equations, {eq}`eq-ue-general` and {eq}`eq-ue-momentum`, produce
 $\{E_{\text{kin}}=\tfrac12mv^2,\ p=mv\}$ and $\{E_{\text{kin}}=(\gamma-1)mc^2,\
 p=\gamma mv\}$, distinguished only by the package. The energy equation fixes the
 "even" function ($\cosh$ or quadratic) and the momentum equation its "odd" companion
-($\sinh$ or linear); together they assemble the Galilean pair $(mv,\tfrac12mv^2)$ or
-the relativistic 4-vector $(\gamma mv,\,\gamma mc^2)$.
+($\sinh$ or linear); together they assemble the Galilean pair
+$(p,E_{\text{kin}})=(mv,\tfrac12mv^2)$ or the relativistic four-momentum
+$P^\mu=(E/c,p)=(\gamma mc,\gamma mv)$.
 
 (ue-fourvector)=
 ## Four-momentum and the conservation law
 
-The energy and momentum derived above are not loose numbers: in both spacetimes they
-assemble into a **four-momentum** $P^\mu=m\,u^\mu$ (mass times four-velocity), and the
-conservation law becomes a single, frame-independent statement. This section builds
-that object in full for both theories and proves a key structural fact —
-frame-independence *couples* the components, so momentum conservation cannot hold
+The momentum derived above is not an isolated three-vector. In both spacetimes it is the
+spatial part of a **four-momentum** $P^\mu=m\,u^\mu$ (mass times four-velocity), and the
+conservation law becomes a single, frame-independent statement. The relativistic time
+slot is $E/c$; the Galilean time slot is $m$. Thus the Galilean object is more precisely
+a **mass-momentum** four-vector, not an energy-momentum four-vector.
+
+This section builds that object in full for both theories and proves a key structural
+fact: frame-independence *couples* the components, so momentum conservation cannot hold
 without the time component (mass, or energy) being conserved too.
+
+### What "four-vector" means here
+
+There are two levels of covariance to keep distinct.
+
+First, in flat spacetime with inertial Cartesian/adapted frames, the admissible inertial
+frame changes are the ten continuous symmetries: rotations, translations, boosts, and
+time translations (plus optional discrete reflections). These are the Galilei
+transformations in Galilean spacetime and the Poincare transformations in Minkowski
+spacetime. Checking how $P^\mu$ transforms under these transformations proves that its
+components form the correct inertial-frame four-vector.
+
+Second, in the differential-geometric sense, a tensor is a coordinate-independent object
+whose components transform tensorially under arbitrary smooth coordinate changes. That
+stronger statement is proved not by checking every coordinate system, but by giving a
+coordinate-free definition: $u^\mu$ is the tangent to the worldline, and $P^\mu=m u^\mu$
+with $m$ a scalar. Then the tensor transformation law follows by the chain rule. The
+Galilei and Poincare formulas below are the inertial-coordinate special cases of this
+general tensorial statement.
+
+Also, tensorial means **covariant**, not invariant. Components may change from one frame
+to another; what matters is that they change by the correct transformation law.
 
 ### The four-velocity
 
@@ -200,20 +226,24 @@ $$
 u^\mu:=\frac{dx^\mu}{d\tau}=\gamma\frac{dx^\mu}{dt}=(\gamma c,\ \gamma\mathbf v),
 \qquad \gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
 $$
-It is a four-vector ($u'^\mu=\Lambda^\mu{}_\nu u^\nu$), with constant Minkowski norm
+It is a four-vector; under a Lorentz transformation
+$u'^\mu=\Lambda^\mu{}_\nu u^\nu$, with constant Minkowski norm
 $\eta_{\mu\nu}u^\mu u^\nu=\gamma^2(c^2-v^2)=c^2$.
 
-**Galilean — absolute time.** Time is absolute, so the natural parameter is coordinate
-time $t$. The four-velocity is
+**Galilean — absolute time.** Time is absolute, so in adapted coordinates the natural
+parameter is coordinate time $t$. Equivalently, the Newton-Cartan clock one-form
+$\tau_\mu$ normalizes the worldline tangent by $\tau_\mu u^\mu=1$. In such adapted
+coordinates the four-velocity is
 $$
 u^\mu:=\frac{dx^\mu}{dt}=(1,\ \mathbf v).
 $$
-Under a Galilean boost ($\mathbf x'=\mathbf x-\mathbf b\,t$, $t'=t$),
+Under a Galilean boost, including a possible rotation
+($\mathbf x'=R\mathbf x-\mathbf b\,t+\mathbf a$, $t'=t+a^0$),
 $$
-u'^\mu=(1,\ \mathbf v-\mathbf b),
+u'^0=u^0,\qquad \mathbf u'=R\mathbf u-\mathbf b\,u^0,
 $$
-i.e. $u'^{0}=u^{0}=1$ and $\mathbf u'=\mathbf u-\mathbf b\,u^{0}$ — precisely the
-transformation law of a Galilean four-vector.
+so for $u^0=1$ one has $\mathbf v'=R\mathbf v-\mathbf b$ — precisely the transformation
+law of a Galilean four-vector.
 
 ### The four-momentum $P^\mu=m\,u^\mu$
 
@@ -224,9 +254,22 @@ Multiply by the rest mass $m$ (a frame-invariant scalar in both theories):
 | relativistic | $(\gamma c,\ \gamma\mathbf v)$ | $(\gamma mc,\ \gamma m\mathbf v)=(E/c,\ \mathbf p)$ |
 | Galilean | $(1,\ \mathbf v)$ | $(m,\ m\mathbf v)=(m,\ \mathbf p)$ |
 
-The *same* formula $P^\mu=m\,u^\mu$ holds in both. The only difference is what occupies
-the time slot — $E/c$ (relativistic) or $m$ (Galilean). Since $m$ is a scalar and
-$u^\mu$ a four-vector, $P^\mu$ is a four-vector in both spacetimes.
+The *same* formula $P^\mu=m\,u^\mu$ holds in both. Since $m$ is a scalar and $u^\mu$ is
+the worldline tangent, $P^\mu$ is a genuine vector in the generally covariant
+formulation. The only difference is what occupies the time slot in adapted inertial
+coordinates — $E/c$ (relativistic) or $m$ (Galilean).
+
+For a Galilean boost this gives
+$$
+P'^0=P^0=m,\qquad \mathbf P'=R\mathbf P-\mathbf b\,P^0
+=R\mathbf p-m\mathbf b.
+$$
+The term $-m\mathbf b$ has the elementary meaning
+$m(\mathbf v-\mathbf b)=m\mathbf v-m\mathbf b$: changing to a frame moving with velocity
+$\mathbf b$ subtracts the frame's velocity from every particle velocity, and therefore
+subtracts $m\mathbf b$ from its momentum. This is why $\mathbf p$ alone is not a
+Galilean spacetime vector. It is a three-vector under rotations, but under boosts it is
+not closed by itself; it needs the mass component $P^0=m$.
 
 The metric then reads off the "mass-shell":
 
@@ -273,7 +316,12 @@ laws:
 
 The frame-independence proof conceals the key point: a boost *mixes* the time and space
 components, so conserving one component alone does **not** survive a change of frame.
-The components are locked together.
+The components are locked together. In relativity the mixing is two-way: $E/c$ and
+$\mathbf p$ are not separate Lorentz tensors, only components of the four-vector
+$P^\mu$. In Galilean spacetime the mixing is triangular: the mass component is invariant,
+but the spatial momentum still receives a contribution from it. Thus $\mathbf p$ is a
+tensor only for the reduced rotation subgroup, not for the full Galilei group with
+boosts.
 
 **Galilean — momentum conservation forces mass conservation.** Assume only that
 momentum is conserved in the lab, $\sum_{\rm in}\mathbf p=\sum_{\rm out}\mathbf p$, and
@@ -381,6 +429,8 @@ axiom.
 | kinetic energy | $\tfrac12 mv^2$ | $(\gamma-1)mc^2$ |
 | momentum equation | Cauchy's equation | $\sinh$ addition formula |
 | momentum | $mv$ | $\gamma mv$ |
+| four-momentum | $(m,\mathbf p)$, mass-momentum | $(E/c,\mathbf p)$, energy-momentum |
+| energy in four-vector? | no; $E=|\mathbf p|^2/(2m)$ is separate | yes; $E$ is the time component |
 | rest energy $\mathcal E(0)$ | $0$ (free, shiftable) | $c^2$ (forced) |
 | mass in collision | conserved ($M=2m$) | grows ($M=2\gamma m$) |
 
