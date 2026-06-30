@@ -402,6 +402,174 @@ law: its four-momentum already carries the energy in the time slot, so the singl
 statement {eq}`eq-ue-Pcons` covers everything. One conservation law (relativistic)
 versus one plus an extra (Galilean) — that is the precise cost of the degenerate metric.
 
+(ue-gravity)=
+## Adding gravity: from inertial forces to curvature
+
+The derivation so far was the flat-spacetime theory. If we write the same theory in
+arbitrary coordinates, including accelerating or rotating coordinates, the equations
+already contain connection terms. Those terms are **fictitious forces**: they come from a
+non-inertial coordinate choice, and the corresponding curvature is still zero. True
+gravity begins when the connection has nonzero curvature, so that no coordinate choice
+can remove the effect everywhere.
+
+The bottom-up extension to gravity follows the same pattern in the Galilean and
+relativistic theories. The common steps are:
+
+1. **Universal free fall.** All test bodies fall the same way, independently of their
+   mass and composition.
+2. **Geometrize the universal force.** Since the acceleration is universal, it should not
+   be a force attached separately to each body. It is encoded in a common spacetime
+   connection $\nabla$, and free particles follow geodesics.
+3. **Only tidal effects are invariant.** A uniform gravitational field can be removed
+   locally by a freely falling frame. Thus the connection coefficients themselves are not
+   the invariant gravitational field; curvature is.
+4. **Choose the conserved source.** Galilean gravity is sourced by mass density. Relativistic
+   gravity is sourced by the full stress-energy tensor.
+5. **Locality and second-order simplicity.** The field equation should be local,
+   covariant, and second order in the gravitational variables.
+6. **Fix the normalization.** The remaining constant is fixed by the observed Newtonian
+   weak/static limit; symmetry fixes the form, not the numerical value of $G$.
+
+### Universal free fall gives the geodesic equation
+
+The equivalence principle is the shared starting point:
+
+| | **Galilean / Newton-Cartan** | **Relativistic / GR** |
+| --- | --- | --- |
+| clock/metric structure | clock one-form $\tau_\mu$ and spatial metric $h^{\mu\nu}$ | Lorentzian metric $g_{\mu\nu}$ |
+| normalization | $\tau_\mu u^\mu=1$ | $g_{\mu\nu}u^\mu u^\nu=c^2$ |
+| free-fall equation | $u^\nu\nabla_\nu u^\mu=0$ | $u^\nu\nabla_\nu u^\mu=0$ |
+
+So the equation of motion is literally the same tensor equation in both theories:
+```{math}
+:label: eq-ue-grav-geodesic
+
+\boxed{\,u^\nu\nabla_\nu u^\mu=0\,}.
+```
+The difference lies in the background geometric structure: Newton-Cartan has absolute
+time and a degenerate spatial metric; GR has a non-degenerate Lorentzian metric.
+
+In adapted Newton-Cartan coordinates, $\tau=dt$ and $u^\mu=(1,\dot{\mathbf x})$. For an
+ordinary Newtonian potential $\Phi$, the gravitational connection component is
+$$
+\Gamma^i_{00}=\partial^i\Phi,
+$$
+so {eq}`eq-ue-grav-geodesic` becomes
+$$
+\frac{d^2x^i}{dt^2}+\Gamma^i_{00}=0
+\qquad\Longleftrightarrow\qquad
+\frac{d^2x^i}{dt^2}=-\partial^i\Phi.
+$$
+
+In GR, the same geodesic equation in the weak, slowly moving, static limit with
+$$
+g_{00}=1+\frac{2\Phi}{c^2}
+$$
+also reduces to
+$$
+\frac{d^2x^i}{dt^2}=-\partial^i\Phi.
+$$
+Thus both theories agree on the motion law in the Newtonian limit.
+
+### Curvature is the gravitational field
+
+A freely falling coordinate system can set the connection coefficients to zero at one
+event. Therefore $\Gamma^\mu_{\nu\rho}$ itself is not the invariant gravitational field.
+The invariant obstruction to removing gravity throughout a region is curvature.
+
+In Newton-Cartan theory, with $\Gamma^i_{00}=\partial^i\Phi$, the tidal tensor is the
+second derivative of the potential:
+$$
+R^i{}_{0j0}=\partial_j\partial^i\Phi,
+\qquad
+R_{00}=\partial_i\partial^i\Phi=\nabla^2\Phi.
+$$
+A uniform field has $\partial_i\Phi=\text{constant}$ and hence zero curvature; it is
+locally removable by an accelerating frame. Tidal gravity is what remains.
+
+In GR, the same statement is expressed by the Riemann tensor
+$R^\mu{}_{\nu\rho\sigma}$. In a local inertial frame the connection can be made to
+vanish at a point, but the curvature tensor generally cannot.
+
+### The field equation: curvature sourced by the conserved quantity
+
+The final step is to connect curvature to matter.
+
+**Galilean / Newton-Cartan.** The source selected by the flat theory is mass. Let
+$\rho$ be the mass density. Locality, spatial rotational invariance, and second-order
+simplicity select the scalar second-derivative equation
+$$
+\nabla^2\Phi=C\rho.
+$$
+Writing $C=4\pi G$ gives Poisson's equation,
+```{math}
+:label: eq-ue-poisson
+
+\boxed{\,\nabla^2\Phi=4\pi G\rho\,}.
+```
+In Newton-Cartan tensor form this is
+```{math}
+:label: eq-ue-newton-cartan-field
+
+\boxed{\,R_{\mu\nu}=4\pi G\,\rho\,\tau_\mu\tau_\nu\,}.
+```
+In adapted coordinates, the only nontrivial component is $R_{00}=4\pi G\rho$, exactly
+{eq}`eq-ue-poisson`.
+
+For a point mass, $\rho=M\delta^{(3)}(\mathbf x)$, the rotationally symmetric solution is
+$$
+\Phi(r)=-\frac{GM}{r},
+\qquad
+\mathbf a=-\nabla\Phi=-\frac{GM}{r^2}\,\hat{\mathbf r}.
+$$
+Thus the inverse-square law follows from locality, three-dimensional rotational
+symmetry, and the second-order Poisson equation; $G$ is the empirical coupling constant.
+
+**Relativistic / GR.** The source selected by the relativistic flat theory is the full
+stress-energy tensor $T_{\mu\nu}$, not just mass density. The left-hand side must be a
+symmetric, generally covariant, divergence-free tensor built locally from the metric and
+at most two derivatives. In four dimensions, the Lovelock uniqueness theorem gives
+$$
+G_{\mu\nu}+\Lambda g_{\mu\nu}
+$$
+as the unique possibility of this type, where
+$G_{\mu\nu}:=R_{\mu\nu}-\tfrac12 Rg_{\mu\nu}$ and $\nabla^\mu G_{\mu\nu}=0$ by the
+Bianchi identity. Therefore the field equation must be
+```{math}
+:label: eq-ue-einstein-field
+
+\boxed{\,G_{\mu\nu}+\Lambda g_{\mu\nu}
+=\frac{8\pi G}{c^4}\,T_{\mu\nu}\,}.
+```
+The coefficient is fixed by the weak/static limit: with
+$T_{00}\approx\rho c^2$ and $g_{00}=1+2\Phi/c^2$, the $00$ component of
+{eq}`eq-ue-einstein-field` reduces to
+$$
+\nabla^2\Phi=4\pi G\rho.
+$$
+The cosmological constant $\Lambda$ is allowed by the same covariance and second-order
+axioms; it is an additional empirical constant, set to zero if one demands exactly flat
+empty spacetime.
+
+The parallel structure is therefore:
+$$
+\text{universal free fall}
+\Rightarrow
+\text{connection/geodesics}
+\Rightarrow
+\text{curvature as gravity}
+\Rightarrow
+\text{curvature sourced by mass or stress-energy}.
+$$
+
+With gravity present, the flat-spacetime global conservation law is also replaced by a
+local covariant statement. In GR this is $\nabla_\mu T^{\mu\nu}=0$ for matter (with the
+gravitational field included geometrically rather than as a separate local
+stress-energy tensor). In Newton-Cartan theory, mass conservation remains the local
+continuity equation for the mass current, while momentum balance is expressed using the
+Newton-Cartan connection. Global conserved energies or momenta require extra spacetime
+symmetries, just as in GR.
+
 (ue-limit)=
 ## The Galilean theory is the $c\to\infty$ limit
 
@@ -452,6 +620,8 @@ axiom.
 | momentum | $mv$ | $\gamma mv$ |
 | four-momentum | $(m,\mathbf p)$, mass-momentum | $(E/c,\mathbf p)$, energy-momentum |
 | energy in four-vector? | no; $E=|\mathbf p|^2/(2m)$ is separate | yes; $E$ is the time component |
+| free fall with gravity | $u^\nu\nabla_\nu u^\mu=0$, $\tau_\mu u^\mu=1$ | $u^\nu\nabla_\nu u^\mu=0$, $g_{\mu\nu}u^\mu u^\nu=c^2$ |
+| gravitational field equation | $R_{\mu\nu}=4\pi G\rho\,\tau_\mu\tau_\nu$ | $G_{\mu\nu}+\Lambda g_{\mu\nu}=8\pi G T_{\mu\nu}/c^4$ |
 | rest energy $\mathcal E(0)$ | $0$ (free, shiftable) | $c^2$ (forced) |
 | mass in collision | conserved ($M=2m$) | grows ($M=2\gamma m$) |
 
