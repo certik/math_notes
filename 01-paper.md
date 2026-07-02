@@ -29,46 +29,70 @@ computation using tensors.
 Any vector $\mathbf{u}$ can be written as:
 $$\mathbf{u}=u^i \vec{e}_i\,.$$
 
-Any form $\mathbf{p}$ can be written as:
+:::{note}
+ The _Einstein summation convention_ simplifies formulae, expressions, and equations by omitting explicit summation symbols. Under this convention, whenever an index variable appears twice in a single term—once as a superscript (upper index) and once as a subscript (lower index)—an implicit summation over all possible values of that index is assumed. For example, an $n$‑dimensional vector $\mathbf{u}$ is written simply as:
+$$\mathbf{u} = u^i \vec{e}_i$$
+which implicitly represents $$\quad \mathbf{u} = \sum_{i=1}^n u^i \vec{e}_i\,.$$
+This convention applies implicitly throughout our notes to both Latin indices (e.g., $i, j, k$ for spatial or generic dimensions) and to Greek indices (e.g., $\mu, \nu$ for spacetime coordinates), unless an exception is explicitly stated, as via a “no sum” label.
+:::
+
+Any one-form $\mathbf{p}$ can be written as:
 $$\mathbf{p}=p_i \tilde{e}^i\,.$$
 
-The basis vectors are $\vec{e}_i$ and the basis forms are $\tilde{e}^i$.
+The basis vectors are $\vec{e}_i$ and the basis one-forms are $\tilde{e}^i$.
 
-Any rank 2 tensor $\mathbf{A}$ can be written as:
+:::{note}
+In the language of linear algebra, vectors are _column vectors_ and one-forms are _row vectors_, also called _covectors_. Covectors are linear operators that transform vectors to scalars via the _inner product_ $\mathbf{u}^\intercal\mathbf{v}$ or transform vectors to matrices via the _outer product_ $\mathbf{u}\mathbf{v}^\intercal$, also called the _tensor product_ $\mathbf{u}\otimes\mathbf{v}$. 
+
+The basis vector $\vec{e}_i$ in the _standard basis_ is the column vector with $1$ in position $i$ and zeros elsewhere. Likewise, the basis one-form $\tilde{e}^i$ is the row vector with $1$ in position $I$ and zeros elsewhere such that  $\tilde{e}^i={\vec{e}_i}^\intercal$. 
+:::
+
+Any rank‑2 _contravariant_ tensor $\mathbf{A}$ can be written as:
 $$\mathbf{A}=A^{ij} \vec{e}_i \otimes \vec{e}_j\,.$$
-Any rank 3 tensor $\mathbf{A}$ can be written as:
+and any rank‑3 contravariant tensor $\mathbf{A}$ can be written as:
 $$\mathbf{A}=A^{ijk} \vec{e}_i \otimes \vec{e}_j \otimes \vec{e}_k\,.$$
 
-The tensor basis is $\vec{e}_i \otimes \vec{e}_j$ and $\vec{e}_i \otimes \vec{e}_j \otimes \vec{e}_k$.
+The tensor bases are $\vec{e}_i \otimes \vec{e}_j$ and $\vec{e}_i \otimes \vec{e}_j \otimes \vec{e}_k\,$, respectively.
+
+:::{note}
+In the language of linear algebra, the expression $\vec{e}_i \otimes \vec{e}_j$ is the tensor product of $\vec{e}_i$ and $\vec{e}_j$, which is the matrix $\vec{e}_i {\vec{e}_j}^\intercal$, with $1$ at row $i$ and column $j$ and zeros everywhere else in the standard basis, with $1$ at position $k$ and zeros elsewhere. 
+:::
+
 If we mix lower and upper indices:
 $$\mathbf{A}=A^i{}_{j} \vec{e}_i \otimes \tilde{e}^j\,.$$
+:::{note}
+The expression $\vec{e}_i\otimes\tilde{e}^j$ is, again, the _tensor product_ of $\vec{e}_i$ and $\tilde{e}^j$, the outer product $\vec{e}_i \tilde{e}^j = \vec{e}_i {\vec{e}_j}^\intercal$ in the standard basis because $\tilde{e}^j={\vec{e}_j}^\intercal$ is a row vector (covector). 
+:::
 
-The vector basis and the dual (form) basis is related by a dot product:
+The vector basis and the dual (form) basis are elated by a dot product:
 $$\tilde{e}^i \cdot \vec{e}_j = \delta^i{}_j\,.
 $$
+
+:::{note}
+This is also just the inner product noted above, i.e., $\tilde{e}^i\vec{e}_j\equiv\vec{e}_i^\intercal\vec{e}_j$.
+:::
+
+:::{note}
+The _Kronecker delta_ $\delta^i{}_j$ is often written (unambiguously) in stacked form as $\delta^i_j\,$.
+:::
 
 If the vector basis is a coordinate basis, then it can be written as:
 $$\vec{e}_i = {\partial\mathbf{r}\over\partial x^i} \equiv
   {\partial\over\partial x^i}\,,
 $$
-where the position vector $\mathbf{r}$ can be omitted, and the basis vector is
-treated as an operator on any function on the manifold (we will not use this
-notation).
+where the position vector $\mathbf{r}$ can be omitted, and the basis vector is treated as an operator on any function on the manifold (we will not use this notation).
+
 The corresponding form basis can be written as
 $$\tilde{e}^i \equiv dx^i\,.
 $$
-The form can be said to act on a vector to produce a number (definition of a
-dual space) as follows using a dot product:
+As noted above, the one-form can act on a vector to produce a number (definition of a dual space) as follows using a dot product:
 $$\mathbf{p}(\mathbf{u})\equiv\mathbf{p} \cdot \mathbf{u}
 =p_i \tilde{e}^i \cdot u^j \vec{e}_j
 =p_i u^j \tilde{e}^i \cdot \vec{e}_j
 =p_i u^j \delta^i{}_j
 =p_i u^i\,.
 $$
-We will not use the $\mathbf{p}(\mathbf{u})$ notation, we will use the dot
-product directly, or simply contracting indices as $p_i u^i$. All other forms
-acting on vectors is defined in a similar way using a dot product, and in index
-notation it just becomes a contraction.
+We will not use the $\mathbf{p}(\mathbf{u})$ notation, we will use the dot product directly, or simply contract indices as $p_i u^i$. All other forms acting on vectors are defined in a similar way using a dot product, and in index notation it just becomes a contraction.
 
 
 ## Index Notation
