@@ -64,7 +64,7 @@ $$\mathbf{A}=A^i{}_{j} \vec{e}_i \otimes \tilde{e}^j\,.$$
 The expression $\vec{e}_i\otimes\tilde{e}^j$ is, again, the _tensor product_ of $\vec{e}_i$ and $\tilde{e}^j$, the outer product $\vec{e}_i \tilde{e}^j = \vec{e}_i {\vec{e}_j}^\intercal$ in the standard basis because $\tilde{e}^j={\vec{e}_j}^\intercal$ is a row vector (covector). 
 :::
 
-The vector basis and the dual (form) basis are elated by a dot product:
+The vector basis and the dual (form) basis are related by a dot product:
 $$\tilde{e}^i \cdot \vec{e}_j = \delta^i{}_j\,.
 $$
 
