@@ -255,10 +255,9 @@ A_{k_1,\, \dots,\, k_N}$$
 ## Exterior (Wedge) Product
 
 The _exterior (wedge) product_ of two 1-forms $\mathbf{u}=u_i \tilde{e}^i$ and $\mathbf{v}=v_i \tilde{e}^i$ is defined as:
-<a id="wedge_def"></a>
-$$\tag{1} %\label{wedge_def}
+$$\label{wedge_def}
 \mathbf{u} \wedge \mathbf{v} \equiv
-\mathbf{u} \otimes \mathbf{v} - \mathbf{v} \otimes \mathbf{u}\,.%
+\mathbf{u} \otimes \mathbf{v} - \mathbf{v} \otimes \mathbf{u}\,.
 $$
 Expressing this in components in a basis:
 $$\begin {aligned}
@@ -289,8 +288,16 @@ $$
 The left term contains an antisymmetric tensor
 $A_{ij}=u_i v_j-u_j v_i$ contracted with a symmetric tensor $(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)$; the result is zero.
 
-:::{warning} TODO
-Insert a lean proof that a contraction of an antisymmetric tensor with a symmetric tensor vanishes.
+:::{dropdown} Lean proof: `contract_antisymm_symm` (and `contract_antisymm_symm_eq_neg`)
+Writing the full contraction of two rank-2 covariant tensors as $\sum_{i,j} A_{ij}\,S^{ij}$,
+relabelling the summation indices $i\leftrightarrow j$ and using antisymmetry $A_{ij}=-A_{ji}$
+together with symmetry $S^{ij}=S^{ji}$ shows that the contraction equals its own negation. Over
+$\mathbb{R}$ this forces it to vanish.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: contract-vanishes
+:end-before: ANCHOR_END: contract-vanishes
+```
 :::
 
 We end up with:
@@ -306,7 +313,7 @@ The equation
 $$A_{ij}\;\tilde{e}^i \otimes \tilde{e}^j
 ={1\over2} A_{ij}\; \tilde{e}^i \wedge \tilde{e}^j
 $$
-shows that any rank-2 antisymmetric covariant tensor (a 2-form) can be written as a wedge product or as a differential form. And Definition [1](#wedge_def) shows that
+shows that any rank-2 antisymmetric covariant tensor (a 2-form) can be written as a wedge product or as a differential form. And Definition [](#wedge_def) shows that
 any differential 2-form can be written as an antisymmetric tensor. The same
 will be true for higher ranks too.
 
@@ -355,17 +362,15 @@ For an antisymmetric tensor $A_{ij}$.
 :::
 
 Thus we get:
-<a id="wedge_rank2"></a>
-$$\tag{2} %\label{wedge_rank2}
+$$\label{wedge_rank2}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j =
     \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
     \tilde{e}^i \otimes \tilde{e}^j
     = A_{ij}\tilde{e}^i \otimes \tilde{e}^j
-    = {1\over2}A_{ij}\tilde{e}^i \wedge \tilde{e}^j\,.%
+    = {1\over2}A_{ij}\tilde{e}^i \wedge \tilde{e}^j\,.
 $$
 The wedge product of three 1-forms is defined using:
-<a id="wedge_def3"></a>
-$$\tag{3} %\label{wedge_def3}
+$$\label{wedge_def3}
 \begin{aligned}
 \mathbf{u} \wedge \mathbf{v} \wedge \mathbf{w} &\equiv
  \mathbf{u} \otimes \mathbf{v} \otimes \mathbf{w}
@@ -377,13 +382,12 @@ $$\tag{3} %\label{wedge_def3}
 \end{aligned}
 $$
 Expressing this in components we get a rank 3 antisymmetric tensor:
-<a id="wedge_rank3"></a>
-$$\tag{4} %\label{wedge_rank3}
+$$\label{wedge_rank3}
 \begin{aligned}
 u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k &=
     \det\begin{pmatrix} u_i & u_j & u_k \\ v_i & v_j & v_k \\ w_i & w_j & w_k \end{pmatrix}
     \tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
-\\&=A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.%
+\\&=A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.
 \end{aligned}
 $$
 :::{warning} TODO
@@ -395,20 +399,18 @@ But we need to prove it.
 :::
 
 Higher-order products are defined in analogous manner ($n$ wedge products is a rank $n$ fully antisymmetric tensor). The exterior product can be defined for vectors as well. The components of these tensors are equal to:
-<a id="index_rank2"></a>
-$$\tag{5} %\label{index_rank2}
+$$\label{index_rank2}
 A_{ij}= \det\begin{pmatrix} u_i & u_j \\ v_i & v_j \end{pmatrix}
-    = u_i v_j - u_j v_i%
+    = u_i v_j - u_j v_i
 $$
 and
-<a id="index_rank3"></a>
-$$\tag{6} %\label{index_rank3}
-A_{ijk} = \det\begin{pmatrix} u_i & u_j & u_k \\ v_i & v_j & v_k \\ w_i & w_j & w_k \end{pmatrix}\,.%
+$$\label{index_rank3}
+A_{ijk} = \det\begin{pmatrix} u_i & u_j & u_k \\ v_i & v_j & v_k \\ w_i & w_j & w_k \end{pmatrix}\,.
 $$
 
 The wedge product is equal to the tensor written using the tensor basis in
-equations [2](#wedge_rank2) and [4](#wedge_rank3). The same tensor in index
-notation is given by equations [5](#index_rank2) and [6](#index_rank3).
+equations [](#wedge_rank2) and [](#wedge_rank3). The same tensor in index
+notation is given by equations [](#index_rank2) and [](#index_rank3).
 
 Via properties of a determinant, we can see that the wedge product is just a
 fully antisymmetric tensor.
