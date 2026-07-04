@@ -184,6 +184,41 @@ For instance, `test_digit_seven` says that for $p$ ending in $7$,
 $p\mid 10a+b \iff p\mid a-\lfloor 3p/10\rfloor\,b$.
 :::
 
+(div-main)=
+## The main theorem
+
+Combining the equivalence {eq}`eq-div-claim` with the recipe for $k$ folds all
+four cases into a single statement. Write $k(p)$ for the number produced by the
+table in [Finding $k$](#div-finding-k) — a function of $p$ alone.
+
+:::{tip} Theorem (divisibility test)
+Let $p$ be an integer whose last digit is $1$, $3$, $7$, or $9$ — for a prime,
+exactly every prime other than $2$ and $5$. Write $n=10a+b$. Then $p$ divides
+$n$ if and only if $p$ divides the determinant
+
+```{math}
+:label: eq-div-main
+
+\begin{vmatrix} a & b \\ k(p) & 1 \end{vmatrix} = a - k(p)\,b .
+```
+:::
+
+In Lean the number $k(p)$ is `kFor p`, defined by the four-way case split on the
+last digit, and the theorem `divisibility_test` is a two-line consequence of the
+core equivalence `dvd_iff_dvd_det` together with the certificate
+$10\,k(p)+1=m\,p$ that the case split supplies.
+
+:::{dropdown} Lean proof: main theorem `divisibility_test` and the function `kFor`
+```{literalinclude} math_notes_lean/MathNotesLean/DivisibilityByPrimeFlow.lean
+:language: lean
+:start-after: ANCHOR: flow-div-main
+:end-before: ANCHOR_END: flow-div-main
+```
+The statement reads exactly as the informal one: `p ∣ (10 * a + b)` iff `p`
+divides `Matrix.det !![a, b; kFor p, 1]`, Mathlib's $2\times2$ determinant
+$a-k(p)\,b$.
+:::
+
 (div-worked)=
 ## The worked examples, formalized
 

@@ -141,6 +141,38 @@ theorem test_digit_nine {p : ℤ} (hp : p % 10 = 9) (a b : ℤ) :
   dvd_iff (k_digit_nine hp) a b
 -- ANCHOR_END: flow-div-tests
 
+/-! ### The main theorem: one statement for all four cases -/
+
+-- ANCHOR: flow-div-main
+/-- The number `k` used in the test, as a function of `p` alone.  It depends only on the last digit
+of `p`, following the table: the multiplier `m ∈ {1, 7, 3, 9}` is the inverse of that digit modulo
+`10`, and `k = ⌊m * p / 10⌋`. -/
+def kFor (p : ℤ) : ℤ :=
+  if p % 10 = 1 then p / 10          -- m = 1
+  else if p % 10 = 3 then 7 * p / 10 -- m = 7
+  else if p % 10 = 7 then 3 * p / 10 -- m = 3
+  else 9 * p / 10                    -- m = 9
+
+/-- **Main theorem (divisibility test).**  Let `p` be an integer whose last digit is `1, 3, 7`, or
+`9` — for a prime, exactly every prime other than `2` and `5`.  Writing `n = 10 * a + b`, the number
+`p` divides `n` **if and only if** `p` divides the determinant
+
+  `| a       b |`
+  `| kFor p  1 |  =  a - (kFor p) * b`. -/
+theorem divisibility_test {p : ℤ}
+    (hp : p % 10 = 1 ∨ p % 10 = 3 ∨ p % 10 = 7 ∨ p % 10 = 9) (a b : ℤ) :
+    p ∣ (10 * a + b) ↔ p ∣ Matrix.det !![a, b; kFor p, 1] := by
+  have hcert : ∃ m : ℤ, 10 * kFor p + 1 = m * p := by
+    unfold kFor
+    split_ifs with h1 h3 h7
+    · exact ⟨1, by omega⟩
+    · exact ⟨7, by omega⟩
+    · exact ⟨3, by omega⟩
+    · exact ⟨9, by omega⟩
+  obtain ⟨m, hm⟩ := hcert
+  exact dvd_iff_dvd_det hm a b
+-- ANCHOR_END: flow-div-main
+
 /-! ### The worked examples from the note -/
 
 -- ANCHOR: flow-div-example
