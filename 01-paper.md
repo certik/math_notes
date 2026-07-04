@@ -561,14 +561,22 @@ Take a 1-form $f_j$, differentiate $\partial_i f_j$, to get a rank-2 tensor. Pro
 Let's now do the same computation using regular tensors:
 $$
 \begin{aligned}
-A_{ij} &= \partial_{[i} f_{j]}
-\\&= {1\over 2}\varepsilon_{ij}\varepsilon^{kl} \partial_{k} f_{l}
-\\&= {1\over 2}(\delta_i{}^k\delta_j{}^l-\delta_i{}^l\delta_j{}^k) \partial_{k} f_{l}
-\\&= {1\over 2}(\partial_i f_j - \partial_j f_i)\,.
+A_{ij} &= 2\,\partial_{[i} f_{j]}
+\\&= \varepsilon_{ij}\varepsilon^{kl} \partial_{k} f_{l}
+\\&= (\delta_i{}^k\delta_j{}^l-\delta_i{}^l\delta_j{}^k) \partial_{k} f_{l}
+\\&= \partial_i f_j - \partial_j f_i\,.
 \end{aligned}
 $$
-:::{error}
-This seems to be off by a factor of $\frac12$ from the above.
+:::{note}
+This agrees with the wedge computation above once the normalization of the
+antisymmetrization bracket is accounted for. The bracket is normalized,
+$\partial_{[i} f_{j]} = {1\over2}(\partial_i f_j - \partial_j f_i)$, so the components of
+$d\tilde f$ in the $\otimes$ basis are
+$A_{ij} = 2\,\partial_{[i} f_{j]} = \partial_i f_j - \partial_j f_i$. The factor $2=2!$ is
+the same double counting that relates the two bases,
+$A_{ij}\, dx^i \otimes dx^j = {1\over2} A_{ij}\, dx^i \wedge dx^j$: the antisymmetrized
+derivative $\partial_{[i} f_{j]}$ gives the components in the $\wedge$ basis, whereas
+$A_{ij}$ gives them in the $\otimes$ basis.
 :::
 
 The exterior derivative is simply a regular (not antisymmetric) derivative $\partial_{i} f_{j}$ that is made antisymmetric: $\partial_{[i} f_{j]}$. The same applies to higher ranks.
