@@ -11,9 +11,11 @@ Watson [@watson2003divisibility] and popularized by John D. Cook in
 [*Divisibility by any prime*](https://www.johndcook.com/blog/2021/02/17/divisibility-by-any-prime/).
 To test whether an integer $n$ is divisible by a prime $p$, split off the last
 digit, writing $n=10a+b$, and evaluate a small $2\times 2$ determinant
-$$
-\begin{vmatrix} a & b \\ k & 1 \end{vmatrix}=a-kb,
-$$
+
+```{math}
+\begin{vmatrix} a & b \\ k & 1 \end{vmatrix} = a - kb,
+```
+
 where $k$ is a fixed number depending only on $p$. Then $n$ is divisible by $p$
 if and only if this determinant is. Because the determinant is a smaller number,
 one simply iterates until divisibility is obvious.
@@ -41,21 +43,25 @@ placed next to the statement it formalizes, for direct comparison.
 
 Take $p=31$ and $n=2759$. Here $31$ ends in $1$, and the recipe below gives
 $k=3$. Peel off the last digit and evaluate the determinant, then repeat:
-$$
-\begin{vmatrix} 275 & 9 \\ 3 & 1 \end{vmatrix}=275-3\cdot 9=248,
+
+```{math}
+\begin{vmatrix} 275 & 9 \\ 3 & 1 \end{vmatrix} = 275 - 3\cdot 9 = 248,
 \qquad
-\begin{vmatrix} 24 & 8 \\ 3 & 1 \end{vmatrix}=24-3\cdot 8=0.
-$$
+\begin{vmatrix} 24 & 8 \\ 3 & 1 \end{vmatrix} = 24 - 3\cdot 8 = 0.
+```
+
 The chain ends in $0$, which is divisible by $31$, so $2759$ is divisible by
 $31$.
 
 For a negative answer, take $p=61$ and $n=75273$. Again $61$ ends in $1$, giving
 $k=6$:
-$$
-\begin{vmatrix} 7527 & 3 \\ 6 & 1 \end{vmatrix}=7509,\quad
-\begin{vmatrix} 750 & 9 \\ 6 & 1 \end{vmatrix}=696,\quad
-\begin{vmatrix} 69 & 6 \\ 6 & 1 \end{vmatrix}=33.
-$$
+
+```{math}
+\begin{vmatrix} 7527 & 3 \\ 6 & 1 \end{vmatrix} = 7509,\quad
+\begin{vmatrix} 750 & 9 \\ 6 & 1 \end{vmatrix} = 696,\quad
+\begin{vmatrix} 69 & 6 \\ 6 & 1 \end{vmatrix} = 33.
+```
+
 Since $33$ is not divisible by $61$, neither is $75273$.
 
 The determinant is literally $a-kb$; the Lean statement below checks this against
@@ -187,10 +193,12 @@ question into a chain of equivalences ending in an obvious case.
 
 For $p=37$ (which ends in $7$, so $k=\lfloor 3\cdot 37/10\rfloor=11$) and
 $n=3293$, this is Cook's headline example:
-$$
-\begin{vmatrix} 329 & 3 \\ 11 & 1 \end{vmatrix}=296,\qquad
-\begin{vmatrix} 29 & 6 \\ 11 & 1 \end{vmatrix}=29-66=-37,
-$$
+
+```{math}
+\begin{vmatrix} 329 & 3 \\ 11 & 1 \end{vmatrix} = 296,\qquad
+\begin{vmatrix} 29 & 6 \\ 11 & 1 \end{vmatrix} = 29 - 66 = -37,
+```
+
 and $-37$ is divisible by $37$. (The blog writes the last determinant as $37$;
 its sign is irrelevant because we only ask about divisibility.)
 
