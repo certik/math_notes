@@ -201,6 +201,20 @@ A_{(ij)} &= \frac{1}{2!} \text{perm}\begin{pmatrix} \delta_i{}^k & \delta_i{}^l 
 $$
 :::
 
+Together these give the decomposition of any rank-2 tensor into its symmetric and
+antisymmetric parts, $A_{ij}=A_{(ij)}+A_{[ij]}$.
+
+:::{dropdown} Lean proof: `symPart`, `antisymPart`, and the decomposition `symPart_add_antisymPart`
+Over $\mathbb{R}$, define the symmetric and antisymmetric parts of a rank-2 tensor,
+$A_{(ij)}={1\over2}(A_{ij}+A_{ji})$ and $A_{[ij]}={1\over2}(A_{ij}-A_{ji})$. The Lean checks confirm
+that they are genuinely symmetric and antisymmetric and that they sum back to $A_{ij}$.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: sym-antisym
+:end-before: ANCHOR_END: sym-antisym
+```
+:::
+
 ### Antisymmetric part of a covariant rank-3 tensor:
 $$
 \begin{aligned}
@@ -288,7 +302,7 @@ $$
 The left term contains an antisymmetric tensor
 $A_{ij}=u_i v_j-u_j v_i$ contracted with a symmetric tensor $(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)$; the result is zero.
 
-:::{dropdown} Lean proof: `contract_antisymm_symm` (and `contract_antisymm_symm_eq_neg`)
+:::{dropdown} Lean proof: `contract_antisymm_symm` (and `contract_antisymPart_symPart`)
 Writing the full contraction of two rank-2 covariant tensors as $\sum_{i,j} A_{ij}\,S^{ij}$,
 relabelling the summation indices $i\leftrightarrow j$ and using antisymmetry $A_{ij}=-A_{ji}$
 together with symmetry $S^{ij}=S^{ji}$ shows that the contraction equals its own negation. Over
@@ -297,6 +311,13 @@ $\mathbb{R}$ this forces it to vanish.
 :language: lean
 :start-after: ANCHOR: contract-vanishes
 :end-before: ANCHOR_END: contract-vanishes
+```
+In particular, applied to the symmetric and antisymmetric parts defined earlier, the antisymmetric
+part of any tensor contracts to zero against the symmetric part of any tensor.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: contract-parts
+:end-before: ANCHOR_END: contract-parts
 ```
 :::
 
@@ -390,12 +411,33 @@ u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k &=
 \\&=A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.
 \end{aligned}
 $$
-:::{warning} TODO
-Likely this is true:
-$$A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
+This tensor can also be written in the wedge basis, with a $1\over3!$ factor:
+$$\label{wedge_rank3_identity}
+A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
 ={1\over 3!}A_{ijk}\;\tilde{e}^i \wedge \tilde{e}^j \wedge \tilde{e}^k\,.
 $$
-But we need to prove it.
+This is the rank-3 analogue of the rank-2 identity [](#wedge_rank2); the $1\over3!$ is the
+generalized double counting, since each wedge $\tilde{e}^i \wedge \tilde{e}^j \wedge \tilde{e}^k$
+expands into $3!$ signed tensor products.
+
+:::{dropdown} Lean proof: `otimesExpand_eq_smul_wedgeExpand`
+Model rank-3 covariant tensors over a finite index set as the free $\mathbb{R}$-module on index
+triples, with basis tensor $\tilde{e}^{p_0}\otimes\tilde{e}^{p_1}\otimes\tilde{e}^{p_2}$ and wedge
+$\tilde{e}^{p_0}\wedge\tilde{e}^{p_1}\wedge\tilde{e}^{p_2}=\sum_\sigma \operatorname{sgn}(\sigma)\,\tilde{e}^{p_{\sigma(0)}}\otimes\tilde{e}^{p_{\sigma(1)}}\otimes\tilde{e}^{p_{\sigma(2)}}$.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: rank3-defs
+:end-before: ANCHOR_END: rank3-defs
+```
+For a fully antisymmetric $A_{ijk}$ (such as the determinant above), reindexing the double sum
+$\sum_{p}\sum_\sigma$ by $p\mapsto p\circ\sigma$ and using antisymmetry turns each wedge term back
+into the plain tensor term, so all $3!$ permutations contribute one copy each, canceling the
+$1\over3!$.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: rank3-main
+:end-before: ANCHOR_END: rank3-main
+```
 :::
 
 Higher-order products are defined in analogous manner ($n$ wedge products is a rank $n$ fully antisymmetric tensor). The exterior product can be defined for vectors as well. The components of these tensors are equal to:
@@ -577,6 +619,17 @@ the same double counting that relates the two bases,
 $A_{ij}\, dx^i \otimes dx^j = {1\over2} A_{ij}\, dx^i \wedge dx^j$: the antisymmetrized
 derivative $\partial_{[i} f_{j]}$ gives the components in the $\wedge$ basis, whereas
 $A_{ij}$ gives them in the $\otimes$ basis.
+:::
+
+:::{dropdown} Lean proof: the factor of 2 — `two_mul_antisymPart`
+Taking $A_{ij}=\partial_i f_j$, the normalized bracket satisfies
+$2\,\partial_{[i} f_{j]} = \partial_i f_j - \partial_j f_i$ with no leftover ${1\over2}$, which is
+exactly the correction discussed above.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: two-antisym
+:end-before: ANCHOR_END: two-antisym
+```
 :::
 
 The exterior derivative is simply a regular (not antisymmetric) derivative $\partial_{i} f_{j}$ that is made antisymmetric: $\partial_{[i} f_{j]}$. The same applies to higher ranks.
