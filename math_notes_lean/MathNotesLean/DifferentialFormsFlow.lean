@@ -29,6 +29,10 @@ The second part of the file (`symPart`, `antisymPart`) records the note's splitt
 tensor into symmetric and antisymmetric parts, the factor of `2` relating the exterior-derivative
 components to the normalized antisymmetrization bracket (`two_mul_antisymPart`), and the resulting
 vanishing of the antisymmetric-part / symmetric-part contraction (`contract_antisymPart_symPart`).
+
+The third part (`otimesExpand`, `wedge`, `wedgeExpand`) proves the note's rank-3 claim
+`A_{ijk} ẽⁱ⊗ẽʲ⊗ẽᵏ = (1/3!) A_{ijk} ẽⁱ∧ẽʲ∧ẽᵏ` for a fully antisymmetric `A`
+(`otimesExpand_eq_smul_wedgeExpand`).
 -/
 
 namespace MathNotesLean
@@ -115,6 +119,91 @@ theorem contract_antisymPart_symPart [Fintype ι] (A B : ι → ι → ℝ) :
     contract (antisymPart A) (symPart B) = 0 :=
   contract_antisymm_symm (antisymPart_isAntisymm A) (symPart_isSymm B)
 -- ANCHOR_END: contract-parts
+
+/-! ### Rank-3: the ⊗-expansion is `1/3!` times the ∧-expansion
+
+`01-paper.md` claims that for a fully antisymmetric rank-3 tensor `A`,
+
+  `A_{ijk} ẽⁱ⊗ẽʲ⊗ẽᵏ = (1/3!) A_{ijk} ẽⁱ∧ẽʲ∧ẽᵏ`.
+
+We model rank-3 covariant tensors over a finite index set `ι` as elements of the free `ℝ`-module on
+index triples, `(Fin 3 → ι) → ℝ`, whose basis tensor `ẽ^{p 0}⊗ẽ^{p 1}⊗ẽ^{p 2}` is `Pi.single p 1`.
+The wedge `ẽ^{p 0}∧ẽ^{p 1}∧ẽ^{p 2}` is the signed sum over the `3!` permutations of the three slots,
+matching the note's definition of `u ∧ v ∧ w`. Full antisymmetry of `A` is
+`A (p ∘ σ) = sign σ * A p`; the determinant tensor `A_{ijk} = det(u,v,w)` of the note is one such
+`A`.
+
+The proof reindexes the double sum `∑ₚ ∑_σ`: for each fixed permutation `σ`, substituting the
+summation triple `p ↦ p ∘ σ` and using antisymmetry turns the wedge term back into the plain
+`⊗`-term, so each of the `3!` permutations contributes one copy of the `⊗`-expansion. -/
+
+-- ANCHOR: rank3-defs
+/-- Levi-Civita sign of a permutation of the three tensor slots, as a real scalar. -/
+def signR (σ : Equiv.Perm (Fin 3)) : ℝ := ((Equiv.Perm.sign σ : ℤ) : ℝ)
+
+/-- The basis tensor `ẽ^{p 0} ⊗ ẽ^{p 1} ⊗ ẽ^{p 2}` in the free `ℝ`-module on index triples. -/
+def basisTensor [DecidableEq ι] (p : Fin 3 → ι) : (Fin 3 → ι) → ℝ := Pi.single p 1
+
+/-- The `⊗`-expansion `∑_{i,j,k} A_{ijk} ẽⁱ⊗ẽʲ⊗ẽᵏ` of a rank-3 tensor with coefficients `A`. -/
+def otimesExpand [Fintype ι] [DecidableEq ι] (A : (Fin 3 → ι) → ℝ) : (Fin 3 → ι) → ℝ :=
+  ∑ p, A p • basisTensor p
+
+/-- The wedge basis tensor `ẽ^{p 0} ∧ ẽ^{p 1} ∧ ẽ^{p 2}`: the signed sum over permutations of the
+three slots, matching the note's definition of `u ∧ v ∧ w`. -/
+def wedge [DecidableEq ι] (p : Fin 3 → ι) : (Fin 3 → ι) → ℝ :=
+  ∑ σ : Equiv.Perm (Fin 3), signR σ • basisTensor (p ∘ ⇑σ)
+
+/-- The `∧`-expansion `∑_{i,j,k} A_{ijk} ẽⁱ∧ẽʲ∧ẽᵏ`. -/
+def wedgeExpand [Fintype ι] [DecidableEq ι] (A : (Fin 3 → ι) → ℝ) : (Fin 3 → ι) → ℝ :=
+  ∑ p, A p • wedge p
+-- ANCHOR_END: rank3-defs
+
+/-- Precomposition by `σ` as an equivalence of the triple-index type. -/
+def precomp (σ : Equiv.Perm (Fin 3)) : (Fin 3 → ι) ≃ (Fin 3 → ι) where
+  toFun p := p ∘ ⇑σ
+  invFun q := q ∘ ⇑σ.symm
+  left_inv p := by funext t; simp
+  right_inv q := by funext t; simp
+
+/-- Reindexing lemma: the `∧`-expansion equals `3! = card (Perm (Fin 3))` copies of the
+`⊗`-expansion. For each permutation `σ`, substituting `p ↦ p ∘ σ` and using antisymmetry rewrites
+the wedge term into the plain `⊗`-term. -/
+theorem wedgeExpand_eq_card_smul [Fintype ι] [DecidableEq ι] (A : (Fin 3 → ι) → ℝ)
+    (hA : ∀ (p : Fin 3 → ι) (σ : Equiv.Perm (Fin 3)), A (p ∘ ⇑σ) = signR σ * A p) :
+    wedgeExpand A = (Fintype.card (Equiv.Perm (Fin 3))) • otimesExpand A := by
+  have key : ∀ σ : Equiv.Perm (Fin 3),
+      (∑ p, A p • (signR σ • basisTensor (p ∘ ⇑σ))) = otimesExpand A := by
+    intro σ
+    rw [otimesExpand]
+    refine Fintype.sum_equiv (precomp σ) _ _ (fun p => ?_)
+    show A p • (signR σ • basisTensor (p ∘ ⇑σ))
+        = A (precomp σ p) • basisTensor (precomp σ p)
+    have hp : precomp σ p = p ∘ ⇑σ := rfl
+    rw [hp, hA p σ, smul_smul, mul_comm]
+  have hstep : wedgeExpand A
+      = ∑ σ : Equiv.Perm (Fin 3), (∑ p, A p • (signR σ • basisTensor (p ∘ ⇑σ))) := by
+    rw [wedgeExpand]
+    simp only [wedge, Finset.smul_sum]
+    rw [Finset.sum_comm]
+  rw [hstep]
+  simp only [key]
+  rw [Finset.sum_const, Finset.card_univ]
+
+-- ANCHOR: rank3-main
+/-- **The rank-3 claim of `01-paper.md`.** For a fully antisymmetric rank-3 tensor `A`
+(`A (p ∘ σ) = sign σ * A p`), the `⊗`-expansion equals `1/3!` times the `∧`-expansion:
+`A_{ijk} ẽⁱ⊗ẽʲ⊗ẽᵏ = (1/3!) A_{ijk} ẽⁱ∧ẽʲ∧ẽᵏ`. -/
+theorem otimesExpand_eq_smul_wedgeExpand [Fintype ι] [DecidableEq ι] (A : (Fin 3 → ι) → ℝ)
+    (hA : ∀ (p : Fin 3 → ι) (σ : Equiv.Perm (Fin 3)), A (p ∘ ⇑σ) = signR σ * A p) :
+    otimesExpand A = (1 / 6 : ℝ) • wedgeExpand A := by
+  have hcard : Fintype.card (Equiv.Perm (Fin 3)) = 6 := by
+    rw [Fintype.card_perm, Fintype.card_fin]; rfl
+  have h6 : wedgeExpand A = (6 : ℝ) • otimesExpand A := by
+    rw [wedgeExpand_eq_card_smul A hA, hcard, ← Nat.cast_smul_eq_nsmul ℝ]
+    norm_num
+  rw [h6, smul_smul]
+  norm_num
+-- ANCHOR_END: rank3-main
 
 end DifferentialForms
 

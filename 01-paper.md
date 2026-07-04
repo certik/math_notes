@@ -411,12 +411,33 @@ u_i \tilde{e}^i \wedge v_j \tilde{e}^j \wedge w_k\tilde{e}^k &=
 \\&=A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k\,.
 \end{aligned}
 $$
-:::{warning} TODO
-Likely this is true:
-$$A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
+This tensor can also be written in the wedge basis, with a $1\over3!$ factor:
+$$\label{wedge_rank3_identity}
+A_{ijk}\;\tilde{e}^i \otimes \tilde{e}^j \otimes \tilde{e}^k
 ={1\over 3!}A_{ijk}\;\tilde{e}^i \wedge \tilde{e}^j \wedge \tilde{e}^k\,.
 $$
-But we need to prove it.
+This is the rank-3 analogue of the rank-2 identity [](#wedge_rank2); the $1\over3!$ is the
+generalized double counting, since each wedge $\tilde{e}^i \wedge \tilde{e}^j \wedge \tilde{e}^k$
+expands into $3!$ signed tensor products.
+
+:::{dropdown} Lean proof: `otimesExpand_eq_smul_wedgeExpand`
+Model rank-3 covariant tensors over a finite index set as the free $\mathbb{R}$-module on index
+triples, with basis tensor $\tilde{e}^{p_0}\otimes\tilde{e}^{p_1}\otimes\tilde{e}^{p_2}$ and wedge
+$\tilde{e}^{p_0}\wedge\tilde{e}^{p_1}\wedge\tilde{e}^{p_2}=\sum_\sigma \operatorname{sgn}(\sigma)\,\tilde{e}^{p_{\sigma(0)}}\otimes\tilde{e}^{p_{\sigma(1)}}\otimes\tilde{e}^{p_{\sigma(2)}}$.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: rank3-defs
+:end-before: ANCHOR_END: rank3-defs
+```
+For a fully antisymmetric $A_{ijk}$ (such as the determinant above), reindexing the double sum
+$\sum_{p}\sum_\sigma$ by $p\mapsto p\circ\sigma$ and using antisymmetry turns each wedge term back
+into the plain tensor term, so all $3!$ permutations contribute one copy each, canceling the
+$1\over3!$.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: rank3-main
+:end-before: ANCHOR_END: rank3-main
+```
 :::
 
 Higher-order products are defined in analogous manner ($n$ wedge products is a rank $n$ fully antisymmetric tensor). The exterior product can be defined for vectors as well. The components of these tensors are equal to:
