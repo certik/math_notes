@@ -7,6 +7,7 @@ import MathNotesLean.DeterminantHomomorphism
 import MathNotesLean.DeterminantHomomorphismFlow
 import MathNotesLean.DeterminantHomomorphismMonoid
 import MathNotesLean.DeterminantHomomorphismReal
+import MathNotesLean.DifferentialFormsFlow
 import MathNotesLean.DivisibilityByPrimeFlow
 import MathNotesLean.Limits1Flow
 import MathNotesLean.ScalingFunctionalEquationFlow

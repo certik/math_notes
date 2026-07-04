@@ -288,8 +288,16 @@ $$
 The left term contains an antisymmetric tensor
 $A_{ij}=u_i v_j-u_j v_i$ contracted with a symmetric tensor $(\tilde{e}^i \otimes \tilde{e}^j+\tilde{e}^j \otimes \tilde{e}^i)$; the result is zero.
 
-:::{warning} TODO
-Insert a lean proof that a contraction of an antisymmetric tensor with a symmetric tensor vanishes.
+:::{dropdown} Lean proof: `contract_antisymm_symm` (and `contract_antisymm_symm_eq_neg`)
+Writing the full contraction of two rank-2 covariant tensors as $\sum_{i,j} A_{ij}\,S^{ij}$,
+relabelling the summation indices $i\leftrightarrow j$ and using antisymmetry $A_{ij}=-A_{ji}$
+together with symmetry $S^{ij}=S^{ji}$ shows that the contraction equals its own negation. Over
+$\mathbb{R}$ this forces it to vanish.
+```{literalinclude} math_notes_lean/MathNotesLean/DifferentialFormsFlow.lean
+:language: lean
+:start-after: ANCHOR: contract-vanishes
+:end-before: ANCHOR_END: contract-vanishes
+```
 :::
 
 We end up with:
