@@ -8,8 +8,8 @@ version = "0.1.0"
 
 [tasks]
 plots = { cmd = "python bohr_mollerup_convex_plots.py", description = "Generate the note figures (PNGs under figures/, git-ignored)" }
-start = { cmd = "myst start", description = "Start the MyST development server with live preview" }
-build = { cmd = "myst build", description = "Build the site with MyST", env = { NODE_NO_WARNINGS = "1" } }
+start = { cmd = "myst start", depends-on = ["plots"], description = "Start the MyST development server with live preview" }
+build = { cmd = "myst build", depends-on = ["plots"], description = "Build the site with MyST", env = { NODE_NO_WARNINGS = "1" } }
 tex = { cmd = "myst build --tex && (cd _build/exports/paper_tex && tectonic paper.tex)", description = "Build the paper as LaTeX and compile it to PDF with tectonic" }
 texdet = { cmd = "myst build --tex 02-determinant.md && (cd _build/exports/determinant_tex && tectonic determinant.tex)", description = "Build the determinant note as LaTeX and compile it to PDF with tectonic" }
 typst = { cmd = "myst build --typst", description = "Build the site as Typst documents" }

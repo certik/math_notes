@@ -37,6 +37,9 @@ jobs:
           pixi-version: v0.68.0
           cache: true
 
+      - name: Generate note figures
+        run: pixi run plots
+
       - name: Build static HTML site
         run: pixi run -- myst build --html
 

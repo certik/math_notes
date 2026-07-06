@@ -103,6 +103,19 @@ These three are elementary and fully machine-checked.
 ```
 :::
 
+The convex counterexample is, to the eye, indistinguishable from $\Gamma$:
+
+:::{figure} figures/bohr_mollerup_convex_scalings.png
+:label: fig-bmc-scalings
+:alt: Gamma and f_epsilon plotted on linear, semilogx, semilogy, and log-log axes
+:width: 100%
+
+$\Gamma$ (black) and the convex counterexample $f_{0.01}$ (blue) coincide to the eye in all four
+scalings; a larger, non-convex $f_{0.20}$ (red) exposes the periodic ripple. The ripple is a
+few-percent *relative* modulation: swamped by factorial growth on the linear axes, but clearly
+visible on the **logarithmic** axes (bottom row), where multiplicative structure becomes additive.
+:::
+
 (bmc-gap)=
 ## 3. It differs from $\Gamma$, and it is not log-convex
 
@@ -227,7 +240,45 @@ headline value $\varepsilon=\tfrac1{100}$ sits comfortably inside the convex ran
 ($\min f_\varepsilon''\approx 0.48$). The trigamma bound {eq}`eq-bmc-trigamma`, $\psi'(x)\ge 1/x$, was
 also checked pointwise and holds with room to spare.
 
-## 6. What is proved where
+(bmc-seeing)=
+## 6. Seeing the wiggle: the linear plot versus the log plot
+
+The ripple $g_\varepsilon=1+\varepsilon(1-\cos 2\pi x)$ is a *relative* (multiplicative) modulation of
+a few percent. Against factorial growth it is invisible on a linear axis but visible on a logarithmic
+one, where multiplicative structure becomes additive ([](#fig-bmc-scalings)). This is why "no wiggles"
+has two different meanings — and why the stronger one is the right one:
+
+- **No wiggle on the linear plot $=$ $f$ convex $=$ $f'$ monotone.** This forbids the derivative from
+  ever decreasing (the obvious S-shaped wiggle). It is necessary, but *not* sufficient: $f_{0.01}$ is
+  convex yet still carries the ripple, because $\Gamma$'s curvature is strong enough to keep $f'$
+  increasing while a small oscillation rides along.
+- **No wiggle on the log plot $=$ $f$ log-convex $=$ $(\log f)'=f'/f$ monotone.** The *relative* growth
+  rate is the natural quantity for a multiplicatively-defined object — the functional equation
+  multiplies by $x$. Here $f_{0.01}$ fails: $(\log f_{0.01})'$ visibly turns over.
+
+The two derivative tests side by side make this concrete: in $f'$ the convex $f_{0.01}$ stays
+monotone (only the non-convex $f_{0.20}$ dips), whereas in the log-derivative $f'/f$ the tiny $2\%$
+ripple of $f_{0.01}$ is amplified to a clearly non-monotone wobble.
+
+:::{figure} figures/bohr_mollerup_convex_derivs.png
+:label: fig-bmc-derivs
+:alt: values versus derivatives of f_0.01 and f_0.20, with a zoom of the log-derivative
+:width: 100%
+
+Values (left) versus derivatives (right) for $f_{0.01}$ (blue) and $f_{0.20}$ (red). The convex
+ripple is invisible in the values. In the ordinary derivative $f'$ (top right) $f_{0.01}$ stays
+monotone — no wiggle, i.e. convex — while $f_{0.20}$ dips. In the log-derivative $(\log f)'=f'/f$
+(bottom right, with zoom) $f_{0.01}$ visibly wiggles and turns over: it is *not* log-convex.
+:::
+
+Because log-convex $\Rightarrow$ convex (for positive $f$, since $f=\exp(\log f)$ and $\exp$ is convex
+increasing), demanding smoothness on the log plot is *strictly stronger* and automatically delivers
+smoothness on the linear plot too. And since the factorial is exponentially large, the log plot is the
+physically natural place to demand it. That single demand — no wiggle on the log plot — is exactly the
+log-convexity hypothesis, and by [Bohr–Mollerup](./bohr_mollerup.md) it pins down $\Gamma$ uniquely,
+whereas plain convexity does not.
+
+## 7. What is proved where
 
 The bundled Lean statement `convex_hypothesis_insufficient` collects the machine-checked facts: for
 every $\varepsilon>0$, the function $f_\varepsilon$ is positive on $(0,\infty)$, satisfies
