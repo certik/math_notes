@@ -241,12 +241,19 @@ headline value $\varepsilon=\tfrac1{100}$ sits comfortably inside the convex ran
 also checked pointwise and holds with room to spare.
 
 (bmc-seeing)=
-## 6. Seeing the wiggle: the linear plot versus the log plot
+## 6. Why log-convexity? Fitting exponential data without wiggles
 
-The ripple $g_\varepsilon=1+\varepsilon(1-\cos 2\pi x)$ is a *relative* (multiplicative) modulation of
-a few percent. Against factorial growth it is invisible on a linear axis but visible on a logarithmic
-one, where multiplicative structure becomes additive ([](#fig-bmc-scalings)). This is why "no wiggles"
-has two different meanings — and why the stronger one is the right one:
+Step back to what we are really doing: interpolating the factorials, i.e. fitting the points
+$(n,(n-1)!)$. These grow *exponentially*, so the natural canvas for them is the **semilogy plot**,
+where the points become $(n,\log (n-1)!)$. By Stirling, $\log (n-1)! \approx n\log n - n$, so on that
+canvas they lie on a gently curving, almost straight line. A faithful interpolation should have no
+wiggles on *either* canvas — not on the ordinary linear plot, and not on this natural log plot.
+
+These are two genuinely different requirements. The ripple $g_\varepsilon=1+\varepsilon(1-\cos 2\pi
+x)$ is a *relative* (multiplicative) modulation of a few percent: against factorial growth it is
+invisible on the linear axis but plainly visible on the log axis, where multiplicative structure
+becomes additive ([](#fig-bmc-scalings)). And the two "no wiggle" demands are exactly the two notions
+of convexity:
 
 - **No wiggle on the linear plot $=$ $f$ convex $=$ $f'$ monotone.** This forbids the derivative from
   ever decreasing (the obvious S-shaped wiggle). It is necessary, but *not* sufficient: $f_{0.01}$ is
@@ -272,11 +279,10 @@ monotone — no wiggle, i.e. convex — while $f_{0.20}$ dips. In the log-deriva
 :::
 
 Because log-convex $\Rightarrow$ convex (for positive $f$, since $f=\exp(\log f)$ and $\exp$ is convex
-increasing), demanding smoothness on the log plot is *strictly stronger* and automatically delivers
-smoothness on the linear plot too. And since the factorial is exponentially large, the log plot is the
-physically natural place to demand it. That single demand — no wiggle on the log plot — is exactly the
-log-convexity hypothesis, and by [Bohr–Mollerup](./bohr_mollerup.md) it pins down $\Gamma$ uniquely,
-whereas plain convexity does not.
+increasing), **no wiggle on the log plot automatically implies no wiggle on the linear plot** — it is
+the strictly stronger, and therefore decisive, requirement. That single demand — a smooth fit on the
+natural (log) canvas for exponential data — is exactly the log-convexity hypothesis, and by
+[Bohr–Mollerup](./bohr_mollerup.md) it pins down $\Gamma$ uniquely, whereas plain convexity does not.
 
 ## 7. What is proved where
 
