@@ -1,5 +1,7 @@
 import MathNotesLean.Basic
 import MathNotesLean.AutomaticContinuity
+import MathNotesLean.BohrMollerupConvexFlow
+import MathNotesLean.BohrMollerupFlow
 import MathNotesLean.CircleCharacters
 import MathNotesLean.CstarHomomorphism
 import MathNotesLean.CstarHomomorphismFlow

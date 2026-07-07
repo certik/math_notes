@@ -38,7 +38,7 @@ jobs:
           cache: true
 
       - name: Build static HTML site
-        run: pixi run -- myst build --html
+        run: pixi run html
 
       - name: Determine deploy branch
         id: branch
