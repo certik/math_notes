@@ -21,16 +21,20 @@ exhibits an explicit one and proves it works.
 :::{note} Lean formalization
 The Lean-checkable core is formalized in Lean 4 + Mathlib in
 [`BohrMollerupConvexFlow.lean`](https://github.com/certik/math_notes/blob/main/math_notes_lean/MathNotesLean/BohrMollerupConvexFlow.lean).
-For every $\varepsilon>0$ it proves, sorry-free, that the function below is a positive solution of the
-functional equation with $f(1)=1$, is **not** equal to $\Gamma$, and is **not** log-convex — so it
-lives in the gap between "convex" and "log-convex". Continuous integration runs `lake build` (which
-fails on any error or `sorry`), and the file is axiom-clean (`propext`, `Classical.choice`,
-`Quot.sound`).
+For **every** $\varepsilon>0$ it proves, sorry-free, that the function below is a positive solution of
+the functional equation with $f(1)=1$, is **not** equal to $\Gamma$, and is **not** log-convex — so it
+lives in the gap between "convex" and "log-convex". For the headline value $\varepsilon=\tfrac1{100}$
+it *additionally* proves the counterexample is **convex** on $(0,\infty)$, giving a complete,
+machine-checked refutation. Continuous integration runs `lake build` (which fails on any error or
+`sorry`), and the file is axiom-clean (`propext`, `Classical.choice`, `Quot.sound`).
 
-The single step that is **not** machine-checked is the *convexity* of the counterexample: it rests on
-lower bounds for the di- and tri-gamma functions ($(\log\Gamma)''(x)\ge 1/x$ and
-$(\log\Gamma)'(x)\to\infty$) that current Mathlib does not provide. That step is proved by hand in
-[§4](#bmc-convex) and confirmed numerically in [§5](#bmc-numerics).
+The crux — the **convexity** — is the hard part, because current Mathlib has no di-/tri-gamma theory.
+The Lean file therefore builds it from scratch: it derives the $C^2$-smoothness of $\log\Gamma$ from
+the analyticity of the complex $\Gamma$, proves the digamma recurrence $\psi(x+1)=\psi(x)+1/x$ and the
+**trigamma lower bound** $(\log\Gamma)''(x)\ge 1/x$, and reads off the digamma value
+$\psi(\tfrac12)=-\gamma-2\log 2$ from Mathlib's $\Gamma'(\tfrac12)$. Convexity then follows from the
+$C^2$ criterion. The hand proof in [§4](#bmc-convex) and the numerics in [§5](#bmc-numerics) remain
+the readable account of that step.
 :::
 
 (bmc-space)=
@@ -212,6 +216,28 @@ For the concrete value $\varepsilon=\tfrac{1}{100}$ the constants already close:
 $C_2=4\pi^2(0.01)(1.01)\approx 0.399$, so $1/C_2\approx 2.51$, while $\sqrt{C_2}+C_1\approx 0.69$ is
 reached by $\psi$ already at $x\approx 2.49\le 2.51$. The next section confirms this numerically.
 
+This entire argument is now machine-checked for $\varepsilon=\tfrac1{100}$. The linchpin is the
+trigamma lower bound, obtained from the trigamma recurrence $\psi'(x)=\psi'(x+1)+1/x^2$ (differentiate
+{eq}`eq-bmc-digamma`), telescoping, and $\psi'\ge 0$: since
+$\psi'(x)=\sum_{k<n}\tfrac1{(x+k)^2}+\psi'(x+n)\ge\sum_{k<n}\tfrac1{(x+k)^2}\ge \tfrac1x-\tfrac1{x+n}$,
+letting $n\to\infty$ gives $\psi'(x)\ge 1/x$.
+
+:::{dropdown} Lean proof: `trig_ge` (the trigamma bound $(\log\Gamma)''(x)\ge 1/x$)
+```{literalinclude} math_notes_lean/MathNotesLean/BohrMollerupConvexFlow.lean
+:language: lean
+:start-after: ANCHOR: bmc-trigamma
+:end-before: ANCHOR_END: bmc-trigamma
+```
+:::
+
+:::{dropdown} Lean proof: `f_convex` ($f_{1/100}$ is convex on $(0,\infty)$, via the two regions above)
+```{literalinclude} math_notes_lean/MathNotesLean/BohrMollerupConvexFlow.lean
+:language: lean
+:start-after: ANCHOR: bmc-convex
+:end-before: ANCHOR_END: bmc-convex
+```
+:::
+
 :::{tip} Why log-convexity is different
 In Region B the perturbation's downward curvature $v''<0$ can exceed the tiny trigamma value
 $\psi'(x)\approx 1/x$, so $u''=(\log f_\varepsilon)''$ genuinely goes **negative** there: $\log
@@ -286,12 +312,12 @@ natural (log) canvas for exponential data — is exactly the log-convexity hypot
 
 ## 7. What is proved where
 
-The bundled Lean statement `convex_hypothesis_insufficient` collects the machine-checked facts: for
-every $\varepsilon>0$, the function $f_\varepsilon$ is positive on $(0,\infty)$, satisfies
-$f_\varepsilon(x+1)=x\,f_\varepsilon(x)$ and $f_\varepsilon(1)=1$, is not equal to $\Gamma$, and is not
-log-convex.
+Every hypothesis of the false theorem is machine-checked. For **every** $\varepsilon>0$, the bundled
+statement `convex_hypothesis_insufficient` collects that $f_\varepsilon$ is positive on $(0,\infty)$,
+satisfies $f_\varepsilon(x+1)=x\,f_\varepsilon(x)$ and $f_\varepsilon(1)=1$, is not equal to $\Gamma$,
+and is not log-convex.
 
-:::{dropdown} Lean: `convex_hypothesis_insufficient` (the machine-checked core)
+:::{dropdown} Lean: `convex_hypothesis_insufficient` (positivity, functional equation, $f\neq\Gamma$, not log-convex — for every $\varepsilon>0$)
 ```{literalinclude} math_notes_lean/MathNotesLean/BohrMollerupConvexFlow.lean
 :language: lean
 :start-after: ANCHOR: bmc-summary
@@ -299,11 +325,28 @@ log-convex.
 ```
 :::
 
-The remaining fact — that $f_\varepsilon$ is *convex* for small $\varepsilon$ — is proved
-analytically in [§4](#bmc-convex) and confirmed numerically in [§5](#bmc-numerics). Machine-checking
-it in Lean would require developing di-/tri-gamma bounds ($(\log\Gamma)''(x)\ge 1/x$ and
-$(\log\Gamma)'(x)\to\infty$) and the $C^2$ convexity criterion for $\Gamma$, none of which are
-currently in Mathlib.
+The crux — that $f_\varepsilon$ is also **convex** — is now machine-checked for the headline value
+$\varepsilon=\tfrac1{100}$ (`f_convex`, [§4](#bmc-convex)). Because current Mathlib has no di-/tri-gamma
+theory, the Lean file builds it from scratch: it establishes the $C^2$-smoothness of $\log\Gamma$ (from
+the analyticity of the complex $\Gamma$), the digamma recurrence $\psi(x+1)=\psi(x)+1/x$, and the
+trigamma lower bound $(\log\Gamma)''(x)\ge 1/x$; convexity then follows from the $C^2$ criterion, using
+the digamma value $\psi(\tfrac12)=-\gamma-2\log2$ (from Mathlib's $\Gamma'(\tfrac12)$) and monotonicity
+of $\psi$ for the Region-B hand-off at $x=\tfrac52$. The single non-elementary numeric input is a
+sharpened bound $\gamma<\tfrac{29}{50}$ on the Euler–Mascheroni constant, obtained from Mathlib's
+$\gamma<\text{harmonic}(256)-\log 256$ and its precise bounds on $\log 2$.
+
+The complete counterexample is bundled in `convexity_hypotheses_hold`: for $\varepsilon=\tfrac1{100}$,
+$f_\varepsilon$ is positive, satisfies the functional equation and $f_\varepsilon(1)=1$, is **convex**,
+is not equal to $\Gamma$, and is not log-convex — so convexity, normalization and the functional
+equation together do **not** characterize $\Gamma$.
+
+:::{dropdown} Lean: `convexity_hypotheses_hold` (the full machine-checked counterexample at $\varepsilon=1/100$)
+```{literalinclude} math_notes_lean/MathNotesLean/BohrMollerupConvexFlow.lean
+:language: lean
+:start-after: ANCHOR: bmc-convex-summary
+:end-before: ANCHOR_END: bmc-convex-summary
+```
+:::
 
 ## Conclusion
 
@@ -311,7 +354,8 @@ Convexity does **not** replace log-convexity in the Bohr–Mollerup theorem: for
 $\varepsilon>0$ the function $f_\varepsilon(x)=\Gamma(x)\bigl(1+\varepsilon(1-\cos 2\pi x)\bigr)$ is a
 convex, positive solution of $f(x+1)=x\,f(x)$ with $f(1)=1$ that is different from $\Gamma$. The
 log-convexity hypothesis of the [original theorem](./bohr_mollerup.md) is therefore essential — it is
-exactly strong enough to eliminate the periodic perturbations that plain convexity tolerates.
+exactly strong enough to eliminate the periodic perturbations that plain convexity tolerates. For
+$\varepsilon=\tfrac1{100}$ this is now verified end-to-end in Lean, convexity included.
 
 ## References
 
