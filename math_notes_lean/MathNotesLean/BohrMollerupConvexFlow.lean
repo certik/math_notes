@@ -20,7 +20,7 @@ is **not** log-convex — yet (as proved analytically in the note, and confirmed
 `Γ`.
 
 Since `log ∨ f` convex ⟹ `f` convex (for positive `f`), convexity is a *strictly weaker* hypothesis,
-so this is exactly the expected failure. Concretely we prove here, sorry-free:
+so this is exactly the expected failure. Concretely we prove here, with no proof holes:
 
 * `perturb` is `1`-periodic, positive, and equals `1` at `x = 1` (so it preserves everything);
 * `f` is positive, obeys `f (x+1) = x f x`, and `f 1 = 1`;
