@@ -26,7 +26,7 @@ The original version of this article in Wolfram Mathematica is published in [@be
 
 ## Introduction
 
-Gauge theory and gauge-covariant derivatives are the mathematical backbone of the Standard Model of particle physics, describing electromagnetic, weak, and strong interactions as connections on principal fiber bundles. Covariant derivatives on spacetime itself are the mathematical backbone of general relativity and gravitation. It is a seldom-mentioned, yet remarkable fact that exactly the same mathematical machinery pertains to classical Newtonian mechanics! 
+Gauge theory and gauge-covariant derivatives are the mathematical backbone of the Standard Model of particle physics, describing electromagnetic, weak, and strong interactions as connections on principal fibre bundles. Covariant derivatives on spacetime itself are the mathematical backbone of general relativity and gravitation. It is a seldom-mentioned, yet remarkable fact that exactly the same mathematical machinery pertains to classical Newtonian mechanics! 
 
 The unifying fact, promoted to a slogan, is:
 
@@ -56,6 +56,8 @@ We accompany this note with:
 
 ## 1. Lagrangian Formulation & Singularity
 
+This section furnishes a "ground-truth" via the conventional and traditional derivation---Euler-Lagrange equations. Later, we show that the new, geodesical derivation yields exactly the same equations of motion.
+
 Consider a rigid-rod pendulum of uniform density with mass $m$ and length $2 c_z$, with its center of mass located at distance $c_z$ from the pivot, fixed to the 2D floor. We measure its angular position with two coordinates:
 * $\delta$ (pitch), measuring co-latitude from the North pole.
 * $\eta$ (cone-roll), measuring rotation around the original $X$-axis.
@@ -78,7 +80,7 @@ $$
 The velocity is $\mathbf{v} = \dot{\mathbf{r}}$, leading to the kinetic energy:
 
 $$
-T = \frac{1}{2} m \mathbf{v} \cdot \mathbf{v} = \frac{1}{2} m c_z^2 \left( \dot{\delta}^2 + \cos^2\delta \, \dot{\eta}^2 \right)
+T = \frac{1}{2} m \mathbf{v} \cdot \mathbf{v} = \frac{1}{2} m c_z^2\left(\dot{\delta}^2 + \cos^2\delta \, \dot{\eta}^2\right)
 $$
 
 The potential energy under gravity pointing in the $-Z$ direction is:
@@ -101,7 +103,7 @@ $$
 
 The equation for $\ddot{\eta}$ contains the term $\sec\delta \sin\eta = \frac{\sin\eta}{\cos\delta}$, which diverges at the equator $\delta \to \pm \pi/2$ ($\cos\delta \to 0$) for almost all values of $\eta$. This is the mathematical manifestation of gimbal lock. 
 
-We can analyze the limits of the gravitational term at the equator:
+We can analyze the limits of the applied, gravitational, non-inertial force term in the $-Z$ direction, at the equator:
 * **Typical Points ($\eta \neq 0, \pi$)**: If the pendulum is tilted away from the $y$-$z$ plane ($\sin\eta \neq 0$), the force term diverges:
   $$
   \lim_{\delta \to \pi/2} \sec\delta \sin\eta = \pm \infty
@@ -114,7 +116,7 @@ We can analyze the limits of the gravitational term at the equator:
   The force remains finite (and vanishes) at the equator because the gravity vector has no projection along the direction of azimuthal change. These trajectories can pass through the equator smoothly.
 * **Indeterminate Limits**: For general paths where $(\delta, \eta) \to (\pi/2, 0)$, the limit $\lim \frac{\sin\eta}{\cos\delta}$ is an indeterminate $0/0$ form and is path-dependent, reflecting the topological fact that the coordinate direction is undefined at the poles of the rotated coordinate system.
 
-This gimbal-lock problem will be fully resolved in an upcoming note by performing the entire geometric computation again in $SU(2)$, the double-cover rotation group that is completely coordinate-singularity-free. A side-by-side video demonstration showing $SO(3)$ gimbal-lock divergence vs $SU(2)$ singularity-free stability is available in [@beckman2026euler]. A second video showing the mathematical equivalence of $SO(3)$ and $SU(2)$ trajectories away from the gimbal lock equator is available in [@beckman2026equivalence]. We thank the Wolfram Community for hosting these video attachments.
+This gimbal-lock problem will be fully resolved in an upcoming note by performing the entire geometric computation again in $SU(2)$, the double-cover rotation group that is free of coordinate singularities. A side-by-side video demonstration showing $SO(3)$ gimbal-lock divergence vs $SU(2)$ singularity-free stability is available in [@beckman2026euler]. A second video showing the mathematical equivalence of $SO(3)$ and $SU(2)$ trajectories away from the gimbal lock equator is available in [@beckman2026equivalence]. We thank the Wolfram Community for hosting these video attachments.
 
 We formally define this metric and verify the vanishing of its determinant at the singularity in Lean 4:
 
@@ -136,7 +138,7 @@ We formally define this metric and verify the vanishing of its determinant at th
 
 ## 2. Geometric Derivation via Kinetic-Energy Metric
 
-Instead of the Euler-Lagrange formalism, we can derive the equations of motion geometrically. The kinetic energy defines a Riemannian metric tensor $g_{\mu\nu}$ on the $2$D configuration space:
+Instead of the Euler-Lagrange formalism, we can derive the exact same equations of motion geometrically. The kinetic energy defines a Riemannian metric tensor $g_{\mu\nu}$ on the $2$D configuration space:
 
 $$
 g_{\mu\nu} = \begin{pmatrix} I_1 & 0 \\ 0 & I_1 \cos^2\delta \end{pmatrix}
@@ -180,17 +182,84 @@ $$
 \Gamma^\delta_{\eta\eta} = \cos\delta \sin\delta, \quad \Gamma^\eta_{\delta\eta} = -\tan\delta
 $$
 
+### Centrifugal and Coriolis Forces from Connection Coefficients
+
+By expanding the geodesic equation for each coordinate, we can identify these connection coefficients with familiar physical forces.
+
+For the pitch coordinate $\mu = \delta$:
+$$
+\ddot{\delta} + \Gamma^\delta_{\eta\eta} \dot{\eta}^2 = F^\delta \implies \ddot{\delta} + (\cos\delta \sin\delta) \dot{\eta}^2 = F^\delta
+$$
+Here, the inertial term $- \Gamma^\delta_{\eta\eta} \dot{\eta}^2 = -(\cos\delta \sin\delta) \dot{\eta}^2$ is proportional to the square of the velocity $\dot{\eta}^2$. This is the **centrifugal force** acting on the pitch angle due to the azimuthal roll of the pendulum.
+
+For the roll coordinate $\mu = \eta$:
+$$
+\ddot{\eta} + 2\Gamma^\eta_{\delta\eta} \dot{\delta}\dot{\eta} = F^\eta \implies \ddot{\eta} - 2(\tan\delta) \dot{\delta}\dot{\eta} = F^\eta
+$$
+Here, the inertial term $-2\Gamma^\eta_{\delta\eta} \dot{\delta}\dot{\eta} = 2(\tan\delta) \dot{\delta}\dot{\eta}$ is proportional to the product of two distinct velocities $\dot{\delta}\dot{\eta}$. This is the **Coriolis force**, arising from the interaction of radial (pitch) and azimuthal (roll) motions.
+
+This is the precise realization of the governing slogan at the top of this note:
+> **"Forces arise as connection coefficients in covariant derivatives."**
+
+In standard Newtonian mechanics, these inertial forces are introduced ad-hoc as "fictitious" corrections for working in a rotating reference frame. Here, they are not postulated at all; they are the geometric consequence of the connection coefficients $\Gamma^\mu_{\alpha\beta}$ in the absolute covariant derivative along the curved trajectory.
+
 The geodesic equation of motion incorporating the potential gradient force is:
 
 $$
 \ddot{x}^\mu + \Gamma^\mu_{\alpha\beta} \dot{x}^\alpha \dot{x}^\beta = F^\mu
 $$
 
-where the force vector $F^\mu = -g^{\mu\nu} \partial_\nu V$. This matches the Euler-Lagrange equations exactly.
+where the force vector $F^\mu = -g^{\mu\nu} \partial_\nu V$. 
+
+:::{note}
+In this derivation, the applied gravitational force does not arise from connection coefficients; it remains on the right-hand side as an external potential gradient force. Only the inertial (centrifugal and Coriolis) forces do, appearing directly as the connection terms $\Gamma^\mu_{\alpha\beta} \dot{x}^\alpha \dot{x}^\beta$ on the left-hand side of the geodesic equation. 
+
+The inertial forces, here, are a consequence of the gauge choice $SO(3)$ (or more precisely, the geometry of the quotient manifold $SO(3)/SO(2) \cong S^2$). In gauge theories of classical mechanics, the configuration space is viewed as a fibre bundle, where the metric naturally determines connection coefficients (the gauge connection) that govern how motion in the base space and couples to rotation in the fibres. Classic examples of this framework include self-propulsion and deformation kinematics described by Shapere and Wilczek @shapere1989gauge, as well as the gauge formulation of the falling cat problem by Montgomery @montgomery1993gauge.
+
+We can make the applied gravitational force *also* arise from connection coefficients by aggrandizing this theory with general relativity (where gravity is entirely geometrized and absorbed into the connection coefficients of a 4D spacetime metric, setting the external force $F^\mu = 0$). However, such a derivation, while interesting theoretically, is far more complicated, overkill for this math note, and far afield from our primary, gauge-theoritic message.
+:::
+
+Let's grind through this computation explicitly. First, we compute the coordinate derivatives of the potential energy $V = m g c_z \cos\delta \cos\eta$:
+$$
+\partial_\delta V = \partial_\delta \left( m g c_z \cos\delta \cos\eta \right) = -m g c_z \sin\delta \cos\eta
+$$
+$$
+\partial_\eta V = \partial_\eta \left( m g c_z \cos\delta \cos\eta \right) = -m g c_z \cos\delta \sin\eta
+$$
+
+Using the inverse metric $g^{\mu\nu} = \operatorname{diag}\left(\frac{1}{I_1}, \frac{1}{I_1 \cos^2\delta}\right)$ where $I_1 = m c_z^2$, we obtain the contravariant force components:
+$$
+F^\delta = -g^{\delta\delta} \partial_\delta V = -\frac{1}{m c_z^2} \left(-m g c_z \sin\delta \cos\eta\right) = \frac{g}{c_z} \sin\delta \cos\eta
+$$
+$$
+F^\eta = -g^{\eta\lambda} \partial_\lambda V = -\frac{1}{m c_z^2 \cos^2\delta} \left(-m g c_z \cos\delta \sin\eta\right) = \frac{g}{c_z} \sec\delta \sin\eta
+$$
+
+Substituting these force components and the non-vanishing Christoffel symbols back into the geodesic equations:
+
+1. **For $\mu = \delta$:**
+   $$
+   \ddot{\delta} + \Gamma^\delta_{\eta\eta} \dot{\eta}^2 = F^\delta \implies \ddot{\delta} + \cos\delta\sin\delta \, \dot{\eta}^2 = \frac{g}{c_z} \sin\delta \cos\eta
+   $$
+   Solving for $\ddot{\delta}$ yields:
+   $$
+   \ddot{\delta} = \sin\delta \left( \frac{g}{c_z} \cos\eta - \cos\delta \, \dot{\eta}^2 \right)
+   $$
+   which matches the Euler-Lagrange equation for $\delta$ character-for-character.
+
+2. **For $\mu = \eta$:**
+   $$
+   \ddot{\eta} + 2\Gamma^\eta_{\delta\eta} \dot{\delta}\dot{\eta} = F^\eta \implies \ddot{\eta} - 2\tan\delta \, \dot{\delta}\dot{\eta} = \frac{g}{c_z} \sec\delta \sin\eta
+   $$
+   Solving for $\ddot{\eta}$ yields:
+   $$
+   \ddot{\eta} = \frac{g}{c_z} \sec\delta \sin\eta + 2 \tan\delta \, \dot{\delta} \, \dot{\eta}
+   $$
+   which matches the Euler-Lagrange equation for $\eta$ character-for-character.
 
 ## 3. Gyroscopic Fibration via $SO(3)$
 
-To include gyroscopic effects, we add a third angle $\psi$, representing twist or spin around the long axis of the baton. The configuration space is now the full Lie group $SO(3)$, viewed as a circle bundle (fibration) over the $2$D sphere.
+To include gyroscopic effects, we add a third angle $\psi$, representing twist or spin around the long axis of the baton. The configuration space is now the full Lie group $SO(3)$, viewed as a circle bundle (fibration) over the $2D$ sphere.
 
 Let $I_3$ be the moment of inertia around the spin axis, and $I_1$ be the transverse moment of inertia. The $3$D metric tensor is:
 
