@@ -14,3 +14,5 @@ import MathNotesLean.DivisibilityByPrimeFlow
 import MathNotesLean.Limits1Flow
 import MathNotesLean.ScalingFunctionalEquationFlow
 import MathNotesLean.KineticEnergyGalileanFlow
+import MathNotesLean.ClassicalMechanicsSO3Flow
+
