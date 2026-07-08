@@ -16,41 +16,47 @@ bibliography:
 
 ## Abstract
 
-We analyze the inverted spherical pendulum (ISP) as a gauge theory in $SO(3)$, the Lie group of rotations in three dimensions. We show that the equations of motion can be derived as geodesic equations on a curved manifold, $SO(3)$, fibred over ordinary spacetime. Adding a third angle $\psi$, representing twist about the baton axis, introduces gyroscopic coupling that physically stabilizes the pendulum. This formulation directly mirrors Yang-Mills theory and general relativity, showing that classical Newtonian mechanics can be elegantly expressed in terms of differential geometry. The original version of this article in Wolfram Mathematica is published in [@beckman2026wolfram].
+We analyze the classical mechanics of the inverted spherical pendulum (ISP) and of the symmetrical (Lagrange) top as gauge theories in $SO(3)$, the Lie group of rotations in three dimensions. We show that the equations of motion can be derived as geodesic equations on a curved manifold, $SO(3)$, fibred over ordinary spacetime. This derivation is short and direct, standing in contrast to the more standard and elaborate delivery. 
+
+Adding a third angle $\psi$, representing twist about the baton axis, introduces gyroscopic coupling that physically stabilizes the pendulum and converts the problem into that of the symmetrical top. 
+
+This formulation directly mirrors Yang-Mills theory and general relativity, showing that classical Newtonian mechanics can be elegantly expressed in terms of differential geometry. 
+
+The original version of this article in Wolfram Mathematica is published in [@beckman2026wolfram].
 
 ## Introduction
 
-Gauge theory and gauge-covariant derivatives are the mathematical backbone of the Standard Model of particle physics, describing electromagnetic, weak, and strong interactions as connections on principal fiber bundles. It is a seldom-mentioned, yet absolutely head-turning fact that exactly the same mathematical machinery pertains directly to classical Newtonian mechanics! 
+Gauge theory and gauge-covariant derivatives are the mathematical backbone of the Standard Model of particle physics, describing electromagnetic, weak, and strong interactions as connections on principal fiber bundles. Covariant derivatives on spacetime itself are the mathematical backbone of general relativity and gravitation. It is a seldom-mentioned, yet remarkable fact that exactly the same mathematical machinery pertains to classical Newtonian mechanics! 
 
-The central slogan and primary insight of this article is:
+The unifying fact, promoted to a slogan, is:
 
 > **"Forces arise as connection coefficients in covariant derivatives."**
 
-Standard physics curricula derive the equations of motion for rotating rigid bodies using coordinate-heavy Euler-Lagrange equations in terms of Euler angles (yaw, pitch, and roll) or angular velocity vectors. This traditional approach—found in classic textbooks such as Goldstein's *Classical Mechanics* [@goldstein2002classical], Landau and Lifshitz's *Mechanics* [@landau1976mechanics], or Arnol'd's *Mathematical Methods of Classical Mechanics* [@arnold2013mathematical]—often obscures the underlying geometric structure.
+Standard physics curricula derive the equations of motion for rotating rigid bodies using coordinate-heavy Euler-Lagrange equations written in Euler angles (yaw, pitch, and roll). This traditional approach—found in classic textbooks such as Goldstein's *Classical Mechanics* [@goldstein2002classical], Landau and Lifshitz's *Mechanics* [@landau1976mechanics], or Arnol'd's *Mathematical Methods of Classical Mechanics* [@arnold2013mathematical]—tends to obscure the overarching geometric structure.
 
-In this article, we reformulate the classical inverted spherical pendulum (ISP) geometrically, revealing that the equations of motion can be written elegantly in terms of a **gauge-covariant absolute derivative** along the system's trajectory:
+In this article, we reformulate the classical inverted spherical pendulum (ISP) and Lagrange top geometrically, revealing the equations of motion following from a **gauge-covariant absolute derivative** along the system's trajectory:
 
 $$
-D_t \dot{x}^\mu = \frac{d\dot{x}^\mu}{dt} + \Gamma^\mu_{\alpha\beta} \dot{x}^\alpha \dot{x}^\beta = F^\mu
+D_t \dot{x}^\mu \;\stackrel{\text{def}}{=}\; \frac{d\dot{x}^\mu}{dt} + \Gamma^\mu_{\alpha\beta} \dot{x}^\alpha \dot{x}^\beta = F^\mu
 $$
 
-where $D_t$ is the absolute covariant derivative and the $\Gamma$'s are the connection coefficients of the specific gauge manifold we choose. In this article, the gauge manifold / gauge group is $SO(3)$. In a future note, we will choose $SU(2)$, specifically to avoid gimbal lock. 
+where $D_t$ is the absolute covariant derivative and the $\Gamma$'s are the **connection coefficients** of the specific gauge manifold we choose. In this article, the gauge manifold / gauge group is $SO(3)$. In a future note, we will choose $SU(2)$, specifically to avoid gimbal lock. 
 
-This is *exactly* the same kind of computation performed under the banner of gauge invariance in the Standard Model! Rather than postulating Coriolis or gyroscopic forces ad-hoc, they emerge naturally as the Christoffel connection coefficients $\Gamma^\mu_{\alpha\beta}$ of a curved manifold ($SO(3)/SO(2)$ or $SO(3)$) fibred over ordinary time.
+This is *exactly* the same kind of computation performed under the banner of _gauge invariance_ in the Standard Model. Rather than postulating Coriolis or gyroscopic forces ad-hoc, they emerge naturally as the Christoffel connection coefficients $\Gamma^\mu_{\alpha\beta}$ of a curved manifold ($SO(3)/SO(2)$ or $SO(3)$) fibred over ordinary time. _Inertial forces arise from connection coefficients_.
 
 This formulation directly mirrors:
 1. **General Relativity**: Where the gravitational force is replaced entirely by geodesic motion (vanishing covariant acceleration) in a curved 4D spacetime manifold.
 2. **Yang-Mills Gauge Theory**: Where the gyroscopic off-diagonal coupling terms act exactly as a gauge potential $A_\mu$, and the resulting Coriolis and gyroscopic precession forces emerge directly from the gauge-covariant derivative.
 
-It is a remarkable fact that physics of all kinds—classical and quantum, relativistic and Newtonian—can be concisely and elegantly unified through the language of differential geometry. This note provides an eager, accessible bridge for advanced physics undergraduates to see how gauge theory operates in a simple, concrete classical system.
+It is a remarkable fact that physics of all kinds—classical and quantum, relativistic and Newtonian—are concisely and elegantly unified through differential geometry. This note aims to furnish a concise, accessible bridge for physics undergraduates to see how gauge theory operates even in a simple, concrete classical system.
 
 We accompany this note with:
 1. A formal verification in Lean 4 verifying the algebraic properties of the 2D quotient metric and its singularity.
-2. A symbolic verification in SymPy computing the Christoffel symbols, geodesic equations, and their $I_3 \to 0$ limit.
+2. A symbolic verification in SymPy computing the Christoffel symbols, geodesic equations, and their $I_3 \to 0$ limit, whereby the Lagrange top converges to the inverted spherical pendulum.
 
 ## 1. Lagrangian Formulation & Singularity
 
-Consider a rigid pendulum of uniform density with mass $m$ and length $2 c_z$, with its center of mass located at distance $c_z$ from the pivot. We measure its angular position with two coordinates:
+Consider a rigid-rod pendulum of uniform density with mass $m$ and length $2 c_z$, with its center of mass located at distance $c_z$ from the pivot, fixed to the 2D floor. We measure its angular position with two coordinates:
 * $\delta$ (pitch), measuring co-latitude from the North pole.
 * $\eta$ (cone-roll), measuring rotation around the original $X$-axis.
 
@@ -59,6 +65,15 @@ The position of the center of mass in Cartesian coordinates is:
 $$
 \mathbf{r} = R_x(\eta) R_y(\delta) \begin{pmatrix} 0 \\ 0 \\ c_z \end{pmatrix}
 $$
+
+:::{figure} figures/non_quantum_so3_coordinates.png
+:label: fig-non-quantum-so3-coordinates
+:align: center
+:width: 80%
+
+3D visualization of the inverted spherical pendulum showing the pitch ($\delta$) and cone-roll ($\eta$) coordinate system.
+:::
+
 
 The velocity is $\mathbf{v} = \dot{\mathbf{r}}$, leading to the kinetic energy:
 
