@@ -18,7 +18,7 @@ cannot tell by looking at a metric or particular coordinates which one is time
 and which space. We must do a computation with a particular spacetime structure
 to figure it out.
 
-## Example
+## Example I
 
 In Galilean space time we can have the following equation of motion
 $$
@@ -35,3 +35,44 @@ $$ R_{\mu\nu} = 4\pi G\rho\,\tau_\mu\tau_\nu \,.$$
 
 This equation is fully invariant with respect to any 4D coordinate
 transformation, including space-dependent time.
+
+The Poisson example can thus be written in a tensor form.
+
+## Example II
+
+Here is an example equation that cannot be written in a tensor form:
+
+$\frac{d^2\mathbf{x}}{dt_{\rm abs}^2} = -\nabla\Phi + \mathbf{f}(t_{\rm abs}, \mathbf{v})$
+
+This equation is invariant with respect to any spatial transformation, time
+translation and Galilean transformation. It is however not invariant to
+space-dependent time transformation (such as local time zones) and cannot be
+written in an invariant tensor form.
+
+As such, one can construct local experiment in a freely falling "elevator" that
+can determine the $f$ term and thus the preferred frame: the residual force
+depends on when they do the experiment and on their velocity relative to the
+absolute space.
+
+As such, the requirement to be invariant to space-dependent time coordinate
+transformations is not an artificial requirement, but rather a fundamental
+invariance requirement: without it we can determine a "local time zone" from
+local experiments, which is unphysical (against the strong equivalence
+principle). Thus the string equivalence principle requires that physical laws
+are invariant to any 4D transformation including space-dependent time
+coordinates.
+
+In fact, the converse is also true: such tensor laws in 4D spacetime plus some
+mild additional assumptions automatically imply the strong equivalence
+principle.
+
+## Summary
+
+The conclusion is that we can assume the strong equivalence principle (SEP) as
+the starting point. Technically we could derive everything from a slightly
+weaker assumption as well, but for the initial treatment we'll assume the full
+SEP.
+
+From SEP it strictly follows that all physical laws must be written in tensor
+form, invariant to any 4D transformation of spacetime, including
+space-dependent time coordinate transformations.
