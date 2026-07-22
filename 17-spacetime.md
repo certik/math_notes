@@ -13,6 +13,11 @@ Via the associated Klein geometries these groups determine the possible invarian
 
 Any spacetime theory consistent with the stated assumptions must therefore be based on one of these two local structures (possibly equipped with a dynamical connection compatible with that structure). The construction itself remains agnostic about which structure is realized and about the presence or absence of curvature.
 
+Note: all 4 coordinates are equal in a sense that they are just labels, we
+cannot tell by looking at a metric or particular coordinates which one is time
+and which space. We must do a computation with a particular spacetime structure
+to figure it out.
+
 ## Example
 
 In Galilean space time we can have the following equation of motion
