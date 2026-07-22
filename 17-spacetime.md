@@ -76,3 +76,22 @@ SEP.
 From SEP it strictly follows that all physical laws must be written in tensor
 form, invariant to any 4D transformation of spacetime, including
 space-dependent time coordinate transformations.
+
+Mathematically, the equations must be invariant under the full diffeomorphism
+group $\mathrm{Diff}(M)$.
+
+Note: there is a separate additional assumption that one can impose: background
+independence. Background independence goes one step further from SEP: it also
+discards absolute structures that have no effect at all on any experiment.
+Those inert structures are already invisible to the SEP, so removing them is
+not required for the covariance argument above. It is an additional theoretical
+cleanliness condition, not a logical necessity for deriving 4D tensorial form.
+It requires that no fixed, non-dynamical geometric structure may appear in the
+field equations. Every geometric object that determines free-fall trajectories,
+causal structure, or the coupling of matter to gravity must itself be dynamical
+(it must transform under diffeomorphisms and, typically, satisfy its own field
+equation). The background independence is typically used to greatly restrict
+the possible forms of the field equations (Einstein's equations in GR and the
+Newton equations in NC). However the background independence is not used to
+derive the requirement that all physical laws must be tensor equations, or
+other properties of spacetime above.
