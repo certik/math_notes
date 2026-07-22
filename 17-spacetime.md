@@ -1,44 +1,14 @@
-# Spacetime
+**Spacetime**
 
-Spacetime is a 4D manifold where the 3 spatial and 1 time coordinates are
-unified in the following sense:
+Spacetime is a 4-dimensional manifold in which the three spatial coordinates and one time coordinate are unified as follows:
 
-* The time coordinate can be multiplied with a conversion factor ($c$) of units
-  of speed to measure it in units of distance and treat it as an equal
-  coordinate to the spatial coordinates.
+- A conversion factor with dimensions of speed allows the time coordinate to be expressed in units of length, treating it on the same footing as the spatial coordinates.
+- All equations are invariant under arbitrary smooth 4-dimensional diffeomorphisms, which may mix the time and space coordinates.
 
-* All equations are invariant to arbitrary (smooth) 4D transformations, mixing
-  time and space in arbitrary manner.
+Any manifold equipped with a torsion-free affine connection admits local coordinates in which the connection coefficients vanish at a chosen point. Their derivatives need not vanish, so the Riemann tensor (and curvature) may still be nonzero. Whatever geometric structure is present can be brought to a standard form at that point.
 
-For any manifold equipped with a torsion-free affine connection, it can be
-shown that:
+The concrete geometric structure is fixed solely by symmetries and general properties. Homogeneity implies that transformations between inertial frames are linear. Combined with spatial isotropy, the existence of the ten generators corresponding to spatial rotations, spatial translations, boosts and time translation, and mild causality requirements, the only consistent possibilities are the Poincaré group and the Galilei group. (Fully Euclidean rotations that erase any distinction between space and time are excluded by causality.)
 
-* Locally one can always transform the coordinates in such a way to obtain
-  locally flat space, where at the point all connection coefficients disappear.
-  Their derivatives in general do not, so the Riemann tensor is non-zero and
-  the curvature is still there.
-  If the metric is not degenerate, it will be diagonal. If it is degenerate,
-  both metrics will be diagonal as well.
+Via the associated Klein geometries these groups determine the possible invariant geometric structures: a non-degenerate metric of signature $(-+++)$ or a degenerate pair consisting of a temporal 1-form and a spatial co-metric.
 
-The specific metric structure and signature is determined from spacetime
-symmetries:
-
-* We assume isotropy and homogeneity symmetries
-* We assume 10 generators (3 spatial rotations, 3 spatial translations, 3
-  boosts, 1 time translation)
-* From symmetries we derive Lie algebra brackets, many of which are set (such
-  as $[J, J] = J$, $[J, K] = K$, $[J, P] = P$, etc.)
-* We enumerate / classify all options. Under very mild assumptions we can prove
-  there just three kinematical groups:
-  * Rotation translation group
-  * Poincaré group
-  * Galileo group
-* We assume very mild assumptions about causality, which excludes the
-  O(4) rotations
-
-So only Poincaré and Galileo groups are allowed by symmetries. From their Lie
-algebra one can derive the corresponding metric via Klein construction. One
-obtains Minkowski metric for Poincaré, with signature -1, and the degenerate
-pair of metric for Galileo.
-
-As a result the spacetime is then fully determined.
+Any spacetime theory consistent with the stated assumptions must therefore be based on one of these two local structures (possibly equipped with a dynamical connection compatible with that structure). The construction itself remains agnostic about which structure is realized and about the presence or absence of curvature.
