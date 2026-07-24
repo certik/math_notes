@@ -1,97 +1,454 @@
-# Spacetime
+# Spacetime from Common Kinematical Assumptions
 
-Spacetime is a 4-dimensional manifold in which the three spatial coordinates and one time coordinate are unified as follows:
+The purpose of this note is to classify the flat local spacetime structures
+compatible with a common set of physical assumptions. We do not assume
+Galilean or Lorentzian spacetime at the start. Instead, the two arise as the
+causal branches of one kinematical algebra.
 
-* A conversion factor with dimensions of speed allows the time coordinate to be expressed in units of length, treating it on the same footing as the spatial coordinates.
-* All equations are invariant under arbitrary smooth 4-dimensional diffeomorphisms, which may mix the time and space coordinates.
+The conclusion is deliberately limited. The argument classifies flat
+inertial kinematics. Obtaining Newton-Cartan theory or general relativity
+requires additional assumptions about gravity, universal free fall, and
+field dynamics.
 
-Any manifold equipped with a torsion-free affine connection admits local coordinates in which the connection coefficients vanish at a chosen point. Their derivatives need not vanish, so the Riemann tensor (and curvature) may still be nonzero. Whatever geometric structure is present can be brought to a standard form at that point.
+## Assumptions ledger
 
-The concrete geometric structure is fixed solely by symmetries and general properties. Homogeneity implies that transformations between inertial frames are linear. Combined with spatial isotropy, the existence of the ten generators corresponding to spatial rotations, spatial translations, boosts and time translation, and mild causality requirements, the only consistent possibilities are the Poincaré group and the Galilei group. (Fully Euclidean rotations that erase any distinction between space and time are excluded by causality.)
+### Physical principles
 
-Via the associated Klein geometries these groups determine the possible invariant geometric structures: a non-degenerate metric of signature $(-+++)$ or a degenerate pair consisting of a temporal 1-form and a spatial co-metric.
+1. **Relativity principle.** No inertial frame is preferred. The identity
+   component of the inertial transformations acts transitively on inertial
+   velocity states.
+2. **Strong spacetime homogeneity.** The transformation of a displacement
+   between two events is independent of where that displacement is based.
+3. **Spatial isotropy and reflection symmetry.** Within the identity
+   component, the stabilizer of a rest frame is $SO(3)$. Spatial reflection
+   is an additional discrete symmetry acting in the standard way: $P_i$ and
+   $K_i$ are polar vectors, $J_i$ is an axial vector, and $H$ is a scalar.
+4. **Causal time orientation.** The connected inertial symmetry group
+   preserves a distinction between future and past.
 
-Any spacetime theory consistent with the stated assumptions must therefore be based on one of these two local structures (possibly equipped with a dynamical connection compatible with that structure). The construction itself remains agnostic about which structure is realized and about the presence or absence of curvature.
+### Mathematical assumptions
 
-Note: all 4 coordinates are equal in a sense that they are just labels, we
-cannot tell by looking at a metric or particular coordinates which one is time
-and which space. We must do a computation with a particular spacetime structure
-to figure it out.
+1. Events have four real coordinates, and inertial-frame transformations are
+   continuous bijections.
+2. We classify the connected transformations through their Lie algebra; the
+   discrete spatial reflection is used only to constrain its structure
+   constants.
+3. The connected inertial algebra has exactly ten generators: three
+   rotations, three boosts, three spatial translations, and one time
+   translation. In particular, an independent dilation is not an inertial
+   transformation. Without this fixed generator content, Weyl-type extensions
+   preserving only a conformal class would also be possible.
 
-## Example I
+### Conventions
 
-In Galilean space time we can have the following equation of motion
+The generators are:
+
+- $J_i$: spatial rotations;
+- $K_i$: boosts;
+- $P_i$: spatial translations;
+- $H$: time translation.
+
+## Strong homogeneity forces affine transformations
+
+Let $F:\mathbb R^4\to\mathbb R^4$ be a transformation between inertial
+coordinate systems. Strong homogeneity says that for every displacement $a$,
+
 $$
-\nabla^2\Phi=4\pi G\rho.
+F(x+a)-F(x)=L(a)
 $$
 
-This equation is invariant with respect to any spatial coordinate
-transformation, as well as time translation. But it is not invariant with
-respect to making local time space dependent (such as timezones on Earth). It's
-a tensor equation in the spatial 3D space, but not a tensor equation in the
-full 4D spacetime. To make it invariant, one must write it as:
+is independent of the base event $x$. Applying this twice gives
 
-$$ R_{\mu\nu} = 4\pi G\rho\,\tau_\mu\tau_\nu \,.$$
+$$
+\begin{aligned}
+L(a+b)
+&=F(x+a+b)-F(x)
+\\
+&=\bigl(F(x+a+b)-F(x+a)\bigr)
+ +\bigl(F(x+a)-F(x)\bigr)
+\\
+&=L(b)+L(a).
+\end{aligned}
+$$
 
-This equation is fully invariant with respect to any 4D coordinate
-transformation, including space-dependent time.
+Thus $L$ is additive. Continuity excludes pathological additive maps, so
+$L$ is linear over $\mathbb R$. Taking $x=0$ gives
 
-The Poisson example can thus be written in a tensor form.
+$$
+F(x)=L(x)+F(0).
+$$
 
-## Example II
+Every inertial-frame transformation is therefore affine. After choosing a
+common origin, it is linear.
 
-Here is an example equation that cannot be written in a tensor form:
+Pure translations are consequently
 
-$\frac{d^2\mathbf{x}}{dt_{\rm abs}^2} = -\nabla\Phi + \mathbf{f}(t_{\rm abs}, \mathbf{v})$
+$$
+T_a(x)=x+a,
+$$
 
-This equation is invariant with respect to any spatial transformation, time
-translation and Galilean transformation. It is however not invariant to
-space-dependent time transformation (such as local time zones) and cannot be
-written in an invariant tensor form.
+and satisfy
 
-As such, one can construct a local experiment in a freely falling "elevator" that
-can determine the $f$ term and thus the preferred frame: the residual force
-depends on when they do the experiment and on their velocity relative to the
-absolute space.
+$$
+T_aT_b=T_{a+b}=T_bT_a.
+$$
 
-As such, the requirement to be invariant to space-dependent time coordinate
-transformations is not an artificial requirement, but rather a fundamental
-invariance requirement: without it we can determine a "local time zone" from
-local experiments, which is unphysical (against the strong equivalence
-principle). Thus the strong equivalence principle requires that physical laws
-be invariant to any 4D transformation including space-dependent time
-coordinates.
+Hence commuting translations are a conclusion of strong homogeneity, not an
+independent assumption. Kinematics whose translation generators do not
+commute, including de Sitter, anti-de Sitter, and Newton-Hooke kinematics, are
+already outside this stronger notion of homogeneity.
 
-In fact, the converse is also true: such tensor laws in 4D spacetime plus some
-mild additional assumptions automatically imply the strong equivalence
-principle.
+Affine transformations form a semidirect product
 
-## Summary
+$$
+GL(4,\mathbb R)\ltimes\mathbb R^4.
+$$
 
-The conclusion is that we can assume the strong equivalence principle (SEP) as
-the starting point. Technically we could derive everything from a slightly
-weaker assumption as well, but for the initial treatment we'll assume the full
-SEP.
+The translations $\mathbb R^4$ are therefore an ideal: the commutator of a
+linear generator with a translation generator is another translation
+generator. Likewise, the commutator of two linear generators has no
+translation part. These closure facts restrict the boost brackets below.
 
-From SEP it strictly follows that all physical laws must be written in tensor
-form, invariant to any 4D transformation of spacetime, including
-space-dependent time coordinate transformations.
+## The common kinematical algebra
 
-Mathematically, the equations must be invariant under the full diffeomorphism
-group $\mathrm{Diff}(M)$.
+Spatial isotropy fixes the rotation brackets and the transformation of
+spatial vectors:
 
-Note: there is a separate additional assumption that one can impose: background
-independence. Background independence goes one step further from SEP: it also
-discards absolute structures that have no effect at all on any experiment.
-Those inert structures are already invisible to the SEP, so removing them is
-not required for the covariance argument above. It is an additional theoretical
-cleanliness condition, not a logical necessity for deriving 4D tensorial form.
-It requires that no fixed, non-dynamical geometric structure may appear in the
-field equations. Every geometric object that determines free-fall trajectories,
-causal structure, or the coupling of matter to gravity must itself be dynamical
-(it must transform under diffeomorphisms and, typically, satisfy its own field
-equation). The background independence is typically used to greatly restrict
-the possible forms of the field equations (Einstein's equations in GR and the
-Newton equations in NC). However the background independence is not used to
-derive the requirement that all physical laws must be tensor equations, or
-other properties of spacetime above.
+$$
+\begin{aligned}
+[J_i,J_j]&=\epsilon_{ijk}J_k,
+&
+[J_i,K_j]&=\epsilon_{ijk}K_k,
+\\
+[J_i,P_j]&=\epsilon_{ijk}P_k,
+&
+[J_i,H]&=0.
+\end{aligned}
+$$
+
+The affine result above gives
+
+$$
+[P_i,P_j]=0,
+\qquad
+[P_i,H]=0.
+$$
+
+Because translations are an ideal, $[K_i,H]$ must be a translation. Rotation
+covariance makes it a spatial vector, so
+
+$$
+[K_i,H]=bP_i.
+$$
+
+Transitivity on inertial velocity states requires $b\ne0$: a boost must change
+the velocity of the rest worldline. Rescaling $K_i$ sets $b=1$. Static and
+Carroll-type boosts, which leave that velocity fixed, do not satisfy the
+stated relativity principle. We therefore use the convention
+
+$$
+[K_i,H]=P_i.
+$$
+
+The ideal property requires $[K_i,P_j]$ to be a translation. Rotational
+covariance permits a scalar term $\delta_{ij}H$ and a chiral vector term
+$\epsilon_{ijk}P_k$; spatial reflection excludes the latter. The commutator
+of two boosts belongs to the homogeneous linear algebra. Antisymmetry,
+rotational covariance, and reflection symmetry allow an axial rotation term
+but exclude a polar boost term. Consequently the general remaining brackets
+are
+
+$$
+[K_i,P_j]=\kappa\,\delta_{ij}H,
+\qquad
+[K_i,K_j]=a\,\epsilon_{ijk}J_k
+$$
+
+for constants $\kappa$ and $a$. The Jacobi identity for
+$(K_i,K_j,P_k)$ determines their relation. Substitution gives
+
+$$
+\begin{aligned}
+0
+&=[K_i,[K_j,P_k]]
+  +[K_j,[P_k,K_i]]
+  +[P_k,[K_i,K_j]]
+\\
+&=(\kappa+a)
+  \left(\delta_{jk}P_i-\delta_{ik}P_j\right).
+\end{aligned}
+$$
+
+Therefore
+
+$$
+a=-\kappa.
+$$
+
+All brackets relevant to inertial kinematics are consequently
+
+$$
+\boxed{
+\begin{aligned}
+[K_i,H]&=P_i,
+&
+[K_i,P_j]&=\kappa\,\delta_{ij}H,
+&
+[K_i,K_j]&=-\kappa\,\epsilon_{ijk}J_k.
+\end{aligned}
+}
+$$
+
+The single constant $\kappa$ has dimensions of inverse speed squared. At this
+stage the algebra has three branches: $\kappa>0$, $\kappa=0$, and
+$\kappa<0$.
+
+## Selecting the causal branches
+
+### Finite invariant speed: $\kappa>0$
+
+Write
+
+$$
+\kappa=\frac{1}{c^2},
+\qquad 0<c<\infty.
+$$
+
+Rescaling the time coordinate by $c$ converts the brackets into the Poincare
+algebra. The boosts do not commute, and their commutator is a rotation:
+
+$$
+[K_i,K_j]=-\frac{1}{c^2}\epsilon_{ijk}J_k.
+$$
+
+The invariant spacetime tensor derived from this algebra is a non-degenerate
+Lorentzian metric. Its normalization is conventional; with signature
+$(-+++)$,
+
+$$
+g_{\mu\nu}
+=\operatorname{diag}(-1,1,1,1).
+$$
+
+The connected group preserves each component of the timelike cone, so a
+future time orientation can be chosen and preserved.
+
+### Infinite invariant speed: $\kappa=0$
+
+The boost brackets become
+
+$$
+[K_i,P_j]=0,
+\qquad
+[K_i,K_j]=0.
+$$
+
+This is the bare Galilei algebra. It has no non-degenerate invariant
+spacetime metric. Instead it preserves two degenerate structures:
+
+$$
+\tau_\mu=(1,0,0,0),
+\qquad
+h^{\mu\nu}=\operatorname{diag}(0,1,1,1),
+$$
+
+with
+
+$$
+h^{\mu\nu}\tau_\nu=0.
+$$
+
+The covector $\tau_\mu$ defines absolute elapsed time and a time orientation;
+$h^{\mu\nu}$ defines Euclidean spatial lengths within simultaneity slices.
+
+### Euclidean branch: $\kappa<0$
+
+If $\kappa=-1/c_E^2$, boosts act as ordinary compact rotations between the
+time direction and spatial directions. The invariant bilinear form is
+positive definite rather than Lorentzian.
+
+The connected homogeneous group can continuously rotate a chosen time
+direction into spatial directions and eventually into its negative. It
+therefore preserves no future cone or global distinction between future and
+past. The causal-time-orientation principle excludes this branch.
+
+Thus the stated assumptions leave exactly
+
+$$
+\boxed{\kappa=0\quad\text{or}\quad\kappa=\frac{1}{c^2}>0.}
+$$
+
+These are the Galilean and Lorentzian branches, respectively. Their names are
+conclusions of the classification, not initial assumptions.
+
+## Geometry from the two algebras
+
+The algebraic classification and the geometric classification are separate
+steps. For either surviving algebra, spacetime is the homogeneous space
+
+$$
+M=G/H_{\mathrm{event}},
+$$
+
+where $G$ is the inertial symmetry group and $H_{\mathrm{event}}$ is the
+subgroup generated by rotations and boosts that fixes a chosen event. The
+translation generators $\{H,P_i\}$ span the tangent representation at that
+event.
+
+The invariant-tensor calculation is carried out in
+[the metric note](13-poincare-galilei-metric.md). Its results are:
+
+| branch | invariant local spacetime structure |
+| --- | --- |
+| $\kappa>0$ | non-degenerate Lorentzian metric $g_{\mu\nu}$ |
+| $\kappa=0$ | temporal covector $\tau_\mu$ and spatial co-metric $h^{\mu\nu}$ |
+
+Because translations commute and form an abelian ideal, both homogeneous
+models are flat affine spaces. This conclusion follows from strong
+homogeneity; it does not follow from isotropy or transitivity alone.
+
+## The common velocity-space structure
+
+The two branches also share the structure needed for free-particle
+kinematics. Fix a future-directed rest velocity $u_0$. The connected
+homogeneous group generated by rotations and boosts acts transitively on the
+admissible inertial velocity space $\mathcal V$:
+
+$$
+\mathcal V=G_0/SO(3).
+$$
+
+The stabilizer of $u_0$ is $SO(3)$, and its action on
+$T_{u_0}\mathcal V$ is the ordinary three-dimensional vector
+representation. Concretely,
+
+| branch | velocity space $\mathcal V$ | invariant affine parameter |
+| --- | --- | --- |
+| $\kappa=0$ | $\{u:\tau_\mu u^\mu=1\}\cong\mathbb R^3$ | absolute time |
+| $\kappa>0$ | $\{u:g(u,u)=-c^2,\ u\text{ future}\}$ | proper time |
+
+This shared homogeneous-space statement, rather than either explicit boost
+formula, is the input used for the unified derivation of inertial motion in
+[the kinematics note](18-kinematics.md).
+
+## Coordinate covariance is not a physical symmetry
+
+A passive coordinate change relabels the same events and tensor fields. A
+physical spacetime symmetry maps one physical configuration to another while
+preserving the background spacetime structure. These are different claims:
+
+- **coordinate covariance** says that an equation has the same geometric
+  meaning in every chart;
+- **inertial symmetry** says that the flat background is preserved by a
+  particular finite-dimensional group;
+- **diffeomorphism gauge symmetry** identifies configurations related by an
+  active diffeomorphism when the theory makes that identification.
+
+Writing an equation in tensor form establishes coordinate covariance. It does
+not by itself establish the relativity principle, remove preferred background
+fields, or imply the strong equivalence principle.
+
+For example, let $D$ be the flat compatible Newton-Cartan connection. The
+coordinate Poisson equation
+
+$$
+\delta^{ij}\partial_i\partial_j\Phi=4\pi G\rho
+$$
+
+is the adapted-coordinate form of a Newton-Cartan scalar equation such as
+
+$$
+h^{\mu\nu}D_\mu D_\nu\Phi=4\pi G\rho.
+$$
+
+Equivalently, after the gravitational potential has been incorporated into a
+compatible Newton-Cartan connection, the field equation can be written
+
+$$
+R_{\mu\nu}=4\pi G\rho\,\tau_\mu\tau_\nu
+$$
+
+subject to the additional Newton-Cartan curvature conditions. These tensor
+equations remain meaningful under coordinate transformations that mix the
+time and space labels.
+
+Conversely, a preferred-frame force can also be written covariantly if one
+introduces an observer field $n^\mu$ representing that preferred frame. The
+equation is then coordinate-covariant but still violates the relativity
+principle because $n^\mu$ is observable background structure. Tensor notation
+cannot turn a preferred-frame theory into a frame-independent one.
+
+## From flat models to curved spacetime
+
+The flat homogeneous models describe tangent kinematics. A curved theory
+introduces an affine connection $\nabla$ compatible with the branch's local
+geometric structure.
+
+At any event, the symmetric part of a connection can be made to vanish by a
+coordinate choice. This is only a pointwise statement:
+
+$$
+\Gamma^\lambda_{(\mu\nu)}(p)=0.
+$$
+
+Derivatives of the connection need not vanish, and curvature can remain
+nonzero. A local normal-coordinate construction therefore does not imply
+flatness on a neighborhood or globally.
+
+The equivalence principle supplies physical content beyond coordinate
+covariance: sufficiently small freely falling experiments cannot detect a
+universal homogeneous gravitational field, although tidal effects can remain.
+To turn that statement into geodesic motion one must additionally assume
+universal free fall and minimal coupling to a connection.
+
+The two curved continuations are then:
+
+- a Lorentzian geometry with a metric-compatible connection, as used in
+  general relativity;
+- a Galilean geometry with $\tau_\mu$, $h^{\mu\nu}$, and an independent
+  compatible connection, as used in Newton-Cartan theory.
+
+The kinematical classification does not determine either gravitational field
+equation.
+
+## Background independence
+
+Background independence is stronger than coordinate covariance. It asks that
+geometric structures affecting observable motion or causal relations not be
+fixed nondynamical fields.
+
+This condition is conceptually separate from the classification above:
+
+- the flat inertial models intentionally contain fixed invariant structures;
+- Newton-Cartan theory commonly retains $\tau_\mu$ and $h^{\mu\nu}$ as
+  absolute structures while allowing the compatible connection to carry
+  gravity;
+- general relativity makes the Lorentzian metric dynamical.
+
+Exactly which fields must be dynamical is an additional choice of theory, not
+a consequence of writing equations under $\operatorname{Diff}(M)$.
+
+## Dependency summary
+
+The logical chain is
+
+$$
+\begin{gathered}
+\text{relativity}+\text{strong homogeneity}+\text{isotropy}
++\text{fixed ten-generator content}
+\\
+\Longrightarrow
+\text{one-parameter algebra } \mathfrak g_\kappa
+\\
+\xrightarrow{\text{causal time orientation}}
+\kappa=0\ \text{or}\ \kappa>0
+\\
+\Longrightarrow
+\text{Galilean or Lorentzian local geometry}.
+\end{gathered}
+$$
+
+The stronger homogeneity condition has already excluded non-affine curved
+kinematics, while transitivity on velocity states excludes ineffective
+boosts. Gravity, geodesic motion, actions, and field equations all require
+further physical assumptions.
