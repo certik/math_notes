@@ -49,7 +49,7 @@ translation and Galilean transformation. It is however not invariant to
 space-dependent time transformation (such as local time zones) and cannot be
 written in an invariant tensor form.
 
-As such, one can construct local experiment in a freely falling "elevator" that
+As such, one can construct a local experiment in a freely falling "elevator" that
 can determine the $f$ term and thus the preferred frame: the residual force
 depends on when they do the experiment and on their velocity relative to the
 absolute space.
@@ -58,8 +58,8 @@ As such, the requirement to be invariant to space-dependent time coordinate
 transformations is not an artificial requirement, but rather a fundamental
 invariance requirement: without it we can determine a "local time zone" from
 local experiments, which is unphysical (against the strong equivalence
-principle). Thus the string equivalence principle requires that physical laws
-are invariant to any 4D transformation including space-dependent time
+principle). Thus the strong equivalence principle requires that physical laws
+be invariant to any 4D transformation including space-dependent time
 coordinates.
 
 In fact, the converse is also true: such tensor laws in 4D spacetime plus some

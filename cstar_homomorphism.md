@@ -7,7 +7,7 @@ g:\mathbb C^*\to\mathbb C^*,
 \qquad
 g(zw)=g(z)g(w).
 $$
-Without regularity assumptions such homomorphisms can be highly nonconstructive.
+Without regularity assumptions, such homomorphisms can be highly nonconstructive.
 With continuity, or even Borel measurability, they have one simple form.
 
 :::{note} Lean formalization
